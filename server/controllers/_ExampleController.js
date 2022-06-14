@@ -1,8 +1,8 @@
-const rainbowCardModel = require("../models/RainbowCardModel");
+const exampleModel = require("../models/_ExampleModel");
 
 // Example
 exports.getRainbowCardDataList = async (req, res, next) => {
-  await rainbowCardModel
+  await exampleModel
     .getRainbowCardDataList()
     .then((result) => {
       res.setHeader("Content-Type", "application/json");

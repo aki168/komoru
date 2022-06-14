@@ -9,7 +9,7 @@ var logger = require('morgan');
 var cors = require('cors');
 
 // router
-var configRouter = require('./routes/_configRouters');
+var configRouter = require('./routes/_ConfigRouters');
 
 // errorController
 var errorController = require('./controllers/_errorController');

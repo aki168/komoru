@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const cityController = require("../controllers/Cityontroller");
+const cityController = require("../controllers/CityController");
 
 // 2022-06-12-PG
 // 載入回傳 json 格式所需模組
