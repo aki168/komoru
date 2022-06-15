@@ -10,7 +10,9 @@ router.use(bodyParser.json());
 
 // ----------------------------------------------------------------------------------------------------------------------
 
-
+// 2022-06-15 PG
+// 取得飯店照片列表 By HotelId
+router.post("/getHotelImgDataListByHotelId", hotelImgController.getHotelImgDataListByHotelId);
 
 
 module.exports = router;
