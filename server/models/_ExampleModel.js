@@ -1,4 +1,4 @@
-const db = require("../bin/dbConfig");
+const db = require("../bin/db/_Config");
 
 // Example
 exports.getRainbowCardDataList = async () => {
