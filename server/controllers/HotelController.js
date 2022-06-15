@@ -11,8 +11,7 @@ exports.getHotelDataListWithMainImgAndCityName = async (req, res, next) => {
   await hotelModel
     .getHotelDataListWithMainImgAndCityName()
     .then((result) => {
-      res.setHeader("Content-Type", "application/json");
-      res.end(JSON.stringify(result));
+      configController.sendJsonMsg(res, true, "", result);
     })
     .catch((err) => {
       // 目前不確定這邊要怎改
@@ -26,18 +25,11 @@ exports.getHotelDataListWithMainImgAndCityName = async (req, res, next) => {
 // return：json
 exports.getHotelDataByHotelId = async (req, res, next) => {
   let data = req.body;
-  if (typeof(data.hotelId) !== "undefined") {
+  if (typeof data.hotelId !== "undefined") {
     await hotelModel
       .getHotelDataByHotelId(data.hotelId)
       .then((result) => {
-        res.setHeader("Content-Type", "application/json");
-        res.end(
-          JSON.stringify({
-            status: true,
-            errMsg: "",
-            data: result,
-          })
-        );
+        configController.sendJsonMsg(res, true, "", result);
       })
       .catch((err) => {
         // 目前不確定這邊要怎改
@@ -45,6 +37,6 @@ exports.getHotelDataByHotelId = async (req, res, next) => {
         res.status(500).json({ message: "Server error" });
       });
   } else {
-    configController.sendErrorJsonMsg(res, "無傳遞變數");
+    configController.sendJsonMsg(res, false, "無傳遞變數", []);
   }
 };

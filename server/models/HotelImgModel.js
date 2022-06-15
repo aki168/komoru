@@ -1,7 +1,7 @@
 const db = require("../bin/db/_Config");
 
 // 2022-06-15 PG
-// 取得飯店照片列表 By HotelId
+// 取得飯店照片列表 By hotelId
 // hotelId：飯店 Id
 // return：[{}]
 exports.getHotelImgDataListByHotelId = async (hotelId) => {

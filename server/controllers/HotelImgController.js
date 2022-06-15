@@ -2,7 +2,7 @@ const configController = require("./_ConfigController");
 const hotelImgModel = require("../models/HotelImgModel");
 
 // 2022-06-15 PG
-// 取得飯店照片 By HotelId
+// 取得飯店照片 By hotelId
 // return：json
 exports.getHotelImgDataListByHotelId = async (req, res, next) => {
   let data = req.body;
@@ -10,8 +10,7 @@ exports.getHotelImgDataListByHotelId = async (req, res, next) => {
     await hotelImgModel
       .getHotelImgDataListByHotelId(data.hotelId)
       .then((result) => {
-        res.setHeader("Content-Type", "application/json");
-        res.end(JSON.stringify(result));
+        configController.sendJsonMsg(res, true, "", result);
       })
       .catch((err) => {
         // 目前不確定這邊要怎改
@@ -19,6 +18,6 @@ exports.getHotelImgDataListByHotelId = async (req, res, next) => {
         res.status(500).json({ message: "Server error" });
       });
   } else {
-    configController.sendErrorJsonMsg(res, "無傳遞變數");
+    configController.sendJsonMsg(res, false, "無傳遞變數", []);
   }
 };
