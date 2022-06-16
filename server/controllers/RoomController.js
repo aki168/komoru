@@ -2,7 +2,7 @@ const configController = require("./_ConfigController");
 const roomModel = require("../models/RoomModel");
 
 // 2022-06-15 PG
-// 取得房型列表、主圖、所屬縣市名
+// 取得房型列表、主圖、所屬飯店名
 // roomId hotelId roomTitle liveNum
 // roomImgPath
 // hotelTitle
