@@ -10,7 +10,8 @@ router.use(bodyParser.json());
 
 // ----------------------------------------------------------------------------------------------------------------------
 
-
-
+// 2022-06-15 PG
+// 取得房型照片列表 By roomId
+router.post("/getRoomImgDataListByRoomId", roomImgController.getRoomImgDataListByRoomId);
 
 module.exports = router;
