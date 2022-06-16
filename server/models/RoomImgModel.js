@@ -9,7 +9,8 @@ exports.getRoomImgDataListByRoomId = async (roomId) => {
       let sql =
         "SELECT *" +
         "FROM `RoomImg` " +
-        "WHERE `RoomImg`.`room_id` = ?;";
+        "WHERE `RoomImg`.`room_id` = ?" + 
+        "AND `RoomImg`.`is_invalid` = '1';";
       let value = roomId;
       db.con.query(sql, value,(err, rows, fields) => {
         if (err) {

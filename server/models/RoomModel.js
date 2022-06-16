@@ -16,7 +16,8 @@ exports.getRoomDataListWithMainImgAndHotelName = async () => {
         "FROM `Room` " +
         "JOIN `RoomImg` ON `Room`.`room_id` = `RoomImg`.`room_id` " +
         "JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id` " +
-        "WHERE `RoomImg`.`room_img_is_main` = '0';";
+        "WHERE `RoomImg`.`room_img_is_main` = '0' " +
+        "AND `Room`.`is_invalid` = '1';";
       db.con.query(sql, (err, rows, fields) => {
         if (err) {
           reject(err);
@@ -34,7 +35,8 @@ exports.getRoomDataListWithMainImgAndHotelName = async () => {
       let sql =
         "SELECT *" +
         "FROM `Room` " +
-        "WHERE `Room`.`room_id` = ?;";
+        "WHERE `Room`.`room_id` = ? " +
+        "AND `Room`.`is_invalid` = '1';";
       let value = roomId;
       db.con.query(sql, value, (err, rows, fields) => {
         if (err) {
