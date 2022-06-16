@@ -8,7 +8,6 @@ const db = mysql.createConnection({
   database: "komoru",
 });
 
-
 db.connect(function (err) {
   // console.log(err);
   if (err) {
@@ -18,7 +17,7 @@ db.connect(function (err) {
   console.log("connecting success");
 });
 
-exports.con = db;  
+exports.con = db;
 
 // 2022-06-14 PG
 // 將 column name 底線轉換為駝峰
@@ -48,30 +47,41 @@ exports.setColumnNameCamelToLine = (text) => {
 // 將 rowData obj 轉換為駝峰
 // rows：原始資料庫 obj
 // return：陣列包物件 [{}]
-exports.rowDataToCamelData = (rows)=>{
+exports.rowDataToCamelData = (rows) => {
   let newDatalist = [];
   Object.values(rows).forEach((data) => {
-      let newData = {};
+    let newData = {};
     Object.entries(data).forEach(([key, value]) => {
-      Object.assign(newData,{ [this.setColumnNameLineToCamel(key)]: value });
+      Object.assign(newData, { [this.setColumnNameLineToCamel(key)]: value });
     });
     newDatalist.push(newData);
   });
   return newDatalist;
-}
+};
 
 // 2022-06-14 PG
 // 將 key 為駝峰資料轉為底線
 // dataList：欲轉換的 dataList obj
 // return：陣列包物件 [{}]
-exports.camelDataToRowData = (dataList)=>{
+exports.camelDataToRowData = (dataList) => {
   let newDatalist = [];
   Object.values(dataList).forEach((data) => {
-      let newData = {};
+    let newData = {};
     Object.entries(data).forEach(([key, value]) => {
-      Object.assign(newData,{ [this.setColumnNameCamelToLine(key)]: value });
+      Object.assign(newData, { [this.setColumnNameCamelToLine(key)]: value });
     });
     newDatalist.push(newData);
   });
   return newDatalist;
-}
+};
+
+// 2022-06-16 PG
+// 取得當下時間（ +8 hr 轉換）
+exports.getDateTimeNow = () => {
+  let now = new Date();
+  now = now.setHours(now.getHours() + 8);
+  return new Date(now)
+    .toISOString()
+    .replace(/T/, " ")
+    .replace(/\..+/, "");
+};

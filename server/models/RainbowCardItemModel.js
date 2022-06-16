@@ -1,1 +1,1 @@
-const db = require("../bin/db/_Config");
+const db = require("./_ConfigDB");

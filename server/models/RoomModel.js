@@ -1,4 +1,4 @@
-const db = require("../bin/db/_Config");
+const db = require("./_ConfigDB");
 
 // 2022-06-15 PG
 // 取得房型列表、主圖、所屬飯店名
