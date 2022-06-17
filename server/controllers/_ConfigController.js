@@ -10,7 +10,7 @@ exports.sendJsonMsg = (res, status, msg, data) => {
     JSON.stringify({
       "status": status,
       "errMsg": msg,
-      "data": data,
+      "dataList": data,
     })
   );
 };
