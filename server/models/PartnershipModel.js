@@ -74,9 +74,9 @@ exports.addPartnership = async (dataList) => {
 };
 
 // 2022-06-17 PG
-// 修改合作夥伴
+// 修改合作夥伴 By partnershipId
 // return：{}
-exports.updatePartnership = async (dataList) => {
+exports.updatePartnershipByPartnershipId = async (dataList) => {
   return new Promise((resolve, reject) => {
     let sql =
       "UPDATE `Partnership` SET " +
@@ -104,9 +104,9 @@ exports.updatePartnership = async (dataList) => {
 };
 
 // 2022-06-17 PG
-// 刪除合作夥伴
+// 刪除合作夥伴 By partnershipId
 // return：{}
-exports.delPartnership = async (dataList) => {
+exports.delPartnershipByPartnershipId = async (dataList) => {
   return new Promise((resolve, reject) => {
     let sql =
       "UPDATE `Partnership` SET " +

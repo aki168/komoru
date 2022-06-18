@@ -80,9 +80,9 @@ exports.addPartnership = async (req, res, next) => {
 };
 
 // 2022-06-17 PG
-// 修改合作夥伴
+// 修改合作夥伴 By partnershipId
 // return：json
-exports.updatePartnership = async (req, res, next) => {
+exports.updatePartnershipByPartnershipId = async (req, res, next) => {
   let data = req.body;
   let checkDataResult = checkData(data, [
     "partnershipId",
@@ -96,7 +96,7 @@ exports.updatePartnership = async (req, res, next) => {
   // 判斷是否有空值、沒有傳需要的資料
   if (checkDataResult.errCheck) {
     await partnershipModel
-      .updatePartnership(data)
+      .updatePartnershipByPartnershipId(data)
       .then((result) => {
         // 判斷資料庫執行狀態是否為成功
         if (result.status == 2) {
@@ -116,9 +116,9 @@ exports.updatePartnership = async (req, res, next) => {
 };
 
 // 2022-06-16 PG
-// 刪除合作夥伴
+// 刪除合作夥伴 By partnershipId
 // return：json
-exports.delPartnership = async (req, res, next) => {
+exports.delPartnershipByPartnershipId = async (req, res, next) => {
   let data = req.body;
   let checkDataResult = checkData(data, [
     "partnershipId",
@@ -127,7 +127,7 @@ exports.delPartnership = async (req, res, next) => {
   // 判斷是否有空值、沒有傳需要的資料
   if (checkDataResult.errCheck) {
     await partnershipModel
-      .delPartnership(data)
+      .delPartnershipByPartnershipId(data)
       .then((result) => {
         // 判斷資料庫執行狀態是否為成功
         if (result.status == 2) {

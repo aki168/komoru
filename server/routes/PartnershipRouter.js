@@ -25,11 +25,11 @@ router.post("/getPartnershipDataByPartnershipId", partnershipController.getPartn
 router.post("/addPartnership", partnershipController.addPartnership);
 
 // 2022-06-17 PG
-// 修改合作夥伴
-router.post("/updatePartnership", partnershipController.updatePartnership);
+// 修改合作夥伴 By partnershipId
+router.post("/updatePartnershipByPartnershipId", partnershipController.updatePartnershipByPartnershipId);
 
 // 2022-06-17 PG
-// 刪除合作夥伴
-router.post("/delPartnership", partnershipController.delPartnership);
+// 刪除合作夥伴 By partnershipId
+router.post("/delPartnershipByPartnershipId", partnershipController.delPartnershipByPartnershipId);
 
 module.exports = router;
