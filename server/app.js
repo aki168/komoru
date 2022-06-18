@@ -20,8 +20,10 @@ var app = express();
 // 設定前端 port 導轉後端 port
 app.use(cors());
 
-// 2022-06-12-PG
-// 後端無需頁面，註解測試會不會影響
+// 2022-06-18 PG
+// 開放公開資料夾做讀取
+app.use(express.static("public"));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
