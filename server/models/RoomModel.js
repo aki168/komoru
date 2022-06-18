@@ -1,21 +1,24 @@
 const db = require("./_ConfigDB");
 
 // 2022-06-15 PG
-// 取得房型列表、主圖、所屬飯店名
+// 取得房型列表、主圖、所屬飯店名、所屬區域名
 // roomId hotelId roomTitle liveNum
 // roomImgPath
 // hotelTitle
+// cityName
 // return：({})
-exports.getRoomDataListWithMainImgAndHotelName = async () => {
+exports.getRoomDataListWithMainImgAndHotelNameAndCityName = async () => {
     return new Promise((resolve, reject) => {
       let sql =
         "SELECT" +
         "`Room`.`room_id`,`Room`.`hotel_id`,`Room`.`room_title`,`Room`.`live_num`," +
         "`RoomImg`.`room_img_path`," +
-        "`Hotel`.`hotel_title`" +
+        "`Hotel`.`hotel_title`," +
+        "`City`.`city_name` " +
         "FROM `Room` " +
         "JOIN `RoomImg` ON `Room`.`room_id` = `RoomImg`.`room_id` " +
         "JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id` " +
+        "JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id` " +
         "WHERE `RoomImg`.`room_img_is_main` = '0' " +
         "AND `Room`.`is_invalid` = '1';";
       db.con.query(sql, (err, rows, fields) => {

@@ -11,11 +11,12 @@ router.use(bodyParser.json());
 // ----------------------------------------------------------------------------------------------------------------------
 
 // 2022-06-15 PG
-// 取得房型列表、主圖、所屬飯店名
+// 取得房型列表、主圖、所屬飯店名、所屬區域名
 // roomId hotelId roomTitle liveNum
 // roomImgPath
 // hotelTitle
-router.post("/getRoomDataListWithMainImgAndHotelName", roomController.getRoomDataListWithMainImgAndHotelName);
+// cityName
+router.post("/getRoomDataListWithMainImgAndHotelNameAndCityName", roomController.getRoomDataListWithMainImgAndHotelNameAndCityName);
 
 // 2022-06-15 PG
 // 取得房型資料 By roomId

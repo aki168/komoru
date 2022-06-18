@@ -2,14 +2,15 @@ const configController = require("./_ConfigController");
 const roomModel = require("../models/RoomModel");
 
 // 2022-06-15 PG
-// 取得房型列表、主圖、所屬飯店名
+// 取得房型列表、主圖、所屬飯店名、所屬區域名
 // roomId hotelId roomTitle liveNum
 // roomImgPath
 // hotelTitle
+// cityName
 // return：json
-exports.getRoomDataListWithMainImgAndHotelName = async (req, res, next) => {
+exports.getRoomDataListWithMainImgAndHotelNameAndCityName = async (req, res, next) => {
   await roomModel
-    .getRoomDataListWithMainImgAndHotelName()
+    .getRoomDataListWithMainImgAndHotelNameAndCityName()
     .then((result) => {
       configController.sendJsonMsg(res, true, "", result);
     })
