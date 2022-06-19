@@ -10,6 +10,18 @@ router.use(bodyParser.json());
 
 // ----------------------------------------------------------------------------------------------------------------------
 
+// 2022-06-18 PG
+// 取得訂單 DataList、房型資訊、入住天數
+// orderId orderNumber orderStartDate stayNight orderStatus 
+// memberName 
+// roomDesc
+router.post("/getOrderDataListWithRoomDescAndStayNight", orderController.getOrderDataListWithRoomDescAndStayNight);
+
+
+
+// 2022-06-18 PG
+// 修改訂單狀態 By orderId
+router.post("/updateOrderStatusByOrderId", orderController.updateOrderStatusByOrderId);
 
 
 
