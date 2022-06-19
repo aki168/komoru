@@ -8,9 +8,58 @@ exports.sendJsonMsg = (res, status, msg, data) => {
   res.setHeader("Content-Type", "application/json");
   res.end(
     JSON.stringify({
-      "status": status,
-      "errMsg": msg,
-      "dataList": data,
+      status: status,
+      errMsg: msg,
+      dataList: data,
     })
   );
+};
+
+// 2022-06-18 PG
+// 將 enum 數值轉換為文字
+// tableName：資料庫表
+// column：欄位名稱
+// value：要轉換的值
+// return {}
+exports.enumValueToString = (tableName, column, value) => {
+  let errCheck = true;
+  let errMsg = "";
+  let transferString = "";
+  
+  switch (tableName) {
+    case "Order":
+      switch (column) {
+        case "orderStatus":
+          switch (value) {
+            case "0":
+              transferString = "未入住";
+              break;
+            case "1":
+              transferString = "已入住";
+              break;
+            case "2":
+              transferString = "已退房";
+              break;
+            default:
+              errCheck = false;
+              errMsg = "狀態值不存在";
+              break;
+          }
+          break;
+        default:
+          errCheck = false;
+          errMsg = "欄位不存在";
+          break;
+      }
+      break;
+    default:
+      errCheck = false;
+      errMsg = "資料表不存在";
+      break;
+  }
+  return {
+    errCheck: errCheck,
+    errMsg: errMsg,
+    transferString: transferString,
+  };
 };
