@@ -6,6 +6,7 @@ const db = mysql.createConnection({
   user: "kmradmin",
   password: "1qaz@WSX",
   database: "komoru",
+  dateStrings: true // 2022-06-18 PG 強制日期格式以字串傳回
 });
 
 db.connect(function (err) {

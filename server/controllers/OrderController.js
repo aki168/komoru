@@ -1,2 +1,89 @@
+const configController = require("./_ConfigController");
 const orderModel = require("../models/OrderModel");
 
+// 2022-06-18 PG
+// 取得訂單 DataList、房型資訊、入住天數
+// orderId orderNumber orderStartDate stayNight orderStatus 
+// memberName 
+// roomDesc
+// return：json
+exports.getOrderDataListWithRoomDescAndStayNight = async (req, res, next) => {
+  await orderModel
+    .getOrderDataListWithRoomDescAndStayNight()
+    .then((result) => {
+      Object.entries(result).forEach(([key, value]) => {
+        // 將 enum 數值轉換為文字
+        let valueToString = configController.enumValueToString(
+          "Order",
+          "orderStatus",
+          value.orderStatus
+        );
+        // 如果檢查結果是正常，即將值取代為對應的文字，否則輸出錯誤訊息
+        result[key].orderStatus = valueToString.errCheck
+          ? valueToString.transferString
+          : valueToString.errMsg;
+      });
+      configController.sendJsonMsg(res, true, "", result);
+    })
+    .catch((err) => {
+      // 目前不確定這邊要怎改
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    });
+};
+
+// 2022-06-18 PG
+// 修改訂單狀態 By orderId
+// return：json
+exports.updateOrderStatusByOrderId = async (req, res, next) => {
+  let data = req.body;
+  let checkDataResult = checkData(data, [
+    "orderId",
+    "orderStatus",
+    "employeeId",
+  ]);
+  // 判斷是否有空值、沒有傳需要的資料
+  if (checkDataResult.errCheck) {
+    await orderModel
+      .updateOrderStatusByOrderId(data)
+      .then((result) => {
+        // 判斷資料庫執行狀態是否為成功
+        if (result.status == 2) {
+          configController.sendJsonMsg(res, true, "", []);
+        } else {
+          configController.sendJsonMsg(res, false, "SQL未預期錯誤", []);
+        }
+      })
+      .catch((err) => {
+        // 目前不確定這邊要怎改
+        console.log(err);
+        res.status(500).json({ message: "Server error" });
+      });
+  } else {
+    configController.sendJsonMsg(res, false, checkDataResult.errMsg, []);
+  }
+};
+
+// 2022-06-18 PG
+// 檢查資料
+// dataList：要檢查的資料（前端傳來的）
+// dataColumns：要檢查的項目
+// return json
+const checkData = (dataList, dataColumns) => {
+  let errMsg = "";
+  let errCheck = true;
+  dataColumns.forEach((value) => {
+    if (
+      typeof dataList[value] === "undefined" ||
+      !dataList[value] ||
+      typeof dataList[value] === ""
+    ) {
+      errMsg += value + " 不可為空。";
+      errCheck = false;
+    }
+  });
+  return {
+    errMsg: errMsg,
+    errCheck: errCheck,
+  };
+};
