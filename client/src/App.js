@@ -1,9 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import BackstageAdmin from "./pages/BackstageAdmin";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes></Routes>
+      <BackstageAdmin/>
     </BrowserRouter>
   );
 }
