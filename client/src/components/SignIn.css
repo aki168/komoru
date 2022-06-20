@@ -1,0 +1,92 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+li,ul {
+  list-style: none;
+  padding: 0;
+}
+
+h1,h2,h3,h4,h5{
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 976px;
+}
+
+/* 上面為全域設定 */
+
+.signIn {
+  width: 80%;
+}
+
+.signIn--title {
+  padding-left: 80px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 52px;
+  /* identical to box height, or 130% */
+  letter-spacing: 0.01em;
+
+}
+
+.signIn--item {
+  /* display: flex; */
+  padding-bottom: 20px;
+  text-align: right;
+}
+
+.signIn--input--XL {
+  text-align: left;
+  padding: 12px;
+  font-size: 20px;
+  width: 550px;
+}
+
+.signIn--input--L {
+  padding: 12px;
+  font-size: 20px;
+  width: 500px;
+}
+
+.signIn--input--M {
+  text-align: left;
+  padding: 12px;
+  font-size: 20px;
+  width: 230px;
+}
+
+.signIn--label {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  padding-right: 30px;
+}
+
+.signIn--submit{
+  font-size: 18px;
+  float:right;
+  padding:15px;
+  background: #000;
+  color: #fff;
+  border: none;
+}
+
+hr {
+  padding: 20px;
+  border: none;
+}
+
+.mr-16 {
+  margin-right: 16px;
+}

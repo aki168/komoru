@@ -1,0 +1,70 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+li,
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  padding: 0;
+}
+
+
+.container {
+  margin: 0 auto;
+  max-width: 976px;
+}
+
+/* 上面為全域設定 */
+
+.rainbowCard {
+  margin: 0 auto;
+  max-width: 800px ;
+  padding: 150px 0;
+  text-align: center;
+  border: 1px solid #ccc;
+  position: relative;
+
+}
+
+.rainbowCard--CN {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 39px;
+
+}
+
+.rainbowCard--EN {
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  /* or 125% */
+  text-align: center;
+
+}
+
+.rainbowCard--download{
+  width: 40px;
+  position: absolute;
+  right:80px;
+  bottom: 30px;
+}
+
+.mb-32{
+  margin-bottom: 32px;
+}
