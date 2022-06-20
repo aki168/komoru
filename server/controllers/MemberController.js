@@ -19,10 +19,10 @@ exports.showAllMember = async (req, res, next) => {
 };
 
 // 0616 是否有該會員email在資料庫 - aki
-  exports.emailIsExisted = async (req, res) => {
+  exports.checkMailIsExisted = async (req, res) => {
     const {mail} = req.body;
     await memberModel
-      .emailIsExisted(mail)
+      .checkMailIsExisted(mail)
       .then((result) => {
         res.setHeader("Content-Type", "application/json");
         res.end(JSON.stringify(result));

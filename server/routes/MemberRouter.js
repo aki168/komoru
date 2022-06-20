@@ -14,7 +14,7 @@ router.use(bodyParser.json());
 router.post("/showAllMember", memberController.showAllMember);
 
 // 0616 是否有該會員email在資料庫 - aki
-router.post("/emailIsExisted", memberController.emailIsExisted);
+router.post("/checkMailIsExisted", memberController.checkMailIsExisted);
 
 // 0619 確認帳密，允許登入 - aki
 router.post("/loginAuth", memberController.loginAuth);

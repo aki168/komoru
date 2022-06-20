@@ -14,7 +14,7 @@ exports.showAllMember = async () => {
 };
 
 // 0616 是否有該會員email在資料庫 - aki
-exports.emailIsExisted = async (mail) => {
+exports.checkMailIsExisted = async (mail) => {
   return new Promise((resolve, reject) => {
     let sql = ' SELECT * FROM Member WHERE `member_mail` =  ? ; ';
     db.con.query(sql, mail, (err, rows, fields) => {
@@ -28,6 +28,7 @@ exports.emailIsExisted = async (mail) => {
 // ' SELECT * FROM Member WHERE `member_mail` = "wang@gmail.com" ';
 
 // 0619 確認帳密，允許登入(controller與emailIsExisted不同) - aki
+// passwd暫時先由前端判斷
 exports.loginAuth = async (mail,passwd) => {
   return new Promise((resolve, reject) => {
     let sql = ' SELECT * FROM Member WHERE `member_mail` =  ? ; ';
