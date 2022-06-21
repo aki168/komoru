@@ -1,30 +1,22 @@
-import React from 'react'
-import {Modal,Button,Form} from "react-bootstrap"
+import React from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 
 function RoomViewEditsModal(props) {
-    return (
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        closeButton
-      >
-        {/* <Modal.Header >
-          <Modal.Title id="contained-modal-title-vcenter">
+  return (
+    <Modal>
+      <Modal.Header closeButton>
+        {/* <Modal.Title id="contained-modal-title-vcenter">
             Modal heading
-          </Modal.Title>
-        </Modal.Header> */}
-        <Modal.Body >
-          <Form>
-            
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
+          </Modal.Title> */}
+      </Modal.Header>
+      <Modal.Body>
+        <Form></Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
 
-  export default RoomViewEditsModal
+export default RoomViewEditsModal;

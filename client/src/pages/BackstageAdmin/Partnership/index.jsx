@@ -1,7 +1,9 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
-
+import { nanoid } from "nanoid";
+import { Modal, Button, Form } from "react-bootstrap";
+import PartnershipAdd from "./PartnershipAdd";
 function Partnership() {
   /* 20220616 YG
   初始化使用者資料
@@ -11,9 +13,29 @@ function Partnership() {
   /*20220617 YG
   接後端資料初始化*/
   const [data, setData] = useState([]);
+  const [addShow, setAddShow] = useState(false);
+
+  const handleAddShow = () => setAddShow(true);
+  const handleAddClose = () => setAddShow(false);
+
   /*20220617 YG
   接後端api取後端資料*/
   useEffect(() => {
+    // const fetchData = async () => {
+    //   // get the data from the api
+    //   const response = await fetch('http://localhost:5000/partnership/getPartnershipDataListWithCityName',{
+    //     method: "POST",
+    // });
+    //   // set state with the result
+    //   const json= await response.json()
+    //   const dataResult = json.dataList
+    //   // console.log(dataResult)
+    //   setData(dataResult);
+    // }
+    // // call the function
+    // fetchData()
+    //   // make sure to catch any error
+    //   .catch(console.error);;
     axios
       .post(
         "http://localhost:5000/partnership/getPartnershipDataListWithCityName"
@@ -32,25 +54,38 @@ function Partnership() {
   總頁面資料個數 */
   const pageVisited = pageNumber * userPerPage;
 
-  const arr = Object.values(data).map((values, index) => {
+  const arr = data.map((data, index) => {
     return (
       // console.log(values.hotelTitle)
       <tr key={index} className="form-check-label">
-        <td className="col-sm-1">{values.partnershipName}</td>
-        <td className="col-sm-1">{values.cityName}</td>
-        <td className="col-sm-1">{values.partnershipAddr}</td>
-        <td className="col-sm-1">{values.partnershipTel}</td>
+        <td className="col-sm-1">{data.partnershipName}</td>
+        <td className="col-sm-1">{data.cityName}</td>
+        <td className="col-sm-1">{data.partnershipAddr}</td>
+        <td className="col-sm-1">{data.partnershipTel}</td>
         <td className="col-sm-1">
           <a href="" className="me-1 btn btn-success">
             檢視/修改
           </a>
-          <a href="" className="btn btn-success">
+          <button
+            onClick={()=>deletFormHandle(index)}
+            className="btn btn-success"
+          >
             移除
-          </a>
+          </button>
         </td>
       </tr>
     );
   });
+
+  const deletFormHandle = (index) => {
+    setData(
+      data.filter(dataList =>{
+        return data[index].partnershipId !== dataList.partnershipId
+      })
+      );
+      // console.log(dataList.partnershipId);
+
+  };
   /*20220617 YG
   arr變數(畫面)進行slice顯示資料 */
   const displayUsers = arr.slice(pageVisited, pageVisited + userPerPage);
@@ -96,7 +131,27 @@ function Partnership() {
             </div>
             <div className="col-sm-4">
               <div className="d-flex justify-content-end">
-                <a className="btn btn-success ms-2">新增夥伴</a>
+                <button
+                  onClick={handleAddShow}
+                  className="btn btn-success ms-2"
+                >
+                  新增夥伴
+                </button>
+
+                <Modal
+                  size="lg"
+                  // aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                  show={addShow}
+                  onHide={handleAddClose}
+                >
+                  <Modal.Header closeButton></Modal.Header>
+                  <PartnershipAdd
+                    data={data}
+                    addShow={addShow}
+                    setAddShow={setAddShow}
+                  />
+                </Modal>
               </div>
             </div>
             <div className="col-sm-2 d-flex justify-content-end">
@@ -136,6 +191,38 @@ function Partnership() {
                 </thead>
                 <tbody>{displayUsers}</tbody>
               </table>
+              {/* <h2>add a contact</h2>
+              <form onSubmit={handleAddFormSubmit}>
+                <input
+                  type="text"
+                  name="partnershipName"
+                  required="required"
+                  placeholder="partnershipName"
+                  onChange={handleAddFormChange}
+                />
+                <input
+                  type="text"
+                  name="cityName"
+                  required="required"
+                  placeholder="cityName"
+                  onChange={handleAddFormChange}
+                />
+                <input
+                  type="text"
+                  name="partnershipAddr"
+                  required="required"
+                  placeholder="partnershipAddr"
+                  onChange={handleAddFormChange}
+                />
+                <input
+                  type="text"
+                  name="partnershipTel"
+                  required="required"
+                  placeholder="partnershipTel"
+                  onChange={handleAddFormChange}
+                />
+                <button type="submit">ADD</button>
+              </form> */}
             </div>
           </div>
         </div>

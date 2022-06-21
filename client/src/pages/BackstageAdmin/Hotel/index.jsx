@@ -21,7 +21,7 @@ function Hotel() {
         "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setData(res.data.dataList);
       })
       .catch((err) => console.log(err));
