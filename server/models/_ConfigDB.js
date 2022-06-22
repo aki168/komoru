@@ -6,7 +6,8 @@ const db = mysql.createConnection({
   user: "kmradmin",
   password: "1qaz@WSX",
   database: "komoru",
-  dateStrings: true // 2022-06-18 PG 強制日期格式以字串傳回
+  dateStrings: true, // 2022-06-18 PG 強制日期格式以字串傳回
+  multipleStatements: true
 });
 
 db.connect(function (err) {
@@ -86,3 +87,14 @@ exports.getDateTimeNow = () => {
     .replace(/T/, " ")
     .replace(/\..+/, "");
 };
+
+exports.multipleQueryRowDataToSingleObj = (dataList) => {
+  let newDatalist = [];
+  dataList = JSON.parse(JSON.stringify(dataList));
+  dataList.forEach((data)=>{
+      Object.entries(data[0]).forEach(([key, value]) => {
+         newDatalist[key] = value;
+        });
+    });
+    return newDatalist;
+}

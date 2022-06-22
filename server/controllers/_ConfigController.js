@@ -25,7 +25,7 @@ exports.enumValueToString = (tableName, column, value) => {
   let errCheck = true;
   let errMsg = "";
   let transferString = "";
-  
+
   switch (tableName) {
     case "Order":
       switch (column) {
@@ -61,5 +61,100 @@ exports.enumValueToString = (tableName, column, value) => {
     errCheck: errCheck,
     errMsg: errMsg,
     transferString: transferString,
+  };
+};
+
+// 2022-06-20 PG
+// 取得 enum 所對應的 value
+// tableName：資料庫表
+// column：欄位名稱
+// return {}
+exports.getEnumValue = (tableName, column) => {
+  let errCheck = true;
+  let errMsg = "";
+  let valueObj;
+  
+  switch (tableName) {
+    case "ActivePack":
+      switch (column) {
+        case "activePackType":
+          valueObj = {
+            activePackTypeA: "0",
+            activePackTypeB: "1",
+            activePackTypeC: "2",
+            activePackTypeD: "3",
+            activePackTypeE: "4"
+          };
+          break;
+        default:
+          errCheck = false;
+          errMsg = "欄位不存在";
+          break;
+      }
+      break;
+    case "CouponItem":
+      switch (column) {
+        case "couponItemIsUse":
+          valueObj = {
+            couponUnUse: "0",
+            couponIsUse: "1"
+          };
+          break;
+        default:
+          errCheck = false;
+          errMsg = "欄位不存在";
+          break;
+      }
+      break;
+      case "Room":
+      switch (column) {
+        case "roomType":
+          valueObj = {
+            roomTypeBackpacker: "0",
+            roomTypeSingle: "1"
+          };
+          break;
+        default:
+          errCheck = false;
+          errMsg = "欄位不存在";
+          break;
+      }
+      break;
+      case "OrderItem":
+      switch (column) {
+        case "isActive":
+          valueObj = {
+            isActive: "0",
+            isNoActive: "1"
+          };
+          break;
+        default:
+          errCheck = false;
+          errMsg = "欄位不存在";
+          break;
+      }
+      break;
+      case "Member":
+      switch (column) {
+        case "sex":
+          valueObj = {
+            sexFmale: "0",
+            sexMale: "1"
+          };
+          break;
+        default:
+          errCheck = false;
+          errMsg = "欄位不存在";
+          break;
+      }
+    default:
+      errCheck = false;
+      errMsg = "資料表不存在";
+      break;
+  }
+  return {
+    errCheck: errCheck,
+    errMsg: errMsg,
+    valueObj: valueObj,
   };
 };

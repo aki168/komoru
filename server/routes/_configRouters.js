@@ -22,6 +22,7 @@ const couponRouter = require("./CouponRouter");
 const couponItemRouter = require("./CouponItemRouter");
 const cityRouter = require("./CityRouter");
 const employeeRouter = require("./EmployeeRouter");
+const dashboardRouter = require("./DashboardRouter");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -49,5 +50,7 @@ router.use("/coupon", couponRouter);
 router.use("/couponItem", couponItemRouter);
 router.use("/city", cityRouter);
 router.use("/employee", employeeRouter);
+
+router.use("/dashboard", dashboardRouter);
 
 module.exports = router;
