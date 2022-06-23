@@ -1,0 +1,54 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+li,ul {
+  list-style: none;
+  padding: 0;
+}
+
+h1,h2,h3,h4,h5{
+  margin: 0;
+  padding: 0;
+}
+
+
+.container {
+  margin: 0 auto;
+  max-width: 976px;
+}
+
+/* 上面為全域設定 */
+
+a{
+  display: block;
+  text-decoration: none;
+  color: #000;
+}
+
+.navbar{
+  background: #ccc;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 130px;
+}
+
+.navbar--title{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.navbar--menu{
+  display: flex;
+  justify-content: center;
+}
+
+.navbar--item{
+  padding: 15px;
+  font-size:1rem;
+}

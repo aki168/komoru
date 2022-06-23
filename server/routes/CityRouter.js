@@ -10,6 +10,9 @@ router.use(bodyParser.json());
 
 // ----------------------------------------------------------------------------------------------------------------------
 
+// 2022-06-20 PG
+// 取得縣市 dataList
+router.post("/getCityDataList", cityController.getCityDataList);
 
 
 

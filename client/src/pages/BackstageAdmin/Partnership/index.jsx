@@ -1,25 +1,34 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
-import { nanoid } from "nanoid";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import PartnershipAdd from "./PartnershipAdd";
+import PartnershipEdit from "./PartnershipEdit/index";
 function Partnership() {
-  /* 20220616 YG
+  /* 20220616 YN
   初始化使用者資料
   初始化頁數*/
   // const [users, setUsers] = useState(OrderData.slice(0));
   const [pageNumber, setPageNumber] = useState(0);
-  /*20220617 YG
+  /*20220617 YN
   接後端資料初始化*/
   const [data, setData] = useState([]);
+  /*20220622 YN
+  增加表單modal顯示狀態初始化*/
   const [addShow, setAddShow] = useState(false);
+  /*20220622 YN
+  檢視表單modal顯示狀態初始化*/
+  const [editShow, setEditShow] = useState(false);
 
+  const [editData, setEditData] = useState({});
+
+  /*20220622 YN
+  新增表單時，modal顯示狀態設定*/
   const handleAddShow = () => setAddShow(true);
   const handleAddClose = () => setAddShow(false);
 
-  /*20220617 YG
-  接後端api取後端資料*/
+  /*20220617 YN
+  接後端api取合作夥伴後端資料*/
   useEffect(() => {
     // const fetchData = async () => {
     //   // get the data from the api
@@ -47,27 +56,29 @@ function Partnership() {
       .catch((err) => console.log(err));
   }, []);
 
-  /*20220616 YG
+  /*20220616 YN
   設定畫面上資料個數*/
   const userPerPage = 10;
-  /*20220616 YG
+  /*20220616 YN
   總頁面資料個數 */
   const pageVisited = pageNumber * userPerPage;
 
   const arr = data.map((data, index) => {
     return (
-      // console.log(values.hotelTitle)
       <tr key={index} className="form-check-label">
         <td className="col-sm-1">{data.partnershipName}</td>
         <td className="col-sm-1">{data.cityName}</td>
         <td className="col-sm-1">{data.partnershipAddr}</td>
         <td className="col-sm-1">{data.partnershipTel}</td>
         <td className="col-sm-1">
-          <a href="" className="me-1 btn btn-success">
-            檢視/修改
-          </a>
           <button
-            onClick={()=>deletFormHandle(index)}
+            onClick={()=>handleEditShow(index)}
+            className="me-1 btn btn-success"
+          >
+            檢視/修改
+          </button>
+          <button
+            onClick={() => deletFormHandle(index)}
             className="btn btn-success"
           >
             移除
@@ -76,25 +87,35 @@ function Partnership() {
       </tr>
     );
   });
-
+  /*20220622 YN
+  修改表單時，modal顯示狀態設定*/
+  const handleEditShow = (index) => {
+    setEditShow(true);
+    setEditData(data[index]);
+    // console.log(data[index])
+  };
+  
+  // const handleEditShow = () => setEditShow(true);
+  const handleEditClose = () => setEditShow(false);
+  /*20220620 YN
+  移除功能 */
   const deletFormHandle = (index) => {
     setData(
-      data.filter(dataList =>{
-        return data[index].partnershipId !== dataList.partnershipId
+      data.filter((dataList) => {
+        return data[index].partnershipId !== dataList.partnershipId;
       })
-      );
-      // console.log(dataList.partnershipId);
-
+    );
+    // console.log(dataList.partnershipId);
   };
-  /*20220617 YG
+  /*20220617 YN
   arr變數(畫面)進行slice顯示資料 */
   const displayUsers = arr.slice(pageVisited, pageVisited + userPerPage);
 
-  /*20220616 YG
+  /*20220616 YN
   (react-paginate參數)
   取頁簽顯示數字 */
   const pageCount = Math.ceil(data.length / userPerPage);
-  /*20220616 YG
+  /*20220616 YN
   (react-paginate參數)
   點選後更換頁面 */
   const changePage = ({ selected }) => {
@@ -179,7 +200,7 @@ function Partnership() {
           </div>
           <div className="row ms-5">
             <div className="col-sm-10">
-              <table className="table table-hover table-striped text-center align-middle ">
+              <table className="table table-hover  text-center align-middle ">
                 <thead>
                   <tr>
                     <td>夥伴名稱</td>
@@ -227,6 +248,21 @@ function Partnership() {
           </div>
         </div>
       </div>
+      <Modal
+        size="lg"
+        // aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={editShow}
+        onHide={handleEditClose}
+      >
+        <Modal.Header closeButton></Modal.Header>
+        <PartnershipEdit
+          data={data}
+          editShow={editShow}
+          setEditShow={setEditShow}
+          editData={editData}
+        />
+      </Modal>
     </>
   );
 }
