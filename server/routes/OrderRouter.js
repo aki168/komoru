@@ -25,4 +25,10 @@ router.post("/updateOrderStatusByOrderId", orderController.updateOrderStatusByOr
 
 
 
+// 2022-06-22 MJ
+// 取得並儲存訂單資料
+router.post('/getAndSaveOrderData',orderController.getAndSaveOrderData) 
+
+
+
 module.exports = router;

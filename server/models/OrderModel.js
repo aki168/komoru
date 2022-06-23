@@ -52,3 +52,72 @@ exports.updateOrderStatusByOrderId = async (dataList) => {
     });
   });
 };
+
+// 2022-06-22 MJ
+// 取得訂房資料
+// 傳入JSON格式資料如下
+/**{
+  "memberId": "1",
+  "orderStartDate": "2022-06-23",
+  "expDays": 1,
+  "orderStatus": "0",
+  "roomId": "4",
+  "couponItemId": "3",
+  "orderTotal": 8888,
+}
+*/
+// return：JSON
+exports.getOrderData = (data) => {
+  // 駝峰轉_
+  // 傳入string
+  function decamelize(string, options) {
+    options = options || {};
+    var separator = options.separator || '_'
+    var split = options.split || /(?=[A-Z])/
+    return string.split(split).join(separator).toLowerCase()
+  }
+
+  // 日期加天數Function
+  Date.prototype.addDays = function (days) {
+    this.setDate(this.getDate() + days);
+    return this;
+  }
+
+  // // 收到請求時加入創建訂單的時間
+  data['createDatetime'] = db.getDateTimeNow()
+
+  // 取得入住日期並加上體驗天數
+  var date =new Date(data["orderStartDate"])
+  date = date.addDays(parseInt(data['expDays'])).toLocaleDateString()
+
+  // 將體驗天數轉為退房日期並放入JSON資料中
+  data['orderEndDate'] = date
+  delete data['expDays']
+  
+  // console.log(data)
+  // 把JSON中的駝峰改為_
+  for (key in data) {
+    var newKey = decamelize(key)
+    if (newKey) {
+      data[newKey] = data[key]
+      delete data[key]
+    }
+  }
+  return data
+}
+
+// 2022-06-22 MJ
+// 將訂房資料存入SQL
+exports.saveOrderData = (data) => {
+  data = this.getOrderData(data)
+  return new Promise(function (resolve, reject) {
+    db.con.query('INSERT INTO Ordertest SET ?', data, function (error, results, fields) {
+      if (error) {
+        reject(error)
+      }
+      resolve(
+        console.log('The solution is: ', results)
+      )
+    })
+  })
+}

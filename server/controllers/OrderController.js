@@ -64,6 +64,18 @@ exports.updateOrderStatusByOrderId = async (req, res, next) => {
   }
 };
 
+// MJ
+// 取得並儲存訂單資料
+// req：前端傳來的訂單資料(JSON格式)
+exports.getAndSaveOrderData = async (req, res) => {
+  var data = req.body
+  try {
+    let done = await orderModel.saveOrderData(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // 2022-06-18 PG
 // 檢查資料
 // dataList：要檢查的資料（前端傳來的）
