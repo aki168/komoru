@@ -1,0 +1,40 @@
+.rightImgContainer {
+  height: 600px;
+  width: 970px;
+  margin: 50px 0px 0px 0px;
+  /* line-height: 40px; */
+  position: relative;
+}
+
+.featuredUp {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 0px;
+}
+
+.featuredDown {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0px;
+}
+
+.featuredItem {
+  position: relative;
+  color: rgb(230, 251, 75);
+}
+
+.featuredImg {
+  width: 480px;
+  height: 290px;
+  /* object-fit: cover; */
+}
+
+.featuredTitles {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}

@@ -1,0 +1,47 @@
+.orderContainer {
+  position: relative;
+}
+
+.contentContainer {
+  display: flex;
+  margin: 10px 100px;
+}
+
+.examResult {
+  border: 1px solid black;
+  width: 40%;
+}
+
+.orderList {
+  border: 1px solid green;
+  width: 60%;
+}
+
+.marginContainer {
+  margin: 10px 100px;
+}
+.marginContainer > h5 {
+  border-bottom: 1px solid black;
+  background-color: lightgray;
+}
+
+.activityList {
+  margin-bottom: 10px;
+  border: 1px solid black;
+}
+
+.checkoutBtn {
+  padding: 10px 30px;
+  position: absolute;
+  right: 100px;
+}
+
+.list {
+  margin: 10px;
+  display: flex;
+}
+.list > p,
+.list > span {
+  font-size: 20px;
+  padding-right: 10px;
+}

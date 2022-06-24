@@ -1,0 +1,16 @@
+.activityChoice {
+  display: flex;
+  line-height: 25px;
+  font-size: 18px;
+}
+
+.activityChoice > p {
+  margin-right: 10px;
+}
+
+.rdobutton_radio {
+  width: 20px;
+  height: 20px;
+  margin: 3px;
+}
+
