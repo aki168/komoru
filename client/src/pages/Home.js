@@ -1,11 +1,17 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Navbar/Navbar';
+import {loginOrNot} from '../App'
 
-export default function Register() {
+
+
+export default function Home() {
   return (
     <div className='wrap'>
       <Navbar />
       <div className='container'>
+
+        <button onClick={loginOrNot}>是否有登入，有的話回傳檔案在res.data[0]</button>
+
         <br />
         <br />
         <h3>這是一個虛擬的首頁，待Matt製作</h3>

@@ -41,3 +41,57 @@ exports.loginAuth = async (mail,passwd) => {
   });
 };
 
+// 0621 註冊會員  - aki
+exports.register = async (mail, passwd, forgetPasswordAns, name, nickName, sex, phone) => {
+  return new Promise((resolve, reject) => {
+    let sql = "INSERT INTO `Member`" +
+    " (`member_mail`, `member_passwd`, `member_forget_passwd_ans`, `member_name`, `member_nick_name`, `member_gender`, `member_phone`,`create_datetime`,`update_datetime`)"+
+    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);" ;
+    let value = [ 
+      mail, 
+      passwd, 
+      forgetPasswordAns, 
+      name, 
+      nickName, 
+      sex, 
+      phone,
+      db.getDateTimeNow(),
+      db.getDateTimeNow()
+    ];
+
+    console.log(value)
+    db.con.query(sql, value, (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(
+        console.log('新增成功')
+      );
+    });
+  });
+};
+
+//  0622 是否有登入 - aki
+exports.isLogin = async (memberId) => {
+  return new Promise((resolve, reject) => {
+    let sql = ' SELECT * FROM Member WHERE `member_id` =  ? ; ';
+    db.con.query(sql, memberId, (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};
+
+
+
+// member_mail
+// member_passwd
+// member_forget_passwd_ans
+// member_name
+// member_nick_name
+// member_gender
+// member_phone
+// member_img_path
+// register_type

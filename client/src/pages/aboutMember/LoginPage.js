@@ -1,11 +1,10 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Confirm from '../components/Confirm'
-import Login from '../components/Login';
+import Navbar from '../../components/Navbar/Navbar';
+import Confirm from '../../components/Confirm/Confirm'
+import Login from '../../components/Login/Login';
 
 
 export default function Register() {
-
 
 
 

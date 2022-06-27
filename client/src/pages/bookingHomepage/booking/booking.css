@@ -1,0 +1,73 @@
+.frame {
+  display: flex;
+}
+
+.leftContainer {
+  height: 600px;
+  margin: 50px 0px 0px 70px;
+  line-height: 40px;
+  border: 1px solid black;
+  position: relative;
+}
+
+.datePickerStyle {
+  width: 400px;
+  height: 45px;
+  font-size: 20px;
+  border-radius: 10px;
+  border: 0.8px solid black;
+  padding-left: 10px;
+}
+
+.bookingSearchItem {
+  padding: 10px;
+}
+
+.headerSearchText {
+  font-size: 15px;
+}
+
+.headerDaySelect,
+.headerLocationSelect,
+.headerCouponSelect {
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 10px;
+  width: 400px;
+}
+
+.roomTypeItem,
+.couponItem,
+.ActivityItem,
+.DayItem,
+.DateItem {
+  line-height: 20px;
+}
+
+.headerBtn {
+  width: 400px;
+  font-size: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
+}
+
+.getActivity {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.isActivity {
+  padding-left: 25px;
+}
+
+.rdoBtn_radio {
+  width: 20px;
+  height: 20px;
+  margin: 3px;
+}
+/* input:checked + .rdobutton_label {
+  /* 當check時 按鈕顏色改變 
+  background-color: #10bd2a;
+}  */

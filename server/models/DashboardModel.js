@@ -26,16 +26,15 @@ exports.getCouponUsageDataByCondition = async (dataList) => {
       dataList.couponId,
       "couponAll",
       dataList.dateRange,
-      dataList.couponId,
+      dataList.couponId
     ];
 
-    a = db.con.query(sql + sql + sqlAll, value, (err, rows, fields) => {
+    db.con.query(sql + sql + sqlAll, value, (err, rows, fields) => {
       if (err) {
         reject(err);
       }
       resolve(db.multipleQueryRowDataToSingleObj(rows));
     });
-    console.log(a.sql);
   });
 };
 
@@ -87,7 +86,7 @@ exports.getActiveTypeDataByCondition = async (dataList) => {
       dataList.dateRange,
       "activePackTypeAll",
       dataList.cityId,
-      dataList.dateRange,
+      dataList.dateRange
     ];
     db.con.query(
       sql + sql + sql + sql + sql + sqlAll,
@@ -126,7 +125,7 @@ exports.getIsOrderAfterExamItemDataByCondition = async (dataList) => {
       "noOrderAfterExamItem",
       dataList.dateRange,
       "examItemAll",
-      dataList.dateRange,
+      dataList.dateRange
     ];
     db.con.query(
       sqlIsNotNull + sqlIsNull + sqlAll,
@@ -217,7 +216,7 @@ exports.getIsActiveDataByCondition = async (dataList) => {
       dataList.cityId,
       "isActiveAll",
       dataList.dateRange,
-      dataList.cityId,
+      dataList.cityId
     ];
     db.con.query(sql + sql + sqlAll, value, (err, rows, fields) => {
       if (err) {
@@ -257,7 +256,7 @@ exports.getWriteFeebackDataByCondition = async (dataList) => {
       dataList.cityId,
       "writeFeebackAll",
       dataList.dateRange,
-      dataList.cityId,
+      dataList.cityId
     ];
     db.con.query(sql + sqlAll, value, (err, rows, fields) => {
       if (err) {

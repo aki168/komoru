@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import SignIn from '../components/SignIn';
-import Confirm from '../components/Confirm'
+import Navbar from '../../components/Navbar/Navbar';
+import SignIn from '../../components/SignIn/SignIn';
+import Confirm from '../../components/Confirm/Confirm';
 
 export default function Register() {
   return (

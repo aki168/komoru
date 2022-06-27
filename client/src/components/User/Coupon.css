@@ -1,0 +1,57 @@
+.User--container {
+  margin: 0 auto;
+  max-width: 1024px;
+}
+
+.Coupon {
+  display: flex;
+  padding: 100px 0;
+}
+
+.Coupon--menu {
+  width: 25%;
+  line-height: 2;
+  font-weight: bold;
+  border-left: 1px solid #111;
+}
+
+.menu--item {
+  font-family: 'Inter';
+  font-size: 28px;
+  padding-left: 20px;
+  margin: 10px 0;
+}
+
+.menu--item--on {
+  font-size: 28px;
+  border-left: 8px solid #ccc;
+  padding-left: 12px;
+}
+
+.Coupon--card {
+  text-align: center;
+  width: 75%;
+  min-height: 500px;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* border: 1px solid #111; */
+  background: #D9D9D9;
+  font-family: 'Poppins';
+  color: #333333;
+}
+
+.coupon--item{
+  background: #fff;
+  min-height: 200px;
+  padding: 100px 0;
+}
+
+@media (max-width:768px) {
+  .Coupon--card {
+    width: 100%;
+  }
+
+  .Coupon--menu {
+    display: none;
+  }
+}

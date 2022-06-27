@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Confirm from '../components/Confirm'
-import ForgotPW from '../components/ForgotPW';
+import Navbar from '../../components/Navbar/Navbar';
+import Confirm from '../../components/Confirm/Confirm'
+import ForgotPW from '../../components/ForgotPW/ForgotPW';
 
 export default function ForgotPWPage() {
   return (
