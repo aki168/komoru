@@ -105,21 +105,21 @@ function RoomAdd({ setAddShow, data }) {
     const newContacts = newContact;
     console.log(newContacts)
 
-    // setAddFormData(newContacts);
-    // fetch("http://localhost:5000/partnership/addPartnership", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json; charset=utf-8",
-    //   },
-    //   body: JSON.stringify(newContacts),
-    // })
-    //   .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((e) => {
-    //     console.error(e);
-    //   });
+    setAddFormData(newContacts);
+    fetch("http://localhost:5000/room/addRoom", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(newContacts),
+    })
+      .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
     // data.push(newContacts);
     // setAddShow(false);
     // window.location.reload(false);
