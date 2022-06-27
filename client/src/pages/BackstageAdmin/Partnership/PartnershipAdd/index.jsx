@@ -28,7 +28,8 @@ function PartnershipAdd({ data, setAddShow }) {
       })
       .catch((err) => console.log(err));
   }, []);
-
+  /*20220622 YN
+   將城市資料使用map作下拉選項*/
   const cityArr = cityData.map((cityData, index) => {
     return (
       <option key={index} value={cityData.cityId}>

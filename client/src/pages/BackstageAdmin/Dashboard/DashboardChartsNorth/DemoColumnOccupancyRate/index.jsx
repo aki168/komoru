@@ -38,11 +38,7 @@ const DemoColumnOccupancyRate = () => {
       月份: "Jul.",
       月均降雨量: 24,
     },
-    {
-      name: "London",
-      月份: "Aug.",
-      月均降雨量: 35.6,
-    },
+  
     {
       name: "Berlin",
       月份: "Jan.",
@@ -78,11 +74,7 @@ const DemoColumnOccupancyRate = () => {
       月份: "Jul.",
       月均降雨量: 37.4,
     },
-    {
-      name: "Berlin",
-      月份: "Aug.",
-      月均降雨量: 42.4,
-    },
+  
   ];
   const config = {
     data,

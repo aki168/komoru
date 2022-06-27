@@ -19,8 +19,13 @@ function Partnership() {
   /*20220622 YN
   檢視表單modal顯示狀態初始化*/
   const [editShow, setEditShow] = useState(false);
+  /*20220624 YN
+  取當下選取列表時的data狀態初始化*/
+  const [editData, setEditData] = useState();
 
-  const [editData, setEditData] = useState({});
+  /*20220624 YN
+ 初始化*/
+  // const [deletData, setDeletData] = useState();
 
   /*20220622 YN
   新增表單時，modal顯示狀態設定*/
@@ -72,7 +77,7 @@ function Partnership() {
         <td className="col-sm-1">{data.partnershipTel}</td>
         <td className="col-sm-1">
           <button
-            onClick={()=>handleEditShow(index)}
+            onClick={() => handleEditShow(index)}
             className="me-1 btn btn-success"
           >
             檢視/修改
@@ -92,19 +97,43 @@ function Partnership() {
   const handleEditShow = (index) => {
     setEditShow(true);
     setEditData(data[index]);
-    // console.log(data[index])
+    // console.log(data[index].partnershipId)
   };
-  
+
   // const handleEditShow = () => setEditShow(true);
   const handleEditClose = () => setEditShow(false);
   /*20220620 YN
   移除功能 */
   const deletFormHandle = (index) => {
-    setData(
-      data.filter((dataList) => {
-        return data[index].partnershipId !== dataList.partnershipId;
+    if (window.confirm("確定要移除嗎?")) {
+      const result = {
+        partnershipId: `${data[index].partnershipId}`,
+        employeeId: "1",
+      };
+
+      fetch("http://localhost:5000/partnership/delPartnershipByPartnershipId", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(result),
       })
-    );
+        // .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+      window.location.reload(false);
+    } 
+
+    // setData(
+    //   data.filter((dataList) => {
+    //     return data[index].partnershipId !== dataList.partnershipId;
+    //   })
+    // );
     // console.log(dataList.partnershipId);
   };
   /*20220617 YN
@@ -257,10 +286,10 @@ function Partnership() {
       >
         <Modal.Header closeButton></Modal.Header>
         <PartnershipEdit
-          data={data}
-          editShow={editShow}
+          // editShow={editShow}
           setEditShow={setEditShow}
           editData={editData}
+          data={data}
         />
       </Modal>
     </>
