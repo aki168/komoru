@@ -82,6 +82,15 @@ h1,h2,h3,h4,h5{
   border: none;
 }
 
+.signIn--submitFin{
+  font-size: 18px;
+  float:right;
+  padding:15px;
+  background: #ccc;
+  color: #9d2933;
+  border: none;
+}
+
 hr {
   padding: 20px;
   border: none;
@@ -89,4 +98,10 @@ hr {
 
 .mr-16 {
   margin-right: 16px;
+}
+
+.errMsg{
+  color: #9d2933;
+  font-size: 0.5rem;
+  text-align: right;
 }

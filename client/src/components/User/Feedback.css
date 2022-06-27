@@ -1,0 +1,66 @@
+.User--container {
+  margin: 0 auto;
+  max-width: 1024px;
+}
+
+.Feedback {
+  display: flex;
+  padding: 100px 0;
+}
+
+.Feedback--menu {
+  width: 25%;
+  line-height: 2;
+  font-weight: bold;
+  border-left: 1px solid #111;
+}
+
+.menu--item {
+  font-family: 'Inter';
+  font-size: 28px;
+  padding-left: 20px;
+  margin: 10px 0;
+}
+
+.menu--item--on {
+  font-size: 28px;
+  border-left: 8px solid #ccc;
+  padding-left: 12px;
+}
+
+
+.Feedback--card {
+  padding: 10px 50px;
+  width: 75%;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid #111; */
+  background: #D9D9D9;
+  /* justify-content: space-between; */
+  font-family: 'Poppins';
+  font-weight: 700;
+  font-size: 40px;
+  letter-spacing: 0.01em;
+  color: #333333;
+}
+
+.Feedback--title{
+  padding: 80px 0 100px 0;
+}
+
+.Feedback--btn{
+  width: 70px;
+  align-self: flex-end;
+}
+
+
+@media (max-width:768px) {
+  .Feedback--card {
+    width: 100%;
+  }
+
+  .Feedback--menu {
+    display: none;
+  }
+}

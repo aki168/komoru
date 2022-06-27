@@ -20,9 +20,17 @@ router.post("/checkMailIsExisted", memberController.checkMailIsExisted);
 router.post("/loginAuth", memberController.loginAuth);
 
 // 0619 確認帳密，允許登入 設jwt - aki // 仍在調整中
-router.get('/isUserAuth',memberController.verifyJWT,(req,res)=>{
+router.get('/verifyJWT',memberController.verifyJWT,(req,res)=>{
   res.send({auth:true,message:'嘿，恭喜妳已驗證成功'})
 })
 
+// 0621 註冊會員 - aki
+router.post('/register',memberController.register);
+
+// 0622 是否有登入 - aki
+router.post('/isLogin',memberController.isLogin)
+
+// 0623 會員登出 - aki (改由前端刪除token方式，此路由暫不使用)
+// router.post('/logout',memberController.logout)
 
 module.exports = router;
