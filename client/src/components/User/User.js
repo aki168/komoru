@@ -131,7 +131,7 @@ const alertSwitch = () => {
           </li>
           <li className="user--item">
             <label htmlFor="sex">性別　</label>
-            {!alertData && <span className="fs-4">{formData.sex? `女性`:`男性`}</span> }
+            {!alertData && <span className="fs-4">{formData.sex? `男性`:`女性`}</span> }
             {alertData && <select
               name="sex"
               id="sex"

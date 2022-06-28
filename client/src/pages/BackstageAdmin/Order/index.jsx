@@ -1,29 +1,41 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import axios from "axios";
 import ReactPaginate from "react-paginate";
 import OrderData from "./db_OrderList.json";
 
 function Order() {
-
   /* 20220616 YG
   初始化使用者資料
   初始化頁數*/
-  const [users, setUsers] = useState(OrderData.slice(0));
+  // const [users, setUsers] = useState(OrderData.slice(0));
   const [pageNumber, setPageNumber] = useState(0);
+  /*20220617 YN
+  接後端資料初始化*/
+  const [data, setData] = useState([]);
 
-
-  /*20220616 YG
-  設定畫面上資料個數*/
-  const userPerPage = 10;
-  /*20220616 YG
-  總頁面資料個數 */
-  const pageVisited = pageNumber * userPerPage;
-  /*20220616 YG
+  /*20220617 YN
+  接後端api取後端資料*/
+  useEffect(() => {
+    axios
+      .post(
+        "http://localhost:5000/order/getOrderDataListWithRoomDescAndStayNight"
+      )
+      .then((res) => {
+        console.log(res.data.dataList);
+        setData(res.data.dataList);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  /*20220617 YN
   利用變數取畫面上顯示資料 */
-  const displayUsers = users
-    .slice(pageVisited, pageVisited + userPerPage)
-    .map((user) => {
-      return (
-        <tr key={user.id} className="form-check-label" htmlFor="flexRadioDefault1">
+  const arr = data.map((data, index) => {
+    return (
+      // console.log(values.hotelTitle)
+      <tr
+          key={index}
+          className="form-check-label"
+          htmlFor="flexRadioDefault1"
+        >
           <td>
             <input
               className="form-check-input"
@@ -32,24 +44,34 @@ function Order() {
               id="flexRadioDefault1"
             />
           </td>
-          <td>{user.id}</td>
-          <td>{user.name}</td>
-          <td>{user.room}</td>
-          <td>{user.date}</td>
-          <td>{user.day}</td>
-          <td>{user.status}</td>
+          <td>{data.orderId}</td>
+          <td>{data.orderNumber}</td>
+          <td>{data.roomDesc}</td>
+          <td>{data.orderStartDate}</td>
+          <td>{data.stayNight}</td>
+          <td>{data.orderStatus}</td>
           <td>
             <a href="" className="btn btn-success">
               檢視
             </a>
           </td>
         </tr>
-      );
-    }); 
+    );
+  });
+  /*20220616 YG
+  設定畫面上資料個數*/
+  const userPerPage = 10;
+  /*20220616 YG
+  總頁面資料個數 */
+  const pageVisited = pageNumber * userPerPage;
+  /*20220616 YG
+  利用變數取畫面上顯示資料 */
+  const displayUsers = arr.slice(pageVisited, pageVisited + userPerPage)
+    
   /*20220616 YG
   (react-paginate參數)
   取頁簽顯示數字 */
-  const pageCount = Math.ceil(users.length / userPerPage);
+  const pageCount = Math.ceil(data.length / userPerPage);
   /*20220616 YG
   (react-paginate參數)
   點選後更換頁面 */
@@ -86,7 +108,7 @@ function Order() {
               <nav aria-label="Page navigation example">
                 <ul className="pagination">
                   <ReactPaginate
-                    nextLabel='>'
+                    nextLabel=">"
                     previousLabel="<"
                     pageCount={pageCount}
                     onPageChange={changePage}

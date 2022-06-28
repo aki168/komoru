@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
-import RoomViewEditsModal from "./RoomViewEditsModal";
+import RoomViewEdits from "./RoomViewEdits";
+import RoomAdd from "./RoomAdd";
+import { Modal } from "react-bootstrap";
 
 function Room() {
   /* 20220616 YN
@@ -12,8 +14,15 @@ function Room() {
   /*20220617 YN
   接後端資料初始化*/
   const [data, setData] = useState([]);
-
-  const [modalShow, setModalShow] = useState(false);
+  /*20220622 YN
+  增加表單modal顯示狀態初始化*/
+  const [addShow, setAddShow] = useState(false);
+  /*20220622 YN
+  檢視表單modal顯示狀態初始化*/
+  const [editShow, setEditShow] = useState(false);
+  /*20220624 YN
+  取當下選取列表時的data狀態初始化*/
+  const [editData, setEditData] = useState();
   /*20220617 YN
   接後端api取後端資料*/
   useEffect(() => {
@@ -22,7 +31,7 @@ function Room() {
         "http://localhost:5000/room/getRoomDataListWithMainImgAndHotelNameAndCityName"
       )
       .then((res) => {
-        console.log(res.data.dataList);
+        // console.log(res.data.dataList);
         setData(res.data.dataList);
       })
       .catch((err) => console.log(err));
@@ -37,21 +46,21 @@ function Room() {
 
   /*20220617 YN
   利用變數取畫面上顯示資料 */
-  const arr = Object.values(data).map((values, index) => {
+  const arr = data.map((data, index) => {
     return (
       // console.log(values.hotelTitle)
       <tr key={index} className="form-check-label">
-        <td className="col-sm-1">{values.roomTitle}</td>
-        <td className="col-sm-1">{values.hotelTitle}</td>
-        <td className="col-sm-1">{values.cityName}</td>
-        <td className="col-sm-1">{values.liveNum}</td>
+        <td className="col-sm-1">{data.roomTitle}</td>
+        <td className="col-sm-1">{data.hotelTitle}</td>
+        <td className="col-sm-1">{data.cityName}</td>
+        <td className="col-sm-1">{data.liveNum}</td>
         <td className="col-sm-1">
           <div
             className=" "
             style={{
               width: "100%",
               height: "200px",
-              backgroundImage: `url("http://localhost:5000${values.roomImgPath}")`,
+              backgroundImage: `url("http://localhost:5000${data.roomImgPath}")`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
@@ -61,7 +70,7 @@ function Room() {
         <td className="col-sm-1">
           <button
             className="me-1 btn btn-success"
-            onClick={() => setModalShow(true)}
+            onClick={() => handleEditShow(index)}
           >
             檢視/修改
           </button>
@@ -71,7 +80,7 @@ function Room() {
             className="btn btn-success"
           >
             移除
-          </button> 
+          </button>
         </td>
       </tr>
     );
@@ -99,6 +108,20 @@ function Room() {
     );
     // console.log(dataList.partnershipId);
   };
+  /*20220622 YN
+  新增表單時，modal顯示狀態設定*/
+  const handleAddShow = () => setAddShow(true);
+  const handleAddClose = () => setAddShow(false);
+  /*20220622 YN
+  修改表單時，modal顯示狀態設定*/
+  const handleEditShow = (index) => {
+    setEditShow(true);
+    setEditData(data[index]);
+    // console.log(data[index])
+  };
+
+  // const handleEditShow = () => setEditShow(true);
+  const handleEditClose = () => setEditShow(false);
   return (
     <>
       <div className="mx-5  mb-5">
@@ -130,7 +153,22 @@ function Room() {
             </div>
             <div className="col-sm-4">
               <div className="d-flex justify-content-end">
-                <a className="btn btn-success ms-2">新增房型</a>
+                <button
+                  onClick={handleAddShow}
+                  className="btn btn-success ms-2"
+                >
+                  新增房型
+                </button>
+                <Modal
+                  size="xl"
+                  // aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                  show={addShow}
+                  onHide={handleAddClose}
+                >
+                  <Modal.Header closeButton></Modal.Header>
+                  <RoomAdd />
+                </Modal>
               </div>
             </div>
             <div className="col-sm-2 d-flex justify-content-end">
@@ -184,7 +222,16 @@ function Room() {
           </div>
         </div>
       </div>
-      <RoomViewEditsModal show={modalShow} onHide={() => setModalShow(false)} />
+      <Modal
+        size="xl"
+        // aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={editShow}
+        onHide={handleEditClose}
+      >
+        <Modal.Header closeButton></Modal.Header>
+        <RoomViewEdits />
+      </Modal>
     </>
   );
 }

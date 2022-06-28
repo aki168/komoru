@@ -71,7 +71,9 @@ exports.getAndSaveOrderData = async (req, res) => {
   var data = req.body
   try {
     let done = await orderModel.saveOrderData(data)
+    configController.sendJsonMsg(res, true, '', '儲存成功')
   } catch (error) {
+    configController.sendJsonMsg(res, false, '輸入資料有誤',error['sqlMessage'])
     console.log(error)
   }
 }

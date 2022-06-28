@@ -93,7 +93,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgotPW" element={<ForgotPW />} />
         <Route path="/user" element={<UserPage />} />
-      </Routes>
+      </Routes> 
 
     {/* ZH */}
       {/* <Routes>
