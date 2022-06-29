@@ -9,7 +9,9 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 
 // ----------------------------------------------------------------------------------------------------------------------
-
+// 2022-06-24 MJ
+// 取得並儲存心理測驗資料
+router.post('/getAndSaveExamData', examItemController.getAndSaveExamData)
 
 
 
