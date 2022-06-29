@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
-
+import HotelAdd from "./HotelAdd";
+import { Modal } from "react-bootstrap";
 
 
 function Hotel() {
@@ -13,6 +14,16 @@ function Hotel() {
   /*20220617 YN
   接後端資料初始化*/
   const [data, setData] = useState([]);
+
+  /*20220622 YN
+   增加表單modal顯示狀態初始化*/
+  const [addShow, setAddShow] = useState(false);
+
+  /*20220622 YN
+  新增表單時，modal顯示狀態設定*/
+  const handleAddShow = () => setAddShow(true);
+  const handleAddClose = () => setAddShow(false);
+
   /*20220617 YN
   接後端api取後端資料*/
   useEffect(() => {
@@ -33,7 +44,7 @@ function Hotel() {
   /*20220616 YN
   總頁面資料個數 */
   const pageVisited = pageNumber * userPerPage;
-  
+
   /*20220617 YN
   利用變數取畫面上顯示資料 */
   const arr = Object.values(data).map((values, index) => {
@@ -47,9 +58,9 @@ function Hotel() {
         <td className="col-sm-1">
           <div
             style={{
-              width:"100%",
+              width: "100%",
               height: "200px",
-              backgroundImage: `url("http://localhost:5000${values.hotelImgPath}")`, 
+              backgroundImage: `url("http://localhost:5000${values.hotelImgPath}")`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
@@ -62,7 +73,7 @@ function Hotel() {
             檢視/修改
           </a>
           <button
-            onClick={()=>deletFormHandle(index)}
+            onClick={() => deletFormHandle(index)}
             className="btn btn-success"
           >
             移除
@@ -88,11 +99,11 @@ function Hotel() {
   移除功能 */
   const deletFormHandle = (index) => {
     setData(
-      data.filter(dataList =>{
+      data.filter(dataList => {
         return data[index].hotelId !== dataList.hotelId
       })
-      );
-      // console.log(dataList.partnershipId);
+    );
+    // console.log(dataList.partnershipId);
 
   };
 
@@ -127,7 +138,22 @@ function Hotel() {
             </div>
             <div className="col-sm-4">
               <div className="d-flex justify-content-end">
-                <a className="btn btn-success ms-2">新增飯店</a>
+                <button
+                  onClick={handleAddShow}
+                  className="btn btn-success ms-2"
+                >
+                  新增飯店
+                </button>
+                <Modal
+                  size="xl"
+                  // aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                  show={addShow}
+                  onHide={handleAddClose}
+                >
+                  <Modal.Header closeButton></Modal.Header>
+                  <HotelAdd />
+                </Modal>
               </div>
             </div>
             <div className="col-sm-2 d-flex justify-content-end">

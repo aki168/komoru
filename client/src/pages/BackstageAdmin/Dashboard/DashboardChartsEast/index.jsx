@@ -13,7 +13,7 @@ function DashboardChartsEast() {
     <>
       <div className="mx-5 me-5">
         <div className="row mb-5">
-          <h3>入住率789</h3>
+          <h3>入住率</h3>
           <DemoColumnOccupancyRate />
         </div>
         <div className="row mb-5">
