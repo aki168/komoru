@@ -4,9 +4,6 @@ import Navbar from '../../components/Navbar/Navbar'
 import '../../components/User/User.css'
 import axios from 'axios'
 import User from '../../components/User/User'
-import OrderList from '../../components/User/OrderList'
-import Feedback from '../../components/User/Feedback'
-import Coupon from '../../components/User/Coupon'
 // import { NavItem } from 'react-bootstrap'
 // import { loginOrNot } from '../../App'
 // import RainbowCard from '../../components/RainbowCard/RainbowCard'
@@ -54,9 +51,6 @@ console.log(userData)
         sex={userData.memberGender}
         phone={userData.memberPhone}
         />
-        <OrderList />
-        <Feedback />
-        <Coupon />
         {/* <RainbowCard /> */}
       </div>
     </div>

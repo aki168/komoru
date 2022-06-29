@@ -102,7 +102,7 @@ exports.register = async (req, res) => {
 
 // 0622 是否有登入 - aki
 exports.isLogin = async (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { token } = req.body;
   if (token) {
     // 解碼

@@ -8,10 +8,10 @@ export default function Coupon(props) {
   return (
     <div className="Coupon">
     <ul className="Coupon--menu">
-      <li><a href="/" className="menu--item">基本資料</a></li>
-      <li><a href="/" className="menu--item">訂單記錄</a></li>
-      <li><a href="/" className="menu--item">活動回饋</a></li>
-      <li><a href="/" className="menu--item--on">優惠表單</a></li>
+      <li><a href="/user" className="menu--item">基本資料</a></li>
+      <li><a href="/member-order" className="menu--item">訂單記錄</a></li>
+      <li><a href="/member-feedback" className="menu--item">活動回饋</a></li>
+      <li><a href="/member-coupon" className="menu--item--on">優惠表單</a></li>
     </ul>
 
     <div className="Coupon--card">

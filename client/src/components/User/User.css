@@ -22,16 +22,17 @@
   margin: 10px 0;
 }
 
-.menu--item:hover{
+/* .menu--item:hover,.menu--item--on:hover{
   font-size: 28px;
   border-left: 8px solid #ccc ;
   padding-left: 12px;
-}
+} */
 
 .menu--item--on{
   font-size: 28px;
   border-left: 8px solid #ccc ;
   padding-left: 12px;
+  margin: 10px 0;
 }
 
 

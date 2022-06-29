@@ -14,10 +14,10 @@ import axios from 'axios'
 // registerType: "0"
 // updateDatetime: "2022-06-21 15:59:19"
 
-export default function User(props) {  
+export default function User(props) {
 
 
- //抓取表單資料使用 & 設立初始值
+  //抓取表單資料使用 & 設立初始值
   const [formData, setFormData] = useState(
     {
       // mail: "",
@@ -27,8 +27,8 @@ export default function User(props) {
       // phone: ""
     }
   )
-// 跳轉後即刻渲染資料「初始化」
-  useEffect(()=>{
+  // 跳轉後即刻渲染資料「初始化」
+  useEffect(() => {
     setFormData({
       mail: props.mail,
       name: props.name,
@@ -36,13 +36,13 @@ export default function User(props) {
       sex: props.sex,
       phone: props.phone
     })
-  },[props])
+  }, [props])
 
   // 修改介面觸發：個人資料觸發函式
-const [alertData, setAlertData] = useState(false)
-const alertSwitch = () => {
-  setAlertData(prevAlertData => !prevAlertData)
-}
+  const [alertData, setAlertData] = useState(false)
+  const alertSwitch = () => {
+    setAlertData(prevAlertData => !prevAlertData)
+  }
 
   // 追蹤表單輸入值使用
   function inputHandler(e) {
@@ -55,12 +55,12 @@ const alertSwitch = () => {
   console.log(formData)
 
   // 送出內容：個人資料修改
-  function alertProfile (e) {
+  function alertProfile(e) {
     e.preventDefault();
     axios({
-      method:"POST",
+      method: "POST",
       url: "http://localhost:5000/member/alertProfile",
-      data:{
+      data: {
         mail: formData.mail,
         name: formData.name,
         nickName: formData.nickName,
@@ -68,24 +68,25 @@ const alertSwitch = () => {
         phone: formData.phone
       }
     })
-    .then((res)=>{
-    console.log(res)
-    setAlertData(false)
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
+      .then((res) => {
+        console.log(res)
+        setAlertData(false)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
 
   return (
     <div className="User">
-      <ul className="user--menu">
-        <li><a href="/" className="menu--item--on">基本資料</a></li>
-        <li><a href="/" className="menu--item">訂單記錄</a></li>
-        <li><a href="/" className="menu--item">活動回饋</a></li>
-        <li><a href="/" className="menu--item">優惠表單</a></li>
+      <ul className="OrderList--menu">
+        <li><a href="/user" className="menu--item--on">基本資料</a></li>
+        <li><a href="/member-order" className="menu--item">訂單記錄</a></li>
+        <li><a href="/member-feedback" className="menu--item">活動回饋</a></li>
+        <li><a href="/member-coupon" className="menu--item">優惠表單</a></li>
       </ul>
+
 
       <div className="user--card">
         <div className="user--icon">
@@ -109,63 +110,68 @@ const alertSwitch = () => {
           </li>
           <li className="user--item">
             <label htmlFor="name">姓名　</label>
-            {!alertData && <span className="fs-4">{formData.name}</span> }
+            {!alertData && <span className="fs-4">{formData.name}</span>}
             {alertData && <input
               type="text"
               name="name"
               id="name"
               value={formData.name}
-              onChange={inputHandler} 
-              /> }
+              onChange={inputHandler}
+            />}
           </li>
           <li className="user--item">
-          <label htmlFor="nickName">暱稱　</label> 
+            <label htmlFor="nickName">暱稱　</label>
             {!alertData && <span className="fs-4">{formData.nickName}</span>}
             {alertData && <input
               type="text"
               name="nickName"
               id="nickName"
               value={formData.nickName}
-              onChange={inputHandler} 
-              /> }
+              onChange={inputHandler}
+            />}
           </li>
           <li className="user--item">
             <label htmlFor="sex">性別　</label>
-            {!alertData && <span className="fs-4">{formData.sex? `男性`:`女性`}</span> }
+            {!alertData && <span className="fs-4">{formData.sex==='1'? `男性` : `女性`}</span>}
             {alertData && <select
               name="sex"
               id="sex"
               value={formData.sex}
-              onChange={inputHandler} 
-              > 
+              onChange={inputHandler}
+            >
               <option value="1">男性</option>
               <option value="0">女性</option>
-            </select> }
+            </select>}
           </li>
           <li className="user--item">
             <label htmlFor="phone">手機　</label>
-            {!alertData && <span className="fs-4">{formData.phone}</span> }
+            {!alertData && <span className="fs-4">{formData.phone}</span>}
             {alertData && <input
               type="text"
               name="phone"
               id="phone"
               value={formData.phone}
-              onChange={inputHandler} 
-              /> }
+              onChange={inputHandler}
+            />}
           </li>
         </ul>
         <div className="user--btnBar">
-          <Button 
-          className="user--btn--M" 
-          size="s" 
-          variant="secondary"
-          onClick={alertSwitch}
+          <Button
+            className="user--btn--M"
+            size="s"
+            variant="secondary"
+            onClick={alertSwitch}
           >修改
           </Button>
 
           <Button className="user--btn--M" size="s" variant="secondary" onClick={alertProfile}>儲存</Button>
         </div>
       </div>
+
+
+    
+
+
 
     </div>
   )

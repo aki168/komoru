@@ -30,5 +30,8 @@ router.post("/updateOrderStatusByOrderId", orderController.updateOrderStatusByOr
 router.post('/getAndSaveOrderData',orderController.getAndSaveOrderData) 
 
 
+// 2022-06-28 AKI
+// 取得訂單資料byMemberId
+router.post('/getOrderDataByMemberId',orderController.getOrderDataByMemberId) 
 
 module.exports = router;

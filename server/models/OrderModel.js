@@ -121,3 +121,28 @@ exports.saveOrderData = (data) => {
     })
   })
 }
+
+// 2022-06-28 AKI
+// 取得訂單資料byMemberId
+exports.getOrderDataByMemberId  = async (memberId) => {
+  return new Promise((resolve, reject) => {
+    let sql = 
+    "SELECT `Order`.`order_id`,`Order`.`order_number`," +
+    "`Hotel`.`Hotel_id`,`Hotel`.`hotel_title`, `Hotel`.`hotel_tel`, `Hotel`.`hotel_addr`," + 
+    "`Order`.`order_start_date`,`Member`.`member_id`, `Member`.`member_name`," +
+    "(`order_end_date` - `order_start_date`) AS `stay_night`, `Order`.`order_status`," + 
+    "CONCAT(`City`.`city_name`,' ', `Hotel`.`hotel_title` ,'/',`Room`.`room_title`) AS `room_desc` " +
+    "FROM `Order` " +
+    "JOIN `Member` ON `Order`.`member_id` = `Member`.`member_id`"+
+    "JOIN `Room` ON `Order`.`room_id` = `Room`.`room_id` "+
+    "JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id`"+
+    "JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id`"+
+    "WHERE `Member`.`member_id` = ? ;";
+    db.con.query(sql, memberId, (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};

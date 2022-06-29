@@ -9,6 +9,9 @@ import LoginPage from './pages/aboutMember/LoginPage';
 import ForgotPW from './pages/aboutMember/ForgotPWPage';
 import Register from './pages/aboutMember/Register';
 import UserPage from './pages/userPage/userPage'
+import OrderPage from "./pages/userPage/OrderPage";
+import FeedbackPage from "./pages/userPage/FeedbackPage"; 
+import CouponPage from "./pages/userPage/CouponPage";
 
 //ZH
 // import { useState } from "react";
@@ -40,7 +43,7 @@ export const loginOrNot = () => {
 // 0622- aki 登出請調用該函式 
 export const logout = () => {
   localStorage.removeItem('token')
-  window.location.reload('false')
+  // window.location.reload('false') 想重新渲染同頁面可以用這段
 }
 
 
@@ -93,6 +96,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgotPW" element={<ForgotPW />} />
         <Route path="/user" element={<UserPage />} />
+        <Route path="/member-order" element={<OrderPage />} />
+        <Route path="/member-feedback" element={<FeedbackPage />} />
+        <Route path="/member-coupon" element={<CouponPage />} />
       </Routes> 
 
     {/* ZH */}
