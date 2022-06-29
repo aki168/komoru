@@ -15,27 +15,27 @@ const Exam4 = () => {
   return (
     <div className="topic">
       <p className="text">朋友被分手時</p>
-      <input
-        type="radio"
-        name="TorF"
-        id="T"
-        value="T"
-        defaultChecked={exam4Data === "T"}
-        onChange={(e) => setExam4Data(e.currentTarget.value)}
-      ></input>
-      <label htmlFor="T" className="getOp">
+      <label className="getOp">
+        <input
+          type="radio"
+          name="qFourAnsValue"
+          id="qFourAnsValue"
+          value="T"
+          defaultChecked={exam4Data === "T"}
+          onChange={(e) => setExam4Data(e.currentTarget.value)}
+        ></input>
         你會先用邏輯分析事情的是非對錯,並提出建議
       </label>
-      <input
-        type="radio"
-        name="TorF"
-        id="F"
-        value="F"
-        defaultChecked={exam4Data === "F"}
-        onChange={(e) => setExam4Data(e.currentTarget.value)}
-      ></input>
-      <label htmlFor="F" className="getOp">
-        你會先安撫情緒,注重在對方的感受
+      <label className="getOp">
+        <input
+          type="radio"
+          name="qFourAnsValue"
+          id="qFourAnsValue"
+          value="F"
+          defaultChecked={exam4Data === "F"}
+          onChange={(e) => setExam4Data(e.currentTarget.value)}
+        ></input>
+        你會先安撫對方情緒,更注重在對方的感受如何
       </label>
     </div>
   );

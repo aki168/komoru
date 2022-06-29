@@ -15,26 +15,26 @@ const Exam5 = () => {
   return (
     <div className="topic">
       <p className="text">查到一間有興趣的餐廳,你會?</p>
-      <input
-        type="radio"
-        name="JorP"
-        id="J"
-        value="J"
-        defaultChecked={exam5Data === "J"}
-        onChange={(e) => setExam5Data(e.currentTarget.value)}
-      ></input>
-      <label htmlFor="J" className="getOp">
+      <label className="getOp">
+        <input
+          type="radio"
+          name="qFiveAnsValue"
+          id="qFiveAnsValue"
+          value="J"
+          defaultChecked={exam5Data === "J"}
+          onChange={(e) => setExam5Data(e.currentTarget.value)}
+        ></input>
         神農嘗百白草!吃了就知道
       </label>
-      <input
-        type="radio"
-        name="JorP"
-        id="P"
-        value="P"
-        defaultChecked={exam5Data === "P"}
-        onChange={(e) => setExam5Data(e.currentTarget.value)}
-      ></input>
-      <label htmlFor="P" className="getOp">
+      <label className="getOp">
+        <input
+          type="radio"
+          name="qFiveAnsValue"
+          id="qFiveAnsValue"
+          value="P"
+          defaultChecked={exam5Data === "P"}
+          onChange={(e) => setExam5Data(e.currentTarget.value)}
+        ></input>
         先看其他人的評價,再決定要不要試試看
       </label>
     </div>

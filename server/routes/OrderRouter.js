@@ -26,9 +26,15 @@ router.post("/updateOrderStatusByOrderId", orderController.updateOrderStatusByOr
 
 
 // 2022-06-22 MJ
-// 取得並儲存訂單資料
+// 取得並儲存訂單資料 By MemberId
 router.post('/getAndSaveOrderData',orderController.getAndSaveOrderData) 
 
+// 2022-06-28 AKI
+// 取得訂單資料byMemberId
+router.post('/getOrderDataByMemberId',orderController.getOrderDataByMemberId) 
 
+// 2022-06-29 MJ
+// 取得會員的coupon datalist By MemberId
+router.post('/getCouponData',orderController.getCouponData)
 
 module.exports = router;

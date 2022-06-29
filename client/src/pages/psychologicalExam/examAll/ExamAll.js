@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./ExamAll.css";
 import Exam1 from "./Exam1";
 import Exam2 from "./Exam2";
@@ -6,12 +6,14 @@ import Exam3 from "./Exam3";
 import Exam4 from "./Exam4";
 import Exam5 from "./Exam5";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   Exam1Context,
   Exam2Context,
   Exam3Context,
   Exam4Context,
   Exam5Context,
+  BookContext,
 } from "../../../Helper/Context";
 
 const ExamAll = () => {
@@ -24,6 +26,61 @@ const ExamAll = () => {
 
   const [page, setPage] = useState(0);
   const FormTitles = ["第一題", "第二題", "第三題", "第四題", "第五題"];
+
+  const [memberId, setMemberId] = useState("");
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: "http://localhost:5000/member/isLogin",
+      data: {
+        token: localStorage.token,
+      },
+    })
+      .then((res) => {
+        //有登入的話，回傳「會員資訊」在res.data[0] ｜ 沒登入則回傳message
+        let userData = res.data[0];
+        console.log(userData);
+        setMemberId(userData.memberId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // //是否參與活動
+  const { activityState, setActivityState } = useContext(BookContext);
+  // const ExamResultHandler = (event) => {
+  //   event.preventDefault();
+
+  //   const ExamDetails = {
+  //     isActive: activityState,
+  //     memberId: memberId,
+  //     qOneAnsValue: exam1Data,
+  //     q2AnsValue: exam2Data,
+  //     q3AnsValue: exam3Data,
+  //     q4AnsValue: exam4Data,
+  //     q5AnsValue: exam5Data,
+  //   };
+  //   console.log({
+  //     isActive: activityState,
+  //     memberId: memberId,
+  //     qOneAnsValue: exam1Data,
+  //     q2AnsValue: exam2Data,
+  //     q3AnsValue: exam3Data,
+  //     q4AnsValue: exam4Data,
+  //     q5AnsValue: exam5Data,
+  //   });
+  //   fetch("http://localhost:5000/exam/getAndSaveExamData", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json; charset=utf-8",
+  //     },
+  //     body: JSON.stringify(ExamDetails),
+  //   })
+  //     .then((response) => response.json())
+  //     .then(console.log("ok"))
+  //     .catch(console.error);
+  // };
 
   //2022-06-16 -ZH
   //在同一分頁展示不同測驗題目
@@ -61,15 +118,47 @@ const ExamAll = () => {
     }
   };
 
-  //做完題目後，跳轉到OrderPage
+  //做完題目後，跳轉到examResult
   const navigate = useNavigate();
   const nextPage = () => {
     if (page < 4) {
       setPage((currentPage) => currentPage + 1);
     } else {
-      navigate("/orderPage");
+      navigate("/examResult");
+    }
+
+    if (page === 4) {
+      const ExamDetails = {
+        isActive: activityState,
+        memberId: memberId,
+        qOneAnsValue: exam1Data,
+        q2AnsValue: exam2Data,
+        q3AnsValue: exam3Data,
+        q4AnsValue: exam4Data,
+        q5AnsValue: exam5Data,
+      };
+      console.log({
+        isActive: activityState,
+        memberId: memberId,
+        qOneAnsValue: exam1Data,
+        q2AnsValue: exam2Data,
+        q3AnsValue: exam3Data,
+        q4AnsValue: exam4Data,
+        q5AnsValue: exam5Data,
+      });
+      fetch("http://localhost:5000/examItem/getAndSaveExamData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(ExamDetails),
+      })
+        .then((response) => response.json())
+        .then(console.log("ok"))
+        .catch(console.error);
     }
   };
+
   return (
     <div className="form">
       <div className="progressbar">
@@ -88,7 +177,7 @@ const ExamAll = () => {
           }}
         ></div>
       </div>
-      <div className="form-cantainer">
+      <div className="examFormCantainer">
         <div className="header">
           <h1>{FormTitles[page]}</h1>
         </div>
@@ -100,10 +189,14 @@ const ExamAll = () => {
             onClick={() => {
               setPage((page) => page - 1);
             }}
+            className="prevBtn"
           >
             上一步
           </button>
-          <button onClick={nextPage}>下一步</button>
+          <button onClick={nextPage} className="nextBtn">
+            下一步
+          </button>
+          {/* {(page = 5) && <button onClick={ExamResultHandler}>完成測驗</button>} */}
         </div>
       </div>
     </div>

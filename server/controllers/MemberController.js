@@ -20,21 +20,21 @@ exports.showAllMember = async (req, res, next) => {
 };
 
 // 0616 是否有該會員email在資料庫 - aki
-  exports.checkMailIsExisted = async (req, res) => {
-    const {mail} = req.body;
-    await memberModel
-      .checkMailIsExisted(mail)
-      .then((result) => {
-        res.setHeader("Content-Type", "application/json");
-        res.end(JSON.stringify(result));
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json({ message: "Server error" });
-      });
-  };
+exports.checkMailIsExisted = async (req, res) => {
+  const { mail } = req.body;
+  await memberModel
+    .checkMailIsExisted(mail)
+    .then((result) => {
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify(result));
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    });
+};
 
- // 0619 確認帳密，允許登入（上）＋先生成token在後端 - aki
+// 0619 確認帳密，允許登入（上）＋先生成token在後端 - aki
 exports.loginAuth = async (req, res) => {
   console.log(req.body);
   const { mail, passwd } = req.body;
@@ -89,7 +89,8 @@ exports.register = async (req, res) => {
   const { mail, passwd, forgetPasswordAns, name, nickName, sex, phone } = req.body;
   await memberModel
     .register(mail, passwd, forgetPasswordAns, name, nickName, sex, phone)
-    .then((res) => {
+    .then((result) => {
+      console.log(result)
       res.setHeader("Content-Type", "application/json");
       res.end(JSON.stringify(result));
     })
@@ -101,14 +102,14 @@ exports.register = async (req, res) => {
 
 // 0622 是否有登入 - aki
 exports.isLogin = async (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { token } = req.body;
   if (token) {
     // 解碼
     const decoded = await promisify(jwt.verify)(token, "jwtSecret")
     console.log(decoded);
     const { memberId } = decoded;
-    
+
     await memberModel // 解碼完後對照資料庫，有的話回傳該會員資料
       .isLogin(memberId)
       .then((result) => {
@@ -124,3 +125,21 @@ exports.isLogin = async (req, res, next) => {
     res.json({ message: "該用戶尚未登入" })
   }
 }
+
+
+// 0627 修改個人資料 - aki 
+exports.alertProfile = async (req, res) => {
+  console.log(req.body);
+  const { mail, name, nickName, sex, phone } = req.body;
+  await memberModel
+    .alertProfile(mail, name, nickName, sex, phone)
+    .then((result) => {
+      console.log(result)
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify(result));
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    });
+};

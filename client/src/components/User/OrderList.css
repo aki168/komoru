@@ -15,7 +15,7 @@
   border-left: 1px solid #111;
 }
 
-.menu--item {
+/* .menu--item {
   font-family: 'Inter';
   font-size: 28px;
   padding-left: 20px;
@@ -26,10 +26,9 @@
   font-size: 28px;
   border-left: 8px solid #ccc;
   padding-left: 12px;
-}
+} */
 
-
-.OrderList--card {
+.OrderList--card--none {
   padding: 200px 10px;
   text-align: center;
   width: 75%;
@@ -38,7 +37,6 @@
   /* flex-wrap: wrap; */
   /* border: 1px solid #111; */
   background: #D9D9D9;
-  justify-content: space-between;
   font-family: 'Poppins';
   font-weight: 700;
   font-size: 40px;
@@ -46,8 +44,20 @@
   color: #333333;
 }
 
+.OrderList--card {
+  padding: 10px 10px;
+  text-align: center;
+  width: 75%;
+  min-height: 500px;
+  background: #D9D9D9;
+  font-family: 'Poppins';
+  letter-spacing: 0.01em;
+  color: #333333;
+}
+
+
 @media (max-width:768px) {
-  .OrderList--card {
+  .OrderList--card, .OrderList--card--none {
     flex-direction: column;
     width: 100%;
   }

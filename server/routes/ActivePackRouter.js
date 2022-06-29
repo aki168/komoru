@@ -9,6 +9,9 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 
 // ----------------------------------------------------------------------------------------------------------------------
+// 2022-06-28 MJ 
+// 取得活動包內容
+router.post('/getActivePackData', activePackController.getActivePackData)
 
 
 

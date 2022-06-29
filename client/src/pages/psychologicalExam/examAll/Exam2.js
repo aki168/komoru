@@ -9,32 +9,30 @@ const Exam2 = () => {
   return (
     <div className="topic">
       <p className="text">休假時,我會:</p>
-      <div className="topic1">
+
+      <label className="getOp">
         <input
           type="radio"
-          name="IorE"
-          id="I"
+          name="qTwoAnsValue"
+          id="qTwoAnsValue"
           value="I"
           defaultChecked={exam2Data === "I"}
           onChange={(e) => setExam2Data(e.currentTarget.value)}
         ></input>
-        <label htmlFor="I" className="getOp">
-          在家追劇
-        </label>
-      </div>
-      <div className="topic1">
+        在家追劇
+      </label>
+
+      <label className="getOp">
         <input
           type="radio"
-          name="IorE"
-          id="E"
+          name="qTwoAnsValue"
+          id="qTwoAnsValue"
           value="E"
           defaultChecked={exam2Data === "E"}
           onChange={(e) => setExam2Data(e.currentTarget.value)}
         ></input>
-        <label htmlFor="E" className="getOp">
-          出門和朋友聚會
-        </label>
-      </div>
+        出門和朋友聚會
+      </label>
     </div>
   );
 };

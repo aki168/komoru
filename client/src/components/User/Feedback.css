@@ -30,14 +30,25 @@
 
 
 .Feedback--card {
-  padding: 10px 50px;
+  padding: 10px 10px;
+  text-align: center;
   width: 75%;
   min-height: 500px;
-  display: flex;
-  flex-direction: column;
+  background: #D9D9D9;
+  font-family: 'Poppins';
+  letter-spacing: 0.01em;
+  color: #333333;
+}
+
+.Feedback--card--none {
+  padding: 200px 10px;
+  text-align: center;
+  width: 75%;
+  min-height: 500px;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
   /* border: 1px solid #111; */
   background: #D9D9D9;
-  /* justify-content: space-between; */
   font-family: 'Poppins';
   font-weight: 700;
   font-size: 40px;

@@ -1,5 +1,8 @@
 const configController = require("./_ConfigController");
 const orderModel = require("../models/OrderModel");
+const jwt = require('jsonwebtoken'); //token
+const { promisify } = require('util'); // nodejs原生
+// --------------------------------------------------------------
 
 // 2022-06-18 PG
 // 取得訂單 DataList、房型資訊、入住天數
@@ -64,6 +67,7 @@ exports.updateOrderStatusByOrderId = async (req, res, next) => {
   }
 };
 
+
 // MJ
 // 取得並儲存訂單資料
 // req：前端傳來的訂單資料(JSON格式)
@@ -71,10 +75,34 @@ exports.getAndSaveOrderData = async (req, res) => {
   var data = req.body
   try {
     let done = await orderModel.saveOrderData(data)
+    configController.sendJsonMsg(res, true, '', done)
   } catch (error) {
-    console.log(error)
+    configController.sendJsonMsg(res, false, '輸入資料有誤', error['sqlMessage'])
   }
 }
+
+
+// 2022-06-29 MJ
+// 取得coupon By memberId
+exports.getCouponData = async (req, res) => {
+  var data = req.body
+  var memberId = data['memberId']
+  if (memberId) {
+    try {
+      let done = await orderModel.getCouponItemDataList(memberId)
+      console.log(done)
+      configController.sendJsonMsg(res, true, '', done)
+    }
+    catch (error) {
+      configController.sendJsonMsg(res, false, 'sqlError', error['sqlMessage'])
+      console.log(error)
+    }
+  }
+  else {
+    configController.sendJsonMsg(res, false, 'memberId有誤', '')
+  }
+}
+
 
 // 2022-06-18 PG
 // 檢查資料
@@ -98,4 +126,30 @@ const checkData = (dataList, dataColumns) => {
     errMsg: errMsg,
     errCheck: errCheck,
   };
+};
+
+
+// 2022-06-28 AKI
+// 取得訂單資料byMemberId
+exports.getOrderDataByMemberId = async (req, res) => {
+  const { token } = req.body;
+  if (token) {
+    // 解碼
+    const decoded = await promisify(jwt.verify)(token, "jwtSecret")
+    console.log(decoded);
+    const { memberId } = decoded;
+
+    await orderModel // 解碼完後對照資料庫，有的話回傳該訂單資料
+      .getOrderDataByMemberId(memberId)
+      .then((result) => {
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify(result));
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ message: "Server error" });
+      })
+  } else {
+    res.json({ message: "該用戶尚未登入" })
+  }
 };

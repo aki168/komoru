@@ -84,7 +84,36 @@ exports.isLogin = async (memberId) => {
   });
 };
 
+// 0627 修改個人資料 - aki 
+// 更新(修改)一筆資料
+// UPDATE `資料表` SET `欄位2` = '資料2'  WHERE `欄位1` = '資料1'  ;
+// 一般用法：UPDATE `table` SET `name` = 'newaurora'  WHERE `id` = '12'
 
+exports.alertProfile = async (mail, name, nickName, sex, phone) => {
+  return new Promise((resolve, reject) => {
+    let sql = "UPDATE `Member`" +
+    " SET `member_name`=?, `member_nick_name`=?, `member_gender`=?, `member_phone`=?,`update_datetime`=?"+
+    " WHERE `member_mail` = ? " ;
+    let value = [
+      name, 
+      nickName, 
+      sex, 
+      phone,
+      db.getDateTimeNow(),
+      mail
+    ];
+
+    console.log(value)
+    db.con.query(sql, value, (err, res) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(
+        console.log('修改成功')
+      );
+    });
+  });
+};
 
 // member_mail
 // member_passwd

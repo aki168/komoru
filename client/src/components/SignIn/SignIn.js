@@ -65,7 +65,6 @@ export default function SignIn(props) {
   // 驗證ＯＫ後，提交後觸發
   function submitHandler(e) {
     e.preventDefault()
-
     axios({
       method: 'POST',
       url: 'http://localhost:5000/member/register',
@@ -80,13 +79,11 @@ export default function SignIn(props) {
       }
     })
       .then((res) => {
-        console.log('提交ok')
+        console.log(res)
         setFinish(true)
-
       })
       .catch((err) => {
         console.log(err) 
-
       });
 
 
