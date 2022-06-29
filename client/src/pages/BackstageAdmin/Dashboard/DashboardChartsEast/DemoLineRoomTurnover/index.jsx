@@ -9,7 +9,7 @@ const DemoLineRoomTurnover = () => {
   }, []);
 
   const asyncFetch = () => {
-    fetch('https://gw.alipayobjects.com/os/bmw-prod/1d565782-dde4-4bb6-8946-ea6a38ccf184.json')
+    fetch('https://gw.alipayobjects.com/os/bmw-prod/55424a73-7cb8-4f79-b60d-3ab627ac5698.json')
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => {
@@ -18,12 +18,17 @@ const DemoLineRoomTurnover = () => {
   };
   const config = {
     data,
-    padding: 'auto',
-    xField: 'Date',
-    yField: 'scales',
+    xField: 'year',
+    yField: 'value',
+    seriesField: 'category',
     xAxis: {
-      // type: 'timeCat',
-      tickCount: 5,
+      type: 'time',
+    },
+    yAxis: {
+      label: {
+        // 数值格式化为千分位
+        formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
+      },
     },
   };
 

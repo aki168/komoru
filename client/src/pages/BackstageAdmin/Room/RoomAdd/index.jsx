@@ -94,17 +94,17 @@ function RoomAdd({ setAddShow, data }) {
     console.log(...formData)
     // setAddFormData(newContacts);
 
-    // fetch("http://localhost:5000/room/addRoom", {
-    //   method: "POST",
-    //   body: formData
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((e) => {
-    //     console.error(e);
-    //   });
+    fetch("http://localhost:5000/room/addRoom", {
+      method: "POST",
+      body: formData
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
     // data.push(newContacts);
     // setAddShow(false);
     // window.location.reload(false);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pie } from '@ant-design/plots';
 
-const DemoPieNoParticipate = () => {
+const DemoPieExam = () => {
   const data = [
     {
       type: '分类一',
@@ -52,4 +52,4 @@ const DemoPieNoParticipate = () => {
   return <Pie {...config} />;
 };
 
-export default DemoPieNoParticipate;
+export default DemoPieExam;

@@ -1,31 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { Pie } from '@ant-design/plots';
 
 const DemoPieParticipate = () => {
+  /* 20220629 YN
+  參與活動狀態初始化 */
+  const [activeData, setActiveData] = useState({})
+  /*20220629 YN
+  給值取後端資料 */
+  useEffect(() => {
+    const newContacts = {
+      cityId: "1",
+      dateRange: "2022-06",
+    };
+    fetch("http://localhost:5000/dashboard/getDashboardDataListByCondition", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(newContacts),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data.dataList.isActive);
+        setActiveData(data.dataList.isActive);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }, [])
   const data = [
     {
-      type: '分类一',
-      value: 27,
+      type: '參與活動',
+      value: activeData.isActive,
     },
     {
-      type: '分类二',
-      value: 25,
-    },
-    {
-      type: '分类三',
-      value: 18,
-    },
-    {
-      type: '分类四',
-      value: 15,
-    },
-    {
-      type: '分类五',
-      value: 10,
-    },
-    {
-      type: '其他',
-      value: 5,
+      type: '不參與活動',
+      value: activeData.isNoActive,
     },
   ];
   const config = {

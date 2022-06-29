@@ -1,9 +1,8 @@
 import React from "react";
 import DemoColumnOccupancyRate from "./DemoColumnOccupancyRate";
-import DemoLineTurnover from "./DemoLineTurnover";
 import DemoLineRoomTurnover from "./DemoLineRoomTurnover";
 import DemoPieParticipate from "./DemoPieParticipate";
-import DemoPieNoParticipate from "./DemoPieNoParticipate";
+import DemoPieExam from "./DemoPieExam";
 import DemoPieActivityType from "./DemoPieActivityType";
 import DemoLiquidCoupon from "./DemoLiquidCoupon";
 import DemoLiquidFeedback from "./DemoLiquidFeedback";
@@ -17,14 +16,8 @@ function DashboardChartsMiddle() {
           <DemoColumnOccupancyRate />
         </div>
         <div className="row mb-5">
-          <div className="col-6">
-            <h3>營業額</h3>
-            <DemoLineTurnover />
-          </div>
-          <div className="col-6">
-            <h3>房型營業額</h3>
-            <DemoLineRoomTurnover />
-          </div>
+          <h3>房型營業額</h3>
+          <DemoLineRoomTurnover />
         </div>
         <div className="row mb-5">
           <div className="col-4">
@@ -33,7 +26,7 @@ function DashboardChartsMiddle() {
           </div>
           <div className="col-4">
             <h3>測驗率</h3>
-            <DemoPieNoParticipate />
+            <DemoPieExam />
           </div>
           <div className="col-4">
             <h3>活動類型</h3>
