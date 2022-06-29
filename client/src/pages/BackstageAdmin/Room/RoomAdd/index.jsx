@@ -17,7 +17,7 @@ function RoomAdd({ setAddShow, data }) {
   const [addFormData, setAddFormData] = useState({
     employeeId: "1",
     hotelId: "",
-    roomId: "",
+    roomType: "",
     liveNum: "",
   });
 
@@ -76,7 +76,7 @@ function RoomAdd({ setAddShow, data }) {
     event.preventDefault();
     const newContact = {
       hotelId: addFormData.hotelId,
-      roomId: addFormData.roomId,
+      roomType: addFormData.roomType,
       liveNum: addFormData.liveNum,
       employeeId: 1,
     };
@@ -174,7 +174,7 @@ function RoomAdd({ setAddShow, data }) {
         </Form.Group>
         <Form.Group>
           <Form.Label>房型選擇</Form.Label>
-          <Form.Select name="roomId" onChange={addFormChangeHandle}>
+          <Form.Select name="roomType" onChange={addFormChangeHandle}>
             <option defaultValue>請選擇房型</option>
             <option value="1">私人套房</option>
             <option value="2">背包客房</option>
