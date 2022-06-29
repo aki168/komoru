@@ -43,7 +43,7 @@ export const loginOrNot = () => {
 // 0622- aki 登出請調用該函式 
 export const logout = () => {
   localStorage.removeItem('token')
-  // window.location.reload('false') 想重新渲染同頁面可以用這段
+  window.location.reload('false') //想重新渲染同頁面可以用這段
 }
 
 
