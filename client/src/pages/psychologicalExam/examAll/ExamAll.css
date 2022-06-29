@@ -1,5 +1,7 @@
 .progressbar {
-  width: 100%;
+  width: 90%;
+  max-width: 1024px;
+  margin: 30px auto;
   height: 10px;
   background-color: rgb(250, 245, 189);
   margin-bottom: 50px;
@@ -10,19 +12,73 @@
   background-color: gray;
 }
 
-/* .topic1 {
-  display: inline-block;
+.examFormCantainer {
+  position: relative;
+  width: 90%;
+  max-width: 1024px;
+  height: 450px;
+  margin: auto;
   border: 1px solid black;
-  width: 600px;
-  height: 150px;
-  margin: 50px;
+  background-color: white;
+}
+
+/* .getOp > input[type="radio"] {
+  display: none;
 } */
+
+/* input[type="radio"] {
+  color: chocolate;
+} */
+
+.getOp {
+  width: 400px;
+  height: 150px;
+  font-size: 20px;
+  text-align: center;
+  text-justify: auto;
+  display: inline-block;
+  margin: 20px;
+  border: 1px solid black;
+  padding: 50px 20px 0px 20px;
+}
+
+.colorActive {
+  width: 400px;
+  height: 150px;
+  font-size: 20px;
+  text-align: center;
+  text-justify: auto;
+  display: inline-block;
+  margin: 20px;
+  border: 1px solid black;
+  padding: 50px 20px 0px 20px;
+  background-color: rgb(247, 183, 105);
+}
+
+/* .topic1 {
+      display: inline-block;
+      border: 1px solid black;
+      width: 600px;
+      height: 150px;
+      margin: 50px;
+    } */
 
 .text {
   font-size: 32px;
 }
 
-/* .getOp {
+.prevBtn {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  padding: 10px 20px;
   font-size: 20px;
-  display: block;
-} */
+}
+
+.nextBtn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 10px 20px;
+  font-size: 20px;
+}

@@ -16,36 +16,48 @@ const Day1ContentVisible = () => {
     setCountActivity(1);
   };
 
+  //當活動參與都選否，使activityState得值變"1"(否)，才能直接跳轉OrderPage
+  const { activityState, setActivityState } = useContext(BookContext);
+  useEffect(() => {
+    if (activity1Data === "2") {
+      return setActivityState("1");
+    }
+  }, [activity1Data]);
+
   return (
     <div className="activityChoice">
       <p>第一天</p>
-      <input
-        className="rdobutton_radio"
-        type="radio"
-        name="pick1stActivity"
-        id="activityId"
-        value="1"
-        onClick={show}
-        onChange={(e) => {
-          setActivity1Data(e.target.value);
-        }}
-      ></input>
-      <label htmlFor="yes">要</label>
-      {disable1Visible && (
-        <>
-          <input
-            className="rdobutton_radio"
-            type="radio"
-            name="pick1stActivity"
-            id="activityId"
-            value="2"
-            onChange={(e) => {
-              setActivity1Data(e.target.value);
-            }}
-          ></input>
-          <label htmlFor="yes">否</label>
-        </>
-      )}
+      <label>
+        <input
+          className="rdobutton_radio"
+          type="radio"
+          name="pick1stActivity"
+          id="activityId"
+          value="1"
+          onClick={show}
+          onChange={(e) => {
+            setActivity1Data(e.target.value);
+          }}
+        ></input>
+        要
+      </label>
+      {/* {disable1Visible && (
+        <> */}
+      <label>
+        <input
+          className="rdobutton_radio"
+          type="radio"
+          name="pick1stActivity"
+          id="activityId"
+          value="2"
+          onChange={(e) => {
+            setActivity1Data(e.target.value);
+          }}
+        ></input>
+        否
+      </label>
+      {/* </>
+      )} */}
     </div>
   );
 };

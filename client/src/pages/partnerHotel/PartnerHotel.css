@@ -1,0 +1,110 @@
+.hotelIntroTitle {
+  display: inline;
+  text-align: center;
+}
+
+.image {
+  width: 650px;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 10px;
+  overflow: hidden;
+  transition-duration: 2s;
+}
+
+/* 圖在左 */
+.sliderleft {
+  position: relative;
+  height: 500px;
+  width: 1200px;
+  display: flex;
+  margin-top: 30px;
+  margin-bottom: 200px;
+  left: 150px;
+  box-shadow: 0px 12px 18px -6px rgba(0, 0, 0, 0.3);
+}
+
+.sizeRight {
+  border: 1px solid black;
+  /* margin: 0px 0px 0px 10px; */
+  width: 550px;
+  height: 500px;
+  background-color: white;
+  text-align: center;
+  font-size: 32px;
+}
+
+.sliderleft-left-arrow {
+  position: absolute;
+  top: 50%;
+  left: 30px;
+  font-size: 3rem;
+  color: rgb(255, 255, 255);
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+}
+
+.sliderleft-right-arrow {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  font-size: 3rem;
+  color: rgb(255, 255, 255);
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* 圖在右 */
+.sliderRight {
+  position: relative;
+  height: 500px;
+  width: 1200px;
+  display: flex;
+  margin-bottom: 200px;
+  left: 150px;
+  box-shadow: 0px 12px 18px -6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.sizeLeft {
+  border: 1px solid black;
+  width: 550px;
+  height: 500px;
+  text-align: center;
+  font-size: 32px;
+}
+
+.sliderRight-left-arrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 3rem;
+  color: rgb(255, 255, 255);
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+}
+
+.sliderRight-right-arrow {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  font-size: 3rem;
+  color: rgb(255, 255, 255);
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+}
+
+.slide {
+  opacity: 0.5;
+  transition-duration: ease-in 1s;
+}
+
+.slide.active {
+  opacity: 1;
+  transition-duration: 1s;
+  transform: scale(1);
+}

@@ -7,14 +7,23 @@
   margin: 10px 100px;
 }
 
-.examResult {
+.memberCheckout {
   border: 1px solid black;
-  width: 40%;
+  width: 50%;
+  display: flex;
+}
+.memberImg {
+  margin: 10px;
+}
+
+.memberContent {
+  margin: 10px;
+  line-height: 25px;
 }
 
 .orderList {
-  border: 1px solid green;
-  width: 60%;
+  border: 1px solid rgb(230, 61, 0);
+  width: 50%;
 }
 
 .marginContainer {

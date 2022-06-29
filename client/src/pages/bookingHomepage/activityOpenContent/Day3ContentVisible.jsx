@@ -37,14 +37,14 @@ const Day3ContentVisible = () => {
     }
   });
 
-  const [disableVisible, setDisableVisible] = useState(true);
+  // const [disableVisible, setDisableVisible] = useState(true);
 
-  useEffect(() => {
-    activity1Data === "1" && activity2Data === "3" && activity3Data === "5"
-      ? setDisableVisible(false)
-      : setDisableVisible(true);
-  }, [activity1Data, activity2Data, activity3Data]);
-  console.log(activity1Data, activity2Data, activity3Data);
+  // useEffect(() => {
+  //   activity1Data === "1" && activity2Data === "3" && activity3Data === "5"
+  //     ? setDisableVisible(false)
+  //     : setDisableVisible(true);
+  // }, [activity1Data, activity2Data, activity3Data]);
+  // console.log(activity1Data, activity2Data, activity3Data);
 
   //當活動參與都選否，使activityState得值變"1"(否)，才能直接跳轉OrderPage
   const { activityState, setActivityState } = useContext(BookContext);
@@ -73,21 +73,21 @@ const Day3ContentVisible = () => {
           }}
         ></input>
         <label htmlFor="yes">是</label>
-        {disableVisible && (
-          <>
-            <input
-              className="rdobutton_radio"
-              type="radio"
-              name="pick1stActivity"
-              id="activityId"
-              value="2"
-              onChange={(e) => {
-                setActivity1Data(e.target.value);
-              }}
-            ></input>
-            <label htmlFor="yes">否</label>
-          </>
-        )}
+        {/* {disableVisible && ( */}
+        <>
+          <input
+            className="rdobutton_radio"
+            type="radio"
+            name="pick1stActivity"
+            id="activityId"
+            value="2"
+            onChange={(e) => {
+              setActivity1Data(e.target.value);
+            }}
+          ></input>
+          <label htmlFor="yes">否</label>
+        </>
+        {/* )} */}
       </div>
       <div className="activityChoice">
         <p>第二天</p>
@@ -102,21 +102,21 @@ const Day3ContentVisible = () => {
           }}
         ></input>
         <label htmlFor="yes">是</label>
-        {disableVisible && (
-          <>
-            <input
-              className="rdobutton_radio"
-              type="radio"
-              name="pick2stActivity"
-              id="activityId"
-              value="4"
-              onChange={(e) => {
-                setActivity2Data(e.target.value);
-              }}
-            ></input>
-            <label htmlFor="yes">否</label>
-          </>
-        )}
+        {/* {disableVisible && ( */}
+        <>
+          <input
+            className="rdobutton_radio"
+            type="radio"
+            name="pick2stActivity"
+            id="activityId"
+            value="4"
+            onChange={(e) => {
+              setActivity2Data(e.target.value);
+            }}
+          ></input>
+          <label htmlFor="yes">否</label>
+        </>
+        {/* )} */}
       </div>
       <div className="activityChoice">
         <p>第三天</p>
@@ -131,21 +131,21 @@ const Day3ContentVisible = () => {
           }}
         ></input>
         <label htmlFor="yes">是</label>
-        {disableVisible && (
-          <>
-            <input
-              className="rdobutton_radio"
-              type="radio"
-              name="pick3stActivity"
-              id="activityId"
-              value="6"
-              onChange={(e) => {
-                setActivity3Data(e.target.value);
-              }}
-            ></input>
-            <label htmlFor="yes">否</label>
-          </>
-        )}
+        {/* {disableVisible && ( */}
+        <>
+          <input
+            className="rdobutton_radio"
+            type="radio"
+            name="pick3stActivity"
+            id="activityId"
+            value="6"
+            onChange={(e) => {
+              setActivity3Data(e.target.value);
+            }}
+          ></input>
+          <label htmlFor="yes">否</label>
+        </>
+        {/* )} */}
       </div>
     </>
   );

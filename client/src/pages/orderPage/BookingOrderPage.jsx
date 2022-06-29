@@ -1,15 +1,51 @@
-import React, { useContext } from "react";
-import { useState } from "react";
-import "./OrderPage.css";
+import React, { useContext, useEffect, useState } from "react";
+import "./BookingOrderPage.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Steps } from "rsuite";
 import { BookContext } from "../../Helper/Context";
 import ActivityBag from "./ActivityBag";
-import { useEffect } from "react";
-// import axios from "axios";
-// import { useEffect } from "react";
+import axios from "axios";
 
-function OrderPage() {
+function BookingOrderPage() {
+  const [memberId, setMemberId] = useState("");
+  const [memberNickName, setMemberNickName] = useState("");
+  const [memberName, setMemberName] = useState("");
+  const [memberMail, setMemberMail] = useState("");
+  const [memberPhone, setMemberPhone] = useState("");
+  const [memberGender, setMemberGender] = useState("");
+
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: "http://localhost:5000/member/isLogin",
+      data: {
+        token: localStorage.token,
+      },
+    })
+      .then((res) => {
+        //有登入的話，回傳「會員資訊」在res.data[0] ｜ 沒登入則回傳message
+        let userData = res.data[0];
+        console.log(userData);
+        setMemberId(userData.memberId);
+        setMemberNickName(userData.memberNickName);
+        setMemberName(userData.memberName);
+        setMemberMail(userData.memberMail);
+        setMemberPhone(userData.memberPhone);
+        setMemberGender(userData.memberGender);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const gender = () => {
+    if (memberGender === "0") {
+      return <>女</>;
+    } else if (memberGender === "1") {
+      return <>男</>;
+    }
+  };
+
   const {
     date,
     dayState,
@@ -25,11 +61,11 @@ function OrderPage() {
   } = useContext(BookContext);
 
   console.log(
-    // date,
-    // dayState,
-    // roomState,
-    // couponState,
-    // activityState,
+    date,
+    dayState,
+    roomState,
+    couponState,
+    activityState,
     activity1Data,
     activity2Data,
     activity3Data,
@@ -52,11 +88,6 @@ function OrderPage() {
       ? setactivityBag3Visible(true)
       : setactivityBag3Visible(false);
   }, [activity1Data, activity2Data, activity3Data]);
-
-  const navigate = useNavigate();
-  const handleCheckoutPage = () => {
-    navigate("/CheckoutPage");
-  };
 
   //2022-06-23 ZH
   //根據不同roomState顯示不同房間名稱
@@ -82,10 +113,18 @@ function OrderPage() {
 
   //顯示優惠碼名稱
   const handleCouponStateData = () => {
-    if (couponState === "coupon") {
+    if (couponState === "1") {
       return <p>新會員優惠碼</p>;
     }
   };
+
+  //顯示優惠折扣欄
+  const [showCoupon, setShowCoupon] = useState(false);
+  useEffect(() => {
+    if (couponState === "1") {
+      setShowCoupon(true);
+    }
+  }, [couponState]);
 
   // 顯示是否參與活動;
   const handleActivityStateData = () => {
@@ -141,11 +180,71 @@ function OrderPage() {
     }
   };
 
-  //計算總金額
-  const roomSumCost = 2000;
+  //計算房間金額
+  const [roomSum, setRoomSum] = useState(Number(0));
   useEffect(() => {
-    setSumActivity(countActivity * 700 + 2000);
+    if (
+      roomState === "5" ||
+      roomState === "1" ||
+      roomState === "3" ||
+      roomState === "4"
+    ) {
+      setRoomSum(dayState * 1000);
+    } else if (
+      roomState === "2" ||
+      roomState === "6" ||
+      roomState === "7" ||
+      roomState === "8"
+    ) {
+      setRoomSum(dayState * 700);
+    }
+  }, [roomState]);
+
+  //計算總金額，如果有優惠券，折200元
+  useEffect(() => {
+    if (couponState === "1") {
+      setSumActivity(countActivity * 700 + roomSum - 200);
+    } else {
+      setSumActivity(countActivity * 700 + roomSum);
+    }
   });
+
+  const navigate = useNavigate();
+  //傳訂單明細給後端
+  const CheckoutOrderHandler = (event) => {
+    event.preventDefault();
+
+    const orderDetails = {
+      memberId: memberId,
+      orderStartDate: date,
+      expDays: dayState,
+      orderStatus: "0",
+      roomId: roomState,
+      couponItemId: couponState,
+      orderTotal: sumActivity,
+    };
+    console.log({
+      memberId: memberId,
+      orderStartDate: date,
+      expDays: dayState,
+      orderStatus: "0",
+      roomId: roomState,
+      couponItemId: couponState,
+      orderTotal: sumActivity,
+    });
+    fetch("http://localhost:5000/order/getAndSaveOrderData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(orderDetails),
+    })
+      .then((response) => response.json())
+      .then(console.log("ok"))
+      .catch(console.error);
+
+    navigate("/checkoutSucceeded");
+  };
 
   return (
     <div className="orderContainer">
@@ -156,18 +255,6 @@ function OrderPage() {
         <Steps.Item title="結帳" />
       </Steps> */}
       <div className="contentContainer">
-        <div className="examResult">
-          <h1>霸道總裁</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
-            inventore, alias doloremque eveniet totam iste magni sed amet
-            molestias ad necessitatibus illum quos error optio ea accusantium
-            quaerat. Aliquam adipisci dicta nobis ad accusamus delectus impedit
-            autem exercitationem dolorum et enim quae aperiam laudantium at in,
-            similique minus fuga necessitatibus.
-          </p>
-          <img src="https://picsum.photos/300/300" alt="" />
-        </div>
         <div className="orderList">
           <div className="list">
             <p>入住日期:</p>
@@ -193,6 +280,31 @@ function OrderPage() {
             <p>活動包共{countActivity}天</p>
           </div>
         </div>
+        <div className="memberCheckout">
+          <div className="memberImg">
+            <img src="https://picsum.photos/80/100" alt="" />
+          </div>
+          <div className="memberContent">
+            <p>訂購者資料</p>
+            <p>帳號:{memberMail}</p>
+            <p>姓名:{memberName}</p>
+            <p>暱稱:{memberNickName}</p>
+            <p>性別:{gender()}</p>
+            <p>手機:{memberPhone}</p>
+            <p>付款方式</p>
+            <select
+              id="expDays"
+              defaultValue={"default"}
+              className="headerDaySelect"
+            >
+              <option value="default" disabled hidden>
+                請選擇要付款的方式
+              </option>
+              <option value="1">信用卡</option>
+            </select>
+          </div>
+        </div>
+        <div></div>
       </div>
       <div className="marginContainer">
         {activityBag1Visible && (
@@ -222,13 +334,14 @@ function OrderPage() {
         <p>活動參與天數*{countActivity} </p>
         <p>NT${countActivity * 700}</p>
       </div>
-      <p className="marginContainer">下定金額 NT${roomSumCost}</p>
+      <p className="marginContainer">下定金額 NT${roomSum}</p>
+      {showCoupon && <p className="marginContainer">優惠折扣:200元</p>}
       <p className="marginContainer">應付金額 NT$ {sumActivity}</p>
-      <button className="checkoutBtn" onClick={handleCheckoutPage}>
+      <button className="checkoutBtn" onClick={CheckoutOrderHandler}>
         下一步去結帳
       </button>
     </div>
   );
 }
 
-export default OrderPage;
+export default BookingOrderPage;
