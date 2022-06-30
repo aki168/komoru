@@ -2,7 +2,7 @@ const db = require("./_ConfigDB");
 
 // 2022-06-15 PG
 // 取得房型列表、主圖、所屬飯店名、所屬區域名
-// roomId hotelId roomTitle liveNum
+// roomId hotelId roomType liveNum
 // roomImgPath
 // hotelTitle
 // cityName
@@ -11,7 +11,7 @@ exports.getRoomDataListWithMainImgAndHotelNameAndCityName = async () => {
   return new Promise((resolve, reject) => {
     let sql =
       "SELECT" +
-      "`Room`.`room_id`,`Room`.`hotel_id`,`Room`.`room_title`,`Room`.`live_num`," +
+      "`Room`.`room_id`,`Room`.`hotel_id`,`Room`.`room_type`,`Room`.`live_num`," +
       "`RoomImg`.`room_img_path`," +
       "`Hotel`.`hotel_title`," +
       "`City`.`city_name` " +
@@ -57,11 +57,10 @@ exports.addRoomWithImg = async (dataList) => {
   return new Promise((resolve, reject) => {
     let sql =
       "INSERT INTO `Room` " +
-      "(`hotel_id`, `room_title`, `room_type`, `live_num`, `room_desc`, `creator_id`, `create_datetime`) " +
+      "(`hotel_id`, `room_type`, `live_num`, `room_desc`, `creator_id`, `create_datetime`) " +
       "VALUES (?, ?, ?, ?, ?, ?, ?);";
     let value = [
       dataList.hotelId,
-      "之後這格欄位要刪掉",
       dataList.roomType,
       dataList.liveNum,
       dataList.roomDesc,

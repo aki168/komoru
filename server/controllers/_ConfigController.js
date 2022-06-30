@@ -52,6 +52,28 @@ exports.enumValueToString = (tableName, column, value) => {
           break;
       }
       break;
+    case "Room":
+      switch (column) {
+        case "roomType":
+          switch (value) {
+            case "0":
+              transferString = "背包客";
+              break;
+            case "1":
+              transferString = "單人房";
+              break;
+            default:
+              errCheck = false;
+              errMsg = "狀態值不存在";
+              break;
+          }
+          break;
+        default:
+          errCheck = false;
+          errMsg = "欄位不存在";
+          break;
+      }
+      break;
     default:
       errCheck = false;
       errMsg = "資料表不存在";
@@ -73,7 +95,7 @@ exports.getEnumValue = (tableName, column) => {
   let errCheck = true;
   let errMsg = "";
   let valueObj;
-  
+
   switch (tableName) {
     case "ActivePack":
       switch (column) {
@@ -83,7 +105,7 @@ exports.getEnumValue = (tableName, column) => {
             activePackTypeB: "1",
             activePackTypeC: "2",
             activePackTypeD: "3",
-            activePackTypeE: "4"
+            activePackTypeE: "4",
           };
           break;
         default:
@@ -97,7 +119,7 @@ exports.getEnumValue = (tableName, column) => {
         case "couponItemIsUse":
           valueObj = {
             couponUnUse: "0",
-            couponIsUse: "1"
+            couponIsUse: "1",
           };
           break;
         default:
@@ -106,12 +128,12 @@ exports.getEnumValue = (tableName, column) => {
           break;
       }
       break;
-      case "Room":
+    case "Room":
       switch (column) {
         case "roomType":
           valueObj = {
             roomTypeBackpacker: "0",
-            roomTypeSingle: "1"
+            roomTypeSingle: "1",
           };
           break;
         default:
@@ -120,12 +142,12 @@ exports.getEnumValue = (tableName, column) => {
           break;
       }
       break;
-      case "OrderItem":
+    case "OrderItem":
       switch (column) {
         case "isActive":
           valueObj = {
             isActive: "0",
-            isNoActive: "1"
+            isNoActive: "1",
           };
           break;
         default:
@@ -134,12 +156,12 @@ exports.getEnumValue = (tableName, column) => {
           break;
       }
       break;
-      case "Member":
+    case "Member":
       switch (column) {
         case "sex":
           valueObj = {
             sexFmale: "0",
-            sexMale: "1"
+            sexMale: "1",
           };
           break;
         default:
