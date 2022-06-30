@@ -18,8 +18,8 @@ router.use(bodyParser.json());
 router.post("/getHotelDataListWithMainImgAndCityName", hotelController.getHotelDataListWithMainImgAndCityName);
 
 // 2022-06-15 PG
-// 取得飯店資料 By hotelId
-router.post("/getHotelDataByHotelId", hotelController.getHotelDataByHotelId);
+// 取得飯店資料和照片 By hotelId
+router.post("/getHotelDataWithImgByHotelId", hotelController.getHotelDataWithImgByHotelId);
 
 
 module.exports = router;
