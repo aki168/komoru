@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import DemoColumnOccupancyRate from "./DemoColumnOccupancyRate";
 import DemoLineRoomTurnover from "./DemoLineRoomTurnover";
 import DemoPieParticipate from "./DemoPieParticipate";
@@ -8,39 +8,61 @@ import DemoLiquidCoupon from "./DemoLiquidCoupon";
 import DemoLiquidFeedback from "./DemoLiquidFeedback";
 
 function DashboardChartsSouth() {
+  const [southData, setSouthData] = useState();
+  useEffect(() => {
+    const newContacts = {
+      cityId: "3",
+      dateRange: "2022-06",
+    };
+    fetch("http://localhost:5000/dashboard/getDashboardDataListByCondition", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(newContacts),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data.dataList.IsOrderAfterExamItem);
+        setSouthData(data.dataList);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }, []);
   return (
     <>
       <div className="mx-5 me-5">
         <div className="row mb-5">
           <h3>入住率</h3>
-          <DemoColumnOccupancyRate />
+          {southData && <DemoColumnOccupancyRate southData={southData} />}
         </div>
         <div className="row mb-5">
           <h3>房型營業額</h3>
-          <DemoLineRoomTurnover />
+          {southData && <DemoLineRoomTurnover southData={southData} />}
         </div>
         <div className="row mb-5">
           <div className="col-4">
             <h3>參與活動率</h3>
-            <DemoPieParticipate />
+            {southData && <DemoPieParticipate southData={southData} />}
           </div>
           <div className="col-4">
-            <h3>測驗率</h3>
-            <DemoPieExam />
+            <h3>測驗後參與率</h3>
+            {southData && <DemoPieExam southData={southData} />}
           </div>
           <div className="col-4">
             <h3>活動類型</h3>
-            <DemoPieActivityType />
+            {southData && <DemoPieActivityType southData={southData} />}
           </div>
         </div>
         <div className="row mb-5">
           <div className="col-6">
             <h3>優惠卷使用率</h3>
-            <DemoLiquidCoupon />
+            {southData && <DemoLiquidCoupon southData={southData} />}
           </div>
           <div className="col-6">
             <h3>回饋率</h3>
-            <DemoLiquidFeedback />
+            {southData && <DemoLiquidFeedback southData={southData} />}
           </div>
         </div>
       </div>

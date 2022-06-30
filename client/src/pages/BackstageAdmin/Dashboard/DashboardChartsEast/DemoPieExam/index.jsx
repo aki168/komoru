@@ -1,31 +1,15 @@
 import React from 'react';
 import { Pie } from '@ant-design/plots';
 
-const DemoPieExam = () => {
+const DemoPieExam = ({eastData}) => {
   const data = [
     {
-      type: '分类一',
-      value: 27,
+      type: '測驗後參與',
+      value: eastData.IsOrderAfterExamItem.isOrderAfterExamItem,
     },
     {
-      type: '分类二',
-      value: 25,
-    },
-    {
-      type: '分类三',
-      value: 18,
-    },
-    {
-      type: '分类四',
-      value: 15,
-    },
-    {
-      type: '分类五',
-      value: 10,
-    },
-    {
-      type: '其他',
-      value: 5,
+      type: '測驗後無參與',
+      value: eastData.IsOrderAfterExamItem.noOrderAfterExamItem,
     },
   ];
   const config = {
@@ -52,4 +36,4 @@ const DemoPieExam = () => {
   return <Pie {...config} />;
 };
 
-export default DemoPieExam;
+export default React.memo(DemoPieExam);

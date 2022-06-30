@@ -1,106 +1,106 @@
 import React, { useState, useEffect } from "react";
 import { Column } from "@ant-design/plots";
 
-const DemoColumnOccupancyRate = () => {
-  /* 20220629 YN
-  入住率資料狀態初始化 */
-  const [occupancyData, setOccupancyData] = useState({})
-  /*20220629 YN
-    給值取後端資料 */
-  useEffect(() => {
-    const newContacts = {
-      cityId: "1",
-      dateRange: "2022-06",
-    };
-    fetch("http://localhost:5000/dashboard/getDashboardDataListByCondition", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(newContacts),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.dataList.occupancy);
-        setOccupancyData(data.dataList.occupancy);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }, [])
+const DemoColumnOccupancyRate = ({northData}) => {
+  // /* 20220629 YN
+  // 入住率資料狀態初始化 */
+  // const [occupancyData, setOccupancyData] = useState({})
+  // /*20220629 YN
+  //   給值取後端資料 */
+  // useEffect(() => {
+  //   const newContacts = {
+  //     cityId: "1",
+  //     dateRange: "2022-06",
+  //   };
+  //   fetch("http://localhost:5000/dashboard/getDashboardDataListByCondition", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json; charset=utf-8",
+  //     },
+  //     body: JSON.stringify(newContacts),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data.dataList.occupancy);
+  //       setOccupancyData(data.dataList.occupancy);
+  //     })
+  //     .catch((e) => {
+  //       console.error(e);
+  //     });
+  // }, [])
 
 
   const data = [
     {
       name: "男",
       星期: "星期一",
-      入住率: occupancyData.occupancyMale1,
+      入住率: northData.occupancy.occupancyMale1,
     },
     {
       name: "男",
       星期: "星期二",
-      入住率: occupancyData.occupancyMale2,
+      入住率: northData.occupancy.occupancyMale2,
     },
     {
       name: "男",
       星期: "星期三",
-      入住率: occupancyData.occupancyMale3,
+      入住率: northData.occupancy.occupancyMale3,
     },
     {
       name: "男",
       星期: "星期四",
-      入住率: occupancyData.occupancyMale4,
+      入住率: northData.occupancy.occupancyMale4,
     },
     {
       name: "男",
       星期: "星期五",
-      入住率: occupancyData.occupancyMale5,
+      入住率: northData.occupancy.occupancyMale5,
     },
     {
       name: "男",
       星期: "星期六",
-      入住率: occupancyData.occupancyMale6,
+      入住率: northData.occupancy.occupancyMale6,
     },
     {
       name: "男",
       星期: "星期日",
-      入住率: occupancyData.occupancyMale7,
+      入住率: northData.occupancy.occupancyMale7,
     },
 
     {
       name: "女",
       星期: "星期一",
-      入住率: occupancyData.occupancyFmale1,
+      入住率: northData.occupancy.occupancyFmale1,
     },
     {
       name: "女",
       星期: "星期二",
-      入住率: occupancyData.occupancyFmale2,
+      入住率: northData.occupancy.occupancyFmale2,
     },
     {
       name: "女",
       星期: "星期三",
-      入住率: occupancyData.occupancyFmale3,
+      入住率: northData.occupancy.occupancyFmale3,
     },
     {
       name: "女",
       星期: "星期四",
-      入住率: occupancyData.occupancyFmale4,
+      入住率: northData.occupancy.occupancyFmale4,
     },
     {
       name: "女",
       星期: "星期五",
-      入住率: occupancyData.occupancyFmale5,
+      入住率: northData.occupancy.occupancyFmale5,
     },
     {
       name: "女",
       星期: "星期六",
-      入住率: occupancyData.occupancyFmale6,
+      入住率: northData.occupancy.occupancyFmale6,
     },
     {
       name: "女",
       星期: "星期日",
-      入住率: occupancyData.occupancyFmale7,
+      入住率: northData.occupancy.occupancyFmale7,
     },
 
   ];
@@ -140,4 +140,4 @@ const DemoColumnOccupancyRate = () => {
   return <Column {...config} />;
 };
 
-export default DemoColumnOccupancyRate;
+export default React.memo(DemoColumnOccupancyRate);

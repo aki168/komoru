@@ -1,53 +1,53 @@
 import React ,{ useState, useEffect }from "react";
 import { Pie } from '@ant-design/plots';
 
-const DemoPieActivityType = () => {
-  /* 20220629 YN
-  活動類型資料狀態初始化 */
-  const [activityTypeData, setActivityTypeData] = useState({})
-  /*20220629 YN
-  給值取後端資料 */
-  useEffect(() => {
-    const newContacts = {
-      cityId: "2",
-      dateRange: "2022-06",
-    };
-    fetch("http://localhost:5000/dashboard/getDashboardDataListByCondition", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(newContacts),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data.dataList.activeType);
-        setActivityTypeData(data.dataList.activeType);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }, [])
+const DemoPieActivityType = ({middleData}) => {
+  // /* 20220629 YN
+  // 活動類型資料狀態初始化 */
+  // const [activityTypeData, setActivityTypeData] = useState({})
+  // /*20220629 YN
+  // 給值取後端資料 */
+  // useEffect(() => {
+  //   const newContacts = {
+  //     cityId: "2",
+  //     dateRange: "2022-06",
+  //   };
+  //   fetch("http://localhost:5000/dashboard/getDashboardDataListByCondition", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json; charset=utf-8",
+  //     },
+  //     body: JSON.stringify(newContacts),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       // console.log(data.dataList.activeType);
+  //       setActivityTypeData(data.dataList.activeType);
+  //     })
+  //     .catch((e) => {
+  //       console.error(e);
+  //     });
+  // }, [])
   const data = [
     {
       type: '活動包A',
-      value: activityTypeData.activePackTypeA,
+      value: middleData.activeType.activePackTypeA,
     },
     {
       type: '活動包B',
-      value: activityTypeData.activePackTypeB,
+      value: middleData.activeType.activePackTypeB,
     },
     {
       type: '活動包C',
-      value: activityTypeData.activePackTypeC,
+      value: middleData.activeType.activePackTypeC,
     },
     {
       type: '活動包D',
-      value: activityTypeData.activePackTypeD,
+      value: middleData.activeType.activePackTypeD,
     },
     {
       type: '活動包E',
-      value: activityTypeData.activePackTypeE,
+      value: middleData.activeType.activePackTypeE,
     }
    
   ];
@@ -75,4 +75,4 @@ const DemoPieActivityType = () => {
   return <Pie {...config} />;
 };
 
-export default DemoPieActivityType;
+export default React.memo(DemoPieActivityType);

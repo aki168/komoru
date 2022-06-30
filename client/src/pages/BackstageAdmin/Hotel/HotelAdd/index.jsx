@@ -25,12 +25,19 @@ function HotelAdd({ setAddShow, data }) {
     /*20220625 YN
      預覽照片狀態初始化*/
     const [imgPreview, setImgPreview] = useState(null);
+    /*20220625 YN
+     預覽照片狀態初始化*/
+    const [primaryImgPreview, setPrimaryImgPreview] = useState(null);
 
+    /*20220625 YN
+     照片不符合規格錯誤狀態初始化*/
+    const [primaryError, setPrimaryError] = useState(false);
     /*20220625 YN
      照片不符合規格錯誤狀態初始化*/
     const [error, setError] = useState(false);
 
     const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedPrimaryFile, setSelectedPrimaryFile] = useState(null);
 
     /*20220622 YN
      取得後端飯店資料*/
@@ -104,7 +111,7 @@ function HotelAdd({ setAddShow, data }) {
 
         const newContacts = newContact;
         console.log(newContacts)
-        
+
 
         setAddFormData(newContacts);
         // fetch("http://localhost:5000/room/addRoom", {
@@ -127,7 +134,25 @@ function HotelAdd({ setAddShow, data }) {
     };
     /*20220625 YN
     更換照片、預覽照片、限制照片格式*/
-    const handleImageChange = (e) => {
+    const primaryImageChangeHandle = (e) => {
+        setPrimaryError(false);
+        const selected = e.target.files[0];
+        const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+        if (selected && ALLOWED_TYPES.includes(selected.type)) {
+            let reader = new FileReader();
+            reader.onloadend = () => {
+                setPrimaryImgPreview(reader.result);
+                setSelectedPrimaryFile(selected);
+                console.log(selected)
+            };
+            reader.readAsDataURL(selected);
+        } else {
+            setPrimaryError(true);
+        }
+    };
+
+
+    const imageChangeHandle = (e) => {
         setError(false);
         const selected = e.target.files[0];
         const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg"];
@@ -156,11 +181,11 @@ function HotelAdd({ setAddShow, data }) {
                 <div className="container-fluid d-flex flex-column">
                     <div className="col-12 h-75 justify-content-center d-flex flex-column align-items-center"
                         style={{
-                            background: imgPreview
-                                ? `url("${imgPreview}") no-repeat center/cover`
+                            background: primaryImgPreview
+                                ? `url("${primaryImgPreview}") no-repeat center/cover`
                                 : "#d3d3d3",
                         }}>
-                        {!imgPreview && (
+                        {!primaryImgPreview && (
                             <>
                                 <label className="btn text-white " htmlFor="fileUpload">
                                     <BsFillArrowUpSquareFill size="4em" />
@@ -169,15 +194,15 @@ function HotelAdd({ setAddShow, data }) {
                                     id="fileUpload"
                                     type="file"
                                     style={{ display: "none" }}
-                                    onChange={handleImageChange}
+                                    onChange={primaryImageChangeHandle}
                                 />
-                                <p className="text-white">(png,jpeg or jpg)</p>
+                                <p className="text-white">請選擇主要圖片</p>
                             </>
                         )}
-                        {error && <p className="text-center text-danger">不支援此檔案</p>}
+                        {primaryError && <p className="text-center text-danger">不支援此檔案</p>}
                         <div>
-                            {imgPreview && (
-                                <button onClick={() => setImgPreview(null)}>更換照片</button>
+                            {primaryImgPreview && (
+                                <button onClick={() => setPrimaryImgPreview(null)}>更換照片</button>
                             )}
                         </div>
                     </div>
@@ -197,7 +222,7 @@ function HotelAdd({ setAddShow, data }) {
                                         id="fileUpload"
                                         type="file"
                                         style={{ display: "none" }}
-                                        onChange={handleImageChange}
+                                        onChange={imageChangeHandle}
                                     />
                                 </>
                             )}
@@ -208,16 +233,59 @@ function HotelAdd({ setAddShow, data }) {
                                 )}
                             </div>
                         </div>
-                        <div className="col-md-4 d-flex flex-column justify-content-center align-items-center" style={{
+
+                        <div className="col-md-4 d-flex flex-column justify-content-center align-items-center"
+                            style={{
                                 background: imgPreview
                                     ? `url("${imgPreview}") no-repeat center/cover`
                                     : "#d3d3d3",
-                            }}>1</div>
-                        <div className="ms-1 col-md-4 d-flex flex-column justify-content-center align-items-center" style={{
+                            }}>
+                            {!imgPreview && (
+                                <>
+                                    <label className="btn text-white " htmlFor="fileUpload">
+                                        <BsFillArrowUpSquareFill size="2em" />
+                                    </label>
+                                    <input
+                                        id="fileUpload"
+                                        type="file"
+                                        style={{ display: "none" }}
+                                        onChange={imageChangeHandle}
+                                    />
+                                </>
+                            )}
+                            {error && <p className="text-center text-danger">不支援此檔案</p>}
+                            <div>
+                                {imgPreview && (
+                                    <button onClick={() => setImgPreview(null)}>更換照片</button>
+                                )}
+                            </div>
+                        </div>
+                        <div className="ms-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
+                            style={{
                                 background: imgPreview
                                     ? `url("${imgPreview}") no-repeat center/cover`
                                     : "#d3d3d3",
-                            }}>1</div>
+                            }}>
+                            {!imgPreview && (
+                                <>
+                                    <label className="btn text-white " htmlFor="fileUpload">
+                                        <BsFillArrowUpSquareFill size="2em" />
+                                    </label>
+                                    <input
+                                        id="fileUpload"
+                                        type="file"
+                                        style={{ display: "none" }}
+                                        onChange={imageChangeHandle}
+                                    />
+                                </>
+                            )}
+                            {error && <p className="text-center text-danger">不支援此檔案</p>}
+                            <div>
+                                {imgPreview && (
+                                    <button onClick={() => setImgPreview(null)}>更換照片</button>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </Form.Group>
@@ -228,7 +296,7 @@ function HotelAdd({ setAddShow, data }) {
                         type="text"
                         name="liveNum"
                         required="required"
-                        placeholder="1"
+                        placeholder="請輸入飯店名稱"
                         onChange={addFormChangeHandle}
                     />
                 </Form.Group>
@@ -238,7 +306,7 @@ function HotelAdd({ setAddShow, data }) {
                         type="text"
                         name="liveNum"
                         required="required"
-                        placeholder="1"
+                        placeholder="請輸入飯店地址"
                         onChange={addFormChangeHandle}
                     />
                 </Form.Group>
@@ -248,7 +316,7 @@ function HotelAdd({ setAddShow, data }) {
                         type="text"
                         name="liveNum"
                         required="required"
-                        placeholder="1"
+                        placeholder="請輸入聯絡電話"
                         onChange={addFormChangeHandle}
                     />
                 </Form.Group>

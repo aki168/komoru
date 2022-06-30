@@ -106,8 +106,8 @@ function RoomAdd({ setAddShow, data }) {
         console.error(e);
       });
     // data.push(newContacts);
-    // setAddShow(false);
-    // window.location.reload(false);
+    setAddShow(false);
+    window.location.reload(false);
   };
   /*20220625 YN
   更換照片、預覽照片、限制照片格式*/
@@ -175,7 +175,7 @@ function RoomAdd({ setAddShow, data }) {
         <Form.Group>
           <Form.Label>房型選擇</Form.Label>
           <Form.Select name="roomType" onChange={addFormChangeHandle}>
-            <option defaultValue>請選擇房型</option>
+            <option defaultValue >請選擇房型</option>
             <option value="1">私人套房</option>
             <option value="2">背包客房</option>
           </Form.Select>
@@ -186,7 +186,7 @@ function RoomAdd({ setAddShow, data }) {
             type="text"
             name="liveNum"
             required="required"
-            placeholder="1"
+            placeholder="請輸入人數"
             onChange={addFormChangeHandle}
           />
         </Form.Group>

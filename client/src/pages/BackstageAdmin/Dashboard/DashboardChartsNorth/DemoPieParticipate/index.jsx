@@ -1,41 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { Pie } from '@ant-design/plots';
 
-const DemoPieParticipate = () => {
-  /* 20220629 YN
-  參與活動狀態初始化 */
-  const [activeData, setActiveData] = useState({})
-  /*20220629 YN
-  給值取後端資料 */
-  useEffect(() => {
-    const newContacts = {
-      cityId: "1",
-      dateRange: "2022-06",
-    };
-    fetch("http://localhost:5000/dashboard/getDashboardDataListByCondition", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(newContacts),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data.dataList.isActive);
-        setActiveData(data.dataList.isActive);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }, [])
+const DemoPieParticipate = ({northData}) => {
+  // /* 20220629 YN
+  // 參與活動狀態初始化 */
+  // const [activeData, setActiveData] = useState({})
+  // /*20220629 YN
+  // 給值取後端資料 */
+  // useEffect(() => {
+  //   const newContacts = {
+  //     cityId: "1",
+  //     dateRange: "2022-06",
+  //   };
+  //   fetch("http://localhost:5000/dashboard/getDashboardDataListByCondition", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json; charset=utf-8",
+  //     },
+  //     body: JSON.stringify(newContacts),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       // console.log(data.dataList.isActive);
+  //       setActiveData(data.dataList.isActive);
+  //     })
+  //     .catch((e) => {
+  //       console.error(e);
+  //     });
+  // }, [])
   const data = [
     {
       type: '參與活動',
-      value: activeData.isActive,
+      value: northData.isActive.isActive,
     },
     {
       type: '不參與活動',
-      value: activeData.isNoActive,
+      value: northData.isActive.isNoActive,
     },
   ];
   const config = {
@@ -62,4 +62,4 @@ const DemoPieParticipate = () => {
   return <Pie {...config} />;
 };
 
-export default DemoPieParticipate;
+export default React.memo(DemoPieParticipate);

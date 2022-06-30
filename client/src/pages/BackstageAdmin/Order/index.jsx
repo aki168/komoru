@@ -148,7 +148,7 @@ function Order() {
         </td>
         <td>{data.orderId}</td>
         <td>{data.orderNumber}</td>
-        <td>{data.roomDesc}</td>
+        <td>{data.roomType}</td>
         <td>{data.orderStartDate}</td>
         <td>{data.stayNight}</td>
         <td>{data.orderStatus}</td>

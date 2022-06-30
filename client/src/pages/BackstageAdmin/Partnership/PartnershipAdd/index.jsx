@@ -16,6 +16,7 @@ function PartnershipAdd({ data, setAddShow }) {
     partnershipTel: "",
     employeeId: "1",
     cityId: "",
+    partnershipDesc: "",
   });
   /*20220622 YN
    取得後端城市資料*/
@@ -63,6 +64,7 @@ function PartnershipAdd({ data, setAddShow }) {
       partnershipAddr: addFormData.partnershipAddr,
       partnershipTel: addFormData.partnershipTel,
       employeeId: 1,
+      partnershipDesc: addFormData.partnershipDesc,
     };
 
     const newContacts = newContact;

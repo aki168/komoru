@@ -3,7 +3,6 @@ import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 
 function PartnershipEdit({ setEditShow, editData, data }) {
-  //   const [formDOM, setFormDOM] = useState(null);
   /*20220624 YN
   修改資料初始化*/
   const [editModalData, setEditModalData] = useState({
@@ -14,6 +13,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
     partnershipAddr: "",
     partnershipTel: "",
     employeeId: "1",
+    partnershipDesc:"",
   })
   // const [editFormData, setEditFormData] = useState({
   //   partnershipId: "",
@@ -57,7 +57,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
       .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
       .then((data) => {
         setEditModalData(data.dataList[0]);
-        // console.log(data.dataList[0]);
+        console.log(data.dataList[0]);
 
       })
       .catch((e) => {
@@ -111,6 +111,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
       partnershipTel: editModalData.partnershipTel,
       partnershipId: editModalData.partnershipId,
       employeeId: 1,
+      partnershipDesc: editModalData.partnershipDesc,
     };
     const newContacts = newContact;
     // console.log(newContacts);
@@ -196,7 +197,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
       </Form.Group>
       <Form.Group>
         <Form.Label>備註</Form.Label>
-        <Form.Control as="textarea" rows={3} disabled={isDisabled} />
+        <Form.Control as="textarea" rows={3} disabled={isDisabled} defaultValue={editModalData.partnershipDesc}/>
       </Form.Group>
       <div className="mt-1 mb-1 d-flex justify-content-end">
         <Button className="me-1" onClick={disabledClickHandle}>修改</Button>

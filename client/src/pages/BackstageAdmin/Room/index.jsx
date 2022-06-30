@@ -50,7 +50,7 @@ function Room() {
     return (
       // console.log(values.hotelTitle)
       <tr key={index} className="form-check-label">
-        <td className="col-sm-1">{data.roomTitle}</td>
+        <td className="col-sm-1">{data.roomType}</td>
         <td className="col-sm-1">{data.hotelTitle}</td>
         <td className="col-sm-1">{data.cityName}</td>
         <td className="col-sm-1">{data.liveNum}</td>
