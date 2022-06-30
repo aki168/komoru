@@ -57,6 +57,7 @@ exports.addRoomWithImg = async (req, res, next) => {
     "hotelId",
     "roomType",
     "liveNum",
+    "roomDesc",
     "employeeId",
   ]);
   let img = req.files.roomImgFile[0];
@@ -103,13 +104,23 @@ const checkData = (dataList, dataColumns) => {
   let errMsg = "";
   let errCheck = true;
   dataColumns.forEach((value) => {
-    if (
-      typeof dataList[value] === "undefined" ||
-      !dataList[value] ||
-      typeof dataList[value] === ""
-    ) {
-      errMsg += value + " 不可為空。";
-      errCheck = false;
+    switch (value) {
+      case "roomDesc":
+        if (typeof dataList[value] === "undefined") {
+          errMsg += value + " 不可為空。";
+          errCheck = false;
+        }
+        break;
+      default:
+        if (
+          typeof dataList[value] === "undefined" ||
+          !dataList[value] ||
+          typeof dataList[value] === ""
+        ) {
+          errMsg += value + " 不可為空。";
+          errCheck = false;
+        }
+        break;
     }
   });
   return {

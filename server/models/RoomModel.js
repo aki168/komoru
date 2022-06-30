@@ -1,5 +1,4 @@
 const db = require("./_ConfigDB");
-const roomImgModel = require("./RoomImgModel");
 
 // 2022-06-15 PG
 // 取得房型列表、主圖、所屬飯店名、所屬區域名
@@ -58,13 +57,14 @@ exports.addRoomWithImg = async (dataList) => {
   return new Promise((resolve, reject) => {
     let sql =
       "INSERT INTO `Room` " +
-      "(`hotel_id`, `room_title`, `room_type`,`live_num`, creator_id, `create_datetime`) " +
-      "VALUES (?, ?, ?,?, ?, ?);";
+      "(`hotel_id`, `room_title`, `room_type`, `live_num`, `room_desc`, `creator_id`, `create_datetime`) " +
+      "VALUES (?, ?, ?, ?, ?, ?, ?);";
     let value = [
       dataList.hotelId,
       "之後這格欄位要刪掉",
       dataList.roomType,
       dataList.liveNum,
+      dataList.roomDesc,
       dataList.employeeId,
       db.getDateTimeNow(),
     ];
@@ -102,7 +102,7 @@ exports.addRoomWithImg = async (dataList) => {
                     dataList.mimetype,
                   dataList.employeeId,
                   db.getDateTimeNow(),
-                  addImgResult.insertId
+                  addImgResult.insertId,
                 ];
                 db.con.query(
                   updateImgSql,
@@ -113,7 +113,7 @@ exports.addRoomWithImg = async (dataList) => {
                     } else {
                       resolve({
                         status: updateImgResult.serverStatus,
-                        roomImgId:addImgResult.insertId
+                        roomImgId: addImgResult.insertId,
                       });
                     }
                   }

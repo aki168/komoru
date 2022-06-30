@@ -53,7 +53,8 @@ exports.addPartnership = async (req, res, next) => {
     "partnershipAddr",
     "partnershipTel",
     "partnershipContactPerson",
-    "employeeId"
+    "partnershipDesc",
+    "employeeId",
   ]);
   // 判斷是否有空值、沒有傳需要的資料
   if (checkDataResult.errCheck) {
@@ -91,7 +92,8 @@ exports.updatePartnershipByPartnershipId = async (req, res, next) => {
     "partnershipAddr",
     "partnershipTel",
     "partnershipContactPerson",
-    "employeeId"
+    "partnershipDesc",
+    "employeeId",
   ]);
   // 判斷是否有空值、沒有傳需要的資料
   if (checkDataResult.errCheck) {
@@ -120,10 +122,7 @@ exports.updatePartnershipByPartnershipId = async (req, res, next) => {
 // return：json
 exports.delPartnershipByPartnershipId = async (req, res, next) => {
   let data = req.body;
-  let checkDataResult = checkData(data, [
-    "partnershipId",
-    "employeeId"
-  ]);
+  let checkDataResult = checkData(data, ["partnershipId", "employeeId"]);
   // 判斷是否有空值、沒有傳需要的資料
   if (checkDataResult.errCheck) {
     await partnershipModel
@@ -155,13 +154,23 @@ const checkData = (dataList, dataColumns) => {
   let errMsg = "";
   let errCheck = true;
   dataColumns.forEach((value) => {
-    if (
-      typeof dataList[value] === "undefined" ||
-      !dataList[value] ||
-      typeof dataList[value] === ""
-    ) {
-      errMsg += value + " 不可為空。";
-      errCheck = false;
+    switch (value) {
+      case "partnershipDesc":
+        if (typeof dataList[value] === "undefined") {
+          errMsg += value + " 不可為空。";
+          errCheck = false;
+        }
+        break;
+      default:
+        if (
+          typeof dataList[value] === "undefined" ||
+          !dataList[value] ||
+          typeof dataList[value] === ""
+        ) {
+          errMsg += value + " 不可為空。";
+          errCheck = false;
+        }
+        break;
     }
   });
   return {

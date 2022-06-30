@@ -50,14 +50,15 @@ exports.addPartnership = async (dataList) => {
   return new Promise((resolve, reject) => {
     let sql =
       "INSERT INTO `Partnership` " +
-      "(`city_id`, `partnership_name`, `partnership_addr`, `partnership_tel`, `partnership_contact_person`, creator_id, `create_datetime`) " +
-      "VALUES (?, ?, ?, ?, ?, ?, ?);";
+      "(`city_id`, `partnership_name`, `partnership_addr`, `partnership_tel`, `partnership_contact_person`, `partnership_desc`, creator_id, `create_datetime`) " +
+      "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
     let value = [
       dataList.cityId,
       dataList.partnershipName,
       dataList.partnershipAddr,
       dataList.partnershipTel,
       dataList.partnershipContactPerson,
+      dataList.partnershipDesc,
       dataList.employeeId,
       db.getDateTimeNow()
     ];
@@ -80,7 +81,7 @@ exports.updatePartnershipByPartnershipId = async (dataList) => {
   return new Promise((resolve, reject) => {
     let sql =
       "UPDATE `Partnership` SET " +
-      "`city_id` = ?, `partnership_name` = ?, `partnership_addr` = ?, `partnership_tel` = ?, `partnership_contact_person` = ?, `updater_id` = ?, `update_datetime` = ? " +
+      "`city_id` = ?, `partnership_name` = ?, `partnership_addr` = ?, `partnership_tel` = ?, `partnership_contact_person` = ?, `partnership_desc` = ?, `updater_id` = ?, `update_datetime` = ? " +
       "WHERE `Partnership`.`partnership_id` = ?;";
     let value = [
       dataList.cityId,
@@ -88,6 +89,7 @@ exports.updatePartnershipByPartnershipId = async (dataList) => {
       dataList.partnershipAddr,
       dataList.partnershipTel,
       dataList.partnershipContactPerson,
+      dataList.partnershipDesc,
       dataList.employeeId,
       db.getDateTimeNow(),
       dataList.partnershipId
