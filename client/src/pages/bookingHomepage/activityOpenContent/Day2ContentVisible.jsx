@@ -41,65 +41,72 @@ const Day2ContentVisible = () => {
     <>
       <div className="activityChoice">
         <p>第一天</p>
-        <input
-          className="rdobutton_radio"
-          type="radio"
-          name="pick1stActivity"
-          id="activityId"
-          value="1"
-          onChange={(e) => {
-            setActivity1Data(e.target.value);
-            // countActivityDaysYes();
-          }}
-        ></input>
-        <label htmlFor="yes">是</label>
-        {disableNoVisible && (
-          <>
-            <input
-              className="rdobutton_radio"
-              type="radio"
-              name="pick1stActivity"
-              id="activityId"
-              value="2"
-              onChange={(e) => {
-                setActivity1Data(e.target.value);
-                // countActivityDaysNo();
-              }}
-            ></input>
-            <label htmlFor="yes">否</label>
-          </>
-        )}
+        <label>
+          <input
+            className="rdobutton_radio"
+            type="radio"
+            name="pick1stActivity"
+            id="activityId"
+            value="1"
+            onChange={(e) => {
+              setActivity1Data(e.target.value);
+              // countActivityDaysYes();
+            }}
+          ></input>
+          是
+        </label>
+        {/* {disableNoVisible && ( */}
+
+        <label>
+          <input
+            className="rdobutton_radio"
+            type="radio"
+            name="pick1stActivity"
+            id="activityId"
+            value="2"
+            onChange={(e) => {
+              setActivity1Data(e.target.value);
+              // countActivityDaysNo();
+            }}
+          ></input>
+          否
+        </label>
+
+        {/* )} */}
       </div>
       <div className="activityChoice">
         <p>第二天</p>
-        <input
-          className="rdobutton_radio"
-          type="radio"
-          name="pick2stActivity"
-          id="activityId"
-          value="3"
-          onChange={(e) => {
-            setActivity2Data(e.target.value);
-            // countActivityDaysYes();
-          }}
-        ></input>
-        <label htmlFor="yes">是</label>
-        {disableNoVisible && (
-          <>
-            <input
-              className="rdobutton_radio"
-              type="radio"
-              name="pick2stActivity"
-              id="activityId"
-              value="4"
-              onChange={(e) => {
-                setActivity2Data(e.target.value);
-                // countActivityDaysNo();
-              }}
-            ></input>
-            <label htmlFor="yes">否</label>
-          </>
-        )}
+        <label>
+          <input
+            className="rdobutton_radio"
+            type="radio"
+            name="pick2stActivity"
+            id="activityId"
+            value="3"
+            onChange={(e) => {
+              setActivity2Data(e.target.value);
+              // countActivityDaysYes();
+            }}
+          ></input>
+          是
+        </label>
+        {/* {disableNoVisible && ( */}
+        <label>
+          <input
+            className="rdobutton_radio"
+            type="radio"
+            name="pick2stActivity"
+            id="activityId"
+            value="4"
+            onChange={(e) => {
+              setActivity2Data(e.target.value);
+              // countActivityDaysNo();
+            }}
+          ></input>
+          否
+        </label>
+
+        {/* )} */}
       </div>
     </>
   );

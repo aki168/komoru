@@ -39,7 +39,6 @@ function PartnershipEdit({ setEditShow, editData, data }) {
    城市資料初始化*/
   const [cityData, setCityData] = useState([]);
 
-
   /*20220624 YN
    取得後端檢視資料*/
   useEffect(() => {

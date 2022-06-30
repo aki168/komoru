@@ -1,7 +1,7 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
-import OrderData from "./db_OrderList.json";
+// import OrderData from "./db_OrderList.json";
 
 function Order() {
   /* 20220616 YG
@@ -12,6 +12,10 @@ function Order() {
   /*20220617 YN
   接後端資料初始化*/
   const [data, setData] = useState([]);
+  /*20220628 YN
+  入住資料狀態初始化*/
+  const [orderData, setOrderData] = useState([]);
+
 
   /*20220617 YN
   接後端api取後端資料*/
@@ -21,41 +25,139 @@ function Order() {
         "http://localhost:5000/order/getOrderDataListWithRoomDescAndStayNight"
       )
       .then((res) => {
-        console.log(res.data.dataList);
+        // console.log(res.data.dataList);
         setData(res.data.dataList);
       })
       .catch((err) => console.log(err));
   }, []);
+
+  /*20220628 YN
+  取得目前選取列表orderData資料，並設定orderData狀態*/
+  const orderStatusChange = (index) => {
+    setOrderData(data[index])
+  }
+  /*20220628 YN
+  判斷目前取得的orderStatus狀態資料是否為"未入住"，並轉換狀態*/
+  const unCheckInHandle = () => {
+    // console.log(orderData.orderStatus)
+    if (orderData.orderStatus !== "未入住") {
+      const orderLists = {
+        orderId: orderData.orderId,
+        orderStatus: "0",
+        employeeId: "1"
+      }
+      console.log(orderLists)
+      fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(orderLists),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+      window.location.reload(false);
+    } else {
+      alert("目前以'未入住'狀態")
+    }
+
+  }
+  /*20220628 YN
+  判斷目前取得的orderStatus狀態資料是否為"已入住"，並轉換狀態*/
+  const checkInHandle = () => {
+    // console.log(orderData.orderStatus)
+    if (orderData.orderStatus !== "已入住") {
+      const orderLists = {
+        orderId: orderData.orderId,
+        orderStatus: "1",
+        employeeId: "1"
+      }
+      console.log(orderLists)
+      fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(orderLists),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    } else {
+      alert("目前為'已入住'狀態")
+    }
+    window.location.reload(false);
+  };
+  /*20220628 YN
+  判斷目前取得的orderStatus狀態資料是否為"已退房"，並轉換狀態*/
+  const checkOutHandle = () => {
+    // console.log(orderData.orderStatus)
+    if (orderData.orderStatus !== "已退房") {
+      const orderLists = {
+        orderId: orderData.orderId,
+        orderStatus: "2",
+        employeeId: "1"
+      }
+      console.log(orderLists)
+      fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(orderLists),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    } else {
+      alert("目前以'已退房'狀態")
+    }
+    window.location.reload(false);
+  };
+
   /*20220617 YN
   利用變數取畫面上顯示資料 */
   const arr = data.map((data, index) => {
     return (
       // console.log(values.hotelTitle)
       <tr
-          key={index}
-          className="form-check-label"
-          htmlFor="flexRadioDefault1"
-        >
-          <td>
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault1"
-            />
-          </td>
-          <td>{data.orderId}</td>
-          <td>{data.orderNumber}</td>
-          <td>{data.roomDesc}</td>
-          <td>{data.orderStartDate}</td>
-          <td>{data.stayNight}</td>
-          <td>{data.orderStatus}</td>
-          <td>
-            <a href="" className="btn btn-success">
-              檢視
-            </a>
-          </td>
-        </tr>
+        key={data.orderId}
+        className="form-check-label"
+      >
+        <td>
+          <input
+            className="form-check-input"
+            type="radio"
+            value={data.orderId}
+            name="flexRadioDefault"
+            onChange={() => orderStatusChange(index)}
+          />
+        </td>
+        <td>{data.orderId}</td>
+        <td>{data.orderNumber}</td>
+        <td>{data.roomDesc}</td>
+        <td>{data.orderStartDate}</td>
+        <td>{data.stayNight}</td>
+        <td>{data.orderStatus}</td>
+        <td>
+          <a href="" className="btn btn-success">
+            檢視
+          </a>
+        </td>
+      </tr>
     );
   });
   /*20220616 YG
@@ -67,7 +169,7 @@ function Order() {
   /*20220616 YG
   利用變數取畫面上顯示資料 */
   const displayUsers = arr.slice(pageVisited, pageVisited + userPerPage)
-    
+
   /*20220616 YG
   (react-paginate參數)
   取頁簽顯示數字 */
@@ -99,9 +201,9 @@ function Order() {
             </div>
             <div className="col-sm-5">
               <div className="d-flex justify-content-end">
-                <a className=" btn btn-success">未入住</a>
-                <a className="btn btn-success ms-2">已入住</a>
-                <a className="btn btn-success ms-2">退房</a>
+                <button onClick={unCheckInHandle} className=" btn btn-success">未入住</button>
+                <button onClick={checkInHandle} className="btn btn-success ms-2">已入住</button>
+                <button onClick={checkOutHandle} className="btn btn-success ms-2">已退房</button>
               </div>
             </div>
             <div className="col-sm-2 d-flex justify-content-end">
@@ -129,7 +231,7 @@ function Order() {
           </div>
           <div className="row ms-5">
             <div className="col-sm-10">
-              <table className="table table-hover table-striped text-center align-middle ">
+              <table className="table table-hover text-center align-middle data-click-to-select='true' ">
                 <thead>
                   <tr>
                     <td></td>

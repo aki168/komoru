@@ -8,8 +8,8 @@ import BookingImgTaichungPrivateRoom from "../BookingPageImg/BookingImgTaichungP
 import BookingImgTaichungBackpackerRoom from "../BookingPageImg/BookingImgTaichungBackpackerRoom";
 import BookingImgTainanPrivateRoom from "../BookingPageImg/BookingImgTainanPrivateRoom";
 import BookingImgTainanBackpackerRoom from "../BookingPageImg/BookingImgTainanBackpackerRoom";
-import BookingImgTaitungPrivateRoom from "../BookingPageImg/BookingImgTaitungPrivateRoom";
-import BookingImgTaitungBackpackerRoom from "../BookingPageImg/BookingImgTaitungBackpackerRoom";
+import BookingImgHualienPrivateRoom from "../BookingPageImg/BookingImgHualienPrivateRoom";
+import BookingImgHualienBackpackerRoom from "../BookingPageImg/BookingImgHualienBackpackerRoom";
 import Day1ContentVisible from "../activityOpenContent/Day1ContentVisible";
 import Day2ContentVisible from "../activityOpenContent/Day2ContentVisible";
 import Day3ContentVisible from "../activityOpenContent/Day3ContentVisible";
@@ -141,130 +141,132 @@ function Booking() {
   };
 
   return (
-    <div className="frame">
-      <div className="leftContainer">
-        <div className="bookingSearchItem DateItem">
-          <p className="headerSearchText">入住日期</p>
-          <input
-            className="datePickerStyle"
-            id="orderStartDate"
-            type="date"
-            name="orderStartDate"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
-
-        <div className="bookingSearchItem DayItem">
-          <p className="headerSearchText">探索天數</p>
-          <select
-            id="expDays"
-            defaultValue={"DEFAULT"}
-            className="headerDaySelect"
-            onChange={clearActivityDataByChangingDayState}
-          >
-            <option value="DEFAULT" disabled hidden>
-              請選擇要探索的天數
-            </option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
-        </div>
-
-        <div className="bookingSearchItem roomTypeItem">
-          <p className="headerSearchText">青旅/房型</p>
-          <select
-            id="roomId"
-            value={roomState}
-            className="headerLocationSelect"
-            onChange={(e) => setRoomState(e.target.value)}
-          >
-            <option value="DEFAULT">請選擇房型</option>
-            <option value="5">台北:夾腳拖的家-私人套房</option>
-            <option value="8">台北:夾腳拖的家-背包客房</option>
-            <option value="1">台中:Star Hostel-私人套房</option>
-            <option value="2">台中:Star Hostel-背包客房</option>
-            <option value="3">台南:快活慢行-私人套房</option>
-            <option value="6">台南:快活慢行-背包客房</option>
-            <option value="4">台東:山林山鄰-私人套房</option>
-            <option value="7">台東:山林山鄰-背包客房</option>
-          </select>
-        </div>
-        <div className="bookingSearchItem couponItem">
-          <p className="headerSearchText">優惠代碼</p>
-          <select
-            id="couponItemId"
-            defaultValue={"DEFAULT"}
-            className="headerCouponSelect"
-            onChange={(e) => setCouponState(e.target.value)}
-          >
-            <option value="DEFAULT" disabled hidden>
-              請選擇要使用的優惠券
-            </option>
-            <option value="1">新會員優惠碼</option>
-          </select>
-        </div>
-        <div className="bookingSearchItem ActivityItem">
-          <p className="headerSearchText">是否要參與活動?</p>
-          <input
-            className="rdoBtn_radio"
-            type="radio"
-            name="yesOrNo"
-            id="yes"
-            value="0"
-            disabled={activityOpen === true}
-            onChange={(e) => setActivityState(e.target.value)}
-            onClick={() => {
-              setActivityOpen(true);
-            }}
-          ></input>
-          <label htmlFor="yes" className="getActivity">
-            是
-          </label>
-          <input
-            className="rdoBtn_radio"
-            type="radio"
-            name="yesOrNo"
-            id="no"
-            value="1"
-            // disabled={activityOpen === true}
-            onChange={(e) => {
-              setActivityState(e.target.value);
-            }}
-            onClick={() => {
-              setActivityOpen(false);
-            }}
-          ></input>
-          <label htmlFor="no" className="getActivity">
-            否
-          </label>
-        </div>
-
-        {activityOpen && (
-          <div className="isActivity">
-            {day1ContentVisible && <Day1ContentVisible />}
-            {day2ContentVisible && <Day2ContentVisible />}
-            {day3ContentVisible && <Day3ContentVisible />}
+    <>
+      <div className="frame">
+        <div className="leftContainer">
+          <div className="bookingSearchItem DateItem">
+            <p className="headerSearchText">入住日期</p>
+            <input
+              className="datePickerStyle"
+              id="orderStartDate"
+              type="date"
+              name="orderStartDate"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
           </div>
-        )}
-        <div className="bookingSearchItem">
-          <p className="headerSearchText"></p>
-          <button className="headerBtn" onClick={handleSearch}>
-            下一步
-          </button>
+
+          <div className="bookingSearchItem DayItem">
+            <p className="headerSearchText">探索天數</p>
+            <select
+              id="expDays"
+              defaultValue={"DEFAULT"}
+              className="headerDaySelect"
+              onChange={clearActivityDataByChangingDayState}
+            >
+              <option value="DEFAULT" disabled hidden>
+                請選擇要探索的天數
+              </option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+
+          <div className="bookingSearchItem roomTypeItem">
+            <p className="headerSearchText">青旅/房型</p>
+            <select
+              id="roomId"
+              value={roomState}
+              className="headerLocationSelect"
+              onChange={(e) => setRoomState(e.target.value)}
+            >
+              <option value="DEFAULT">請選擇房型</option>
+              <option value="5">台北:夾腳拖的家-私人套房</option>
+              <option value="8">台北:夾腳拖的家-背包客房</option>
+              <option value="1">台中:Star Hostel-私人套房</option>
+              <option value="2">台中:Star Hostel-背包客房</option>
+              <option value="3">台南:快活慢行-私人套房</option>
+              <option value="6">台南:快活慢行-背包客房</option>
+              <option value="4">花蓮:山林山鄰-私人套房</option>
+              <option value="7">花蓮:山林山鄰-背包客房</option>
+            </select>
+          </div>
+          <div className="bookingSearchItem couponItem">
+            <p className="headerSearchText">優惠代碼</p>
+            <select
+              id="couponItemId"
+              defaultValue={"DEFAULT"}
+              className="headerCouponSelect"
+              onChange={(e) => setCouponState(e.target.value)}
+            >
+              <option value="DEFAULT" disabled hidden>
+                請選擇要使用的優惠券
+              </option>
+              <option value="1">新會員優惠碼</option>
+            </select>
+          </div>
+          <div className="bookingSearchItem ActivityItem">
+            <p className="headerSearchText">是否要參與活動?</p>
+            <label className="getActivity">
+              <input
+                className="rdoBtn_radio"
+                type="radio"
+                name="yesOrNo"
+                id="isActive"
+                value="0"
+                disabled={activityOpen === true}
+                onChange={(e) => setActivityState(e.target.value)}
+                onClick={() => {
+                  setActivityOpen(true);
+                }}
+              ></input>
+              是
+            </label>
+            <label className="getActivity">
+              <input
+                className="rdoBtn_radio"
+                type="radio"
+                name="yesOrNo"
+                id="no"
+                value="1"
+                // disabled={activityOpen === true}
+                onChange={(e) => {
+                  setActivityState(e.target.value);
+                }}
+                onClick={() => {
+                  setActivityOpen(false);
+                }}
+              ></input>
+              否
+            </label>
+          </div>
+
+          {activityOpen && (
+            <div className="isActivity">
+              {day1ContentVisible && <Day1ContentVisible />}
+              {day2ContentVisible && <Day2ContentVisible />}
+              {day3ContentVisible && <Day3ContentVisible />}
+            </div>
+          )}
+          <div className="bookingSearchItem">
+            <p className="headerSearchText"></p>
+            <button className="headerBtn" onClick={handleSearch}>
+              下一步
+            </button>
+          </div>
         </div>
+        {DEFAULTContentVisile && <BookingPageImgAll />}
+        {room1ContentVisile && <BookingImgTaipeiPrivateRoom />}
+        {room2ContentVisile && <BookingImgTaipeiBackpackerRoom />}
+        {room3ContentVisile && <BookingImgTaichungPrivateRoom />}
+        {room4ContentVisile && <BookingImgTaichungBackpackerRoom />}
+        {room5ContentVisile && <BookingImgTainanPrivateRoom />}
+        {room6ContentVisile && <BookingImgTainanBackpackerRoom />}
+        {room7ContentVisile && <BookingImgHualienPrivateRoom />}
+        {room8ContentVisile && <BookingImgHualienBackpackerRoom />}
       </div>
-      {DEFAULTContentVisile && <BookingPageImgAll />}
-      {room1ContentVisile && <BookingImgTaipeiPrivateRoom />}
-      {room2ContentVisile && <BookingImgTaipeiBackpackerRoom />}
-      {room3ContentVisile && <BookingImgTaichungPrivateRoom />}
-      {room4ContentVisile && <BookingImgTaichungBackpackerRoom />}
-      {room5ContentVisile && <BookingImgTainanPrivateRoom />}
-      {room6ContentVisile && <BookingImgTainanBackpackerRoom />}
-      {room7ContentVisile && <BookingImgTaitungPrivateRoom />}
-      {room8ContentVisile && <BookingImgTaitungBackpackerRoom />}
-    </div>
+    </>
   );
 }
 

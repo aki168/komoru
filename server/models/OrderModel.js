@@ -53,6 +53,7 @@ exports.updateOrderStatusByOrderId = async (dataList) => {
   });
 };
 
+
 // 2022-06-22 MJ
 // 取得訂房資料
 // 傳入JSON格式資料如下
@@ -79,21 +80,21 @@ exports.getOrderData = (data) => {
 
   // 日期加天數Function
   Date.prototype.addDays = function (days) {
-    this.setDate(this.getDate() + days);
-    return this;
+    this.setDate(this.getDate() + days)
+    return this
   }
 
-  // // 收到請求時加入創建訂單的時間
+  // 收到請求時加入創建訂單的時間
   data['createDatetime'] = db.getDateTimeNow()
 
   // 取得入住日期並加上體驗天數
-  var date =new Date(data["orderStartDate"])
+  var date = new Date(data["orderStartDate"])
   date = date.addDays(parseInt(data['expDays'])).toLocaleDateString()
 
   // 將體驗天數轉為退房日期並放入JSON資料中
   data['orderEndDate'] = date
   delete data['expDays']
-  
+
   // console.log(data)
   // 把JSON中的駝峰改為_
   for (key in data) {
@@ -108,21 +109,80 @@ exports.getOrderData = (data) => {
 
 // 2022-06-22 MJ
 // 將訂房資料存入SQL
-exports.saveOrderData = (data) => {
+exports.saveOrderData = async (data) => {
   data = this.getOrderData(data)
-  return new Promise(function (resolve, reject) {
-    db.con.query('INSERT INTO Ordertest SET ?', data, function (error, results, fields) {
+  // 生成隨機亂碼做order_number
+  data['order_number'] = db.creatRandomPassword(8)
+
+  //  檢查order_number是否重複
+  let check = await exports.isOnumExist(data['order_number'])
+  while (check) {
+    data['order_number'] = db.creatRandomPassword(8)
+    let doubleCheck = await exports.isOnumExist(data['order_number'])
+    if (doubleCheck) {
+      break
+    }
+  }
+
+  // 存入SQL
+  return new Promise(function (reslove, reject) {
+    db.con.query('INSERT INTO `Order` SET ?', data, function (error, results, fields) {
       if (error) {
         reject(error)
       }
-      resolve(
+      reslove(
+        data,
         console.log('The solution is: ', results)
       )
     })
   })
 }
 
+// 2022-06-28 MJ
+// 檢查orderNumber是否重複
+exports.isOnumExist = (orderNum) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "SELECT " +
+      "`order_number`" +
+      "FROM `Order`" +
+      "WHERE `order_number` = ?"
+    let value = orderNum
+
+    db.con.query(sql, value, (err, result) => {
+      if (err) {
+        reject(false)
+      }
+      resolve(true)
+    })
+  })
+}
+
+// 2022-06-29 MJ
+// 取得會員couponItem dataList
+// return：({})
+exports.getCouponItemDataList = async (memberId) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "SELECT" +
+      "`Coupon`.`coupon_title`,`CouponItem`.`coupon_id`,`Coupon`.`discount`" +
+      "FROM `CouponItem`" +
+      "JOIN `Coupon` ON `CouponItem`.`coupon_id` = `Coupon`.`coupon_id`" +
+      "WHERE `CouponItem`.`coupon_item_status` = '0'" +
+      "AND `CouponItem`.`member_id` = ?"
+    let value = memberId
+
+    db.con.query(sql, value, (err, rows, fields) => {
+      if (err) {
+        reject(err)
+      }
+      resolve(db.rowDataToCamelData(rows))
+    })
+  })
+}
+
 // 2022-06-28 AKI
+
 // 取得訂單資料byMemberId (只有標題....)
 exports.getOrderDataByMemberId  = async (memberId) => {
   return new Promise((resolve, reject) => {

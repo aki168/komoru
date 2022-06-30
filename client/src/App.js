@@ -1,7 +1,7 @@
-// import { useState } from "react";
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
-// import BackstageAdmin from "./pages/BackstageAdmin";
+import BackstageAdmin from "./pages/BackstageAdmin";
 
 // AKI
 import Home from './pages/Home';
@@ -10,7 +10,7 @@ import ForgotPW from './pages/aboutMember/ForgotPWPage';
 import Register from './pages/aboutMember/Register';
 import UserPage from './pages/userPage/userPage'
 import OrderPageUserZone from "./pages/userPage/OrderPageUserZone";
-import FeedbackPage from "./pages/userPage/FeedbackPage"; 
+import FeedbackPage from "./pages/userPage/FeedbackPage";
 import CouponPage from "./pages/userPage/CouponPage";
 
 //ZH
@@ -28,8 +28,8 @@ export const loginOrNot = () => {
   axios({
     method: "post",
     url: "http://localhost:5000/member/isLogin",
-    data:{
-      token:localStorage.token
+    data: {
+      token: localStorage.token
     }
   }).then((res) => {
     //有登入的話，回傳「會員資訊」在res.data[0] ｜ 沒登入則回傳message
@@ -45,11 +45,14 @@ export const logout = () => {
   localStorage.removeItem('token')
   window.location.reload('false') //想重新渲染同頁面可以用這段
 }
-
+// 0622- aki 登出請調用該函式
+// export const logout = () => {
+//   localStorage.removeItem("token");
+//   window.location.reload("false"); //想重新渲染同頁面可以用這段
+// };
 
 function App() {
-
-   //2022-06-23 ZH
+  //2022-06-23 ZH
   //用context讓所有組件共用以下state
   const [date, setDate] = useState(new Date());
   const [dayState, setDayState] = useState("");
@@ -86,10 +89,10 @@ function App() {
   };
   return (
     <BrowserRouter>
-    {/* YN */}
+      {/* YN */}
       {/* <BackstageAdmin /> */}
 
-    {/* AKI */}
+      {/* AKI */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
@@ -99,12 +102,9 @@ function App() {
         <Route path="/member-order" element={<OrderPageUserZone />} />
         <Route path="/member-feedback" element={<FeedbackPage />} />
         <Route path="/member-coupon" element={<CouponPage />} />
-      {/* </Routes>  */}
-
-    {/* ZH */}
-      {/* <Routes> */}
+        {/* ZH */}
         <Route
-          path="/"
+          path="/bookingHomepage"
           element={
             <BookContext.Provider value={all}>
               <BookingHomepage />
@@ -112,30 +112,22 @@ function App() {
           }
         />
         <Route path="/psychologicalExam" element={<PsychologicalExam />} />
+        <Route path="/examResult" element={<ExamResult />} />
         <Route
-          path="/orderPage"
+          path="/bookingorderPage"
           element={
             <BookContext.Provider value={all}>
-              <OrderPage />
+              <BookingOrderPage />
             </BookContext.Provider>
           }
         />
-        <Route
-          path="/CheckoutPage"
-          element={
-            <BookContext.Provider value={all}>
-              <CheckoutPage />
-            </BookContext.Provider>
-          }
-        />
-
         <Route path="checkoutSucceeded" element={<CheckoutSucceeded />} />
         <Route path="/404" element={<ErrorPage />} />
+        <Route path="/hotelIntro" element={<PartnerHotel />} />
       </Routes>
-    </BrowserRouter>
 
-    
-  )
+    </BrowserRouter>
+  );
 }
 
 export default App;

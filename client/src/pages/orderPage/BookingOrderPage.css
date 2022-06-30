@@ -1,0 +1,56 @@
+.orderContainer {
+  position: relative;
+}
+
+.contentContainer {
+  display: flex;
+  margin: 10px 100px;
+}
+
+.memberCheckout {
+  border: 1px solid black;
+  width: 50%;
+  display: flex;
+}
+.memberImg {
+  margin: 10px;
+}
+
+.memberContent {
+  margin: 10px;
+  line-height: 25px;
+}
+
+.orderList {
+  border: 1px solid rgb(230, 61, 0);
+  width: 50%;
+}
+
+.marginContainer {
+  margin: 10px 100px;
+}
+.marginContainer > h5 {
+  border-bottom: 1px solid black;
+  background-color: lightgray;
+}
+
+.activityList {
+  margin-bottom: 10px;
+  border: 1px solid black;
+}
+
+.checkoutBtn {
+  padding: 10px 30px;
+  position: absolute;
+  right: 100px;
+}
+
+.list {
+  margin: 10px;
+  display: flex;
+}
+.list > p,
+.list > span {
+  font-size: 20px;
+  padding-right: 10px;
+}

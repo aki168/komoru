@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { nanoid } from "nanoid";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { BsFillArrowUpSquareFill } from "react-icons/bs";
@@ -18,7 +17,7 @@ function RoomAdd({ setAddShow, data }) {
   const [addFormData, setAddFormData] = useState({
     employeeId: "1",
     hotelId: "",
-    roomId: "",
+    roomType: "",
     liveNum: "",
   });
 
@@ -31,6 +30,8 @@ function RoomAdd({ setAddShow, data }) {
   const [error, setError] = useState(false);
 
   const [selectedFile, setSelectedFile] = useState(null);
+
+
 
   /*20220622 YN
    取得後端飯店資料*/
@@ -46,20 +47,8 @@ function RoomAdd({ setAddShow, data }) {
       .catch((err) => console.log(err));
   }, []);
 
-  /*20220625 YN
-   取得後端房型資料*/
-  // useEffect(() => {
-  //   axios
-  //     .post(
-  //       "http://localhost:5000/room/getRoomDataListWithMainImgAndHotelNameAndCityName"
-  //     )
-  //     .then((res) => {
-  //       console.log(res.data.dataList);
-  //       setRoomData(res.data.dataList);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
+  /*20220628 YN
+   將飯店資料map成飯店選項*/
   const hotelTitleArr = hotelData.map((hotelTitleData, index) => {
     return (
       <option key={index} value={hotelTitleData.hotelId}>
@@ -67,13 +56,6 @@ function RoomAdd({ setAddShow, data }) {
       </option>
     );
   });
-  // const roomTitleArr = roomData.map((roomTitleData, index) => {
-  //   return (
-  //     <option key={index} value={roomTitleData.roomId}>
-  //       {roomTitleData.roomTitle}
-  //     </option>
-  //   );
-  // });
 
   /*20220622 YN
    取得輸入新增表單資料*/
@@ -92,28 +74,31 @@ function RoomAdd({ setAddShow, data }) {
    送出時取得輸入新增表單資料，並傳到後端重整畫面*/
   const addFormSubmitHandle = (event) => {
     event.preventDefault();
-
     const newContact = {
-      id: nanoid(),
       hotelId: addFormData.hotelId,
-      roomId: addFormData.roomId,
+      roomType: addFormData.roomType,
       liveNum: addFormData.liveNum,
       employeeId: 1,
-      roomImgPath:selectedFile
     };
+    // const newContacts = newContact; 
 
-    const newContacts = newContact;
-    console.log(newContacts)
+    /*20220628 YN
+    使用formData接text(使用for將取得資料陣列化)、file資料，
+    打包成formData傳給後端*/
+    const formData = new FormData();
+    // for (var index in newContact) {
+    // }
+    formData.append('roomDataList', JSON.stringify(newContact));
+    formData.append("roomImgFile", selectedFile);
 
-    setAddFormData(newContacts);
+    console.log(...formData)
+    // setAddFormData(newContacts);
+
     fetch("http://localhost:5000/room/addRoom", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(newContacts),
+      body: formData
     })
-      .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
+      .then((response) => response.json())
       .then((data) => {
         console.log(data);
       })
@@ -135,7 +120,6 @@ function RoomAdd({ setAddShow, data }) {
       reader.onloadend = () => {
         setImgPreview(reader.result);
         setSelectedFile(selected);
-        console.log(selected)
       };
       reader.readAsDataURL(selected);
     } else {
@@ -166,7 +150,7 @@ function RoomAdd({ setAddShow, data }) {
                   style={{ display: "none" }}
                   onChange={handleImageChange}
                 />
-                <p className="text-white">(png,jpeg or jpg)</p>
+                <p className="text-white">(png、jpeg、jpg)</p>
               </>
             )}
           </div>
@@ -190,7 +174,7 @@ function RoomAdd({ setAddShow, data }) {
         </Form.Group>
         <Form.Group>
           <Form.Label>房型選擇</Form.Label>
-          <Form.Select name="roomId" onChange={addFormChangeHandle}>
+          <Form.Select name="roomType" onChange={addFormChangeHandle}>
             <option defaultValue>請選擇房型</option>
             <option value="1">私人套房</option>
             <option value="2">背包客房</option>

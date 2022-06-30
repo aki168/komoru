@@ -1,32 +1,56 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { Pie } from '@ant-design/plots';
 
 const DemoPieActivityType = () => {
+  /* 20220629 YN
+   活動類型資料狀態初始化 */
+  const [activityTypeData, setActivityTypeData] = useState({})
+  /*20220629 YN
+  給值取後端資料 */
+  useEffect(() => {
+    const newContacts = {
+      cityId: "4",
+      dateRange: "2022-06",
+    };
+    
+    fetch("http://localhost:5000/dashboard/getDashboardDataListByCondition", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(newContacts),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data.dataList.activeType);
+        setActivityTypeData(data.dataList.activeType);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }, [])
   const data = [
     {
-      type: '分类一',
-      value: 27,
+      type: '活動包A',
+      value: activityTypeData.activePackTypeA,
     },
     {
-      type: '分类二',
-      value: 25,
+      type: '活動包B',
+      value: activityTypeData.activePackTypeB,
     },
     {
-      type: '分类三',
-      value: 18,
+      type: '活動包C',
+      value: activityTypeData.activePackTypeC,
     },
     {
-      type: '分类四',
-      value: 15,
+      type: '活動包D',
+      value: activityTypeData.activePackTypeD,
     },
     {
-      type: '分类五',
-      value: 10,
-    },
-    {
-      type: '其他',
-      value: 5,
-    },
+      type: '活動包E',
+      value: activityTypeData.activePackTypeE,
+    }
+
   ];
   const config = {
     appendPadding: 10,

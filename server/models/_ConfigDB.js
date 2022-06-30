@@ -91,10 +91,27 @@ exports.getDateTimeNow = () => {
 exports.multipleQueryRowDataToSingleObj = (dataList) => {
   let newDatalist = [];
   dataList = JSON.parse(JSON.stringify(dataList));
-  dataList.forEach((data)=>{
-      Object.entries(data[0]).forEach(([key, value]) => {
-         newDatalist[key] = value;
-        });
+  dataList.forEach((data) => {
+    Object.entries(data[0]).forEach(([key, value]) => {
+      newDatalist[key] = value;
     });
-    return newDatalist;
+  });
+  return newDatalist;
+}
+
+// 2022-06-28 MJ 
+// 隨機產生密碼 
+exports.creatRandomPassword = (size) => {
+  var seed = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'p', 'Q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    '2', '3', '4', '5', '6', '7', '8', '9'
+  )
+  // 陣列長度
+  seedlength = seed.length
+  var createPassword = []
+  for (i = 0; i < size; i++) {
+    var j = Math.floor(Math.random() * seedlength)
+    createPassword.push(seed[j])
+  }
+  return createPassword.join('')
 }
