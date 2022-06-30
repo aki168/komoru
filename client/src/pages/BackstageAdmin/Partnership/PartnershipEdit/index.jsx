@@ -197,7 +197,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
       </Form.Group>
       <Form.Group>
         <Form.Label>備註</Form.Label>
-        <Form.Control as="textarea" rows={3} disabled={isDisabled} defaultValue={editModalData.partnershipDesc}/>
+        <Form.Control as="textarea" rows={3} disabled={isDisabled} defaultValue={editModalData.partnershipDesc} onChange={editFormChangeHandle} name="partnershipDesc" />
       </Form.Group>
       <div className="mt-1 mb-1 d-flex justify-content-end">
         <Button className="me-1" onClick={disabledClickHandle}>修改</Button>

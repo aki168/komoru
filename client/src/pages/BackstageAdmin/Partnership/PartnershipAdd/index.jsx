@@ -140,7 +140,7 @@ function PartnershipAdd({ data, setAddShow }) {
       </Form.Group>
       <Form.Group>
         <Form.Label>備註</Form.Label>
-        <Form.Control as="textarea" rows={3} placeholder="xxx" />
+        <Form.Control as="textarea" rows={3} placeholder="xxx" name="partnershipDesc"  onChange={addFormChangeHandle} />
       </Form.Group>
       <div className="mt-1 mb-1 d-flex justify-content-end">
         <Button className="me-1" type="submit">
