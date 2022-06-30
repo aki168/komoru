@@ -23,7 +23,7 @@ import CheckoutSucceeded from "./pages/checkoutSucceededPage/CheckoutSucceeded";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import { BookContext } from "./Helper/Context";
 
-// 0622-確認該用戶是否登入，可以連這隻api
+// 0622 - 確認該用戶是否登入，可以連這隻api
 export const loginOrNot = () => {
   axios({
     method: "post",
