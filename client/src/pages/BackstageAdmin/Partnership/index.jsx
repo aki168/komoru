@@ -73,7 +73,7 @@ function Partnership() {
       <tr key={index} className="form-check-label">
         <td className="col-sm-1">{data.partnershipName}</td>
         <td className="col-sm-1">{data.cityName}</td>
-        <td className="col-sm-1">{data.partnershipAddr}</td>
+        <td className="col-sm-2">{data.partnershipAddr}</td>
         <td className="col-sm-1">{data.partnershipTel}</td>
         <td className="col-sm-1">
           <button
