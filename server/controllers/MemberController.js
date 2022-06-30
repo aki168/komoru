@@ -126,7 +126,6 @@ exports.isLogin = async (req, res, next) => {
   }
 }
 
-
 // 0627 修改個人資料 - aki 
 exports.alertProfile = async (req, res) => {
   console.log(req.body);

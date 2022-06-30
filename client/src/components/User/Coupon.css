@@ -1,3 +1,13 @@
+.Coupon a{
+  display: block;
+  text-decoration: none;
+  color: #000;
+}
+
+.Coupon a:hover{
+  text-decoration: none;
+}
+
 .User--container {
   margin: 0 auto;
   max-width: 1024px;

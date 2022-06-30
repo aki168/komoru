@@ -31,7 +31,7 @@ router.post('/getAndSaveOrderData',orderController.getAndSaveOrderData)
 
 
 // 2022-06-28 AKI
-// 取得訂單資料byMemberId
+// 取得訂單資料byMemberId (只有標題)
 router.post('/getOrderDataByMemberId',orderController.getOrderDataByMemberId) 
 
 module.exports = router;

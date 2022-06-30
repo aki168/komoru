@@ -28,12 +28,12 @@ router.get('/verifyJWT',memberController.verifyJWT,(req,res)=>{
 router.post('/register',memberController.register);
 
 // 0622 是否有登入 - aki
-router.post('/isLogin',memberController.isLogin)
+router.post('/isLogin',memberController.isLogin);
 
 // 0623 會員登出 - aki (改由前端刪除token方式，此路由暫不使用)
 // router.post('/logout',memberController.logout)
 
 // 0627 修改個人資料 - aki 
-router.post('/alertProfile',memberController.alertProfile) 
+router.post('/alertProfile',memberController.alertProfile);
 
 module.exports = router;

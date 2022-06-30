@@ -1,3 +1,13 @@
+.Feedback a{
+  display: block;
+  text-decoration: none;
+  color: #000;
+}
+
+.Feedback a:hover{
+  text-decoration: none;
+}
+
 .User--container {
   margin: 0 auto;
   max-width: 1024px;

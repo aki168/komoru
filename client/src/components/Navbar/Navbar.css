@@ -39,6 +39,7 @@ a{
 }
 
 .navbar--title{
+  color: #000;
   padding-top: 30px;
   padding-bottom: 30px;
 }
@@ -49,6 +50,12 @@ a{
 }
 
 .navbar--item{
+  color: #000;
+  text-decoration: none;
   padding: 15px;
   font-size:1rem;
+}
+
+.navbar--item:hover{
+  text-decoration: none;
 }

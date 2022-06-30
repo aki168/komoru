@@ -9,19 +9,19 @@ import LoginPage from './pages/aboutMember/LoginPage';
 import ForgotPW from './pages/aboutMember/ForgotPWPage';
 import Register from './pages/aboutMember/Register';
 import UserPage from './pages/userPage/userPage'
-import OrderPage from "./pages/userPage/OrderPage";
+import OrderPageUserZone from "./pages/userPage/OrderPageUserZone";
 import FeedbackPage from "./pages/userPage/FeedbackPage"; 
 import CouponPage from "./pages/userPage/CouponPage";
 
 //ZH
-// import { useState } from "react";
-// import PsychologicalExam from "./pages/psychologicalExam/PsychologicalExam";
-// import BookingHomepage from "./pages/bookingHomepage/BookingHomepage";
-// import OrderPage from "./pages/orderPage/OrderPage";
-// import CheckoutPage from "./pages/checkoutPage/CheckoutPage";
-// import CheckoutSucceeded from "./pages/checkoutSucceededPage/CheckoutSucceeded";
-// import ErrorPage from "./pages/errorPage/ErrorPage";
-// import { BookContext } from "./Helper/Context";
+import { useState } from "react";
+import PsychologicalExam from "./pages/psychologicalExam/PsychologicalExam";
+import BookingHomepage from "./pages/bookingHomepage/BookingHomepage";
+import OrderPage from "./pages/orderPage/OrderPage";
+import CheckoutPage from "./pages/checkoutPage/CheckoutPage";
+import CheckoutSucceeded from "./pages/checkoutSucceededPage/CheckoutSucceeded";
+import ErrorPage from "./pages/errorPage/ErrorPage";
+import { BookContext } from "./Helper/Context";
 
 // 0622-確認該用戶是否登入，可以連這隻api
 export const loginOrNot = () => {
@@ -43,7 +43,7 @@ export const loginOrNot = () => {
 // 0622- aki 登出請調用該函式 
 export const logout = () => {
   localStorage.removeItem('token')
-  // window.location.reload('false') 想重新渲染同頁面可以用這段
+  window.location.reload('false') //想重新渲染同頁面可以用這段
 }
 
 
@@ -51,39 +51,39 @@ function App() {
 
    //2022-06-23 ZH
   //用context讓所有組件共用以下state
-  // const [date, setDate] = useState(new Date());
-  // const [dayState, setDayState] = useState("");
-  // const [roomState, setRoomState] = useState("DEFAULT");
-  // const [couponState, setCouponState] = useState("");
-  // const [activityState, setActivityState] = useState("");
-  // const [activity1Data, setActivity1Data] = useState("");
-  // const [activity2Data, setActivity2Data] = useState("");
-  // const [activity3Data, setActivity3Data] = useState("");
-  // const [countActivity, setCountActivity] = useState(Number(0));
-  // const [sumActivity, setSumActivity] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [dayState, setDayState] = useState("");
+  const [roomState, setRoomState] = useState("DEFAULT");
+  const [couponState, setCouponState] = useState("");
+  const [activityState, setActivityState] = useState("");
+  const [activity1Data, setActivity1Data] = useState("");
+  const [activity2Data, setActivity2Data] = useState("");
+  const [activity3Data, setActivity3Data] = useState("");
+  const [countActivity, setCountActivity] = useState(Number(0));
+  const [sumActivity, setSumActivity] = useState("");
 
-  // const all = {
-  //   date,
-  //   setDate,
-  //   dayState,
-  //   setDayState,
-  //   roomState,
-  //   setRoomState,
-  //   couponState,
-  //   setCouponState,
-  //   activityState,
-  //   setActivityState,
-  //   activity1Data,
-  //   setActivity1Data,
-  //   activity2Data,
-  //   setActivity2Data,
-  //   activity3Data,
-  //   setActivity3Data,
-  //   countActivity,
-  //   setCountActivity,
-  //   sumActivity,
-  //   setSumActivity,
-  // };
+  const all = {
+    date,
+    setDate,
+    dayState,
+    setDayState,
+    roomState,
+    setRoomState,
+    couponState,
+    setCouponState,
+    activityState,
+    setActivityState,
+    activity1Data,
+    setActivity1Data,
+    activity2Data,
+    setActivity2Data,
+    activity3Data,
+    setActivity3Data,
+    countActivity,
+    setCountActivity,
+    sumActivity,
+    setSumActivity,
+  };
   return (
     <BrowserRouter>
     {/* YN */}
@@ -96,13 +96,13 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgotPW" element={<ForgotPW />} />
         <Route path="/user" element={<UserPage />} />
-        <Route path="/member-order" element={<OrderPage />} />
+        <Route path="/member-order" element={<OrderPageUserZone />} />
         <Route path="/member-feedback" element={<FeedbackPage />} />
         <Route path="/member-coupon" element={<CouponPage />} />
-      </Routes> 
+      {/* </Routes>  */}
 
     {/* ZH */}
-      {/* <Routes>
+      {/* <Routes> */}
         <Route
           path="/"
           element={
@@ -131,7 +131,7 @@ function App() {
 
         <Route path="checkoutSucceeded" element={<CheckoutSucceeded />} />
         <Route path="/404" element={<ErrorPage />} />
-      </Routes> */}
+      </Routes>
     </BrowserRouter>
 
     

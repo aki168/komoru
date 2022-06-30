@@ -106,7 +106,7 @@ const checkData = (dataList, dataColumns) => {
 
 
 // 2022-06-28 AKI
-// 取得訂單資料byMemberId
+// 取得訂單資料byMemberId （只有標題）
 exports.getOrderDataByMemberId = async (req, res) => {
   const { token } = req.body;
   if (token) {
