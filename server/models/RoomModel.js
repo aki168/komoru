@@ -58,7 +58,7 @@ exports.addRoomWithImg = async (dataList) => {
     let sql =
       "INSERT INTO `Room` " +
       "(`hotel_id`, `room_type`, `live_num`, `room_desc`, `creator_id`, `create_datetime`) " +
-      "VALUES (?, ?, ?, ?, ?, ?, ?);";
+      "VALUES (?, ?, ?, ?, ?, ?);";
     let value = [
       dataList.hotelId,
       dataList.roomType,
