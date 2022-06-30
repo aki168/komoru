@@ -167,7 +167,11 @@ function Room() {
                   onHide={handleAddClose}
                 >
                   <Modal.Header closeButton></Modal.Header>
-                  <RoomAdd />
+                  <RoomAdd
+                    data={data}
+                    addShow={addShow}
+                    setAddShow={setAddShow}
+                  />
                 </Modal>
               </div>
             </div>

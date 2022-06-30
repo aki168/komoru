@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route ,Navigate} from "react-router-dom";
 import axios from "axios";
 import BackstageAdmin from "./pages/BackstageAdmin";
 import BackstageLogin from "./pages/BackstageLogin";
 
 // AKI
-import Home from './pages/Home';
-import LoginPage from './pages/aboutMember/LoginPage';
-import ForgotPW from './pages/aboutMember/ForgotPWPage';
-import Register from './pages/aboutMember/Register';
-import UserPage from './pages/userPage/userPage'
+import Home from "./pages/Home";
+import LoginPage from "./pages/aboutMember/LoginPage";
+import ForgotPW from "./pages/aboutMember/ForgotPWPage";
+import Register from "./pages/aboutMember/Register";
+import UserPage from "./pages/userPage/userPage";
 import OrderPageUserZone from "./pages/userPage/OrderPageUserZone";
 import FeedbackPage from "./pages/userPage/FeedbackPage";
 import CouponPage from "./pages/userPage/CouponPage";
@@ -31,22 +31,24 @@ export const loginOrNot = () => {
     method: "post",
     url: "http://localhost:5000/member/isLogin",
     data: {
-      token: localStorage.token
-    }
-  }).then((res) => {
-    //有登入的話，回傳「會員資訊」在res.data[0] ｜ 沒登入則回傳message
-    let userData = res.data[0];
-    console.log(userData)
-  }).catch((err) => {
-    console.log(err)
+      token: localStorage.token,
+    },
   })
-}
+    .then((res) => {
+      //有登入的話，回傳「會員資訊」在res.data[0] ｜ 沒登入則回傳message
+      let userData = res.data[0];
+      console.log(userData);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 // 0622- aki 登出請調用該函式
 export const logout = () => {
-  localStorage.removeItem('token')
-  window.location.reload('false') //想重新渲染同頁面可以用這段
-}
+  localStorage.removeItem("token");
+  window.location.reload("false"); //想重新渲染同頁面可以用這段
+};
 // 0622- aki 登出請調用該函式
 // export const logout = () => {
 //   localStorage.removeItem("token");
@@ -54,41 +56,41 @@ export const logout = () => {
 // };
 
 function App() {
-    //2022-06-23 ZH
-    //用context讓所有組件共用以下state
-    const [date, setDate] = useState(new Date());
-    const [dayState, setDayState] = useState("");
-    const [roomState, setRoomState] = useState("DEFAULT");
-    const [couponState, setCouponState] = useState("");
-    const [activityState, setActivityState] = useState("");
-    const [activity1Data, setActivity1Data] = useState("");
-    const [activity2Data, setActivity2Data] = useState("");
-    const [activity3Data, setActivity3Data] = useState("");
-    const [countActivity, setCountActivity] = useState(Number(0));
-    const [sumActivity, setSumActivity] = useState("");
+  //2022-06-23 ZH
+  //用context讓所有組件共用以下state
+  const [date, setDate] = useState(new Date());
+  const [dayState, setDayState] = useState("");
+  const [roomState, setRoomState] = useState("DEFAULT");
+  const [couponState, setCouponState] = useState("");
+  const [activityState, setActivityState] = useState("");
+  const [activity1Data, setActivity1Data] = useState("");
+  const [activity2Data, setActivity2Data] = useState("");
+  const [activity3Data, setActivity3Data] = useState("");
+  const [countActivity, setCountActivity] = useState(Number(0));
+  const [sumActivity, setSumActivity] = useState("");
 
-    const all = {
-      date,
-      setDate,
-      dayState,
-      setDayState,
-      roomState,
-      setRoomState,
-      couponState,
-      setCouponState,
-      activityState,
-      setActivityState,
-      activity1Data,
-      setActivity1Data,
-      activity2Data,
-      setActivity2Data,
-      activity3Data,
-      setActivity3Data,
-      countActivity,
-      setCountActivity,
-      sumActivity,
-      setSumActivity,
-    };
+  const all = {
+    date,
+    setDate,
+    dayState,
+    setDayState,
+    roomState,
+    setRoomState,
+    couponState,
+    setCouponState,
+    activityState,
+    setActivityState,
+    activity1Data,
+    setActivity1Data,
+    activity2Data,
+    setActivity2Data,
+    activity3Data,
+    setActivity3Data,
+    countActivity,
+    setCountActivity,
+    sumActivity,
+    setSumActivity,
+  };
   return (
     <BrowserRouter>
       {/* YN */}
@@ -107,8 +109,8 @@ function App() {
         <Route path="/member-order" element={<OrderPageUserZone />} />
         <Route path="/member-feedback" element={<FeedbackPage />} />
         <Route path="/member-coupon" element={<CouponPage />} />
-      {/* ZH */}
-      <Route
+        {/* ZH */}
+        <Route
           path="/bookingHomepage"
           element={
             <BookContext.Provider value={all}>

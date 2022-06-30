@@ -19,6 +19,7 @@ function RoomAdd({ setAddShow, data }) {
     hotelId: "",
     roomType: "",
     liveNum: "",
+    roomDesc: "",
   });
 
   /*20220625 YN
@@ -192,7 +193,7 @@ function RoomAdd({ setAddShow, data }) {
         </Form.Group>
         <Form.Group>
           <Form.Label>備註</Form.Label>
-          <Form.Control as="textarea" rows={3} placeholder="xxx" />
+          <Form.Control as="textarea" rows={3} placeholder="xxx" name="roomDesc" onChange={addFormChangeHandle} />
         </Form.Group>
       </Form.Group>
       <div className="mt-1 mb-1 d-flex justify-content-end">
