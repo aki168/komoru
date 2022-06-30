@@ -14,7 +14,7 @@ exports.getRoomDataListWithMainImgAndHotelNameAndCityName = async () => {
       "`Room`.`room_id`,`Room`.`hotel_id`,`Room`.`room_type`,`Room`.`live_num`," +
       "`RoomImg`.`room_img_path`," +
       "`Hotel`.`hotel_title`," +
-      "`City`.`city_name` " +
+      "`City`.`city_id`,`City`.`city_name` " +
       "FROM `Room` " +
       "JOIN `RoomImg` ON `Room`.`room_id` = `RoomImg`.`room_id` " +
       "JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id` " +
