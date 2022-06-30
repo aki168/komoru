@@ -14,14 +14,15 @@ import FeedbackPage from "./pages/userPage/FeedbackPage";
 import CouponPage from "./pages/userPage/CouponPage";
 
 //ZH
-import { useState } from "react";
+//import { useState } from "react";
 import PsychologicalExam from "./pages/psychologicalExam/PsychologicalExam";
 import BookingHomepage from "./pages/bookingHomepage/BookingHomepage";
-import OrderPage from "./pages/orderPage/OrderPage";
-import CheckoutPage from "./pages/checkoutPage/CheckoutPage";
+import ExamResult from "./pages/psychologicalExam/examAll/ExamResult";
+import BookingOrderPage from "./pages/orderPage/BookingOrderPage";
 import CheckoutSucceeded from "./pages/checkoutSucceededPage/CheckoutSucceeded";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import { BookContext } from "./Helper/Context";
+import PartnerHotel from "./pages/partnerHotel/PartnerHotel";
 
 // 0622 - 確認該用戶是否登入，可以連這隻api
 export const loginOrNot = () => {
