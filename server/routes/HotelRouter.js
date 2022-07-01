@@ -8,6 +8,22 @@ const hotelController = require("../controllers/HotelController");
 const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 
+// 2022-07-01 PG
+// 上傳檔案初始化
+const multer = require("multer");
+// 自定義行為模式
+const storage = multer.diskStorage({
+  // 指定儲存路徑
+  destination: function (req, file, cb) {
+    cb(null, "./public/images/hotel/");
+  },
+  // 檔名更改
+  filename: function (req, file, cb) {
+    cb(null, "hotel" + file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
+
 // ----------------------------------------------------------------------------------------------------------------------
 
 // 2022-06-15 PG
@@ -15,11 +31,30 @@ router.use(bodyParser.json());
 // hotelId hotelTitle hotelAddr hotelTel hotelContent checkInTime checkOutTime
 // hotelImgPath
 // cityName
-router.post("/getHotelDataListWithMainImgAndCityName", hotelController.getHotelDataListWithMainImgAndCityName);
+router.post(
+  "/getHotelDataListWithMainImgAndCityName",
+  hotelController.getHotelDataListWithMainImgAndCityName
+);
 
 // 2022-06-15 PG
 // 取得飯店資料和照片 By hotelId
-router.post("/getHotelDataWithImgByHotelId", hotelController.getHotelDataWithImgByHotelId);
+router.post(
+  "/getHotelDataWithImgByHotelId",
+  hotelController.getHotelDataWithImgByHotelId
+);
 
+// 2022-07-01 PG
+// 新增飯店和照片
+router.post(
+  "/addHotel",
+  upload.fields([
+    { name: "hotelDataList" },
+    { name: "mainHotelImgFile" },
+    { name: "firstHotelImgFile" },
+    { name: "secondHotelImgFile" },
+    { name: "thirdHotelImgFile" },
+  ]),
+  hotelController.addHotelWithImg
+);
 
 module.exports = router;
