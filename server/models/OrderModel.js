@@ -71,7 +71,6 @@ exports.updateOrderStatusByOrderId = async (dataList) => {
 // return：JSON
 exports.getOrderData = (data) => {
   // 駝峰轉_
-  // 傳入string
   function decamelize(string, options) {
     options = options || {};
     var separator = options.separator || '_'
@@ -182,29 +181,29 @@ exports.getCouponItemDataList = async (memberId) => {
   })
 }
 
-// 2022-06-28 AKI
-
-// 取得訂單資料byMemberId (只有標題....)
-exports.getOrderDataByMemberId  = async (memberId) => {
+// 2022-06-28 AKI MJ
+// 取得訂單資料byMemberId
+exports.getOrderDataByMemberId = async (memberId) => {
   return new Promise((resolve, reject) => {
-    let sql = 
-    "SELECT `Order`.`order_id`,`Order`.`order_number`," +
-    "`Hotel`.`Hotel_id`,`Hotel`.`hotel_title`, `Hotel`.`hotel_tel`, `Hotel`.`hotel_addr`," + 
-    "`Order`.`order_start_date`,`Member`.`member_id`, `Member`.`member_name`," +
-    "(`order_end_date` - `order_start_date`) AS `stay_night`, `Order`.`order_status`," + 
-    "CONCAT(`City`.`city_name`,'　', `Hotel`.`hotel_title` ,'　/　',`Room`.`room_title`) AS `room_desc` " +
-    "FROM `Order` " +
-    "JOIN `Member` ON `Order`.`member_id` = `Member`.`member_id`"+
-    "JOIN `Room` ON `Order`.`room_id` = `Room`.`room_id` "+
-    "JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id`"+
-    "JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id`"+
-    "WHERE `Member`.`member_id` = ? "+
-    "ORDER BY `order_start_date` DESC;";
+    let sql = "SELECT" +
+      "`Order`.`order_id`, `Order`.`order_number`, `Order`.`room_id`, `Order`.`coupon_item_id`, `Order`.`order_status`, `Order`.`order_start_date`, `Order`.`order_end_date`, `Order`.`order_total`, `Order`.`create_datetime`, `OrderItem`.`order_item_date`, `OrderItem`.`is_active`, `OrderItem`.`order_item_price`, `Order`.`member_id`, `Member`.`member_mail`, `Member`.`member_name`, `Member`.`member_nick_name`, `Member`.`member_gender`, `Member`.`member_phone`, `Member`.`member_img_path`, `City`.`city_name`, `Hotel`.`hotel_title`, `Hotel`.`hotel_addr`, `Hotel`.`hotel_tel`, `Hotel`.`hotel_desc`, `Room`.`room_type`, `Room`.`room_desc`, `ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`active_pack_item_start_time`, `ActivePackItem`.`active_pack_item_end_time`, `OrderItem`.`active_pack_id`, `ActivePackItem`.`partnership_id`" +
+      "FROM `Order`" +
+      "INNER JOIN OrderItem ON`Order`.`order_id` = `OrderItem`.`order_id`" +
+      "INNER JOIN `Member` ON`Order`.`member_id` = `Member`.`member_id`" +
+      "INNER JOIN `Room` ON `Order`.`room_id` = `Room`.`room_id`" +
+      "INNER JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id`" +
+      "INNER JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id`" +
+      "LEFT JOIN `CouponItem` ON `Order`.`coupon_item_id` = `CouponItem`.`coupon_item_id`" +
+      "INNER JOIN `ActivePack` ON `OrderItem`.`active_pack_id` = `ActivePack`.`active_pack_id`" +
+      "INNER JOIN `ActivePackItem` ON `ActivePack`.`active_pack_id` = `ActivePackItem`.`active_pack_id`" +
+      "WHERE `Order`.`member_id` = ? " +
+      "ORDER BY `order_start_date` DESC " 
+
     db.con.query(sql, memberId, (err, rows, fields) => {
       if (err) {
-        reject(err);
+        reject(err)
       }
-      resolve(db.rowDataToCamelData(rows));
-    });
-  });
-};
+      resolve(db.rowDataToCamelData(rows))
+    })
+  })
+}

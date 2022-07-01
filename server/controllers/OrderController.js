@@ -136,27 +136,40 @@ const checkData = (dataList, dataColumns) => {
   };
 };
 
-// 2022-06-28 AKI
-// 取得訂單資料byMemberId （只有標題）
+// 2022-06-28 AKI MJ
+// 取得訂單資料byMemberId 
 exports.getOrderDataByMemberId = async (req, res) => {
   const { token } = req.body;
   if (token) {
     // 解碼
     const decoded = await promisify(jwt.verify)(token, "jwtSecret");
     console.log(decoded);
-    const { memberId } = decoded;
+    const { memberId } = decoded
 
     await orderModel // 解碼完後對照資料庫，有的話回傳該訂單資料
       .getOrderDataByMemberId(memberId)
       .then((result) => {
-        res.setHeader("Content-Type", "application/json");
-        res.end(JSON.stringify(result));
+        Object.entries(result).forEach(([key, value]) => {
+          // 將 enum 數值轉換為文字
+          let valueToString = configController.enumValueToString(
+            "Room",
+            "roomType",
+            value.roomType
+          )
+          // 如果檢查結果是正常，即將值取代為對應的文字，否則輸出錯誤訊息
+          result[key].roomType = valueToString.errCheck
+            ? valueToString.transferString
+            : valueToString.errMsg;
+        })
+        configController.sendJsonMsg(res, true, "", result)
       })
       .catch((err) => {
-        console.log(err);
-        res.status(500).json({ message: "Server error" });
-      });
+        // 目前不確定這邊要怎改
+        console.log(err)
+        res.status(500).json({ message: "Server error" })
+      })
+
   } else {
-    res.json({ message: "該用戶尚未登入" });
+    res.json({ message: "該用戶尚未登入" })
   }
-};
+}

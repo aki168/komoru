@@ -29,7 +29,7 @@ router.post("/updateOrderStatusByOrderId", orderController.updateOrderStatusByOr
 // 取得並儲存訂單資料 By MemberId
 router.post('/getAndSaveOrderData',orderController.getAndSaveOrderData) 
 
-// 2022-06-28 AKI
+// 2022-06-28 AKI MJ
 // 取得訂單資料byMemberId (只有標題)
 router.post('/getOrderDataByMemberId',orderController.getOrderDataByMemberId) 
 
