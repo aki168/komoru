@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
 import HotelAdd from "./HotelAdd";
+import HotelViewEdits from "./HotelViewEdits"
 import { Modal } from "react-bootstrap";
 
 
@@ -18,6 +19,15 @@ function Hotel() {
   /*20220622 YN
    增加表單modal顯示狀態初始化*/
   const [addShow, setAddShow] = useState(false);
+
+  /*20220622 YN
+ 檢視表單modal顯示狀態初始化*/
+  const [editShow, setEditShow] = useState(false);
+  /*20220624 YN
+  取當下選取列表時的data狀態初始化*/
+  const [editData, setEditData] = useState();
+
+  
 
   /*20220622 YN
   新增表單時，modal顯示狀態設定*/
@@ -45,6 +55,8 @@ function Hotel() {
   總頁面資料個數 */
   const pageVisited = pageNumber * userPerPage;
 
+
+
   /*20220617 YN
   利用變數取畫面上顯示資料 */
   const arr = Object.values(data).map((values, index) => {
@@ -69,9 +81,12 @@ function Hotel() {
           </div>
         </td>
         <td className="col-sm-1">
-          <a href="" className="me-1 btn btn-success">
+          <button
+            className="me-1 btn btn-success"
+            onClick={() => handleEditShow(index)}
+          >
             檢視/修改
-          </a>
+          </button>
           <button
             onClick={() => deletFormHandle(index)}
             className="btn btn-success"
@@ -106,6 +121,17 @@ function Hotel() {
     // console.log(dataList.partnershipId);
 
   };
+
+  /*20220622 YN
+修改表單時，modal顯示狀態設定*/
+  const handleEditShow = (index) => {
+    setEditShow(true);
+    setEditData(data[index]);
+    // console.log(data[index])
+  };
+
+  // const handleEditShow = () => setEditShow(true);
+  const handleEditClose = () => setEditShow(false);
 
   return (
     <>
@@ -207,6 +233,16 @@ function Hotel() {
           </div>
         </div>
       </div>
+      <Modal
+        size="xl"
+        // aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={editShow}
+        onHide={handleEditClose}
+      >
+        <Modal.Header closeButton></Modal.Header>
+        <HotelViewEdits />
+      </Modal>
     </>
   );
 }

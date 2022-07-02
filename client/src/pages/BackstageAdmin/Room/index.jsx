@@ -23,6 +23,11 @@ function Room() {
   /*20220624 YN
   取當下選取列表時的data狀態初始化*/
   const [editData, setEditData] = useState();
+
+  /*20220622 YN
+   飯店資料初始化*/
+  const [hotelData, setHotelData] = useState([]);
+
   /*20220617 YN
   接後端api取後端資料*/
   useEffect(() => {
@@ -117,11 +122,25 @@ function Room() {
   const handleEditShow = (index) => {
     setEditShow(true);
     setEditData(data[index]);
-    // console.log(data[index])
+    console.log(data[index]);
   };
 
   // const handleEditShow = () => setEditShow(true);
   const handleEditClose = () => setEditShow(false);
+
+  // /*20220701 YN
+  //   取得後端飯店資料*/
+  useEffect(() => {
+    axios
+      .post(
+        "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
+      )
+      .then((res) => {
+        console.log(res.data.dataList);
+        setHotelData(res.data.dataList);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <>
       <div className="mx-5  mb-5">
@@ -234,7 +253,14 @@ function Room() {
         onHide={handleEditClose}
       >
         <Modal.Header closeButton></Modal.Header>
-        <RoomViewEdits />
+        {hotelData && (
+          <RoomViewEdits
+            editData={editData}
+            setEditShow={setEditShow}
+            data={data}
+            hotelData={hotelData}
+          />
+        )}
       </Modal>
     </>
   );

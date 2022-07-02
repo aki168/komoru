@@ -29,10 +29,9 @@ function RoomAdd({ setAddShow, data }) {
   /*20220625 YN
    照片不符合規格錯誤狀態初始化*/
   const [error, setError] = useState(false);
-
+  /*20220630 YN
+     選擇照片狀態初始化*/
   const [selectedFile, setSelectedFile] = useState(null);
-
-
 
   /*20220622 YN
    取得後端飯店資料*/
@@ -79,36 +78,39 @@ function RoomAdd({ setAddShow, data }) {
       hotelId: addFormData.hotelId,
       roomType: addFormData.roomType,
       liveNum: addFormData.liveNum,
+      roomDesc: addFormData.roomDesc,
       employeeId: 1,
     };
-    // const newContacts = newContact; 
+    // const newContacts = newContact;
 
     /*20220628 YN
     使用formData接text(使用for將取得資料陣列化)、file資料，
     打包成formData傳給後端*/
-    const formData = new FormData();
     // for (var index in newContact) {
     // }
-    formData.append('roomDataList', JSON.stringify(newContact));
+    const formData = new FormData();
+    formData.append("roomDataList", JSON.stringify(newContact));
     formData.append("roomImgFile", selectedFile);
 
-    console.log(...formData)
+    console.log(...formData);
     // setAddFormData(newContacts);
 
     fetch("http://localhost:5000/room/addRoom", {
       method: "POST",
-      body: formData
+      body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
+        if (data.status) {
+          setAddShow(false);
+          window.location.reload(false);
+        }
         console.log(data);
       })
       .catch((e) => {
         console.error(e);
       });
     // data.push(newContacts);
-    setAddShow(false);
-    window.location.reload(false);
   };
   /*20220625 YN
   更換照片、預覽照片、限制照片格式*/
@@ -176,9 +178,9 @@ function RoomAdd({ setAddShow, data }) {
         <Form.Group>
           <Form.Label>房型選擇</Form.Label>
           <Form.Select name="roomType" onChange={addFormChangeHandle}>
-            <option defaultValue >請選擇房型</option>
-            <option value="1">私人套房</option>
-            <option value="2">背包客房</option>
+            <option defaultValue>請選擇房型</option>
+            <option value="1">單人房</option>
+            <option value="0">背包客</option>
           </Form.Select>
         </Form.Group>
         <Form.Group>
@@ -193,7 +195,13 @@ function RoomAdd({ setAddShow, data }) {
         </Form.Group>
         <Form.Group>
           <Form.Label>備註</Form.Label>
-          <Form.Control as="textarea" rows={3} placeholder="xxx" name="roomDesc" onChange={addFormChangeHandle} />
+          <Form.Control
+            as="textarea"
+            rows={3}
+            placeholder="xxx"
+            name="roomDesc"
+            onChange={addFormChangeHandle}
+          />
         </Form.Group>
       </Form.Group>
       <div className="mt-1 mb-1 d-flex justify-content-end">

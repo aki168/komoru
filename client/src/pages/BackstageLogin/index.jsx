@@ -4,18 +4,18 @@ import { Container, Row, Col, Form } from "react-bootstrap";
 import LoginHeader from "../../components/BackstageAdminLoginHeader";
 
 function BackstageLogin() {
-  const [mail, setMail] = useState("");
+  const [account, setAccount] = useState("");
   const [passwd, setPasswd] = useState("");
 
-  const inputEmailHandler = (e) => {
-    setMail(() => e.target.value);
+  const inputAccountHandler = (e) => {
+    setAccount(() => e.target.value);
+    //console.log(account) //動態追蹤輸入的account值
   };
-  //console.log(mail) //動態追蹤輸入的mail值
 
   const inputPasswdHandler = (e) => {
     setPasswd(() => e.target.value);
+    //console.log(passwd) //動態追蹤輸入的pw值
   };
-  //console.log(passwd) //動態追蹤輸入的pw值
 
   // 0620 aki - 驗證網站是否有該會員：有的人才能輸入密碼＆向他打招呼
   // 若該mail網站沒有，將會導向註冊頁面
@@ -52,16 +52,18 @@ function BackstageLogin() {
   // };
 
   // 0620 aki - 正式驗證帳號及密碼：登入驗證
-  const loginHandlerWithPW = () => {
-    console.log(mail)
+  const loginHandlerWithPW = (event) => {
+    event.preventDefault();
+    console.log(account)
     console.log(passwd)
 
-    if (mail !== "" && passwd !== "") {
+
+    if (account !== "" && passwd !== "") {
       axios({
         method: "POST",
         url: "http://localhost:5000/employee/login",
         data: {
-          mail: mail,
+          account: account,
           passwd: passwd,
         },
       })
@@ -87,7 +89,7 @@ function BackstageLogin() {
           // alert("帳號或密碼錯誤"); // 進階版
           // }
         });
-    } else if (mail === "" || passwd === "") {
+    } else if (account === "" || passwd === "") {
       alert("請填寫帳號及密碼");
     }
   };
@@ -116,16 +118,15 @@ function BackstageLogin() {
         <Container>
           <Form className="col-lg-6 offset-lg-3">
             <div className="mb-3 mt-3">
-              <label htmlFor="email" className="form-label">
-                Email:
+              <label htmlFor="account" className="form-label">
+                Account:
               </label>
               <input
-                type="email"
                 className="form-control"
-                id="email"
-                placeholder="Enter email"
-                name="email"
-                onChange={inputEmailHandler}
+                // id="account"
+                placeholder="Enter account"
+                name="account"
+                onChange={inputAccountHandler}
               />
             </div>
             <div className="mb-3">
@@ -133,9 +134,9 @@ function BackstageLogin() {
                 Password:
               </label>
               <input
-                type="password"
+                // type="password"
                 className="form-control"
-                id="pwd"
+                // id="pwd"
                 placeholder="Enter password"
                 name="pswd"
                 onChange={inputPasswdHandler}
@@ -151,7 +152,7 @@ function BackstageLogin() {
                 Remember me
               </label>
             </div>
-            <button type="submit" className="btn btn-primary col-md-12 " onClick={loginHandlerWithPW}>
+            <button className="btn btn-primary col-md-12 " onClick={loginHandlerWithPW}>
               Submit
             </button>
           </Form>

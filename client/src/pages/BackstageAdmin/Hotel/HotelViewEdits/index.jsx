@@ -4,25 +4,21 @@ import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { BsFillArrowUpSquareFill } from "react-icons/bs";
 
-function HotelAdd({ setAddShow, data }) {
+function HotelViewEdits({ setAddShow }) {
   /*20220622 YN
-     飯店資料初始化*/
+   飯店資料初始化*/
   const [hotelData, setHotelData] = useState([]);
-
   /*20220622 YN
-     新增表單資料初始化*/
+   新增表單資料初始化*/
   const [addFormData, setAddFormData] = useState({
     employeeId: "1",
     hotelTitle: "",
     hotelAddr: "",
     hotelTel: "",
     hotelDesc: "",
-    hotelContent: "",
-    cityId: "",
   });
-
   /*20220625 YN
-     預覽照片狀態初始化*/
+   預覽照片狀態初始化*/
   const [primaryImgPreview, setPrimaryImgPreview] = useState(null);
   const [firstImgPreview, setFirstImgPreview] = useState(null);
   const [secondImgPreview, setSecondImgPreview] = useState(null);
@@ -43,36 +39,29 @@ function HotelAdd({ setAddShow, data }) {
   const [selectedThirdFile, setSelectedThirdFile] = useState(null);
 
   /*20220622 YN
-     取得後端飯店資料*/
-  useEffect(() => {
-    axios
-      .post(
-        "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
-      )
-      .then((res) => {
-        console.log(res.data.dataList);
-        setHotelData(res.data.dataList);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+   取得後端城市資料*/
+  // useEffect(() => {
+  //   axios
+  //     .post(
+  //       "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
+  //     )
+  //     .then((res) => {
+  //       // console.log(res.data.dataList);
+  //       setHotelData(res.data.dataList);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   // const hotelTitleArr = hotelData.map((hotelTitleData, index) => {
-  //     return (
-  //         <option key={index} value={hotelTitleData.hotelId}>
-  //             {hotelTitleData.hotelTitle}
-  //         </option>
-  //     );
-  // });
-  // const roomTitleArr = roomData.map((roomTitleData, index) => {
   //   return (
-  //     <option key={index} value={roomTitleData.roomId}>
-  //       {roomTitleData.roomTitle}
+  //     <option key={index} value={hotelTitleData.hotelId}>
+  //       {hotelTitleData.hotelTitle}
   //     </option>
   //   );
   // });
 
   /*20220622 YN
-     取得輸入新增表單資料*/
+   取得輸入新增表單資料*/
   const addFormChangeHandle = (event) => {
     event.preventDefault();
     const fieldName = event.target.getAttribute("name");
@@ -85,7 +74,7 @@ function HotelAdd({ setAddShow, data }) {
     console.log(newFormData);
   };
   /*20220622 YN
-     送出時取得輸入新增表單資料，並傳到後端重整畫面*/
+   送出時取得輸入新增表單資料，並傳到後端重整畫面*/
   const addFormSubmitHandle = (event) => {
     event.preventDefault();
 
@@ -95,49 +84,28 @@ function HotelAdd({ setAddShow, data }) {
       hotelAddr: addFormData.hotelAddr,
       hotelTel: addFormData.hotelTel,
       hotelDesc: addFormData.hotelDesc,
-      hotelContent: addFormData.hotelContent,
-      cityId: addFormData.cityId,
     };
-    const formData = new FormData();
-    // for (var index in newContact) {
-    // }
-    formData.append("hotelDataList", JSON.stringify(newContact));
-    formData.append("mainHotelImgFile", selectedPrimaryFile);
-    formData.append("firstHotelImgFile", selectedFirstaryFile);
-    formData.append("secondHotelImgFile", selectedSecondFile);
-    formData.append("thirdHotelImgFile", selectedThirdFile);
-    if (selectedPrimaryFile === null) {
-      alert("請選擇照片");
-    } else if (selectedFirstaryFile === null) {
-      alert("請選擇照片");
-    } else if (selectedSecondFile === null) {
-      alert("請選擇照片");
-    } else if (selectedThirdFile === null) {
-      alert("請選擇照片");
-    } else {
-      console.log(...formData);
-    }
 
-    // fetch("http://localhost:5000/hotel/addHotel", {
+
+    // setAddFormData(newContacts);
+    // fetch("http://localhost:5000/partnership/addPartnership", {
     //   method: "POST",
     //   headers: {
     //     "Content-Type": "application/json; charset=utf-8",
     //   },
-    //   body: JSON.stringify(formData),
+    //   body: JSON.stringify(newContacts),
     // })
-    //   .then((response) => response.json())
+    //   .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
     //   .then((data) => {
-    //     if (data.status) {
-    //       setAddShow(false);
-    //       window.location.reload(false);
-    //     }
     //     console.log(data);
     //   })
     //   .catch((e) => {
     //     console.error(e);
     //   });
+    // data.push(newContacts);
+    setAddShow(false);
+    window.location.reload(false);
   };
-
   /*20220625 YN
     更換照片、預覽照片、限制照片格式*/
   const primaryImageChangeHandle = (e) => {
@@ -204,7 +172,6 @@ function HotelAdd({ setAddShow, data }) {
       setThirdError(true);
     }
   };
-
   return (
     <Form className="container row mt-3" onSubmit={addFormSubmitHandle}>
       <Form.Group className="col-6 d-flex ">
@@ -345,6 +312,7 @@ function HotelAdd({ setAddShow, data }) {
       </Form.Group>
       <Form.Group className="col-6">
         <Form.Group>
+          <Form.Label>飯店名稱</Form.Label>
           <Form.Control
             type="text"
             name="hotelTitle"
@@ -354,24 +322,17 @@ function HotelAdd({ setAddShow, data }) {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Select name="cityId" onChange={addFormChangeHandle}>
-            <option defaultValue>請選擇區域</option>
-            <option value={1}>台北市</option>
-            <option value={2}>台中市</option>
-            <option value={3}>台南市</option>
-            <option value={4}>台東市</option>
-          </Form.Select>
-        </Form.Group>
-        <Form.Group>
+          <Form.Label>地址</Form.Label>
           <Form.Control
             type="text"
             name="hotelAddr"
             required="required"
-            placeholder="請輸入地址"
+            placeholder="請輸入飯店地址"
             onChange={addFormChangeHandle}
           />
         </Form.Group>
         <Form.Group>
+          <Form.Label>聯絡電話</Form.Label>
           <Form.Control
             type="text"
             name="hotelTel"
@@ -381,32 +342,26 @@ function HotelAdd({ setAddShow, data }) {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Control
-            type="text"
-            name="hotelDesc"
-            required="required"
-            placeholder="備註"
-            onChange={addFormChangeHandle}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label></Form.Label>
+          <Form.Label>備註</Form.Label>
           <Form.Control
             as="textarea"
             rows={3}
-            placeholder="請輸入飯店介紹"
-            name="hotelContent"
+            placeholder="xxx"
+            name="hotelDesc"
             onChange={addFormChangeHandle}
           />
         </Form.Group>
       </Form.Group>
       <div className="mt-1 mb-1 d-flex justify-content-end">
+        <Button className="mt-3 mb-3 me-1">
+          修改
+        </Button>
         <Button className="mt-3 mb-3" type="submit">
-          新增
+          儲存
         </Button>
       </div>
     </Form>
   );
 }
 
-export default HotelAdd;
+export default HotelViewEdits;

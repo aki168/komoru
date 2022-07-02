@@ -16,7 +16,6 @@ function Order() {
   入住資料狀態初始化*/
   const [orderData, setOrderData] = useState([]);
 
-
   /*20220617 YN
   接後端api取後端資料*/
   useEffect(() => {
@@ -34,8 +33,8 @@ function Order() {
   /*20220628 YN
   取得目前選取列表orderData資料，並設定orderData狀態*/
   const orderStatusChange = (index) => {
-    setOrderData(data[index])
-  }
+    setOrderData(data[index]);
+  };
   /*20220628 YN
   判斷目前取得的orderStatus狀態資料是否為"未入住"，並轉換狀態*/
   const unCheckInHandle = () => {
@@ -44,9 +43,9 @@ function Order() {
       const orderLists = {
         orderId: orderData.orderId,
         orderStatus: "0",
-        employeeId: "1"
-      }
-      console.log(orderLists)
+        employeeId: "1",
+      };
+      console.log(orderLists);
       fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
         method: "POST",
         headers: {
@@ -63,40 +62,44 @@ function Order() {
         });
       window.location.reload(false);
     } else {
-      alert("目前以'未入住'狀態")
+      alert("目前以'未入住'狀態");
     }
-
-  }
+  };
   /*20220628 YN
   判斷目前取得的orderStatus狀態資料是否為"已入住"，並轉換狀態*/
   const checkInHandle = () => {
     // console.log(orderData.orderStatus)
+
     if (orderData.orderStatus !== "已入住") {
-      const orderLists = {
-        orderId: orderData.orderId,
-        orderStatus: "1",
-        employeeId: "1"
-      }
-      console.log(orderLists)
-      fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify(orderLists),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
+      if (window.confirm("確定修改嗎?")) {
+        const orderLists = {
+          orderId: orderData.orderId,
+          orderStatus: "1",
+          employeeId: "1",
+        };
+        console.log(orderLists);
+        fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          body: JSON.stringify(orderLists),
         })
-        .catch((e) => {
-          console.error(e);
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+        window.location.reload(false);
+        alert("修改成功");
+      }
     } else {
-      alert("目前為'已入住'狀態")
+      alert("目前為'已入住'狀態");
     }
-    window.location.reload(false);
   };
+
   /*20220628 YN
   判斷目前取得的orderStatus狀態資料是否為"已退房"，並轉換狀態*/
   const checkOutHandle = () => {
@@ -105,9 +108,9 @@ function Order() {
       const orderLists = {
         orderId: orderData.orderId,
         orderStatus: "2",
-        employeeId: "1"
-      }
-      console.log(orderLists)
+        employeeId: "1",
+      };
+      console.log(orderLists);
       fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
         method: "POST",
         headers: {
@@ -123,7 +126,7 @@ function Order() {
           console.error(e);
         });
     } else {
-      alert("目前以'已退房'狀態")
+      alert("目前以'已退房'狀態");
     }
     window.location.reload(false);
   };
@@ -133,10 +136,7 @@ function Order() {
   const arr = data.map((data, index) => {
     return (
       // console.log(values.hotelTitle)
-      <tr
-        key={data.orderId}
-        className="form-check-label"
-      >
+      <tr key={data.orderId} className="form-check-label">
         <td>
           <input
             className="form-check-input"
@@ -168,7 +168,7 @@ function Order() {
   const pageVisited = pageNumber * userPerPage;
   /*20220616 YG
   利用變數取畫面上顯示資料 */
-  const displayUsers = arr.slice(pageVisited, pageVisited + userPerPage)
+  const displayUsers = arr.slice(pageVisited, pageVisited + userPerPage);
 
   /*20220616 YG
   (react-paginate參數)
@@ -201,9 +201,21 @@ function Order() {
             </div>
             <div className="col-sm-5">
               <div className="d-flex justify-content-end">
-                <button onClick={unCheckInHandle} className=" btn btn-success">未入住</button>
-                <button onClick={checkInHandle} className="btn btn-success ms-2">已入住</button>
-                <button onClick={checkOutHandle} className="btn btn-success ms-2">已退房</button>
+                <button onClick={unCheckInHandle} className=" btn btn-success">
+                  未入住
+                </button>
+                <button
+                  onClick={checkInHandle}
+                  className="btn btn-success ms-2"
+                >
+                  已入住
+                </button>
+                <button
+                  onClick={checkOutHandle}
+                  className="btn btn-success ms-2"
+                >
+                  已退房
+                </button>
               </div>
             </div>
             <div className="col-sm-2 d-flex justify-content-end">
