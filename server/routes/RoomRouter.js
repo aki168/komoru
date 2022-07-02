@@ -41,7 +41,7 @@ router.post(
 // 取得房型資料 By roomId
 router.post("/getRoomDataByRoomId", roomController.getRoomDataByRoomId);
 
-// 2022-06-18 PG
+// 2022-06-29 PG
 // 新增房型
 router.post(
   "/addRoom",
