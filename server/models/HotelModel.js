@@ -74,8 +74,11 @@ exports.addHotelWithImg = async (dataList) => {
       if (err) {
         reject(err);
       } else {
-        // 如果飯店新增成功才繼續新增照片
-        if (result.serverStatus == 2) {
+        // 如果飯店新增成功，並且有傳照片才繼續新增照片後續處理
+        if (
+          result.serverStatus == 2 &&
+          Object.keys(returnImgDataList).length != 0
+        ) {
           // 確保跑完照片動作才 resolve，目前想不到其他執行順序問題所產生的非同步狀況
           let count = 0;
           Object.entries(returnImgDataList).forEach(
@@ -88,7 +91,7 @@ exports.addHotelWithImg = async (dataList) => {
               let addImgValue = [
                 result.insertId,
                 "tmp",
-                imgDataKey == "main" ? "0" : "1",
+                imgDataKey == "mainHotelImgFile" ? "0" : "1",
                 dataList.employeeId,
                 db.getDateTimeNow(),
               ];

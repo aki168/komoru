@@ -83,79 +83,79 @@ const getHotelImgDataListByHotelId = async (hotelId, res) => {
 // 新增飯店和照片
 // return：json
 exports.addHotelWithImg = async (req, res, next) => {
-  let data = JSON.parse(req.body.hotelDataList);
-  let checkDataResult = checkData(data, [
-    "hotelTitle",
-    "hotelAddr",
-    "hotelTel",
-    "hotelDesc",
-    "employeeId",
+  let checkFieldsResult = checkData({ hotelDataList: req.body.hotelDataList }, [
+    "hotelDataList",
   ]);
-  let mainImg = req.files.mainHotelImgFile[0];
-  let firstImg = req.files.firstHotelImgFile[0];
-  let secondImg = req.files.secondHotelImgFile[0];
-  let thirdImg = req.files.thirdHotelImgFile[0];
 
-  data.hotelImgPath = "/images/hotel/hotel-";
-  // 整理照片資訊：副檔名、檔案路徑含原始檔名、檔案路徑
-  data.hotelImgDataList = {
-    main: {
-      mimetype: mainImg.mimetype.substr(mainImg.mimetype.indexOf("/") + 1),
-      originName: mainImg.destination + mainImg.filename,
-      destination: mainImg.destination,
-    },
-    first: {
-      mimetype: firstImg.mimetype.substr(firstImg.mimetype.indexOf("/") + 1),
-      originName: firstImg.destination + firstImg.filename,
-      destination: mainImg.destination,
-    },
-    second: {
-      mimetype: secondImg.mimetype.substr(secondImg.mimetype.indexOf("/") + 1),
-      originName: secondImg.destination + secondImg.filename,
-      destination: mainImg.destination,
-    },
-    third: {
-      mimetype: thirdImg.mimetype.substr(thirdImg.mimetype.indexOf("/") + 1),
-      originName: thirdImg.destination + thirdImg.filename,
-      destination: mainImg.destination,
-    },
-  };
-  // 判斷是否有空值、沒有傳需要的資料
-  if (checkDataResult.errCheck) {
-    await hotelModel
-      .addHotelWithImg(data)
-      .then((result) => {
-        // 判斷資料庫執行狀態是否為成功
-        if (result.status == 2) {
-          // 將檔案更名為 id 格式
-          Object.values(result.hotelImgDataList).forEach((imgDataValue) => {
-            fs.rename(
-              imgDataValue.originName,
-              imgDataValue.destination +
-                "hotel-" +
-                imgDataValue.hotelImgId +
-                "." +
-                imgDataValue.mimetype,
-              function (err) {
-                if (err) configController.sendJsonMsg(res, false, err, []);
-              }
-            );
-          });
+  // 判斷有沒有傳送飯店資料
+  if (checkFieldsResult.errCheck) {
+    let data = JSON.parse(req.body.hotelDataList);
+    let checkDataResult = checkData(data, [
+      "hotelTitle",
+      "hotelAddr",
+      "hotelTel",
+      "hotelDesc",
+      "employeeId",
+    ]);
+    // 判斷是否有空值、沒有傳需要的資料
+    if (checkDataResult.errCheck) {
+      data.hotelImgDataList = {};
 
-          configController.sendJsonMsg(res, true, "", {
-            hotelId: result.hotelId,
+      let fileLength = Object.keys(req.files).length;
+      // 判斷是否有傳照片
+      if (fileLength != 0) {
+        data.hotelImgPath = "/images/hotel/hotel-";
+        // 整理照片資訊：副檔名、檔案路徑含原始檔名、檔案路徑
+        Object.entries(req.files).forEach(([key, value]) => {
+          Object.assign(data.hotelImgDataList, {
+            [key]: {
+              mimetype: value[0].mimetype.substr(
+                value[0].mimetype.indexOf("/") + 1
+              ),
+              originName: value[0].destination + value[0].filename,
+              destination: value[0].destination,
+            },
           });
-        } else {
-          configController.sendJsonMsg(res, false, "SQL未預期錯誤", []);
-        }
-      })
-      .catch((err) => {
-        // 目前不確定這邊要怎改
-        console.log(err);
-        res.status(500).json({ message: "Server error" });
-      });
+        });
+      }
+      await hotelModel
+        .addHotelWithImg(data)
+        .then((result) => {
+          // 判斷資料庫執行狀態是否為成功
+          if (result.status == 2) {
+            // 如果有傳照片，將檔案更名為 id 格式
+            if (fileLength != 0) {
+              Object.values(result.hotelImgDataList).forEach((imgDataValue) => {
+                fs.rename(
+                  imgDataValue.originName,
+                  imgDataValue.destination +
+                    "hotel-" +
+                    imgDataValue.hotelImgId +
+                    "." +
+                    imgDataValue.mimetype,
+                  function (err) {
+                    if (err) configController.sendJsonMsg(res, false, err, []);
+                  }
+                );
+              });
+            }
+            configController.sendJsonMsg(res, true, "", {
+              hotelId: result.hotelId,
+            });
+          } else {
+            configController.sendJsonMsg(res, false, "SQL未預期錯誤", []);
+          }
+        })
+        .catch((err) => {
+          // 目前不確定這邊要怎改
+          console.log(err);
+          res.status(500).json({ message: "Server error" });
+        });
+    } else {
+      configController.sendJsonMsg(res, false, checkDataResult.errMsg, []);
+    }
   } else {
-    configController.sendJsonMsg(res, false, checkDataResult.errMsg, []);
+    configController.sendJsonMsg(res, false, checkFieldsResult.errMsg, []);
   }
 };
 
