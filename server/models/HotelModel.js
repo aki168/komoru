@@ -49,10 +49,13 @@ exports.getHotelDataByHotelId = async (hotelId) => {
 
 // 2022-07-01 PG
 // 新增飯店和照片
+// dataList：飯店資料
 // return：{}
 exports.addHotelWithImg = async (dataList) => {
   return new Promise((resolve, reject) => {
+    // 最後回傳 hotelImgId 用
     let returnImgDataList = dataList.hotelImgDataList;
+
     let sql =
       "INSERT INTO `Hotel` " +
       "(`city_id`, `hotel_title`, `hotel_addr`, `hotel_tel`, `hotel_content`, `hotel_desc`, `creator_id`, `create_datetime`) " +
@@ -71,11 +74,13 @@ exports.addHotelWithImg = async (dataList) => {
       if (err) {
         reject(err);
       } else {
+        // 如果飯店新增成功才繼續新增照片
         if (result.serverStatus == 2) {
+          // 確保跑完照片動作才 resolve，目前想不到其他執行順序問題所產生的非同步狀況
           let count = 0;
           Object.entries(returnImgDataList).forEach(
             ([imgDataKey, imgDataValue]) => {
-              // 新增圖片
+              // 新增照片
               let addImgSql =
                 "INSERT INTO `HotelImg` " +
                 "(`hotel_id`, `hotel_img_path`, `hotel_img_is_main`, `creator_id`, `create_datetime`) " +
@@ -94,8 +99,9 @@ exports.addHotelWithImg = async (dataList) => {
                   if (addImgErr) {
                     reject(addImgErr);
                   } else {
+                    // 如果新增照片成功才修改照片路徑
                     if (addImgResult.serverStatus == 2) {
-                      // 修改圖片路徑
+                      // 修改照片路徑
                       let updateImgSql =
                         "UPDATE `HotelImg` SET " +
                         "`hotel_img_path` = ?, `updater_id` = ?, `update_datetime` = ? " +
@@ -116,10 +122,14 @@ exports.addHotelWithImg = async (dataList) => {
                           if (updateImgErr) {
                             reject(updateImgErr);
                           } else {
+                            // 修改成功的話把 hotelImgId 塞到要回傳的物件裡
                             returnImgDataList[imgDataKey].hotelImgId =
                               addImgResult.insertId;
                             count++;
-                            if (count == returnImgDataList.length) {
+                            // 確定跑完最後一筆才整包 resolve 回去
+                            if (
+                              count == Object.keys(returnImgDataList).length
+                            ) {
                               resolve({
                                 status: 2,
                                 hotelImgDataList: returnImgDataList,

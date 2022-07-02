@@ -50,8 +50,8 @@ exports.getRoomDataByRoomId = async (roomId) => {
   });
 };
 
-// 2022-06-18 PG
-// 新增房型
+// 2022-06-29 PG
+// 新增房型和照片
 // return：{}
 exports.addRoomWithImg = async (dataList) => {
   return new Promise((resolve, reject) => {
@@ -71,8 +71,9 @@ exports.addRoomWithImg = async (dataList) => {
       if (err) {
         reject(err);
       } else {
+        // 如果房型新增成功才繼續新增照片
         if (result.serverStatus == 2) {
-          // 新增圖片
+          // 新增照片
           let addImgSql =
             "INSERT INTO `RoomImg` " +
             "(`room_id`, `room_img_path`, `room_img_is_main`, `creator_id`, `create_datetime`) " +
@@ -88,8 +89,9 @@ exports.addRoomWithImg = async (dataList) => {
             if (addImgErr) {
               reject(addImgErr);
             } else {
+              // 如果新增照片成功才修改照片路徑
               if (addImgResult.serverStatus == 2) {
-                // 修改圖片路徑
+                // 修改照片路徑
                 let updateImgSql =
                   "UPDATE `RoomImg` SET " +
                   "`room_img_path` = ?, `updater_id` = ?, `update_datetime` = ? " +

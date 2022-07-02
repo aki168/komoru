@@ -59,8 +59,8 @@ exports.getRoomDataByRoomId = async (req, res, next) => {
   }
 };
 
-// 2022-06-18 PG
-// 新增房型
+// 2022-06-29 PG
+// 新增房型和照片
 // return：json
 exports.addRoomWithImg = async (req, res, next) => {
   let data = JSON.parse(req.body.roomDataList);
@@ -71,10 +71,13 @@ exports.addRoomWithImg = async (req, res, next) => {
     "roomDesc",
     "employeeId",
   ]);
+
+  // 整理照片資訊
   let img = req.files.roomImgFile[0];
   let mimetype = img.mimetype.substr(img.mimetype.indexOf("/") + 1);
   data.roomImgPath = "/images/room/room-";
   data.mimetype = mimetype;
+
   // 判斷是否有空值、沒有傳需要的資料
   if (checkDataResult.errCheck) {
     await roomModel
@@ -82,6 +85,7 @@ exports.addRoomWithImg = async (req, res, next) => {
       .then((result) => {
         // 判斷資料庫執行狀態是否為成功
         if (result.status == 2) {
+          // 將檔案更名為 id 格式
           fs.rename(
             img.destination + img.filename,
             img.destination + "room-" + result.roomImgId + "." + mimetype,

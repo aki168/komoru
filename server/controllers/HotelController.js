@@ -83,8 +83,6 @@ const getHotelImgDataListByHotelId = async (hotelId, res) => {
 // 新增飯店和照片
 // return：json
 exports.addHotelWithImg = async (req, res, next) => {
-  // console.log(req.body)
-  // console.log(req.files)
   let data = JSON.parse(req.body.hotelDataList);
   let checkDataResult = checkData(data, [
     "hotelTitle",
@@ -99,26 +97,27 @@ exports.addHotelWithImg = async (req, res, next) => {
   let thirdImg = req.files.thirdHotelImgFile[0];
 
   data.hotelImgPath = "/images/hotel/hotel-";
+  // 整理照片資訊：副檔名、檔案路徑含原始檔名、檔案路徑
   data.hotelImgDataList = {
     main: {
       mimetype: mainImg.mimetype.substr(mainImg.mimetype.indexOf("/") + 1),
       originName: mainImg.destination + mainImg.filename,
-      destination:mainImg.destination
+      destination: mainImg.destination,
     },
     first: {
       mimetype: firstImg.mimetype.substr(firstImg.mimetype.indexOf("/") + 1),
       originName: firstImg.destination + firstImg.filename,
-      destination:mainImg.destination
+      destination: mainImg.destination,
     },
     second: {
       mimetype: secondImg.mimetype.substr(secondImg.mimetype.indexOf("/") + 1),
       originName: secondImg.destination + secondImg.filename,
-      destination:mainImg.destination
+      destination: mainImg.destination,
     },
     third: {
       mimetype: thirdImg.mimetype.substr(thirdImg.mimetype.indexOf("/") + 1),
       originName: thirdImg.destination + thirdImg.filename,
-      destination:mainImg.destination
+      destination: mainImg.destination,
     },
   };
   // 判斷是否有空值、沒有傳需要的資料
@@ -128,18 +127,20 @@ exports.addHotelWithImg = async (req, res, next) => {
       .then((result) => {
         // 判斷資料庫執行狀態是否為成功
         if (result.status == 2) {
-          Object.values(result.hotelImgDataList).forEach(
-            imgDataValue => {
-              console.log(imgDataValue);
-              fs.rename(
-                imgDataValue.originName,
-                imgDataValue.destination + "hotel-" + imgDataValue.hotelImgId + "." + imgDataValue.mimetype,
-                function (err) {
-                  if (err) configController.sendJsonMsg(res, false, err, []);
-                }
-              );
-            }
-          );
+          // 將檔案更名為 id 格式
+          Object.values(result.hotelImgDataList).forEach((imgDataValue) => {
+            fs.rename(
+              imgDataValue.originName,
+              imgDataValue.destination +
+                "hotel-" +
+                imgDataValue.hotelImgId +
+                "." +
+                imgDataValue.mimetype,
+              function (err) {
+                if (err) configController.sendJsonMsg(res, false, err, []);
+              }
+            );
+          });
 
           configController.sendJsonMsg(res, true, "", {
             hotelId: result.hotelId,
