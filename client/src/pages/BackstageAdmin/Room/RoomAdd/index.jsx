@@ -3,10 +3,10 @@ import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { BsFillArrowUpSquareFill } from "react-icons/bs";
 
-function RoomAdd({ setAddShow, data }) {
+function RoomAdd({ setAddShow, data, hotelData }) {
   /*20220622 YN
    飯店資料初始化*/
-  const [hotelData, setHotelData] = useState([]);
+  // const [hotelData, setHotelData] = useState([]);
 
   /*20220622 YN
    房型資料初始化*/
@@ -35,17 +35,17 @@ function RoomAdd({ setAddShow, data }) {
 
   /*20220622 YN
    取得後端飯店資料*/
-  useEffect(() => {
-    axios
-      .post(
-        "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
-      )
-      .then((res) => {
-        // console.log(res.data.dataList);
-        setHotelData(res.data.dataList);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .post(
+  //       "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
+  //     )
+  //     .then((res) => {
+  //       // console.log(res.data.dataList);
+  //       setHotelData(res.data.dataList);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   /*20220628 YN
    將飯店資料map成飯店選項*/

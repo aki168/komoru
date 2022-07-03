@@ -44,32 +44,42 @@ function HotelAdd({ setAddShow, data }) {
 
   /*20220622 YN
      取得後端飯店資料*/
-  useEffect(() => {
-    axios
-      .post(
-        "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
-      )
-      .then((res) => {
-        console.log(res.data.dataList);
-        setHotelData(res.data.dataList);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .post(
+  //       "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
+  //     )
+  //     .then((res) => {
+  //       console.log(res.data.dataList);
+  //       setHotelData(res.data.dataList);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
-  // const hotelTitleArr = hotelData.map((hotelTitleData, index) => {
-  //     return (
-  //         <option key={index} value={hotelTitleData.hotelId}>
-  //             {hotelTitleData.hotelTitle}
-  //         </option>
-  //     );
-  // });
-  // const roomTitleArr = roomData.map((roomTitleData, index) => {
-  //   return (
-  //     <option key={index} value={roomTitleData.roomId}>
-  //       {roomTitleData.roomTitle}
-  //     </option>
-  //   );
-  // });
+  // async function fetchFunction() {
+  //   try{
+  //   const response = await fetch(`http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName`);
+  //   const json = await response.json();
+  //   }
+  //   catch(err) {
+  //     throw err;
+  //     console.log(err);
+  //   }
+  // }
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const res = await axios
+  //       .post(
+  //         "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
+  //       )
+  //       .then((res) => {
+  //         console.log(res.data.dataList);
+  //         setHotelData(res.data.dataList);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   };
+  //   getData();
+  // }, []);
 
   /*20220622 YN
      取得輸入新增表單資料*/
@@ -99,31 +109,26 @@ function HotelAdd({ setAddShow, data }) {
       cityId: addFormData.cityId,
     };
     const formData = new FormData();
-    // for (var index in newContact) {
-    // }
     formData.append("hotelDataList", JSON.stringify(newContact));
     formData.append("mainHotelImgFile", selectedPrimaryFile);
     formData.append("firstHotelImgFile", selectedFirstaryFile);
     formData.append("secondHotelImgFile", selectedSecondFile);
     formData.append("thirdHotelImgFile", selectedThirdFile);
-    if (selectedPrimaryFile === null) {
-      alert("請選擇照片");
-    } else if (selectedFirstaryFile === null) {
-      alert("請選擇照片");
-    } else if (selectedSecondFile === null) {
-      alert("請選擇照片");
-    } else if (selectedThirdFile === null) {
-      alert("請選擇照片");
-    } else {
-      console.log(...formData);
-    }
+    // if (selectedPrimaryFile === null) {
+    //   alert("請選擇照片");
+    // } else if (selectedFirstaryFile === null) {
+    //   alert("請選擇照片");
+    // } else if (selectedSecondFile === null) {
+    //   alert("請選擇照片");
+    // } else if (selectedThirdFile === null) {
+    //   alert("請選擇照片");
+    // } else {
+    // }
+    console.log(...formData);
 
     // fetch("http://localhost:5000/hotel/addHotel", {
     //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json; charset=utf-8",
-    //   },
-    //   body: JSON.stringify(formData),
+    //   body: formData,
     // })
     //   .then((response) => response.json())
     //   .then((data) => {

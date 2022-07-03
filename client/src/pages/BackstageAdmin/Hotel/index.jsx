@@ -42,7 +42,7 @@ function Hotel() {
         "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
       )
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setData(res.data.dataList);
       })
       .catch((err) => console.log(err));
@@ -127,7 +127,7 @@ function Hotel() {
   const handleEditShow = (index) => {
     setEditShow(true);
     setEditData(data[index]);
-    // console.log(data[index])
+    console.log(data[index])
   };
 
   // const handleEditShow = () => setEditShow(true);
@@ -241,7 +241,11 @@ function Hotel() {
         onHide={handleEditClose}
       >
         <Modal.Header closeButton></Modal.Header>
-        <HotelViewEdits />
+        <HotelViewEdits 
+        editData={editData}
+        setEditShow={setEditShow}
+        data={data}
+        />
       </Modal>
     </>
   );

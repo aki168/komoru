@@ -1,22 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { nanoid } from "nanoid";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { BsFillArrowUpSquareFill } from "react-icons/bs";
 
-function HotelViewEdits({ setAddShow }) {
-  /*20220622 YN
-   飯店資料初始化*/
-  const [hotelData, setHotelData] = useState([]);
-  /*20220622 YN
-   新增表單資料初始化*/
-  const [addFormData, setAddFormData] = useState({
-    employeeId: "1",
+function HotelViewEdits({ setEditShow, editData, data }) {
+  /*20220624 YN
+  修改資料初始化*/
+  const [editModalData, setEditModalData] = useState({
     hotelTitle: "",
+    cityId: "",
     hotelAddr: "",
     hotelTel: "",
     hotelDesc: "",
+    hotelContent: "",
+    employeeId: "1",
+    roomImgPath: "",
   });
+
+  /*20220624 YN
+  修改照片資料初始化*/
+  const [mainImageData, setMainImageData] = useState();
+  const [firstImageData, setFirstImageData] = useState();
+  const [secondImageData, setSecondImageData] = useState();
+  const [thirdImageData, setThirdImageData] = useState();
+
+  /*20220622 YN
+   新增表單資料初始化*/
+  // const [addFormData, setAddFormData] = useState({
+  //   employeeId: "1",
+  //   hotelTitle: "",
+  //   hotelAddr: "",
+  //   hotelTel: "",
+  //   hotelDesc: "",
+  // });
+
   /*20220625 YN
    預覽照片狀態初始化*/
   const [primaryImgPreview, setPrimaryImgPreview] = useState(null);
@@ -38,26 +55,73 @@ function HotelViewEdits({ setAddShow }) {
   const [selectedSecondFile, setSelectedSecondFile] = useState(null);
   const [selectedThirdFile, setSelectedThirdFile] = useState(null);
 
-  /*20220622 YN
-   取得後端城市資料*/
+  /*20220624 YN
+   可否修改狀態初始化*/
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  /*20220703 YN
+  縣市狀態初始化*/
+  // const [cityData, setCityData] = useState();
+
+  /*20220701 YN
+    修改圖片狀態初始化*/
+  const [editImage, setEditImage] = useState(false);
+
+  /*20220701 YN
+     取得後端預設飯店資料*/
+  useEffect(() => {
+    // let hotelIdValue = { "hotelId": editData.hotelId}
+    // console.log(editData)
+    fetch("http://localhost:5000/hotel/getHotelDataWithImgByHotelId", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(editData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setEditModalData(data.dataList.hotelData[0]);
+        //20220703 判斷主圖
+        let mainResult = data.dataList.hotelImgDataList;
+        let mainArr = mainResult.filter((result) => {
+          return result.hotelImgIsMain === "0";
+        });
+        //20220703 判斷副圖
+        let otherResult = data.dataList.hotelImgDataList;
+        let otherArr = otherResult.filter((result) => {
+          return result.hotelImgIsMain === "1";
+        });
+
+        setMainImageData(mainArr[0].hotelImgPath);
+        setFirstImageData(otherArr[1].hotelImgPath);
+        setSecondImageData(otherArr[2].hotelImgPath);
+        setThirdImageData(otherArr[3].hotelImgPath);
+        // console.log(data.dataList.hotelImgDataList);
+        // console.log(data.dataList.hotelImgDataList[0].hotelImgPath);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }, []);
+
+  // console.log(editData)
+  /*20220701 YN
+     取得後端預設飯店資料*/
   // useEffect(() => {
   //   axios
-  //     .post(
-  //       "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
-  //     )
+  //     .post("http://localhost:5000/city/getCityDataList")
   //     .then((res) => {
-  //       // console.log(res.data.dataList);
-  //       setHotelData(res.data.dataList);
+  //       console.log(res.data.dataList);
+  //       setCityData(res.data.dataList);
   //     })
   //     .catch((err) => console.log(err));
   // }, []);
-
-  // const hotelTitleArr = hotelData.map((hotelTitleData, index) => {
-  //   return (
-  //     <option key={index} value={hotelTitleData.hotelId}>
-  //       {hotelTitleData.hotelTitle}
-  //     </option>
-  //   );
+  // console.log(cityData);
+  // /*20220701 YN
+  //  飯店資料使用map作下拉選項*/
+  // const cityArr = cityData.map((cityData, index) => {
+  //   return console.log(cityData);
   // });
 
   /*20220622 YN
@@ -67,44 +131,90 @@ function HotelViewEdits({ setAddShow }) {
     const fieldName = event.target.getAttribute("name");
     const fieldValue = event.target.value;
 
-    const newFormData = { ...addFormData };
+    const newFormData = { ...editModalData };
     newFormData[fieldName] = fieldValue;
 
-    setAddFormData(newFormData);
+    setEditModalData(newFormData);
     console.log(newFormData);
   };
   /*20220622 YN
    送出時取得輸入新增表單資料，並傳到後端重整畫面*/
   const addFormSubmitHandle = (event) => {
     event.preventDefault();
-
+    // 20220703 YN 沒更換照片傳的變數
     const newContact = {
+      hotelTitle: editModalData.hotelTitle,
+      cityId: editModalData.cityId,
+      hotelAddr: editModalData.hotelAddr,
+      hotelTel: editModalData.hotelTel,
+      hotelDesc: editModalData.hotelDesc,
+      hotelContent: editModalData.hotelContent,
       employeeId: "1",
-      hotelTitle: addFormData.hotelTitle,
-      hotelAddr: addFormData.hotelAddr,
-      hotelTel: addFormData.hotelTel,
-      hotelDesc: addFormData.hotelDesc,
+      hotelImgPath: [
+        editData.hotelImgPath,
+        firstImageData,
+        secondImageData,
+        thirdImageData,
+      ],
     };
-
-
+    // 20220703 YN 有更換照片傳的變數
+    const editContact = {
+      hotelTitle: editModalData.hotelTitle,
+      cityId: editModalData.cityId,
+      hotelAddr: editModalData.hotelAddr,
+      hotelTel: editModalData.hotelTel,
+      hotelDesc: editModalData.hotelDesc,
+      hotelContent: editModalData.hotelContent,
+      employeeId: "1",
+      hotelImgPath: "",
+    };
+    // console.log(newContact);
     // setAddFormData(newContacts);
-    // fetch("http://localhost:5000/partnership/addPartnership", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json; charset=utf-8",
-    //   },
-    //   body: JSON.stringify(newContacts),
-    // })
-    //   .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((e) => {
-    //     console.error(e);
-    //   });
-    // data.push(newContacts);
-    setAddShow(false);
-    window.location.reload(false);
+
+    if (editImage === true) {
+      const formData = new FormData();
+      formData.append("roomDataList", JSON.stringify(editContact));
+      formData.append("roomImgFile", selectedPrimaryFile);
+      formData.append("roomImgFile", selectedFirstaryFile);
+      formData.append("roomImgFile", selectedSecondFile);
+      formData.append("roomImgFile", selectedThirdFile);
+      console.log(...formData);
+      // fetch("http://localhost:5000/hotel/addHotel", {
+      //   method: "POST",
+      //   body: formData,
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     if (data.status) {
+      //       setEditShow(false);
+      //       window.location.reload(false);
+      //     }
+      //     console.log(data);
+      //   })
+      //   .catch((e) => {
+      //     console.error(e);
+      //   });
+    } else {
+      const formData = new FormData();
+      formData.append("roomDataList", JSON.stringify(newContact));
+      formData.append("roomImgFile", []);
+      console.log(...formData);
+      // fetch("http://localhost:5000/hotel/addHotel", {
+      //   method: "POST",
+      //   body: formData,
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     if (data.status) {
+      //       setEditShow(false);
+      //       window.location.reload(false);
+      //     }
+      //     console.log(data);
+      //   })
+      //   .catch((e) => {
+      //     console.error(e);
+      //   });
+    }
   };
   /*20220625 YN
     更換照片、預覽照片、限制照片格式*/
@@ -172,188 +282,268 @@ function HotelViewEdits({ setAddShow }) {
       setThirdError(true);
     }
   };
+
+  /*20220701 YN
+  修改狀態改變*/
+  const disabledClickHandle = () => {
+    setEditImage(true);
+    setIsDisabled(!isDisabled);
+  };
+
   return (
     <Form className="container row mt-3" onSubmit={addFormSubmitHandle}>
-      <Form.Group className="col-6 d-flex ">
-        <div className="container-fluid d-flex flex-column">
-          <div
-            className="col-12 h-75 justify-content-center d-flex flex-column align-items-center"
-            style={{
-              background: primaryImgPreview
-                ? `url("${primaryImgPreview}") no-repeat center/cover`
-                : "#d3d3d3",
-            }}
-          >
-            {!primaryImgPreview && (
-              <>
-                <label className="btn text-white " htmlFor="primaryfileUpload">
-                  <BsFillArrowUpSquareFill size="4em" />
-                </label>
-                <input
-                  id="primaryfileUpload"
-                  type="file"
-                  style={{ display: "none" }}
-                  onChange={primaryImageChangeHandle}
-                />
-                <p className="text-white">請選擇主要圖片</p>
-              </>
-            )}
-            {primaryError && (
-              <p className="text-center text-danger">不支援此檔案</p>
-            )}
-            <div>
-              {primaryImgPreview && (
-                <button onClick={() => setPrimaryImgPreview(null)}>
-                  更換照片
-                </button>
-              )}
+      {!editImage && (
+        <Form.Group className="col-6 d-flex ">
+          <div className="container-fluid d-flex flex-column">
+            <div
+              className="col-12 h-75 justify-content-center d-flex flex-column align-items-center"
+              style={{
+                background: `url("http://localhost:5000${mainImageData}") no-repeat center/cover`,
+              }}
+            ></div>
+            <div className="mt-2 col-md-12 d-flex h-25 container-fuield">
+              <div
+                className="me-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
+                style={{
+                  background: `url("http://localhost:5000${firstImageData}") no-repeat center/cover`,
+                }}
+              ></div>
+              <div
+                className="col-md-4 d-flex flex-column justify-content-center align-items-center"
+                style={{
+                  background: `url("http://localhost:5000${secondImageData}") no-repeat center/cover`,
+                }}
+              ></div>
+              <div
+                className="ms-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
+                style={{
+                  background: `url("http://localhost:5000${thirdImageData}") no-repeat center/cover`,
+                }}
+              ></div>
             </div>
           </div>
-          <div className="mt-2 col-md-12 d-flex h-25 container-fuield">
-            <div
-              className="me-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
-              style={{
-                background: firstImgPreview
-                  ? `url("${firstImgPreview}") no-repeat center/cover`
-                  : "#d3d3d3",
-              }}
-            >
-              {!firstImgPreview && (
-                <>
-                  <label className="btn text-white " htmlFor="firstFileUpload">
-                    <BsFillArrowUpSquareFill size="2em" />
-                  </label>
-                  <input
-                    id="firstFileUpload"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={firstImageChangeHandle}
-                  />
-                </>
-              )}
-              {firstError && (
-                <p className="text-center text-danger">不支援此檔案</p>
-              )}
-              <div>
-                {firstImgPreview && (
-                  <button onClick={() => setFirstImgPreview(null)}>
-                    更換照片
-                  </button>
-                )}
-              </div>
-            </div>
+        </Form.Group>
+      )}
 
+      {editImage && (
+        <Form.Group className="col-6 d-flex ">
+          <div className="container-fluid d-flex flex-column">
             <div
-              className="col-md-4 d-flex flex-column justify-content-center align-items-center"
+              className="col-12 h-75 justify-content-center d-flex flex-column align-items-center"
               style={{
-                background: secondImgPreview
-                  ? `url("${secondImgPreview}") no-repeat center/cover`
+                background: primaryImgPreview
+                  ? `url("${primaryImgPreview}") no-repeat center/cover`
                   : "#d3d3d3",
               }}
             >
-              {!secondImgPreview && (
+              {!primaryImgPreview && (
                 <>
-                  <label className="btn text-white " htmlFor="secondfileUpload">
-                    <BsFillArrowUpSquareFill size="2em" />
+                  <label
+                    className="btn text-white "
+                    htmlFor="primaryfileUpload"
+                  >
+                    <BsFillArrowUpSquareFill size="4em" />
                   </label>
                   <input
-                    id="secondfileUpload"
+                    id="primaryfileUpload"
                     type="file"
                     style={{ display: "none" }}
-                    onChange={secondImageChangeHandle}
+                    onChange={primaryImageChangeHandle}
                   />
+                  <p className="text-white">請選擇主要圖片</p>
                 </>
               )}
-              {secondError && (
+              {primaryError && (
                 <p className="text-center text-danger">不支援此檔案</p>
               )}
               <div>
-                {secondImgPreview && (
-                  <button onClick={() => setSecondImgPreview(null)}>
+                {primaryImgPreview && (
+                  <button onClick={() => setPrimaryImgPreview(null)}>
                     更換照片
                   </button>
                 )}
               </div>
             </div>
-            <div
-              className="ms-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
-              style={{
-                background: thirdImgPreview
-                  ? `url("${thirdImgPreview}") no-repeat center/cover`
-                  : "#d3d3d3",
-              }}
-            >
-              {!thirdImgPreview && (
-                <>
-                  <label className="btn text-white " htmlFor="fileUpload">
-                    <BsFillArrowUpSquareFill size="2em" />
-                  </label>
-                  <input
-                    id="fileUpload"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={thirdImageChangeHandle}
-                  />
-                </>
-              )}
-              {thirdError && (
-                <p className="text-center text-danger">不支援此檔案</p>
-              )}
-              <div>
-                {thirdImgPreview && (
-                  <button onClick={() => setThirdImgPreview(null)}>
-                    更換照片
-                  </button>
+            <div className="mt-2 col-md-12 d-flex h-25 container-fuield">
+              <div
+                className="me-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
+                style={{
+                  background: firstImgPreview
+                    ? `url("${firstImgPreview}") no-repeat center/cover`
+                    : "#d3d3d3",
+                }}
+              >
+                {!firstImgPreview && (
+                  <>
+                    <label
+                      className="btn text-white "
+                      htmlFor="firstFileUpload"
+                    >
+                      <BsFillArrowUpSquareFill size="2em" />
+                    </label>
+                    <input
+                      id="firstFileUpload"
+                      type="file"
+                      style={{ display: "none" }}
+                      onChange={firstImageChangeHandle}
+                    />
+                  </>
                 )}
+                {firstError && (
+                  <p className="text-center text-danger">不支援此檔案</p>
+                )}
+                <div>
+                  {firstImgPreview && (
+                    <button onClick={() => setFirstImgPreview(null)}>
+                      更換照片
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div
+                className="col-md-4 d-flex flex-column justify-content-center align-items-center"
+                style={{
+                  background: secondImgPreview
+                    ? `url("${secondImgPreview}") no-repeat center/cover`
+                    : "#d3d3d3",
+                }}
+              >
+                {!secondImgPreview && (
+                  <>
+                    <label
+                      className="btn text-white "
+                      htmlFor="secondfileUpload"
+                    >
+                      <BsFillArrowUpSquareFill size="2em" />
+                    </label>
+                    <input
+                      id="secondfileUpload"
+                      type="file"
+                      style={{ display: "none" }}
+                      onChange={secondImageChangeHandle}
+                    />
+                  </>
+                )}
+                {secondError && (
+                  <p className="text-center text-danger">不支援此檔案</p>
+                )}
+                <div>
+                  {secondImgPreview && (
+                    <button onClick={() => setSecondImgPreview(null)}>
+                      更換照片
+                    </button>
+                  )}
+                </div>
+              </div>
+              <div
+                className="ms-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
+                style={{
+                  background: thirdImgPreview
+                    ? `url("${thirdImgPreview}") no-repeat center/cover`
+                    : "#d3d3d3",
+                }}
+              >
+                {!thirdImgPreview && (
+                  <>
+                    <label className="btn text-white " htmlFor="fileUpload">
+                      <BsFillArrowUpSquareFill size="2em" />
+                    </label>
+                    <input
+                      id="fileUpload"
+                      type="file"
+                      style={{ display: "none" }}
+                      onChange={thirdImageChangeHandle}
+                    />
+                  </>
+                )}
+                {thirdError && (
+                  <p className="text-center text-danger">不支援此檔案</p>
+                )}
+                <div>
+                  {thirdImgPreview && (
+                    <button onClick={() => setThirdImgPreview(null)}>
+                      更換照片
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Form.Group>
+        </Form.Group>
+      )}
+
       <Form.Group className="col-6">
         <Form.Group>
-          <Form.Label>飯店名稱</Form.Label>
           <Form.Control
             type="text"
             name="hotelTitle"
             required="required"
-            placeholder="請輸入飯店名稱"
+            defaultValue={editModalData.hotelTitle}
             onChange={addFormChangeHandle}
+            disabled={isDisabled}
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>地址</Form.Label>
+          <Form.Select
+            name="cityId"
+            disabled={isDisabled}
+            onChange={addFormChangeHandle}
+          >
+            <option defaultValue={editModalData.cityId}>
+              {editData.cityName}
+            </option>
+            <option Value="1">台北市</option>
+            <option Value="2">台中市</option>
+            <option Value="3">台南市</option>
+            <option Value="4">台東市</option>
+          </Form.Select>
+        </Form.Group>
+        <Form.Group>
           <Form.Control
             type="text"
             name="hotelAddr"
             required="required"
-            placeholder="請輸入飯店地址"
+            defaultValue={editModalData.hotelAddr}
             onChange={addFormChangeHandle}
+            disabled={isDisabled}
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>聯絡電話</Form.Label>
           <Form.Control
             type="text"
             name="hotelTel"
             required="required"
-            placeholder="請輸入聯絡電話"
+            defaultValue={editModalData.hotelTel}
             onChange={addFormChangeHandle}
+            disabled={isDisabled}
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>備註</Form.Label>
+          <Form.Control
+            type="text"
+            name="hotelDesc"
+            // required="required"
+            placeholder="備註"
+            defaultValue={editModalData.hotelDesc}
+            onChange={addFormChangeHandle}
+            disabled={isDisabled}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label></Form.Label>
           <Form.Control
             as="textarea"
             rows={3}
-            placeholder="xxx"
-            name="hotelDesc"
+            defaultValue={editModalData.hotelContent}
+            name="hotelContent"
             onChange={addFormChangeHandle}
+            disabled={isDisabled}
           />
         </Form.Group>
       </Form.Group>
       <div className="mt-1 mb-1 d-flex justify-content-end">
-        <Button className="mt-3 mb-3 me-1">
+        <Button className="mt-3 mb-3 me-1" onClick={disabledClickHandle}>
           修改
         </Button>
         <Button className="mt-3 mb-3" type="submit">

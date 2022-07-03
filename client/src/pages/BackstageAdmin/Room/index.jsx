@@ -131,15 +131,18 @@ function Room() {
   // /*20220701 YN
   //   取得後端飯店資料*/
   useEffect(() => {
-    axios
-      .post(
-        "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
-      )
-      .then((res) => {
-        console.log(res.data.dataList);
-        setHotelData(res.data.dataList);
-      })
-      .catch((err) => console.log(err));
+    const getData = async () => {
+      const res = await axios
+        .post(
+          "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
+        )
+        .then((res) => {
+          console.log(res.data.dataList);
+          setHotelData(res.data.dataList);
+        })
+        .catch((err) => console.log(err));
+    };
+    getData();
   }, []);
   return (
     <>
@@ -190,6 +193,7 @@ function Room() {
                     data={data}
                     addShow={addShow}
                     setAddShow={setAddShow}
+                    hotelData={hotelData}
                   />
                 </Modal>
               </div>

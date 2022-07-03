@@ -241,38 +241,6 @@ function Partnership() {
                 </thead>
                 <tbody>{displayUsers}</tbody>
               </table>
-              {/* <h2>add a contact</h2>
-              <form onSubmit={handleAddFormSubmit}>
-                <input
-                  type="text"
-                  name="partnershipName"
-                  required="required"
-                  placeholder="partnershipName"
-                  onChange={handleAddFormChange}
-                />
-                <input
-                  type="text"
-                  name="cityName"
-                  required="required"
-                  placeholder="cityName"
-                  onChange={handleAddFormChange}
-                />
-                <input
-                  type="text"
-                  name="partnershipAddr"
-                  required="required"
-                  placeholder="partnershipAddr"
-                  onChange={handleAddFormChange}
-                />
-                <input
-                  type="text"
-                  name="partnershipTel"
-                  required="required"
-                  placeholder="partnershipTel"
-                  onChange={handleAddFormChange}
-                />
-                <button type="submit">ADD</button>
-              </form> */}
             </div>
           </div>
         </div>

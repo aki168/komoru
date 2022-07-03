@@ -17,6 +17,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
     roomId: "",
     roomType: "",
     employeeId: "1",
+    roomImgPath: "",
   });
 
   /*20220622 YN
@@ -42,8 +43,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
 
   /*20220624 YN
    可否修改狀態初始化*/
-   const [isDisabled, setIsDisabled] = useState(true);
-
+  const [isDisabled, setIsDisabled] = useState(true);
 
   // console.log(editImage);
   /*20220701 YN
@@ -84,46 +84,72 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
   const addFormSubmitHandle = (event) => {
     event.preventDefault();
 
+    // 20220703 YN 沒更換照片傳的變數
     const newContact = {
       hotelId: editModalData.hotelId,
       roomType: editModalData.roomType,
       liveNum: editModalData.liveNum,
       roomDesc: editModalData.roomDesc,
       employeeId: 1,
+      roomImgPath: editData.roomImgPath,
+      roomId: editModalData.roomId,
     };
+
+    // 20220703 YN 有更換照片傳的變數
+    const editContact = {
+      hotelId: editModalData.hotelId,
+      roomType: editModalData.roomType,
+      liveNum: editModalData.liveNum,
+      roomDesc: editModalData.roomDesc,
+      employeeId: 1,
+      roomImgPath: "",
+      roomId: editModalData.roomId,
+    };
+
     // console.log(newContact)
+
     if (editImage === true) {
       const formData = new FormData();
-      formData.append("roomDataList", JSON.stringify(newContact));
+      formData.append("roomDataList", JSON.stringify(editContact));
       formData.append("roomImgFile", selectedFile);
       console.log(...formData);
-      // setEditShow(false);
-      // window.location.reload(false);
+      fetch("http://localhost:5000/hotel/addHotel", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status) {
+            setEditShow(false);
+            window.location.reload(false);
+          }
+          console.log(data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+        
     } else {
       const formData = new FormData();
       formData.append("roomDataList", JSON.stringify(newContact));
-      formData.append("roomImgFile", "");
-      console.log(...formData); 
-      // setEditShow(false);
-      // window.location.reload(false);
+      formData.append("roomImgFile", {});
+      console.log(...formData);
+      fetch("http://localhost:5000/hotel/addHotel", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status) {
+            setEditShow(false);
+            window.location.reload(false);
+          }
+          console.log(data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     }
-    // const newContacts = newContact;
-
-    // setAddFormData(newContacts);
-    // fetch("http://localhost:5000/partnership/addPartnership", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json; charset=utf-8",
-    //   },
-    //   body: JSON.stringify(newContacts),
-    // })
-    //   .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((e) => {
-    //     console.error(e);
-    //   });
   };
 
   /*20220625 YN
@@ -149,7 +175,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
   修改狀態改變*/
   const disabledClickHandle = () => {
     setEditImage(true);
-    setIsDisabled(!isDisabled)
+    setIsDisabled(!isDisabled);
   };
   // /*20220701 YN
   //   取得後端飯店資料*/
@@ -225,7 +251,11 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
       <Form.Group className="col-6">
         <Form.Group>
           <Form.Label>飯店名稱</Form.Label>
-          <Form.Select name="hotelId" onChange={addFormChangeHandle} disabled={isDisabled}>
+          <Form.Select
+            name="hotelId"
+            onChange={addFormChangeHandle}
+            disabled={isDisabled}
+          >
             <option defaultValue={editData.hotelId}>
               {editData.hotelTitle}
             </option>
@@ -234,7 +264,11 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
         </Form.Group>
         <Form.Group>
           <Form.Label>房型選擇</Form.Label>
-          <Form.Select name="roomType" onChange={addFormChangeHandle} disabled={isDisabled}>
+          <Form.Select
+            name="roomType"
+            onChange={addFormChangeHandle}
+            disabled={isDisabled}
+          >
             <option defaultValue={editModalData.roomType}>
               {editData.roomType}
             </option>
