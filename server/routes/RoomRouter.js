@@ -49,4 +49,12 @@ router.post(
   roomController.addRoomWithImg
 );
 
+// 2022-07-03 PG
+// 修改房型 By roomId
+router.post(
+  "/updateRoomByRoomId",
+  upload.fields([{ name: "roomImgFile" }, { name: "roomDataList" }]),
+  roomController.updateRoomWithImgByRoomId
+);
+
 module.exports = router;

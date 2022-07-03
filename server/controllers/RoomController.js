@@ -63,50 +63,139 @@ exports.getRoomDataByRoomId = async (req, res, next) => {
 // 新增房型和照片
 // return：json
 exports.addRoomWithImg = async (req, res, next) => {
-  let data = JSON.parse(req.body.roomDataList);
-  let checkDataResult = checkData(data, [
-    "hotelId",
-    "roomType",
-    "liveNum",
-    "roomDesc",
-    "employeeId",
+  let checkFieldsResult = checkData({ roomDataList: req.body.roomDataList }, [
+    "roomDataList",
   ]);
+  // 判斷有沒有傳送房型資料
+  if (checkFieldsResult.errCheck) {
+    let data = JSON.parse(req.body.roomDataList);
+    let checkDataResult = checkData(data, [
+      "hotelId",
+      "roomType",
+      "liveNum",
+      "roomDesc",
+      "employeeId",
+    ]);
 
-  // 整理照片資訊
-  let img = req.files.roomImgFile[0];
-  let mimetype = img.mimetype.substr(img.mimetype.indexOf("/") + 1);
-  data.roomImgPath = "/images/room/room-";
-  data.mimetype = mimetype;
+    // 整理照片資訊
+    let img = req.files.roomImgFile[0];
+    let mimetype = img.mimetype.substr(img.mimetype.indexOf("/") + 1);
+    data.roomImgPath = "/images/room/room-";
+    data.mimetype = mimetype;
 
-  // 判斷是否有空值、沒有傳需要的資料
-  if (checkDataResult.errCheck) {
-    await roomModel
-      .addRoomWithImg(data)
-      .then((result) => {
-        // 判斷資料庫執行狀態是否為成功
-        if (result.status == 2) {
-          // 將檔案更名為 id 格式
-          fs.rename(
-            img.destination + img.filename,
-            img.destination + "room-" + result.roomImgId + "." + mimetype,
-            function (err) {
-              if (err) configController.sendJsonMsg(res, false, err, []);
-            }
-          );
-          configController.sendJsonMsg(res, true, "", {
-            roomId: result.roomId,
-          });
-        } else {
-          configController.sendJsonMsg(res, false, "SQL未預期錯誤", []);
-        }
-      })
-      .catch((err) => {
-        // 目前不確定這邊要怎改
-        console.log(err);
-        res.status(500).json({ message: "Server error" });
-      });
+    // 判斷是否有空值、沒有傳需要的資料
+    if (checkDataResult.errCheck) {
+      await roomModel
+        .addRoomWithImg(data)
+        .then((result) => {
+          // 判斷資料庫執行狀態是否為成功
+          if (result.status == 2) {
+            // 將檔案更名為 id 格式
+            fs.rename(
+              img.destination + img.filename,
+              img.destination + "room-" + result.roomImgId + "." + mimetype,
+              function (err) {
+                if (err) configController.sendJsonMsg(res, false, err, []);
+              }
+            );
+            configController.sendJsonMsg(res, true, "", {
+              roomId: result.roomId,
+            });
+          } else {
+            configController.sendJsonMsg(res, false, "SQL未預期錯誤", []);
+          }
+        })
+        .catch((err) => {
+          // 目前不確定這邊要怎改
+          console.log(err);
+          res.status(500).json({ message: "Server error" });
+        });
+    } else {
+      configController.sendJsonMsg(res, false, checkDataResult.errMsg, []);
+    }
   } else {
-    configController.sendJsonMsg(res, false, checkDataResult.errMsg, []);
+    configController.sendJsonMsg(res, false, checkFieldsResult.errMsg, []);
+  }
+};
+
+// 2022-07-03 PG
+// 修改房型和照片 By roomId
+// return：json
+exports.updateRoomWithImgByRoomId = async (req, res, next) => {
+  let checkFieldsResult = checkData({ roomDataList: req.body.roomDataList }, [
+    "roomDataList",
+  ]);
+  // 判斷有沒有傳送房型資料
+  if (checkFieldsResult.errCheck) {
+    let data = JSON.parse(req.body.roomDataList);
+    let checkDataResult = checkData(data, [
+      "roomId",
+      "hotelId",
+      "roomType",
+      "liveNum",
+      "roomDesc",
+      "roomImgPath",
+      "employeeId",
+    ]);
+
+    let img;
+    let mimetype;
+    // 判斷是否有傳照片
+    if (Object.keys(req.files).length != 0) {
+      // 整理照片資訊
+      img = req.files.roomImgFile[0];
+      mimetype = img.mimetype.substr(img.mimetype.indexOf("/") + 1);
+      if (data.roomImgPath == "") {
+        data.roomImgPath = "/images/room/room-";
+      }
+      data.mimetype = mimetype;
+    }
+    // 判斷是否有空值、沒有傳需要的資料
+    if (checkDataResult.errCheck) {
+      await roomModel
+        .updateRoomWithImgByRoomId(data)
+        .then((result) => {
+          // 判斷資料庫執行狀態是否為成功
+          if (result.status == 2) {
+            if (Object.keys(req.files).length != 0) {
+              // 如果已有照片的話先刪除
+              if (data.roomImgPath !== "") {
+                fs.unlink("./public" + data.roomImgPath, function (err) {
+                  if (err) configController.sendJsonMsg(res, false, err, []);
+                });
+              }
+              // 將檔案更名為 id 格式
+              fs.rename(
+                img.destination + img.filename,
+                data.roomImgPath !== ""
+                  ? "./public" + data.roomImgPath
+                  : img.destination +
+                      "room-" +
+                      result.roomImgId +
+                      "." +
+                      mimetype,
+                function (err) {
+                  if (err) configController.sendJsonMsg(res, false, err, []);
+                }
+              );
+            }
+            configController.sendJsonMsg(res, true, "", {
+              roomId: result.roomId,
+            });
+          } else {
+            configController.sendJsonMsg(res, false, "SQL未預期錯誤", []);
+          }
+        })
+        .catch((err) => {
+          // 目前不確定這邊要怎改
+          console.log(err);
+          res.status(500).json({ message: "Server error" });
+        });
+    } else {
+      configController.sendJsonMsg(res, false, checkDataResult.errMsg, []);
+    }
+  } else {
+    configController.sendJsonMsg(res, false, checkFieldsResult.errMsg, []);
   }
 };
 
@@ -121,6 +210,7 @@ const checkData = (dataList, dataColumns) => {
   dataColumns.forEach((value) => {
     switch (value) {
       case "roomDesc":
+      case "roomImgPath":
         if (typeof dataList[value] === "undefined") {
           errMsg += value + " 不可為空。";
           errCheck = false;

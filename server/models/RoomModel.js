@@ -127,3 +127,86 @@ exports.addRoomWithImg = async (dataList) => {
     });
   });
 };
+
+// 2022-07-03 PG
+// 修改房型和照片 By roomId
+// return：{}
+exports.updateRoomWithImgByRoomId = async (dataList) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "UPDATE `Room` SET " +
+      "`hotel_id` = ?, `room_type` = ?, `live_num` = ?, `room_desc` = ?, `updater_id` = ?, `update_datetime` = ? " +
+      "WHERE `Room`.`room_id` = ?; ";
+    let value = [
+      dataList.hotelId,
+      dataList.roomType,
+      dataList.liveNum,
+      dataList.roomDesc,
+      dataList.employeeId,
+      db.getDateTimeNow(),
+      dataList.roomId,
+    ];
+    db.con.query(sql, value, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        // 如果房型新增成功且沒有照片才繼續新增照片
+        if (result.serverStatus == 2 && dataList.roomImgPath == "") {
+          // 新增照片
+          let addImgSql =
+            "INSERT INTO `RoomImg` " +
+            "(`room_id`, `room_img_path`, `room_img_is_main`, `creator_id`, `create_datetime`) " +
+            "VALUES (?, ?, ?, ?, ?);";
+          let addImgValue = [
+            result.insertId,
+            "tmp",
+            "0",
+            dataList.employeeId,
+            db.getDateTimeNow(),
+          ];
+          db.con.query(addImgSql, addImgValue, (addImgErr, addImgResult) => {
+            if (addImgErr) {
+              reject(addImgErr);
+            } else {
+              // 如果新增照片成功才修改照片路徑
+              if (addImgResult.serverStatus == 2) {
+                // 修改照片路徑
+                let updateImgSql =
+                  "UPDATE `RoomImg` SET " +
+                  "`room_img_path` = ?, `updater_id` = ?, `update_datetime` = ? " +
+                  "WHERE `RoomImg`.`room_img_id` = ?;";
+                let updateImgValue = [
+                  dataList.roomImgPath +
+                    addImgResult.insertId +
+                    "." +
+                    dataList.mimetype,
+                  dataList.employeeId,
+                  db.getDateTimeNow(),
+                  addImgResult.insertId,
+                ];
+                db.con.query(
+                  updateImgSql,
+                  updateImgValue,
+                  (updateImgErr, updateImgResult) => {
+                    if (updateImgErr) {
+                      reject(updateImgErr);
+                    } else {
+                      resolve({
+                        status: updateImgResult.serverStatus,
+                        roomImgId: addImgResult.insertId,
+                      });
+                    }
+                  }
+                );
+              }
+            }
+          });
+        } else {
+          resolve({
+            status: result.serverStatus,
+          });
+        }
+      }
+    });
+  });
+};
