@@ -12,7 +12,7 @@ export default function Navbar() {
       </h1>
       <ul className="navbar--menu">
         <li>
-          <a className="navbar--item" href="/">
+          <a className="navbar--item" href="/hotelIntro">
             房型介紹
           </a>
         </li>

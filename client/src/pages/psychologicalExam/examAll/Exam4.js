@@ -14,8 +14,8 @@ const Exam4 = () => {
   // console.log(exam4Data);
   return (
     <div className="topic">
-      <p className="text">朋友被分手時</p>
-      <label className="getOp">
+      <p className="ExamQes">朋友被分手時</p>
+      <label className={exam4Data === "T" ? "colorActive" : "getOp"}>
         <input
           type="radio"
           name="qFourAnsValue"
@@ -26,7 +26,7 @@ const Exam4 = () => {
         ></input>
         你會先用邏輯分析事情的是非對錯,並提出建議
       </label>
-      <label className="getOp">
+      <label className={exam4Data === "F" ? "colorActive" : "getOp"}>
         <input
           type="radio"
           name="qFourAnsValue"

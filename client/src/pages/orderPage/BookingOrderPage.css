@@ -1,29 +1,35 @@
 .orderContainer {
-  position: relative;
+  margin: 100px auto;
+  width: 1024px;
+  /* position: relative; */
+  background-color: rgb(224, 198, 165);
 }
 
 .contentContainer {
   display: flex;
-  margin: 10px 100px;
+  margin: 10px 50px;
+  justify-content: space-between;
 }
 
+.orderList {
+  border: 1px solid black;
+  width: 450px;
+}
 .memberCheckout {
   border: 1px solid black;
-  width: 50%;
+  width: 450px;
   display: flex;
+  position: relative;
 }
 .memberImg {
-  margin: 10px;
+  position: absolute;
+  top: 10px;
+  right: 50px;
 }
 
 .memberContent {
   margin: 10px;
   line-height: 25px;
-}
-
-.orderList {
-  border: 1px solid rgb(230, 61, 0);
-  width: 50%;
 }
 
 .marginContainer {
@@ -41,7 +47,6 @@
 
 .checkoutBtn {
   padding: 10px 30px;
-  position: absolute;
   right: 100px;
 }
 

@@ -6,6 +6,18 @@ import { useEffect } from "react";
 const Day2ContentVisible = () => {
   const { activity1Data, setActivity1Data } = useContext(BookContext);
   const { activity2Data, setActivity2Data } = useContext(BookContext);
+  //日期計算
+  const { date, setDate } = useContext(BookContext);
+  let nd = new Date(date);
+  let y = nd.getFullYear();
+  let m = nd.getMonth() + 1;
+  let d = nd.getDate();
+  let fst = `${y.toString()}/${m.toString().padStart(2, "0")}/${d
+    .toString()
+    .padStart(2, "0")}`;
+  let sec = `${y.toString()}/${m.toString().padStart(2, "0")}/${(d + 1)
+    .toString()
+    .padStart(2, "0")}`;
 
   const { countActivity, setCountActivity } = useContext(BookContext);
 
@@ -40,7 +52,7 @@ const Day2ContentVisible = () => {
   return (
     <>
       <div className="activityChoice">
-        <p>第一天</p>
+        <p>{fst}</p>
         <label>
           <input
             className="rdobutton_radio"
@@ -53,7 +65,7 @@ const Day2ContentVisible = () => {
               // countActivityDaysYes();
             }}
           ></input>
-          是
+          <span className="adjustActive">參加</span>
         </label>
         {/* {disableNoVisible && ( */}
 
@@ -69,13 +81,13 @@ const Day2ContentVisible = () => {
               // countActivityDaysNo();
             }}
           ></input>
-          否
+          <span className="adjustActive">不參加</span>
         </label>
 
         {/* )} */}
       </div>
       <div className="activityChoice">
-        <p>第二天</p>
+        <p>{sec}</p>
         <label>
           <input
             className="rdobutton_radio"
@@ -88,7 +100,7 @@ const Day2ContentVisible = () => {
               // countActivityDaysYes();
             }}
           ></input>
-          是
+          <span className="adjustActive">參加</span>
         </label>
         {/* {disableNoVisible && ( */}
         <label>
@@ -103,7 +115,7 @@ const Day2ContentVisible = () => {
               // countActivityDaysNo();
             }}
           ></input>
-          否
+          <span className="adjustActive">不參加</span>
         </label>
 
         {/* )} */}

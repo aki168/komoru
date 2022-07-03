@@ -14,7 +14,7 @@ function Exam1() {
   return (
     <>
       <div className="topic">
-        <p className="text">今天去一間咖啡廳,你喜歡:</p>
+        <p className="ExamQes">今天去一間咖啡廳,你喜歡:</p>
 
         <label className={exam1Data === "0" ? "colorActive" : "getOp"}>
           <input

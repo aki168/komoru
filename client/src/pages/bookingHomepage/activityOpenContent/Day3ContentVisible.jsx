@@ -8,6 +8,22 @@ const Day3ContentVisible = () => {
   const { activity2Data, setActivity2Data } = useContext(BookContext);
   const { activity3Data, setActivity3Data } = useContext(BookContext);
 
+  //日期計算
+  const { date, setDate } = useContext(BookContext);
+  let nd = new Date(date);
+  let y = nd.getFullYear();
+  let m = nd.getMonth() + 1;
+  let d = nd.getDate();
+  let fst = `${y.toString()}/${m.toString().padStart(2, "0")}/${d
+    .toString()
+    .padStart(2, "0")}`;
+  let sec = `${y.toString()}/${m.toString().padStart(2, "0")}/${(d + 1)
+    .toString()
+    .padStart(2, "0")}`;
+  let trd = `${y.toString()}/${m.toString().padStart(2, "0")}/${(d + 2)
+    .toString()
+    .padStart(2, "0")}`;
+
   const { countActivity, setCountActivity } = useContext(BookContext);
   useEffect(() => {
     if (
@@ -61,89 +77,101 @@ const Day3ContentVisible = () => {
   return (
     <>
       <div className="activityChoice">
-        <p>第一天</p>
-        <input
-          className="rdobutton_radio"
-          type="radio"
-          name="pick1stActivity"
-          id="activityId"
-          value="1"
-          onChange={(e) => {
-            setActivity1Data(e.target.value);
-          }}
-        ></input>
-        <label htmlFor="yes">是</label>
-        {/* {disableVisible && ( */}
-        <>
+        <p>{fst}</p>
+        <label>
           <input
             className="rdobutton_radio"
             type="radio"
             name="pick1stActivity"
             id="activityId"
-            value="2"
+            value="1"
             onChange={(e) => {
               setActivity1Data(e.target.value);
             }}
           ></input>
-          <label htmlFor="yes">否</label>
+          <span className="adjustActive">參加</span>
+        </label>
+        {/* {disableVisible && ( */}
+        <>
+          <label>
+            <input
+              className="rdobutton_radio"
+              type="radio"
+              name="pick1stActivity"
+              id="activityId"
+              value="2"
+              onChange={(e) => {
+                setActivity1Data(e.target.value);
+              }}
+            ></input>
+            <span className="adjustActive">不參加</span>
+          </label>
         </>
         {/* )} */}
       </div>
       <div className="activityChoice">
-        <p>第二天</p>
-        <input
-          className="rdobutton_radio"
-          type="radio"
-          name="pick2stActivity"
-          id="activityId"
-          value="3"
-          onChange={(e) => {
-            setActivity2Data(e.target.value);
-          }}
-        ></input>
-        <label htmlFor="yes">是</label>
-        {/* {disableVisible && ( */}
-        <>
+        <p>{sec}</p>
+        <label>
           <input
             className="rdobutton_radio"
             type="radio"
             name="pick2stActivity"
             id="activityId"
-            value="4"
+            value="3"
             onChange={(e) => {
               setActivity2Data(e.target.value);
             }}
           ></input>
-          <label htmlFor="yes">否</label>
+          <span className="adjustActive">參加</span>
+        </label>
+        {/* {disableVisible && ( */}
+        <>
+          <label>
+            <input
+              className="rdobutton_radio"
+              type="radio"
+              name="pick2stActivity"
+              id="activityId"
+              value="4"
+              onChange={(e) => {
+                setActivity2Data(e.target.value);
+              }}
+            ></input>
+            <span className="adjustActive">不參加</span>
+          </label>
         </>
         {/* )} */}
       </div>
       <div className="activityChoice">
-        <p>第三天</p>
-        <input
-          className="rdobutton_radio"
-          type="radio"
-          name="pick3stActivity"
-          id="activityId"
-          value="5"
-          onChange={(e) => {
-            setActivity3Data(e.target.value);
-          }}
-        ></input>
-        <label htmlFor="yes">是</label>
-        {/* {disableVisible && ( */}
-        <>
+        <p>{trd}</p>
+        <label>
           <input
             className="rdobutton_radio"
             type="radio"
             name="pick3stActivity"
             id="activityId"
-            value="6"
+            value="5"
             onChange={(e) => {
               setActivity3Data(e.target.value);
             }}
-          ></input>
-          <label htmlFor="yes">否</label>
+          ></input>{" "}
+          <span className="adjustActive">參加</span>
+        </label>
+        {/* {disableVisible && ( */}
+        <>
+          <label>
+            <input
+              className="rdobutton_radio"
+              type="radio"
+              name="pick3stActivity"
+              id="activityId"
+              value="6"
+              onChange={(e) => {
+                setActivity3Data(e.target.value);
+              }}
+            ></input>
+            <span className="adjustActive">不參加</span>
+          </label>
         </>
         {/* )} */}
       </div>

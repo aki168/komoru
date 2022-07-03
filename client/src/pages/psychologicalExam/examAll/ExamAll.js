@@ -15,6 +15,11 @@ import {
   Exam5Context,
   BookContext,
 } from "../../../Helper/Context";
+import {
+  HiOutlineArrowLeft,
+  HiOutlineArrowRight,
+  HiOutlineArrowCircleRight,
+} from "react-icons/hi";
 
 const ExamAll = () => {
   const [exam1Data, setExam1Data] = useState("");
@@ -24,8 +29,12 @@ const ExamAll = () => {
   const [exam5Data, setExam5Data] = useState("");
   console.log(exam1Data, exam2Data, exam3Data, exam4Data, exam5Data);
 
+  const [personality, setPersonality] = useState("");
+  const [personalityDescribe, setPersonalityDescribe] = useState("");
+  const [activityPack, setActivityPack] = useState("");
+
   const [page, setPage] = useState(0);
-  const FormTitles = ["第一題", "第二題", "第三題", "第四題", "第五題"];
+  const FormTitles = ["問題一.", "問題二.", "問題三.", "問題四.", "問題五."];
 
   const [memberId, setMemberId] = useState("");
   useEffect(() => {
@@ -46,41 +55,6 @@ const ExamAll = () => {
         console.log(err);
       });
   }, []);
-
-  // //是否參與活動
-  const { activityState, setActivityState } = useContext(BookContext);
-  // const ExamResultHandler = (event) => {
-  //   event.preventDefault();
-
-  //   const ExamDetails = {
-  //     isActive: activityState,
-  //     memberId: memberId,
-  //     qOneAnsValue: exam1Data,
-  //     q2AnsValue: exam2Data,
-  //     q3AnsValue: exam3Data,
-  //     q4AnsValue: exam4Data,
-  //     q5AnsValue: exam5Data,
-  //   };
-  //   console.log({
-  //     isActive: activityState,
-  //     memberId: memberId,
-  //     qOneAnsValue: exam1Data,
-  //     q2AnsValue: exam2Data,
-  //     q3AnsValue: exam3Data,
-  //     q4AnsValue: exam4Data,
-  //     q5AnsValue: exam5Data,
-  //   });
-  //   fetch("http://localhost:5000/exam/getAndSaveExamData", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json; charset=utf-8",
-  //     },
-  //     body: JSON.stringify(ExamDetails),
-  //   })
-  //     .then((response) => response.json())
-  //     .then(console.log("ok"))
-  //     .catch(console.error);
-  // };
 
   //2022-06-16 -ZH
   //在同一分頁展示不同測驗題目
@@ -118,16 +92,60 @@ const ExamAll = () => {
     }
   };
 
-  //做完題目後，跳轉到examResult
-  const navigate = useNavigate();
-  const nextPage = () => {
-    if (page < 4) {
-      setPage((currentPage) => currentPage + 1);
-    } else {
-      navigate("/examResult");
+  const navigator = useNavigate();
+  //下一步按鈕去訂單明細頁面
+  const ToOrderPage = () => {
+    navigator("/bookingOrderPage", {
+      state: {
+        activityPack,
+      },
+    });
+  };
+  //顯示測驗結果畫面
+  const ExamResultDisplay = () => {
+    if (page === 5) {
+      return (
+        <>
+          <div className="examFormCantainer">
+            <h1>測驗結果</h1>
+            <h2>{personality}</h2>
+            <p className="personalityDescribe">{personalityDescribe}</p>
+            {/* <p>活動包:{activityPack}</p> */}
+            <img src="https://picsum.photos/550/450" alt="" />
+            <button onClick={ToOrderPage} className="nextStepResult">
+              查看訂單&nbsp;
+              <HiOutlineArrowCircleRight className="HiOutlineArrowCircleRight" />
+            </button>
+          </div>
+        </>
+      );
     }
+  };
+
+  const navigate = useNavigate();
+  const {
+    activityState,
+    setActivityState,
+    // personality,
+    // setPersonality,
+    // personalityDescribe,
+    // setPersonalityDescribe,
+  } = useContext(BookContext);
+  const nextPage = () => {
+    if (page < 5) {
+      setPage((currentPage) => currentPage + 1);
+    }
+    // else {
+    //   navigate("/examResult", {
+    //     state: {
+    //       personality: personality,
+    //       personalityDescribe: personalityDescribe,
+    //     },
+    //   });
+    // }
 
     if (page === 4) {
+      console.log(activityState);
       const ExamDetails = {
         isActive: activityState,
         memberId: memberId,
@@ -154,51 +172,64 @@ const ExamAll = () => {
         body: JSON.stringify(ExamDetails),
       })
         .then((response) => response.json())
-        .then(console.log("ok"))
+        .then((data) => {
+          console.log(data.dataList.personality);
+          // let personality = res.dataList.personality;
+          // let personalityDescribe = res.dataList.personalityDescribe;
+          setPersonality(data.dataList.personality);
+          setPersonalityDescribe(data.dataList.personalityDescribe);
+          setActivityPack(data.dataList.activePackType);
+        })
+        .then(console.log("okkkkk"))
         .catch(console.error);
     }
   };
 
   return (
     <div className="form">
-      <div className="progressbar">
-        <div
-          style={{
-            width:
-              page === 0
-                ? "20%"
-                : page === 1
-                ? "40%"
-                : page === 2
-                ? "60%"
-                : page === 3
-                ? "80%"
-                : "100%",
-          }}
-        ></div>
-      </div>
-      <div className="examFormCantainer">
-        <div className="header">
-          <h1>{FormTitles[page]}</h1>
-        </div>
-        <div className="body">{PageDisplay()}</div>
+      {personality === "" && (
+        <>
+          <div className="progressbar">
+            <div
+              style={{
+                width:
+                  page === 0
+                    ? "20%"
+                    : page === 1
+                    ? "40%"
+                    : page === 2
+                    ? "60%"
+                    : page === 3
+                    ? "80%"
+                    : "100%",
+              }}
+            ></div>
+          </div>
+          <div className="examFormCantainer">
+            <div>
+              <p className="headerTitle">{FormTitles[page]}</p>
+            </div>
+            <div className="body">{PageDisplay()}</div>
 
-        <div className="footer">
-          <button
-            disabled={page === 0}
-            onClick={() => {
-              setPage((page) => page - 1);
-            }}
-            className="prevBtn"
-          >
-            上一步
-          </button>
-          <button onClick={nextPage} className="nextBtn">
-            下一步
-          </button>
-          {/* {(page = 5) && <button onClick={ExamResultHandler}>完成測驗</button>} */}
-        </div>
-      </div>
+            <div className="footer">
+              <button
+                disabled={page === 0}
+                onClick={() => {
+                  setPage((page) => page - 1);
+                }}
+                className="prevBtn"
+              >
+                <HiOutlineArrowLeft />
+              </button>
+              <button onClick={nextPage} className="nextBtn">
+                <HiOutlineArrowRight />
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {ExamResultDisplay()}
     </div>
   );
 };

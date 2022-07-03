@@ -8,9 +8,9 @@ const Exam2 = () => {
   // console.log(exam2Data);
   return (
     <div className="topic">
-      <p className="text">休假時,我會:</p>
+      <p className="ExamQes">休假時,我會:</p>
 
-      <label className="getOp">
+      <label className={exam2Data === "I" ? "colorActive" : "getOp"}>
         <input
           type="radio"
           name="qTwoAnsValue"
@@ -22,7 +22,7 @@ const Exam2 = () => {
         在家追劇
       </label>
 
-      <label className="getOp">
+      <label className={exam2Data === "E" ? "colorActive" : "getOp"}>
         <input
           type="radio"
           name="qTwoAnsValue"

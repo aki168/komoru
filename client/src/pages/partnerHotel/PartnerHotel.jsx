@@ -27,6 +27,16 @@ const PartnerHotel = () => {
   const [current3, setCurrent3] = useState(0);
   const [current4, setCurrent4] = useState(0);
 
+  useEffect(() => {
+    axios
+      .post("http://localhost:5000/hotel/getHotelDataWithImgByHotelId", {
+        hotelId: "4",
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  });
+
   //台北
 
   const nextSlide1 = () => {

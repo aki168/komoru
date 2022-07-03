@@ -12,7 +12,6 @@ function BookingPageImgAll() {
         "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
       )
       .then((res) => {
-        // console.log(res.data.dataList);
         setData(res.data.dataList);
       })
       .catch((err) => console.log(err));

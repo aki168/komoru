@@ -12,14 +12,17 @@ const BookingImgTaipeiBackpackerRoom = () => {
         "http://localhost:5000/room/getRoomDataListWithMainImgAndHotelNameAndCityName"
       )
       .then((res) => {
-        console.log(res.data.dataList);
         setData(res.data.dataList);
       })
       .catch((err) => console.log(err));
   }, []);
   return (
     <div className="bookingPageImgContainer">
-      <img className="bookingPageImg" src="http://localhost:5000/images/room/room-10.jpeg" alt="" />
+      <img
+        className="bookingPageImg"
+        src="http://localhost:5000/images/room/room-10.jpeg"
+        alt=""
+      />
     </div>
   );
 };

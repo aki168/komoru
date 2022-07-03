@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route ,Navigate} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 import BackstageAdmin from "./pages/BackstageAdmin";
 import BackstageLogin from "./pages/BackstageLogin";
@@ -15,7 +15,6 @@ import FeedbackPage from "./pages/userPage/FeedbackPage";
 import CouponPage from "./pages/userPage/CouponPage";
 
 //ZH
-//import { useState } from "react";
 import PsychologicalExam from "./pages/psychologicalExam/PsychologicalExam";
 import BookingHomepage from "./pages/bookingHomepage/BookingHomepage";
 import ExamResult from "./pages/psychologicalExam/examAll/ExamResult";
@@ -58,8 +57,9 @@ export const logout = () => {
 function App() {
   //2022-06-23 ZH
   //用context讓所有組件共用以下state
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState("");
   const [dayState, setDayState] = useState("");
+  const [cityState, setCityState] = useState([]);
   const [roomState, setRoomState] = useState("DEFAULT");
   const [couponState, setCouponState] = useState("");
   const [activityState, setActivityState] = useState("");
@@ -68,12 +68,17 @@ function App() {
   const [activity3Data, setActivity3Data] = useState("");
   const [countActivity, setCountActivity] = useState(Number(0));
   const [sumActivity, setSumActivity] = useState("");
+  const [cityIdValue, setCityIdValue] = useState("");
 
   const all = {
     date,
     setDate,
     dayState,
     setDayState,
+    cityState,
+    setCityState,
+    cityIdValue,
+    setCityIdValue,
     roomState,
     setRoomState,
     couponState,
@@ -93,14 +98,12 @@ function App() {
   };
   return (
     <BrowserRouter>
-      {/* YN */}
       <Routes>
+        {/* YN */}
         <Route path="/BackstageLogin" element={<BackstageLogin />}></Route>
         <Route path="/BackstageAdmin/*" element={<BackstageAdmin />}></Route>
-      </Routes>
 
-      {/* AKI */}
-      <Routes>
+        {/* AKI */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<Register />} />
@@ -118,10 +121,17 @@ function App() {
             </BookContext.Provider>
           }
         />
-        <Route path="/psychologicalExam" element={<PsychologicalExam />} />
-        <Route path="/examResult" element={<ExamResult />} />
         <Route
-          path="/bookingorderPage"
+          path="/psychologicalExam"
+          element={
+            <BookContext.Provider value={all}>
+              <PsychologicalExam />
+            </BookContext.Provider>
+          }
+        />
+
+        <Route
+          path="/bookingOrderPage"
           element={
             <BookContext.Provider value={all}>
               <BookingOrderPage />

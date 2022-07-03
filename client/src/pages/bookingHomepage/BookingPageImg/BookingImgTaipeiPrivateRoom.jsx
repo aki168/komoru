@@ -12,7 +12,6 @@ const BookingImgTaipeiPrivateRoom = () => {
         "http://localhost:5000/room/getRoomDataListWithMainImgAndHotelNameAndCityName"
       )
       .then((res) => {
-        console.log(res.data.dataList);
         setData(res.data.dataList);
       })
       .catch((err) => console.log(err));

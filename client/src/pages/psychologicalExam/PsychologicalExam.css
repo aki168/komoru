@@ -1,7 +1,16 @@
+.ExamFrame {
+  position: relative;
+  width: 1600px;
+  height: 796px;
+  margin-top: 236px;
+  margin-left: 150px;
+  border: 1px solid #ed8c4e;
+}
+
 .examContainer {
-  max-width: 1024px;
-  height: 600px;
-  margin: 0px auto;
+  width: 1450px;
+  height: 700px;
+  margin: 50px auto;
   border: 1px solid black;
-  background-color: lightgray;
+  background-image: url(./心理測驗背景.png);
 }

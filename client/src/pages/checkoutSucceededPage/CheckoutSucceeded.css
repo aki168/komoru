@@ -1,0 +1,13 @@
+.checkoutSucceededContainer {
+  border: 1px solid black;
+  width: 1000px;
+  height: 600px;
+  margin: 10px auto;
+}
+
+.checkoutSucceededContainer > p {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}

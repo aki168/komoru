@@ -7,12 +7,61 @@ import ActivityBag from "./ActivityBag";
 import axios from "axios";
 
 function BookingOrderPage() {
+  const location = useLocation();
+  // console.log(location);
+  const [activityPack, setActivityPack] = useState(location.state.activityPack);
+  const [activePackItemContent, setActivePackItemContent] = useState("");
+  const [activePackItemEndTime, setActivePackItemEndTime] = useState("");
+  const [activePackItemStartTime, setActivePackItemStartTime] = useState("");
+  const [activePackItemTitle, setActivePackItemTitle] = useState("");
+
+  const {
+    date,
+    dayState,
+    cityState,
+    cityIdValue,
+    roomState,
+    couponState,
+    activityState,
+    activity1Data,
+    activity2Data,
+    activity3Data,
+    countActivity,
+    sumActivity,
+    setSumActivity,
+  } = useContext(BookContext);
+
+  //獲取活動包
+  useEffect(() => {
+    axios
+      .post("http://localhost:5000/activePack/getActivePackData", {
+        isActive: activityState,
+        jionTotal: countActivity,
+        cityId: cityIdValue,
+        activePackType: activityPack,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setActivePackItemContent(res.data.dataList[0].activePackItemContent);
+        setActivePackItemEndTime(res.data.dataList[0].activePackItemEndTime);
+        setActivePackItemStartTime(
+          res.data.dataList[0].activePackItemStartTime
+        );
+        setActivePackItemTitle(res.data.dataList[0].activePackItemTitle);
+
+        // setShowActivityPack(res.data.dataList.activePackItemContent.activePackItemEndTime.activePackItemStartTime.activePackItemTitle);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const [memberId, setMemberId] = useState("");
   const [memberNickName, setMemberNickName] = useState("");
   const [memberName, setMemberName] = useState("");
   const [memberMail, setMemberMail] = useState("");
   const [memberPhone, setMemberPhone] = useState("");
   const [memberGender, setMemberGender] = useState("");
+
+  // const [getActivePack, setGetActivityPack] = useState("");
 
   useEffect(() => {
     axios({
@@ -25,7 +74,7 @@ function BookingOrderPage() {
       .then((res) => {
         //有登入的話，回傳「會員資訊」在res.data[0] ｜ 沒登入則回傳message
         let userData = res.data[0];
-        console.log(userData);
+        // console.log(userData);
         setMemberId(userData.memberId);
         setMemberNickName(userData.memberNickName);
         setMemberName(userData.memberName);
@@ -45,33 +94,6 @@ function BookingOrderPage() {
       return <>男</>;
     }
   };
-
-  const {
-    date,
-    dayState,
-    roomState,
-    couponState,
-    activityState,
-    activity1Data,
-    activity2Data,
-    activity3Data,
-    countActivity,
-    sumActivity,
-    setSumActivity,
-  } = useContext(BookContext);
-
-  console.log(
-    date,
-    dayState,
-    roomState,
-    couponState,
-    activityState,
-    activity1Data,
-    activity2Data,
-    activity3Data,
-    countActivity,
-    sumActivity
-  );
 
   //判斷活動包
   const [activityBag1Visible, setactivityBag1Visible] = useState(false);
@@ -162,21 +184,42 @@ function BookingOrderPage() {
   //顯示第一天活動包
   const showAvtivity1Bag = () => {
     if (activity1Data === "1") {
-      return <ActivityBag />;
+      return (
+        <>
+          <p>{activePackItemTitle}</p>
+          <p>開始時間:{activePackItemStartTime}</p>
+          <p>結束時間:{activePackItemEndTime}</p>
+          <p>{activePackItemContent}</p>
+        </>
+      );
     }
   };
 
   //顯示第二天活動包
   const showAvtivity2Bag = () => {
     if (activity2Data === "3") {
-      return <ActivityBag />;
+      return (
+        <>
+          <p>{activePackItemTitle}</p>
+          <p>開始時間:{activePackItemStartTime}</p>
+          <p>結束時間:{activePackItemEndTime}</p>
+          <p>{activePackItemContent}</p>
+        </>
+      );
     }
   };
 
   //顯示第三天活動包
   const showAvtivity3Bag = () => {
     if (activity3Data === "5") {
-      return <ActivityBag />;
+      return (
+        <>
+          <p>{activePackItemTitle}</p>
+          <p>開始時間:{activePackItemStartTime}</p>
+          <p>結束時間:{activePackItemEndTime}</p>
+          <p>{activePackItemContent}</p>
+        </>
+      );
     }
   };
 
@@ -240,107 +283,121 @@ function BookingOrderPage() {
       body: JSON.stringify(orderDetails),
     })
       .then((response) => response.json())
-      .then(console.log("ok"))
+      // .then(console.log("ok"))
       .catch(console.error);
 
     navigate("/checkoutSucceeded");
   };
 
+  //獲取活動包後端資料
+  // useEffect(() => {
+  //   axios({
+  //     method: "post",
+  //     url: "http://localhost:5000/activePack/getActivePackData",
+  //     data: { cityId: cityIdValue, activePackType: "3" },
+  //   })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setGetActivityPack(res.data.dataList);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
   return (
-    <div className="orderContainer">
-      {/* <Steps current={2}>
-        <Steps.Item title="計畫確認" />
-        <Steps.Item title="心理測驗" />
-        <Steps.Item title="訂單明細" />
-        <Steps.Item title="結帳" />
-      </Steps> */}
-      <div className="contentContainer">
-        <div className="orderList">
-          <div className="list">
-            <p>入住日期:</p>
-            <span>{date}</span>
+    <>
+      <div className="orderContainer">
+        <div className="contentContainer">
+          <div className="orderList">
+            <div className="list">
+              <p>入住日期:</p>
+              <span>{date}</span>
+            </div>
+            <div className="list">
+              <p>探索天數:</p>
+              <span>{dayState}天</span>
+            </div>
+            <div className="list">
+              <p>青旅/房型:</p>
+              <span>{handleroomStateData()}</span>
+            </div>
+            <div className="list">
+              <p>優惠券使用:</p>
+              <span>{handleCouponStateData()}</span>
+            </div>
+            <div className="list">
+              <p>是否要參與活動:</p>
+              <span>{handleActivityStateData()}</span>
+            </div>
+            <div className="list">
+              <p>活動包共{countActivity}天</p>
+            </div>
           </div>
-          <div className="list">
-            <p>探索天數:</p>
-            <span>{dayState}天</span>
-          </div>
-          <div className="list">
-            <p>青旅/房型:</p>
-            <span>{handleroomStateData()}</span>
-          </div>
-          <div className="list">
-            <p>優惠券使用:</p>
-            <span>{handleCouponStateData()}</span>
-          </div>
-          <div className="list">
-            <p>是否要參與活動:</p>
-            <span>{handleActivityStateData()}</span>
-          </div>
-          <div className="list">
-            <p>活動包共{countActivity}天</p>
-          </div>
-        </div>
-        <div className="memberCheckout">
-          <div className="memberImg">
-            <img src="https://picsum.photos/80/100" alt="" />
-          </div>
-          <div className="memberContent">
-            <p>訂購者資料</p>
-            <p>帳號:{memberMail}</p>
-            <p>姓名:{memberName}</p>
-            <p>暱稱:{memberNickName}</p>
-            <p>性別:{gender()}</p>
-            <p>手機:{memberPhone}</p>
-            <p>付款方式</p>
-            <select
-              id="expDays"
-              defaultValue={"default"}
-              className="headerDaySelect"
-            >
-              <option value="default" disabled hidden>
-                請選擇要付款的方式
-              </option>
-              <option value="1">信用卡</option>
-            </select>
+          <div className="memberCheckout">
+            <div className="memberContent">
+              <p>訂購者資料</p>
+              <p>帳號:{memberMail}</p>
+              <p>姓名:{memberName}</p>
+              <p>暱稱:{memberNickName}</p>
+              <p>性別:{gender()}</p>
+              <p>手機:{memberPhone}</p>
+              <p>付款方式</p>
+              <select
+                id="expDays"
+                defaultValue={"default"}
+                className="headerDaySelect"
+              >
+                <option value="default" disabled hidden>
+                  請選擇要付款的方式
+                </option>
+                <option value="1">信用卡</option>
+              </select>
+            </div>
+            <div className="memberImg">
+              <img src="https://picsum.photos/80/100" alt="" />
+            </div>
           </div>
         </div>
-        <div></div>
+        <div className="marginContainer">
+          {activityBag1Visible && (
+            <div className="activityList">
+              {/* 第一天活動包 */}
+              {handleActivity1Data()}
+              {showAvtivity1Bag()}
+            </div>
+          )}
+          {activityBag2Visible && (
+            <div className="activityList">
+              {/* 第二天活動包 */}
+              {handleActivity2Data()}
+              {showAvtivity2Bag()}
+            </div>
+          )}
+          {activityBag3Visible && (
+            <div className="activityList">
+              {/* 第三天活動包 */}
+              {handleActivity3Data()}
+              {showAvtivity3Bag()}
+            </div>
+          )}
+        </div>
+        <div className="marginContainer">
+          <h5>KOMORU Star Hostel 背包客房型 加購活動確認</h5>
+
+          <p>活動參與天數*{countActivity} </p>
+          <p>NT${countActivity * 700}</p>
+        </div>
+        <div className="marginContainer">
+          <p>下定金額 NT${roomSum}</p>
+          {showCoupon && <p>優惠折扣:200元</p>}
+          <p>應付金額 NT$ {sumActivity}</p>
+          <button className="checkoutBtn" onClick={CheckoutOrderHandler}>
+            下一步去結帳
+          </button>
+        </div>
       </div>
-      <div className="marginContainer">
-        {activityBag1Visible && (
-          <div className="activityList">
-            {/* 第一天活動包 */}
-            {handleActivity1Data()}
-            {showAvtivity1Bag()}
-          </div>
-        )}
-        {activityBag2Visible && (
-          <div className="activityList">
-            {/* 第二天活動包 */}
-            {handleActivity2Data()}
-            {showAvtivity2Bag()}
-          </div>
-        )}
-        {activityBag3Visible && (
-          <div className="activityList">
-            {/* 第三天活動包 */}
-            {handleActivity3Data()}
-            {showAvtivity3Bag()}
-          </div>
-        )}
-      </div>
-      <div className="marginContainer">
-        <h5>KOMORU Star Hostel 背包客房型 加購活動確認</h5>
-        <p>活動參與天數*{countActivity} </p>
-        <p>NT${countActivity * 700}</p>
-      </div>
-      <p className="marginContainer">下定金額 NT${roomSum}</p>
-      {showCoupon && <p className="marginContainer">優惠折扣:200元</p>}
-      <p className="marginContainer">應付金額 NT$ {sumActivity}</p>
-      <button className="checkoutBtn" onClick={CheckoutOrderHandler}>
-        下一步去結帳
-      </button>
-    </div>
+    </>
   );
 }
 

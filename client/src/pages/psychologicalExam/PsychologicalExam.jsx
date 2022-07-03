@@ -16,8 +16,10 @@ function PsychologicalExam() {
   // );
 
   return (
-    <div className="examContainer">
-      <ExamAll />
+    <div className="ExamFrame">
+      <div className="examContainer">
+        <ExamAll />
+      </div>
     </div>
   );
 }

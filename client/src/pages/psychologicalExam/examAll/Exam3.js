@@ -14,8 +14,8 @@ const Exam3 = () => {
   // console.log(exam3Data);
   return (
     <div className="topic">
-      <p className="text">當新款3C產品推出,你會覺得?</p>
-      <label className="getOp">
+      <p className="ExamQes">當新款3C產品推出,你會覺得?</p>
+      <label className={exam3Data === "N" ? "colorActive" : "getOp"}>
         <input
           type="radio"
           name="qThreeAnsValue"
@@ -26,7 +26,7 @@ const Exam3 = () => {
         ></input>
         哇！這想法太創新了,如何做到的？想立刻嘗試
       </label>
-      <label className="getOp">
+      <label className={exam3Data === "S" ? "colorActive" : "getOp"}>
         <input
           type="radio"
           name="qThreeAnsValue"

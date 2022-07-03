@@ -3,6 +3,16 @@ import "./DayContentVisible.css";
 import { BookContext } from "../../../Helper/Context";
 
 const Day1ContentVisible = () => {
+  //日期計算
+  const { date, setDate } = useContext(BookContext);
+  let nd = new Date(date);
+  let y = nd.getFullYear();
+  let m = nd.getMonth() + 1;
+  let d = nd.getDate();
+  let fst = `${y.toString()}/${m.toString().padStart(2, "0")}/${d
+    .toString()
+    .padStart(2, "0")}`;
+
   const { activity1Data, setActivity1Data } = useContext(BookContext);
   const { countActivity, setCountActivity } = useContext(BookContext);
   const [disable1Visible, setDisable1Visible] = useState(true);
@@ -24,9 +34,12 @@ const Day1ContentVisible = () => {
     }
   }, [activity1Data]);
 
+  // const onSubmit = (e) => {
+  //   console.log(e);
+  // };
   return (
     <div className="activityChoice">
-      <p>第一天</p>
+      <p>{fst}</p>
       <label>
         <input
           className="rdobutton_radio"
@@ -39,7 +52,7 @@ const Day1ContentVisible = () => {
             setActivity1Data(e.target.value);
           }}
         ></input>
-        要
+        <span className="adjustActive">參加</span>
       </label>
       {/* {disable1Visible && (
         <> */}
@@ -54,7 +67,7 @@ const Day1ContentVisible = () => {
             setActivity1Data(e.target.value);
           }}
         ></input>
-        否
+        <span className="adjustActive">不參加</span>
       </label>
       {/* </>
       )} */}

@@ -14,8 +14,8 @@ const Exam5 = () => {
   // console.log(exam5Data);
   return (
     <div className="topic">
-      <p className="text">查到一間有興趣的餐廳,你會?</p>
-      <label className="getOp">
+      <p className="ExamQes">查到一間有興趣的餐廳,你會?</p>
+      <label className={exam5Data === "J" ? "colorActive" : "getOp"}>
         <input
           type="radio"
           name="qFiveAnsValue"
@@ -26,7 +26,7 @@ const Exam5 = () => {
         ></input>
         神農嘗百白草!吃了就知道
       </label>
-      <label className="getOp">
+      <label className={exam5Data === "P" ? "colorActive" : "getOp"}>
         <input
           type="radio"
           name="qFiveAnsValue"
@@ -35,7 +35,7 @@ const Exam5 = () => {
           defaultChecked={exam5Data === "P"}
           onChange={(e) => setExam5Data(e.currentTarget.value)}
         ></input>
-        先看其他人的評價,再決定要不要試試看
+        先看其他人的評價,再決定是否試試看
       </label>
     </div>
   );

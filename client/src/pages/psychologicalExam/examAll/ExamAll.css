@@ -1,18 +1,33 @@
 .progressbar {
-  width: 90%;
-  max-width: 1024px;
-  margin: 30px auto;
-  height: 10px;
-  background-color: rgb(250, 245, 189);
+  width: 1396px;
+  /* max-width: 1024px; */
+  margin: 20px auto;
+  height: 16px;
+  background-color: white;
   margin-bottom: 50px;
 }
 
 .progressbar div {
   height: 100%;
-  background-color: gray;
+  background-color: #ed8c4e;
 }
 
-.examFormCantainer {
+.headerTitle {
+  font-size: 30px;
+  margin: 140px 0px 0px 120px;
+}
+
+/* .topic {
+  margin: 0;
+  border: 1px solid black;
+} */
+
+.ExamQes {
+  font-size: 36px;
+  margin: 20px 0px 0px 120px;
+}
+
+/* .examFormCantainer {
   position: relative;
   width: 90%;
   max-width: 1024px;
@@ -20,39 +35,47 @@
   margin: auto;
   border: 1px solid black;
   background-color: white;
-}
-
-/* .getOp > input[type="radio"] {
-  display: none;
 } */
+
+.getOp > input[type="radio"],
+.colorActive > input[type="radio"] {
+  display: none;
+}
 
 /* input[type="radio"] {
   color: chocolate;
 } */
 
 .getOp {
-  width: 400px;
-  height: 150px;
-  font-size: 20px;
-  text-align: center;
-  text-justify: auto;
+  width: 550px;
+  height: 165px;
+  font-size: 30px;
+  /* text-align: center;
+  text-justify: auto; */
   display: inline-block;
-  margin: 20px;
+  margin: 60px -50px 0px 130px;
   border: 1px solid black;
-  padding: 50px 20px 0px 20px;
+  padding: 30px 30px 0px 30px;
+  border-radius: 10px;
+  background-color: white;
+  color: #ed8c4e;
+  box-shadow: 3px 3px 3px rgba(91, 66, 37, 0.3);
 }
 
 .colorActive {
-  width: 400px;
-  height: 150px;
-  font-size: 20px;
-  text-align: center;
-  text-justify: auto;
+  width: 550px;
+  height: 165px;
+  font-size: 30px;
+  /* text-align: center;
+  text-justify: auto; */
   display: inline-block;
-  margin: 20px;
+  margin: 60px -50px 0px 130px;
   border: 1px solid black;
-  padding: 50px 20px 0px 20px;
+  padding: 30px 30px 0px 30px;
+  border-radius: 10px;
   background-color: rgb(247, 183, 105);
+  color: white;
+  box-shadow: 3px 3px 3px rgba(91, 66, 37, 0.3);
 }
 
 /* .topic1 {
@@ -63,22 +86,60 @@
       margin: 50px;
     } */
 
-.text {
-  font-size: 32px;
-}
-
 .prevBtn {
   position: absolute;
-  left: 10px;
-  bottom: 10px;
-  padding: 10px 20px;
-  font-size: 20px;
+  left: 120px;
+  bottom: 80px;
+  font-size: 100px;
+  background-color: rgb(255, 255, 255, 0);
+  color: #ed8c4e;
 }
 
 .nextBtn {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
-  padding: 10px 20px;
+  right: 120px;
+  bottom: 80px;
+  padding: 0px;
+  font-size: 100px;
+  background-color: rgb(255, 255, 255, 0);
+  color: #ed8c4e;
+}
+
+.nextStepResult {
+  position: absolute;
+  width: 400px;
+  height: 74px;
+  bottom: 150px;
+  left: 180px;
   font-size: 20px;
+  background-color: #0e78ff;
+  color: white;
+}
+
+.HiOutlineArrowCircleRight {
+  margin-top: -5px;
+  font-size: 25px;
+}
+
+.examFormCantainer > h1 {
+  margin: 80px 0px 0px 90px;
+}
+.examFormCantainer > h2 {
+  margin: 10px 0px 0px 100px;
+}
+
+.personalityDescribe {
+  display: inline-block;
+  width: 550px;
+  height: 250px;
+  margin: 20px 0px 20px 100px;
+  border: 1px solid black;
+}
+
+.examFormCantainer img {
+  position: absolute;
+  width: 550px;
+  height: 450px;
+  bottom: 150px;
+  right: 180px;
 }
