@@ -75,42 +75,46 @@ exports.updateOrderStatusByOrderId = async (req, res, next) => {
   }
 };
 
-// MJ
+// 2022-06-27 MJ
 // 取得並儲存訂單資料
 // req：前端傳來的訂單資料(JSON格式)
 exports.getAndSaveOrderData = async (req, res) => {
-  var data = req.body;
+  var data = req.body
+
   try {
-    let done = await orderModel.saveOrderData(data);
-    configController.sendJsonMsg(res, true, "", done);
+    await orderModel.saveOrderData(data)
+      .then((result) => {
+        orderModel.saveOrderIdToOrderItemAndExamItem(result)
+      })
+    configController.sendJsonMsg(res, true, "", '儲存成功')
+
   } catch (error) {
     configController.sendJsonMsg(
       res,
       false,
       "輸入資料有誤",
-      error["sqlMessage"]
-    );
+      error['sqlMessage']
+    )
   }
-};
+}
 
 // 2022-06-29 MJ
 // 取得coupon By memberId
 exports.getCouponData = async (req, res) => {
   var data = req.body;
-  var memberId = data["memberId"];
+  var memberId = data["memberId"]
   if (memberId) {
     try {
-      let done = await orderModel.getCouponItemDataList(memberId);
-      console.log(done);
-      configController.sendJsonMsg(res, true, "", done);
+      let done = await orderModel.getCouponItemDataList(memberId)
+      configController.sendJsonMsg(res, true, "", done)
     } catch (error) {
-      configController.sendJsonMsg(res, false, "sqlError", error["sqlMessage"]);
-      console.log(error);
+      configController.sendJsonMsg(res, false, "sqlError", error["sqlMessage"])
+      console.log(error)
     }
   } else {
-    configController.sendJsonMsg(res, false, "memberId有誤", "");
+    configController.sendJsonMsg(res, false, "memberId有誤", "")
   }
-};
+}
 
 // 2022-06-18 PG
 // 檢查資料
@@ -136,16 +140,14 @@ const checkData = (dataList, dataColumns) => {
   };
 };
 
-// 2022-06-28 AKI MJ
+// 2022-06-30 AKI MJ
 // 取得訂單資料byMemberId 
 exports.getOrderDataByMemberId = async (req, res) => {
   const { token } = req.body;
   if (token) {
-    // 解碼
-    const decoded = await promisify(jwt.verify)(token, "jwtSecret");
-    console.log(decoded);
+    //   解碼
+    const decoded = await promisify(jwt.verify)(token, "jwtSecret")
     const { memberId } = decoded
-
     await orderModel // 解碼完後對照資料庫，有的話回傳該訂單資料
       .getOrderDataByMemberId(memberId)
       .then((result) => {
