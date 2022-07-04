@@ -39,13 +39,13 @@ exports.getRoomDataListWithMainImgAndHotelNameAndCityName = async (
 };
 
 // 2022-06-15 PG
-// 取得房型資料 By roomId
+// 取得房型資料和照片 By roomId
 // return：json
-exports.getRoomDataByRoomId = async (req, res, next) => {
+exports.getRoomDataWithImgByRoomId = async (req, res, next) => {
   let data = req.body;
   if (typeof data.roomId !== "undefined") {
     await roomModel
-      .getRoomDataByRoomId(data.roomId)
+      .getRoomDataWithImgByRoomId(data.roomId)
       .then((result) => {
         configController.sendJsonMsg(res, true, "", result);
       })

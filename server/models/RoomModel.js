@@ -31,13 +31,15 @@ exports.getRoomDataListWithMainImgAndHotelNameAndCityName = async () => {
 };
 
 // 2022-06-15 PG
-// 取得房型資料 By roomId
+// 取得房型資料和照片 By roomId
 // return：({})
-exports.getRoomDataByRoomId = async (roomId) => {
+exports.getRoomDataWithImgByRoomId = async (roomId) => {
   return new Promise((resolve, reject) => {
     let sql =
-      "SELECT *" +
+      "SELECT `Room`.*, " +
+      "`RoomImg`.`room_img_path`" +
       "FROM `Room` " +
+      "JOIN `RoomImg` ON `Room`.`room_id` = `RoomImg`.`room_id` " +
       "WHERE `Room`.`room_id` = ? " +
       "AND `Room`.`is_invalid` = '1';";
     let value = roomId;

@@ -21,7 +21,7 @@ export default function FeedbackPage() {
     }
   })
 
-  //  0628 aki 抓取該會員的訂單記錄
+  //  0628 aki 抓取該會員的訂單記錄(含feedback)
   useEffect(() => {
     axios({
       method: "post",
@@ -41,26 +41,6 @@ export default function FeedbackPage() {
     })
   }, [])
 
-  //  0628 aki 抓取該會員的feedback記錄
-  // useEffect(() => {
-  //   axios({
-  //     method: "post",
-  //     url: "http://localhost:5000/feeback/getFeebeakByMemberId",
-  //     data: {
-  //       token: localStorage.token
-  //     }
-  //   }).then((res) => {
-  //     if (res.data.length) {
-  //       let postFeedbackData = res.data;
-  //       setFeedbackData(postFeedbackData) //想辦法把值取出來
-  //       setIsOrder(true)
-  //     }
-  //     console.log(res.data)
-  //   }).catch((err) => {
-  //     console.log(err)
-  //   })
-  // }, [])
-
   // 0629 aki 接收到的資料設定入元件
   const feebacks = feedbackData.map(item => {
     return (
@@ -71,6 +51,10 @@ export default function FeedbackPage() {
       />
     )
   })
+
+  const toBooking = () =>{
+    navigate('/bookingHomepage', { replace: true })
+  }
 
   return (
     <div className='wrap'>
@@ -88,7 +72,7 @@ export default function FeedbackPage() {
           {!isOrder && // 若無任何訂單的畫面
             <div className="Feedback--card--none">
               <p>目前沒有可供評論的訂單，現在就出發！</p>
-              <Button size="lg" variant="secondary">
+              <Button size="lg" variant="secondary" onClick={toBooking}>
                 Book Now
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-arrow-right-short" viewBox="0 0 16 16">
                   <path fillRule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />

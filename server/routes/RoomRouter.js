@@ -38,8 +38,8 @@ router.post(
 );
 
 // 2022-06-15 PG
-// 取得房型資料 By roomId
-router.post("/getRoomDataByRoomId", roomController.getRoomDataByRoomId);
+// 取得房型資料和照片 By roomId
+router.post("/getRoomDataWithImgByRoomId", roomController.getRoomDataWithImgByRoomId);
 
 // 2022-06-29 PG
 // 新增房型

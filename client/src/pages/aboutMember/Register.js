@@ -1,15 +1,14 @@
 import React from 'react';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbar/Navbar-simple';
 import SignIn from '../../components/SignIn/SignIn';
-import Confirm from '../../components/Confirm/Confirm';
+import '../../components/SignIn/SignIn.css'
 
 export default function Register() {
   return (
-    <div className='wrap'>
+    <div className='register--wrap'>
       <Navbar />
-      <div className='container'>
+      <div className='signIn--container'>
         <SignIn />
-        <Confirm />
       </div>
     </div>
   )
