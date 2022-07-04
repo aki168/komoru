@@ -10,9 +10,8 @@ router.use(bodyParser.json());
 
 // ----------------------------------------------------------------------------------------------------------------------
 // 2022-06-28 MJ 
-// 取得活動包內容
+// 取得活動包內容 by activePackType, cityId
 router.post('/getActivePackData', activePackController.getActivePackData)
-
 
 
 

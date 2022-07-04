@@ -10,7 +10,6 @@ exports.getActivePackDataByTypeAndCity = async (packType, cityId) => {
             "JOIN `ActivePack` ON `ActivePackItem`.`active_pack_id` = `ActivePack`.`active_pack_id`" +
             "WHERE `ActivePack`.`active_pack_type` = ?" +
             "AND `ActivePack`.`city_id` = ?" 
-        packType = packType.toString()
         let value = [packType,cityId] 
         db.con.query(sql, value,(err, rows, fields) => {
             if (err) {
