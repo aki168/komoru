@@ -1,4 +1,5 @@
 const memberModel = require("../models/MemberModel");
+const configController = require("./_ConfigController");
 const jwt = require('jsonwebtoken'); //token
 const { application } = require("express");
 const { promisify } = require('util'); // nodejs原生
@@ -142,3 +143,29 @@ exports.alertProfile = async (req, res) => {
       res.status(500).json({ message: "Server error" });
     });
 };
+
+// 0704 取得會員coupon明細 - MJ 
+exports.getCouponByMemberId = async (req, res) => {
+  const { token } = req.body;
+  if (token) {
+    //   解碼
+    const decoded = await promisify(jwt.verify)(token, "jwtSecret")
+    const { memberId } = decoded
+    // let memberId = 2
+
+    if (memberId) {
+      try {
+        let usableCouponlist = await memberModel.getUsableCouponByMemberId(memberId)
+        let UnusableCouponByMemberId = await memberModel.getUnusableCouponByMemberId(memberId)
+        configController.sendJsonMsg(res, true, "", { usableCouponlist, UnusableCouponByMemberId })
+      } catch (error) {
+        configController.sendJsonMsg(res, false, "sqlError", error["sqlMessage"])
+        console.log(error)
+      }
+    } else {
+      configController.sendJsonMsg(res, false, "memberId有誤", "")
+    }
+  } else {
+    res.json({ message: "該用戶尚未登入" })
+  }
+}
