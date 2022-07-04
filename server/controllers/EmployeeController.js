@@ -57,6 +57,13 @@ exports.checkIsLogin = async (req, res, next) => {
   }
 };
 
+// 2022-07-04 PG
+// 後台登出
+exports.logout = async (req, res, next) => {
+  req.session.destroy();
+  configController.sendJsonMsg(res, true, "", []);
+};
+
 // 2022-07-02 PG
 // 取得員工資料 dataList
 // return：json
