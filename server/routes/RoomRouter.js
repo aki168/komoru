@@ -34,7 +34,7 @@ const upload = multer({ storage: storage });
 // cityName
 router.post(
   "/getRoomDataListWithMainImgAndHotelNameAndCityName",
-  roomController.getRoomDataListWithMainImgAndRoomNameAndCityName
+  roomController.getRoomDataListWithMainImgAndHotelNameAndCityName
 );
 
 // 2022-06-15 PG
