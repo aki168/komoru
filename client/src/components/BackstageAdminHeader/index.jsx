@@ -1,6 +1,6 @@
-import React ,{useState,useEffect}from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Routes, Route, Navigate} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Order from "../../pages/BackstageAdmin/Order";
 import Partnership from "../../pages/BackstageAdmin/Partnership";
 import Dashboard from "../../pages/BackstageAdmin/Dashboard";
@@ -8,29 +8,48 @@ import Hotel from "../../pages/BackstageAdmin/Hotel";
 import Room from "../../pages/BackstageAdmin/Room";
 import Employee from "../../pages/BackstageAdmin/Employee";
 import { GrLogout } from "react-icons/gr";
+import { useNavigate } from 'react-router-dom'
+
 
 function AdminHeader() {
-  const [userName,setUserName] = useState("")
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     axios({
       method: "POST",
       url: "http://localhost:5000/employee/checkIsLogin",
-      withCredentials: true
+      withCredentials: true,
     })
       .then((res) => {
         if (res.data.status === true) {
           // console.log(res.data); // 印出撈到的資料看看
-          setUserName(res.data.dataList.employeeName)
-        } 
+          setUserName(res.data.dataList.employeeName);
+        }
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       });
-  }, [])
+  }, []);
 
+  let navigate = useNavigate();
+  const logOut = () => {
+    axios({
+      method: "POST",
+      url: "http://localhost:5000/employee/logout",
+      withCredentials: true,
+    })
+      .then((res) => {
+        if (res.data.status === true) {
+          console.log(res.data); // 印出撈到的資料看看
+          alert("已登出");
+          navigate("/BackstageLogin", { replace: true });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  
   return (
     <>
       <div
@@ -38,12 +57,12 @@ function AdminHeader() {
         style={{ background: "#EFA16A", height: "100px" }}
       >
         <h6>您好, {userName}</h6>
-        <button className="btn">
+        <button className="btn" onClick={logOut}>
           <GrLogout size="2em" color="" />
         </button>
       </div>
       <Routes>
-        <Route path="/order" element={<Order/>}></Route>
+        <Route path="/order" element={<Order />}></Route>
         <Route path="/partnership" element={<Partnership />}></Route>
         <Route path="/dashboard/*" element={<Dashboard />}></Route>
         <Route path="/hotel" element={<Hotel />}></Route>

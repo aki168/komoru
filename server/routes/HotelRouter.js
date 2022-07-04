@@ -57,4 +57,22 @@ router.post(
   hotelController.addHotelWithImg
 );
 
+// 2022-07-04 PG
+// 修改飯店 By hotelId
+router.post(
+  "/updateHotelByHotelId",
+  upload.fields([
+    { name: "hotelDataList" },
+    { name: "mainHotelImgFile" },
+    { name: "firstHotelImgFile" },
+    { name: "secondHotelImgFile" },
+    { name: "thirdHotelImgFile" },
+  ]),
+  hotelController.updateHotelWithImgByHotelId
+);
+
+// 2022-07-04 PG
+// 刪除飯店 By hotelId
+router.post("/delHotelByHotelId", hotelController.delHotelWithImgByHotelId);
+
 module.exports = router;

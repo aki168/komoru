@@ -34,6 +34,10 @@ router.post("/login", employeeController.login);
 // 檢查後台使用者是否登入
 router.post("/checkIsLogin", employeeController.checkIsLogin);
 
+// 2022-07-04 PG
+// 後台登出
+router.post("/logout", employeeController.logout);
+
 // 2022-07-02 PG
 // 取得員工資料 dataList
 router.post("/getEmployeeDataList", employeeController.getEmployeeDataList);

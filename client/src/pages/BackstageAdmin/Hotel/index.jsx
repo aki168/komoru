@@ -4,7 +4,7 @@ import axios from "axios";
 import HotelAdd from "./HotelAdd";
 import HotelViewEdits from "./HotelViewEdits";
 import { Modal } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 function Hotel() {
   /* 20220616 YN
@@ -128,12 +128,35 @@ function Hotel() {
   /*20220620 YN
   移除功能 */
   const deletFormHandle = (index) => {
-    setData(
-      data.filter((dataList) => {
-        return data[index].hotelId !== dataList.hotelId;
-      })
-    );
+    // setData(
+    //   data.filter((dataList) => {
+    //     return data[index].hotelId !== dataList.hotelId;
+    //   })
+    // );
     // console.log(dataList.partnershipId);
+    if (window.confirm("確定要移除嗎?")) {
+      const result = {
+        hotelId: `${data[index].hotelId}`,
+        employeeId: "1",
+      };
+
+      fetch("http://localhost:5000/hotel/delHotelByHotelId", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(result),
+      })
+        // .then((response) => response.json())
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+      window.location.reload(false);
+    }
   };
 
   /*20220622 YN

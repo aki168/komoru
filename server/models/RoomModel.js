@@ -212,3 +212,30 @@ exports.updateRoomWithImgByRoomId = async (dataList) => {
     });
   });
 };
+
+// 2022-07-04 PG
+// 刪除房型 By roomId
+// dataList：刪除資料
+// return：{}
+exports.delRoomByRoomId = async (dataList) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "UPDATE `Room` SET " +
+      "`is_invalid` = ?, `updater_id` = ?, `update_datetime` = ? " +
+      "WHERE `Room`.`room_id` = ?;";
+    let value = [
+      "0",
+      dataList.employeeId,
+      db.getDateTimeNow(),
+      dataList.roomId,
+    ];
+    db.con.query(sql, value, (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve({
+        status: result.serverStatus,
+      });
+    });
+  });
+};
