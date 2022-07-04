@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { nanoid } from "nanoid";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { BsFillArrowUpSquareFill } from "react-icons/bs";
@@ -126,21 +125,21 @@ function HotelAdd({ setAddShow, data }) {
     // }
     console.log(...formData);
 
-    // fetch("http://localhost:5000/hotel/addHotel", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     if (data.status) {
-    //       setAddShow(false);
-    //       window.location.reload(false);
-    //     }
-    //     console.log(data);
-    //   })
-    //   .catch((e) => {
-    //     console.error(e);
-    //   });
+    fetch("http://localhost:5000/hotel/addHotel", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status) {
+          setAddShow(false);
+          window.location.reload(false);
+        }
+        console.log(data);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   /*20220625 YN

@@ -58,14 +58,19 @@ exports.updateOrderStatusByOrderId = async (dataList) => {
 // 2022-06-22 MJ
 // 取得訂房資料
 // 傳入JSON格式資料如下
-/**{
-  "memberId": "1",
-  "orderStartDate": "2022-06-23",
-  "expDays": 1,
-  "orderStatus": "0",
-  "roomId": "4",
-  "couponItemId": "3",
-  "orderTotal": 8888,
+/**
+{
+    "memberId": "19",
+    "orderStartDate": "2022-07-03",
+    "expDays": 3,
+    "orderStatus": "0",
+    "roomId": "5",
+    "orderTotal": 8787,
+
+    "activePackId": [9,8,7],
+    "orderItemPrice": 8763,
+    "isActive":"0",
+    "joinTotal":"3"
 }
 */
 // return：JSON

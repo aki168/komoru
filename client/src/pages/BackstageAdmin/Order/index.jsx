@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import { useNavigate } from 'react-router-dom'
 // import OrderData from "./db_OrderList.json";
 
 function Order() {
@@ -15,6 +16,29 @@ function Order() {
   /*20220628 YN
   入住資料狀態初始化*/
   const [orderData, setOrderData] = useState([]);
+
+
+  // let navigate = useNavigate()
+  // useEffect(() => {
+  //   axios({
+  //     method: "POST",
+  //     url: "http://localhost:5000/employee/checkIsLogin",
+  //     withCredentials: true
+  //   })
+  //     .then((res) => {
+  //       if (res.data.status === false) {
+  //         navigate('/BackstageLogin', { replace: true })
+  //         // console.log(res.data);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     });
+  // }, [])
+
+
+
+
 
   /*20220617 YN
   接後端api取後端資料*/
@@ -183,7 +207,7 @@ function Order() {
   return (
     <>
       <div className="mx-5  mb-5">
-        <h2 className="mt-5 mb-5">訂單管理</h2>
+        <h2 className="mt-3 mb-5">訂單管理</h2>
         <div>
           <div className="row ms-5 mb-3">
             <div className="col-sm-3">

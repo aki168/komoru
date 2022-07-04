@@ -9,7 +9,7 @@ function Dashboard() {
   return (
     <>
       <div className="mx-5  mb-5">
-        <h2 className="mt-5 mb-5">分區報表</h2>
+        <h2 className="mt-3 mb-5">分區報表</h2>
         <div className="row " style={{ height: "300px" }}>
           <Link className="col bg-light me-5" to="north">
             <div>台北</div>

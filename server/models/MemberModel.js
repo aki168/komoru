@@ -29,7 +29,7 @@ exports.checkMailIsExisted = async (mail) => {
 
 // 0619 確認帳密，允許登入(controller與emailIsExisted不同) - aki
 // passwd暫時先由前端判斷
-exports.loginAuth = async (mail,passwd) => {
+exports.loginAuth = async (mail, passwd) => {
   return new Promise((resolve, reject) => {
     let sql = ' SELECT * FROM Member WHERE `member_mail` =  ? ; ';
     db.con.query(sql, mail, (err, rows, fields) => {
@@ -45,15 +45,15 @@ exports.loginAuth = async (mail,passwd) => {
 exports.register = async (mail, passwd, forgetPasswordAns, name, nickName, sex, phone) => {
   return new Promise((resolve, reject) => {
     let sql = "INSERT INTO `Member`" +
-    " (`member_mail`, `member_passwd`, `member_forget_passwd_ans`, `member_name`, `member_nick_name`, `member_gender`, `member_phone`,`create_datetime`,`update_datetime`)"+
-    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);" ;
-    let value = [ 
-      mail, 
-      passwd, 
-      forgetPasswordAns, 
-      name, 
-      nickName, 
-      sex, 
+      " (`member_mail`, `member_passwd`, `member_forget_passwd_ans`, `member_name`, `member_nick_name`, `member_gender`, `member_phone`,`create_datetime`,`update_datetime`)" +
+      " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    let value = [
+      mail,
+      passwd,
+      forgetPasswordAns,
+      name,
+      nickName,
+      sex,
       phone,
       db.getDateTimeNow(),
       db.getDateTimeNow()
@@ -92,12 +92,12 @@ exports.isLogin = async (memberId) => {
 exports.alertProfile = async (mail, name, nickName, sex, phone) => {
   return new Promise((resolve, reject) => {
     let sql = "UPDATE `Member`" +
-    " SET `member_name`=?, `member_nick_name`=?, `member_gender`=?, `member_phone`=?,`update_datetime`=?"+
-    " WHERE `member_mail` = ? " ;
+      " SET `member_name`=?, `member_nick_name`=?, `member_gender`=?, `member_phone`=?,`update_datetime`=?" +
+      " WHERE `member_mail` = ? ";
     let value = [
-      name, 
-      nickName, 
-      sex, 
+      name,
+      nickName,
+      sex,
       phone,
       db.getDateTimeNow(),
       mail
@@ -124,3 +124,45 @@ exports.alertProfile = async (mail, name, nickName, sex, phone) => {
 // member_phone
 // member_img_path
 // register_type
+
+// 0704 取得可使用的coupon - MJ
+exports.getUsableCouponByMemberId = (memberId) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "SELECT" +
+      "`Coupon`.`coupon_title`,`CouponItem`.`coupon_id`,`Coupon`.`discount`" +
+      "FROM `CouponItem`" +
+      "JOIN `Coupon` ON `CouponItem`.`coupon_id` = `Coupon`.`coupon_id`" +
+      "WHERE `CouponItem`.`coupon_item_status` = '0'" +
+      "AND `CouponItem`.`member_id` = ?"
+    let value = memberId
+
+    db.con.query(sql, value, (err, rows, fields) => {
+      if (err) {
+        reject(err)
+      }
+      resolve(db.rowDataToCamelData(rows))
+    })
+  })
+}
+
+// 0704 取得已使用的coupon - MJ
+exports.getUnusableCouponByMemberId = (memberId) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "SELECT" +
+      "`Coupon`.`coupon_title`,`CouponItem`.`coupon_id`,`Coupon`.`discount`" +
+      "FROM `CouponItem`" +
+      "JOIN `Coupon` ON `CouponItem`.`coupon_id` = `Coupon`.`coupon_id`" +
+      "WHERE `CouponItem`.`coupon_item_status` = '1'" +
+      "AND `CouponItem`.`member_id` = ?"
+    let value = memberId
+
+    db.con.query(sql, value, (err, rows, fields) => {
+      if (err) {
+        reject(err)
+      }
+      resolve(db.rowDataToCamelData(rows))
+    })
+  })
+}
