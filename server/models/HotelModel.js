@@ -17,7 +17,8 @@ exports.getHotelDataListWithMainImgAndCityName = async () => {
       "JOIN `HotelImg` ON `Hotel`.`hotel_id` = `HotelImg`.`hotel_id` " +
       "JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id`" +
       "WHERE `HotelImg`.`hotel_img_is_main` = '0' " +
-      "AND `Hotel`.`is_invalid` = '1';";
+      "AND `Hotel`.`is_invalid` = '1' " +
+      "ORDER BY `City`.`city_id` ASC; ";
     db.con.query(sql, (err, rows, fields) => {
       if (err) {
         reject(err);
@@ -148,6 +149,127 @@ exports.addHotelWithImg = async (dataList) => {
               );
             }
           );
+        }
+      }
+    });
+  });
+};
+
+// 2022-07-04 PG
+// 修改飯店和照片 By hotelId
+// dataList：飯店資料
+// return：{}
+exports.updateHotelByHotelId = async (dataList) => {
+  return new Promise((resolve, reject) => {
+    // 最後回傳 hotelImgId 用
+    let returnImgDataList = dataList.hotelImgDataList;
+
+    let sql =
+      "UPDATE `Hotel` SET " +
+      "`city_id` = ?, `hotel_title` = ?, `hotel_addr` = ?, `hotel_tel` = ?, `hotel_content` = ?, `hotel_desc` = ?, `updater_id` = ?, `update_datetime` = ? " +
+      "WHERE `Hotel`.`hotel_id` = ?; ";
+    let value = [
+      dataList.cityId,
+      dataList.hotelTitle,
+      dataList.hotelAddr,
+      dataList.hotelTel,
+      dataList.hotelContent,
+      dataList.hotelDesc,
+      dataList.employeeId,
+      db.getDateTimeNow(),
+      dataList.hotelId,
+    ];
+    db.con.query(sql, value, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        // 如果飯店新增成功，並且有傳照片才繼續新增照片後續處理
+        if (result.serverStatus == 2 && dataList.haveNewImg) {
+          // 確保跑完照片動作才 resolve，目前想不到其他執行順序問題所產生的非同步狀況
+          let count = 0;
+          Object.entries(returnImgDataList).forEach(
+            ([imgDataKey, imgDataValue]) => {
+              // 如果沒有原本的路徑才要新增，有的話就代表更改照片而已
+              if (imgDataValue.hotelImgPath == "") {
+                // 新增照片
+                let addImgSql =
+                  "INSERT INTO `HotelImg` " +
+                  "(`hotel_id`, `hotel_img_path`, `hotel_img_is_main`, `creator_id`, `create_datetime`) " +
+                  "VALUES (?, ?, ?, ?, ?);";
+                let addImgValue = [
+                  dataList.hotelId,
+                  "tmp",
+                  imgDataKey == "mainHotelImgFile" ? "0" : "1",
+                  dataList.employeeId,
+                  db.getDateTimeNow(),
+                ];
+                db.con.query(
+                  addImgSql,
+                  addImgValue,
+                  (addImgErr, addImgResult) => {
+                    if (addImgErr) {
+                      reject(addImgErr);
+                    } else {
+                      // 如果新增照片成功才修改照片路徑
+                      if (addImgResult.serverStatus == 2) {
+                        // 修改照片路徑
+                        let updateImgSql =
+                          "UPDATE `HotelImg` SET " +
+                          "`hotel_img_path` = ?, `updater_id` = ?, `update_datetime` = ? " +
+                          "WHERE `HotelImg`.`hotel_img_id` = ?;";
+                        let updateImgValue = [
+                          dataList.hotelImgPathForSql +
+                            addImgResult.insertId +
+                            "." +
+                            imgDataValue.mimetype,
+                          dataList.employeeId,
+                          db.getDateTimeNow(),
+                          addImgResult.insertId,
+                        ];
+                        db.con.query(
+                          updateImgSql,
+                          updateImgValue,
+                          (updateImgErr, updateImgResult) => {
+                            if (updateImgErr) {
+                              reject(updateImgErr);
+                            } else {
+                              // 修改成功的話把 hotelImgId 塞到要回傳的物件裡
+                              returnImgDataList[imgDataKey].hotelImgId =
+                                addImgResult.insertId;
+                              count++;
+                              // 確定跑完最後一筆才整包 resolve 回去 - 非同步問題，目前想不到解決方式先暴力判斷
+                              if (count == Object.keys(returnImgDataList).length) {
+                                resolve({
+                                  status: 2,
+                                  hotelImgDataList: returnImgDataList,
+                                  hotelId: dataList.hotelId,
+                                });
+                              }
+                            }
+                          }
+                        );
+                      }
+                    }
+                  }
+                );
+              } else {
+                count++;
+              }
+            }
+          );
+          // 確定跑完最後一筆才整包 resolve 回去 - 非同步問題，目前想不到解決方式先暴力判斷
+          if (count == Object.keys(returnImgDataList).length) {
+            resolve({
+              status: 2,
+              hotelImgDataList: returnImgDataList,
+              hotelId: dataList.hotelId,
+            });
+          }
+        } else {
+          resolve({
+            status: result.serverStatus,
+            hotelId: dataList.hotelId,
+          });
         }
       }
     });
