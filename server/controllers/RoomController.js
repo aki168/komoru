@@ -1,21 +1,22 @@
 const configController = require("./_ConfigController");
 const roomModel = require("../models/RoomModel");
+const roomImgModel = require("../models/RoomImgModel");
 const fs = require("fs");
 
 // 2022-06-15 PG
 // 取得房型列表、主圖、所屬飯店名、所屬區域名
-// roomId hotelId roomTitle liveNum
+// roomId roomId roomTitle liveNum
 // roomImgPath
-// hotelTitle
+// roomTitle
 // cityName
 // return：json
-exports.getRoomDataListWithMainImgAndHotelNameAndCityName = async (
+exports.getRoomDataListWithMainImgAndRoomNameAndCityName = async (
   req,
   res,
   next
 ) => {
   await roomModel
-    .getRoomDataListWithMainImgAndHotelNameAndCityName()
+    .getRoomDataListWithMainImgAndRoomNameAndCityName()
     .then((result) => {
       Object.entries(result).forEach(([key, value]) => {
         // 將 enum 數值轉換為文字
@@ -70,7 +71,7 @@ exports.addRoomWithImg = async (req, res, next) => {
   if (checkFieldsResult.errCheck) {
     let data = JSON.parse(req.body.roomDataList);
     let checkDataResult = checkData(data, [
-      "hotelId",
+      "roomId",
       "roomType",
       "liveNum",
       "roomDesc",
@@ -130,7 +131,7 @@ exports.updateRoomWithImgByRoomId = async (req, res, next) => {
     let data = JSON.parse(req.body.roomDataList);
     let checkDataResult = checkData(data, [
       "roomId",
-      "hotelId",
+      "roomId",
       "roomType",
       "liveNum",
       "roomDesc",
@@ -198,6 +199,72 @@ exports.updateRoomWithImgByRoomId = async (req, res, next) => {
     configController.sendJsonMsg(res, false, checkFieldsResult.errMsg, []);
   }
 };
+
+// 2022-07-04 PG
+// 刪除房型和照片 By roomId
+// return：json
+exports.delRoomWithImgByRoomId = async (req, res, next) => {
+  let data = req.body;
+  let checkDataResult = checkData(data, ["roomId", "employeeId"]);
+  
+  // 判斷是否有空值、沒有傳需要的資料
+  if (checkDataResult.errCheck) {
+    let delRoomResult = await delRoomByRoomId(data, res);
+    if (delRoomResult.status == 2) {
+      let delHoteImglResult = await delRoomImgByRoomId(data, res);
+      if (delHoteImglResult.status == 2) {
+        configController.sendJsonMsg(res, true, "", []);
+      } else {
+        configController.sendJsonMsg(res, false, "SQL未預期錯誤", []);
+      }
+    } else {
+      configController.sendJsonMsg(res, false, "SQL未預期錯誤", []);
+    }
+  } else {
+    configController.sendJsonMsg(res, false, checkDataResult.errMsg, []);
+  }
+};
+
+// 2022-07-04 PG
+// 刪除房型 By roomId
+// dataList：刪除資料
+// res：return err 用
+// return：{}
+const delRoomByRoomId = async (dataList, res) => {
+  let roomData;
+  await roomModel
+    .delRoomByRoomId(dataList)
+    .then((result) => {
+      roomData = result;
+    })
+    .catch((err) => {
+      // 目前不確定這邊要怎改
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    });
+  return roomData;
+};
+
+// 2022-07-04 PG
+// 刪除房型照片 By roomId
+// dataList：刪除資料
+// res：return err 用
+// return：{}
+const delRoomImgByRoomId = async (dataList, res) => {
+  let roomImgDataList;
+  await roomImgModel
+    .delRoomImgByRoomId(dataList)
+    .then((result) => {
+      roomImgDataList = result;
+    })
+    .catch((err) => {
+      // 目前不確定這邊要怎改
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    });
+  return roomImgDataList;
+};
+
 
 // 2022-06-18 PG
 // 檢查資料

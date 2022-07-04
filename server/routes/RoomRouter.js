@@ -34,7 +34,7 @@ const upload = multer({ storage: storage });
 // cityName
 router.post(
   "/getRoomDataListWithMainImgAndHotelNameAndCityName",
-  roomController.getRoomDataListWithMainImgAndHotelNameAndCityName
+  roomController.getRoomDataListWithMainImgAndRoomNameAndCityName
 );
 
 // 2022-06-15 PG
@@ -56,5 +56,9 @@ router.post(
   upload.fields([{ name: "roomImgFile" }, { name: "roomDataList" }]),
   roomController.updateRoomWithImgByRoomId
 );
+
+// 2022-07-04 PG
+// 刪除房型 By roomId
+router.post("/delRoomByRoomId", roomController.delRoomWithImgByRoomId);
 
 module.exports = router;
