@@ -136,12 +136,13 @@ const checkData = (dataList, dataColumns) => {
   };
 };
 
-// 2022-06-28 AKI MJ
+
+// 2022-06-30 MJ
 // 取得訂單資料byMemberId 
 exports.getOrderDataByMemberId = async (req, res) => {
   const { token } = req.body;
   if (token) {
-    // 解碼
+    //解碼
     const decoded = await promisify(jwt.verify)(token, "jwtSecret");
     console.log(decoded);
     const { memberId } = decoded

@@ -15,7 +15,7 @@ export default function OrderList(props) {
               <Accordion.Header>
                 <ul className="p-2 w-100 d-flex justify-content-between">
                   <li className="pt-2 pb-1">{props.orderStartDate}</li>
-                  <li className="ps-2 pt-2 pb-1 w-50">{props.roomDesc}</li>
+                  <li className="ps-2 pt-2 pb-1 w-50">{props.cityName}　{props.hotelTitle} / {props.roomType? "私人房型":"背包客房"}</li>
                   <li className="pt-2 pb-1">{props.memberName}</li>
                 </ul>
               </Accordion.Header>

@@ -181,24 +181,24 @@ exports.getCouponItemDataList = async (memberId) => {
   })
 }
 
-// 2022-06-28 AKI MJ
+
+// 2022-06-30 MJ
 // 取得訂單資料byMemberId
 exports.getOrderDataByMemberId = async (memberId) => {
   return new Promise((resolve, reject) => {
     let sql = "SELECT" +
-      "`Order`.`order_id`, `Order`.`order_number`, `Order`.`room_id`, `Order`.`coupon_item_id`, `Order`.`order_status`, `Order`.`order_start_date`, `Order`.`order_end_date`, `Order`.`order_total`, `Order`.`create_datetime`, `OrderItem`.`order_item_date`, `OrderItem`.`is_active`, `OrderItem`.`order_item_price`, `Order`.`member_id`, `Member`.`member_mail`, `Member`.`member_name`, `Member`.`member_nick_name`, `Member`.`member_gender`, `Member`.`member_phone`, `Member`.`member_img_path`, `City`.`city_name`, `Hotel`.`hotel_title`, `Hotel`.`hotel_addr`, `Hotel`.`hotel_tel`, `Hotel`.`hotel_desc`, `Room`.`room_type`, `Room`.`room_desc`, `ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`active_pack_item_start_time`, `ActivePackItem`.`active_pack_item_end_time`, `OrderItem`.`active_pack_id`, `ActivePackItem`.`partnership_id`" +
-      "FROM `Order`" +
-      "INNER JOIN OrderItem ON`Order`.`order_id` = `OrderItem`.`order_id`" +
-      "INNER JOIN `Member` ON`Order`.`member_id` = `Member`.`member_id`" +
-      "INNER JOIN `Room` ON `Order`.`room_id` = `Room`.`room_id`" +
-      "INNER JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id`" +
-      "INNER JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id`" +
-      "LEFT JOIN `CouponItem` ON `Order`.`coupon_item_id` = `CouponItem`.`coupon_item_id`" +
-      "INNER JOIN `ActivePack` ON `OrderItem`.`active_pack_id` = `ActivePack`.`active_pack_id`" +
-      "INNER JOIN `ActivePackItem` ON `ActivePack`.`active_pack_id` = `ActivePackItem`.`active_pack_id`" +
-      "WHERE `Order`.`member_id` = ? " +
-      "ORDER BY `order_start_date` DESC " 
-
+    "`Order`.`order_id`, `Order`.`order_number`, `Order`.`room_id`, `Order`.`coupon_item_id`, `Order`.`order_status`, `Order`.`order_start_date`, `Order`.`order_end_date`, `Order`.`order_total`, `Order`.`create_datetime`, `OrderItem`.`order_item_date`, `OrderItem`.`is_active`, `OrderItem`.`order_item_price`, `Order`.`member_id`, `Member`.`member_mail`, `Member`.`member_name`, `Member`.`member_nick_name`, `Member`.`member_gender`, `Member`.`member_phone`, `Member`.`member_img_path`, `City`.`city_name`, `Hotel`.`hotel_title`, `Hotel`.`hotel_addr`, `Hotel`.`hotel_tel`, `Hotel`.`hotel_desc`, `Room`.`room_type`, `Room`.`room_desc`, `ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`active_pack_item_start_time`, `ActivePackItem`.`active_pack_item_end_time`, `OrderItem`.`active_pack_id`, `ActivePackItem`.`partnership_id`" +
+    "FROM `Order`" +
+    "LEFT JOIN OrderItem ON`Order`.`order_id` = `OrderItem`.`order_id`" +
+    "LEFT JOIN `Member` ON`Order`.`member_id` = `Member`.`member_id`" +
+    "LEFT JOIN `Room` ON `Order`.`room_id` = `Room`.`room_id`" +
+    "LEFT JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id`" +
+    "LEFT JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id`" +
+    "LEFT JOIN `CouponItem` ON `Order`.`coupon_item_id` = `CouponItem`.`coupon_item_id`" +
+    "LEFT JOIN `ActivePack` ON `OrderItem`.`active_pack_id` = `ActivePack`.`active_pack_id`" +
+    "LEFT JOIN `ActivePackItem` ON `ActivePack`.`active_pack_id` = `ActivePackItem`.`active_pack_id`" +
+    "WHERE `Order`.`member_id` = ? " +
+    "ORDER BY `order_start_date` DESC " 
     db.con.query(sql, memberId, (err, rows, fields) => {
       if (err) {
         reject(err)

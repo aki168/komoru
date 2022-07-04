@@ -102,53 +102,56 @@ export default function SignIn(props) {
       <h2 className="signIn--title">建立帳戶</h2>
       <li className="signIn--item">
         {emailErr && <h5 className="errMsg">{emailErr}</h5>}
-        <label className="signIn--label" htmlFor="mail">E-mail　</label>
-        <input className="signIn--input--L"
+        {/* <label className="signIn--label" htmlFor="mail">E-mail　</label> */}
+        <input className="signIn--input--XL"
           name="mail" id="mail" type="email"
           value={formData.mail}
-          onChange={inputHandler} />
+          onChange={inputHandler} 
+          placeholder="請輸入 E-mail"/>
       </li>
 
       <li className="signIn--item">
-        <label className="signIn--label" htmlFor="passwd">密碼　　</label>
-        <input className="signIn--input--L"
-          name="passwd" id="passwd" type="password" placeholder="設定任意英數組合為密碼"
+        {/* <label className="signIn--label" htmlFor="passwd">密碼　　</label> */}
+        <input className="signIn--input--XL"
+          name="passwd" id="passwd" type="password" placeholder="請輸入密碼"
           value={formData.passwd}
           onChange={inputHandler} />
       </li>
       <li className="signIn--item">
         {passwdErr && <h5 className="errMsg">{passwdErr}</h5>}
-        <label className="signIn--label" htmlFor="passwdCheck">確認密碼</label>
-        <input className="signIn--input--L" placeholder="請再次輸入密碼"
+        {/* <label className="signIn--label" htmlFor="passwdCheck">確認密碼</label> */}
+        <input className="signIn--input--XL" placeholder="再次輸入密碼"
           name="passwdCheck" id="passwdCheck" type="password"
           value={formData.passwdCheck}
           onChange={inputHandler} />
       </li>
 
       <li className="signIn--item">
-        <label className="signIn--label" htmlFor="forgetPasswordAns">密碼提示</label>
-        <input className="signIn--input--L"
-          name="forgetPasswordAns" id="forgetPasswordAns" placeholder="請填曾就讀國小作為暗號"
+        {/* <label className="signIn--label" htmlFor="forgetPasswordAns">密碼提示</label> */}
+        <input className="signIn--input--XL"
+          name="forgetPasswordAns" id="forgetPasswordAns" placeholder="請輸入密碼提示"
           value={formData.forgetPasswordAns}
           onChange={inputHandler} />
       </li>
       <br />
       <br />
       <li className="signIn--item">
-        <label className="signIn--label" htmlFor="name">姓名</label>
+        {/* <label className="signIn--label" htmlFor="name">姓名</label> */}
         <input className="signIn--input--M mr-16"
           name="name" id="name"
           value={formData.name}
-          onChange={inputHandler} />
+          onChange={inputHandler}
+          placeholder="請輸入姓名" />
 
-        <label className="signIn--label" htmlFor="nickName">暱稱</label>
+        {/* <label className="signIn--label" htmlFor="nickName">暱稱</label> */}
         <input className="signIn--input--M"
           name="nickName" id="nickName"
           value={formData.nickName}
-          onChange={inputHandler} />
+          onChange={inputHandler}
+          placeholder="請輸入暱稱" />
       </li>
       <li className="signIn--item">
-        <label className="signIn--label" htmlFor="sex">性別</label>
+        {/* <label className="signIn--label" htmlFor="sex">性別</label> */}
         <select className="signIn--input--M"
           name="sex" id="sex"
           value={formData.sex}
@@ -159,11 +162,12 @@ export default function SignIn(props) {
       </li>
       <li className="signIn--item">
         {phoneErr && <h5 className="errMsg">{phoneErr}</h5>}
-        <label className="signIn--label" htmlFor="phone">手機</label>
-        <input className="signIn--input--XL" placeholder=""
+        {/* <label className="signIn--label" htmlFor="phone">手機</label> */}
+        <input className="signIn--input--XL" 
           name="phone" id="phone"
           value={formData.phone}
-          onChange={inputHandler} />
+          onChange={inputHandler}
+          placeholder="請輸入手機號碼" />
       </li>
       {!validateCheck && <button onClick={validate} className="signIn--submit">點擊兩下送出</button>}
 
@@ -173,7 +177,7 @@ export default function SignIn(props) {
 
 
       <br />
-      {allErr && <h5 className="errMsg">{allErr}　　　</h5>}
+      {allErr && <h5 className="errMsg">{allErr}</h5>}
       <br />
       <br />
     </ul>

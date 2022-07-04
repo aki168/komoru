@@ -12,6 +12,7 @@ export default function Login(props) {
   const [passwd, setPasswd] = useState("");
   const [mailCheck, setMailCheck] = useState(""); //確認mail是否設定好在顯示密碼欄位
   const [loginStatus, setLoginStatus] = useState(false); //設置jwt使用按鈕狀態
+  const [emailErr, setEmailErr] = useState("　");
 
   const inputEmailHandler = (e) => {
     setMail(() => (e.target.value));
@@ -48,7 +49,8 @@ export default function Login(props) {
           navigate('/register', { state: { userMail: mail } }, { replace: true })
         });
     } else if (mail === "") {
-      alert("請輸入電子信箱");
+      // alert("請輸入電子信箱");
+      setEmailErr("請輸入電子信箱")
     }
   }
 
@@ -116,7 +118,8 @@ export default function Login(props) {
     <div className="login">
       <h2 className="login--title">登入或建立帳戶</h2>
       <h5>{mailCheck}</h5>
-      <input className="login--input--L" name="mail" id="mail" type="email" onChange={inputEmailHandler} />
+      {emailErr && <h5 className="errMsg">{emailErr}</h5>}
+      <input className="login--input--L" name="mail" id="mail" type="email" onChange={inputEmailHandler} placeholder="請輸入信箱帳號"/>
 
       {mailCheck && <input placeholder="請填寫密碼"
         className="login--input--L" name="passwd" id="passwd"
@@ -125,11 +128,11 @@ export default function Login(props) {
       {!loginStatus && <button className="login--submit"
         onClick={mailCheck ? loginHandlerWithPW : loginHandler}>使用電子信箱繼續</button>}
 
-      {loginStatus && <button onClick={userAuth} className="login--submit text-wine">點擊後進行二次認證</button>}
+      {loginStatus && <button onClick={userAuth} className="login--submit btn-wine">點擊後進行二次認證</button>}
 
 
 
-      <a href="/ForgotPW" className="login--forgot">忘記密碼？</a>
+      {/* <a href="/ForgotPW" className="login--forgot">忘記密碼？</a> */}
 
       <h3 className="login--subTitle">或使用以下選項登入</h3>
       <ul className="login--other">

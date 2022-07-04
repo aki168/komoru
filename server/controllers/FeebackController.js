@@ -27,3 +27,20 @@ exports.getFeebeakByMemberId = async (req, res) => {
     res.json({ message: "該用戶尚未登入" })
   }
 };
+
+// 0701 aki 修改心得回饋
+exports.alterFeeback = async (req, res) => {
+  console.log(req.body);
+  const { orderId, feebackContent } = req.body;
+  await feebackModel
+    .alterFeeback(orderId, feebackContent)
+    .then((result) => {
+      console.log(result)
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify(result));
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    });
+};
