@@ -164,7 +164,7 @@ exports.addHotelWithImg = async (req, res, next) => {
 // 2022-07-04 PG
 // 修改飯店和照片 By hotelId
 // return：json
-exports.updateHotelByHotelId = async (req, res, next) => {
+exports.updateHotelWithImgByHotelId = async (req, res, next) => {
   let checkFieldsResult = checkData({ hotelDataList: req.body.hotelDataList }, [
     "hotelDataList",
   ]);
@@ -213,9 +213,8 @@ exports.updateHotelByHotelId = async (req, res, next) => {
         data.haveNewImg = false;
       }
       await hotelModel
-        .updateHotelByHotelId(data)
+        .updateHotelWithImgByHotelId(data)
         .then((result) => {
-          console.log(result);
           // 判斷資料庫執行狀態是否為成功
           if (result.status == 2) {
             // 如果有傳照片，將檔案更名為 id 格式
@@ -260,6 +259,71 @@ exports.updateHotelByHotelId = async (req, res, next) => {
   } else {
     configController.sendJsonMsg(res, false, checkFieldsResult.errMsg, []);
   }
+};
+
+// 2022-07-04 PG
+// 刪除飯店資料和照片 By hotelId
+// return：json
+exports.delHotelDataWithImgByHotelId = async (req, res, next) => {
+  let data = req.body;
+  let checkDataResult = checkData(data, ["hotelId", "employeeId"]);
+  
+  // 判斷是否有空值、沒有傳需要的資料
+  if (checkDataResult.errCheck) {
+    let delHotelResult = await delHotelByHotelId(data, res);
+    if (delHotelResult.status == 2) {
+      let delHoteImglResult = await delHotelImgByHotelId(data, res);
+      if (delHoteImglResult.status == 2) {
+        configController.sendJsonMsg(res, true, "", []);
+      } else {
+        configController.sendJsonMsg(res, false, "SQL未預期錯誤", []);
+      }
+    } else {
+      configController.sendJsonMsg(res, false, "SQL未預期錯誤", []);
+    }
+  } else {
+    configController.sendJsonMsg(res, false, checkDataResult.errMsg, []);
+  }
+};
+
+// 2022-07-04 PG
+// 刪除飯店資料 By hotelId
+// hotelId：飯店 Id
+// res：return err 用
+// return：{}
+const delHotelByHotelId = async (hotelId, res) => {
+  let hotelData;
+  await hotelModel
+    .delHotelByHotelId(hotelId)
+    .then((result) => {
+      hotelData = result;
+    })
+    .catch((err) => {
+      // 目前不確定這邊要怎改
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    });
+  return hotelData;
+};
+
+// 2022-07-04 PG
+// 刪除飯店照片 By hotelId
+// hotelId：飯店 Id
+// res：return err 用
+// return：{}
+const delHotelImgByHotelId = async (hotelId, res) => {
+  let hotelImgDataList;
+  await hotelImgModel
+    .delHotelImgByHotelId(hotelId)
+    .then((result) => {
+      hotelImgDataList = result;
+    })
+    .catch((err) => {
+      // 目前不確定這邊要怎改
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    });
+  return hotelImgDataList;
 };
 
 // 2022-06-18 PG

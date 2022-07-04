@@ -68,7 +68,12 @@ router.post(
     { name: "secondHotelImgFile" },
     { name: "thirdHotelImgFile" },
   ]),
-  hotelController.updateHotelByHotelId
+  hotelController.updateHotelWithImgByHotelId
 );
+
+// 2022-07-04 PG
+// 刪除飯店 By hotelId
+router.post("/delHotelByHotelId", hotelController.delHotelDataWithImgByHotelId);
+
 
 module.exports = router;

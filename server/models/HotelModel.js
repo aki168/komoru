@@ -159,7 +159,7 @@ exports.addHotelWithImg = async (dataList) => {
 // 修改飯店和照片 By hotelId
 // dataList：飯店資料
 // return：{}
-exports.updateHotelByHotelId = async (dataList) => {
+exports.updateHotelWithImgByHotelId = async (dataList) => {
   return new Promise((resolve, reject) => {
     // 最後回傳 hotelImgId 用
     let returnImgDataList = dataList.hotelImgDataList;
@@ -238,7 +238,9 @@ exports.updateHotelByHotelId = async (dataList) => {
                                 addImgResult.insertId;
                               count++;
                               // 確定跑完最後一筆才整包 resolve 回去 - 非同步問題，目前想不到解決方式先暴力判斷
-                              if (count == Object.keys(returnImgDataList).length) {
+                              if (
+                                count == Object.keys(returnImgDataList).length
+                              ) {
                                 resolve({
                                   status: 2,
                                   hotelImgDataList: returnImgDataList,
@@ -272,6 +274,32 @@ exports.updateHotelByHotelId = async (dataList) => {
           });
         }
       }
+    });
+  });
+};
+
+// 2022-07-04 PG
+// 刪除飯店照片 By hotelId
+// return：{}
+exports.delHotelByHotelId = async (dataList) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "UPDATE `Hotel` SET " +
+      "`is_invalid` = ?, `updater_id` = ?, `update_datetime` = ? " +
+      "WHERE `Hotel`.`hotel_id` = ?;";
+    let value = [
+      "0",
+      dataList.employeeId,
+      db.getDateTimeNow(),
+      dataList.hotelId,
+    ];
+    db.con.query(sql, value, (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve({
+        status: result.serverStatus,
+      });
     });
   });
 };
