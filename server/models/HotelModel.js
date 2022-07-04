@@ -279,7 +279,8 @@ exports.updateHotelWithImgByHotelId = async (dataList) => {
 };
 
 // 2022-07-04 PG
-// 刪除飯店照片 By hotelId
+// 刪除飯店 By hotelId
+// dataList：刪除資料
 // return：{}
 exports.delHotelByHotelId = async (dataList) => {
   return new Promise((resolve, reject) => {

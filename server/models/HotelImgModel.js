@@ -23,6 +23,7 @@ exports.getHotelImgDataListByHotelId = async (hotelId) => {
 
 // 2022-07-04 PG
 // 刪除飯店照片 By hotelId
+// dataList：刪除資料
 // return：{}
 exports.delHotelImgByHotelId = async (dataList) => {
   return new Promise((resolve, reject) => {

@@ -73,7 +73,6 @@ router.post(
 
 // 2022-07-04 PG
 // 刪除飯店 By hotelId
-router.post("/delHotelByHotelId", hotelController.delHotelDataWithImgByHotelId);
-
+router.post("/delHotelByHotelId", hotelController.delHotelWithImgByHotelId);
 
 module.exports = router;

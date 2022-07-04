@@ -262,9 +262,9 @@ exports.updateHotelWithImgByHotelId = async (req, res, next) => {
 };
 
 // 2022-07-04 PG
-// 刪除飯店資料和照片 By hotelId
+// 刪除飯店和照片 By hotelId
 // return：json
-exports.delHotelDataWithImgByHotelId = async (req, res, next) => {
+exports.delHotelWithImgByHotelId = async (req, res, next) => {
   let data = req.body;
   let checkDataResult = checkData(data, ["hotelId", "employeeId"]);
   
@@ -287,14 +287,14 @@ exports.delHotelDataWithImgByHotelId = async (req, res, next) => {
 };
 
 // 2022-07-04 PG
-// 刪除飯店資料 By hotelId
-// hotelId：飯店 Id
+// 刪除飯店 By hotelId
+// dataList：刪除資料
 // res：return err 用
 // return：{}
-const delHotelByHotelId = async (hotelId, res) => {
+const delHotelByHotelId = async (dataList, res) => {
   let hotelData;
   await hotelModel
-    .delHotelByHotelId(hotelId)
+    .delHotelByHotelId(dataList)
     .then((result) => {
       hotelData = result;
     })
@@ -308,13 +308,13 @@ const delHotelByHotelId = async (hotelId, res) => {
 
 // 2022-07-04 PG
 // 刪除飯店照片 By hotelId
-// hotelId：飯店 Id
+// dataList：刪除資料
 // res：return err 用
 // return：{}
-const delHotelImgByHotelId = async (hotelId, res) => {
+const delHotelImgByHotelId = async (dataList, res) => {
   let hotelImgDataList;
   await hotelImgModel
-    .delHotelImgByHotelId(hotelId)
+    .delHotelImgByHotelId(dataList)
     .then((result) => {
       hotelImgDataList = result;
     })
