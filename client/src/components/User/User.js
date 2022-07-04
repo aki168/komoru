@@ -55,11 +55,11 @@ export default function User(props) {
   console.log(formData)
 
   // 送出內容：個人資料修改
-  function alertProfile(e) {
+  function alterProfile(e) {
     e.preventDefault();
     axios({
       method: "POST",
-      url: "http://localhost:5000/member/alertProfile",
+      url: "http://localhost:5000/member/alterProfile",
       data: {
         mail: formData.mail,
         name: formData.name,
@@ -164,7 +164,7 @@ export default function User(props) {
           >修改
           </Button>
 
-          <Button className="user--btn--M" size="s" variant="secondary" onClick={alertProfile}>儲存</Button>
+          <Button className="user--btn--M" size="s" variant="secondary" onClick={alterProfile}>儲存</Button>
         </div>
       </div>
 

@@ -17,40 +17,68 @@ h1,h2,h3,h4,h5{
   padding: 0;
 }
 
-.container {
+.register--wrap{
+  text-align: center;  
+  animation:mymove 8s infinite; /*animation 時間 播放次數*/  
+  animation-direction:alternate; /*是否循環交替反向播放動畫*/ 
+  /*Safari 和 Chrome:*/
+  -webkit-animation:mymove 5s infinite;
+  background-repeat: no-repeat;
+  background-position: bottom 0px right 10%;
+  overflow: visible;
+  padding-bottom: 10px;
+}
+
+@keyframes mymove  
+{
+0% {background-image:url(../../../public/1.png)}  
+50% {background-image:url(../../../public/2.png)}  
+100% {background-image:url(../../../public/3.png)}  
+}  
+
+/*Safari 和 Chrome:*/
+@-webkit-keyframes mymove
+{
+0% {background-image:url(../../../public/1.png)}  
+50% {background-image:url(../../../public/2.png)}  
+100% {background-image:url(../../../public/3.png)}  
+}
+
+
+.signIn--container {
   margin: 0 auto;
   max-width: 976px;
+  display: flex;
+  padding-left: 30px;
 }
 
 /* 上面為全域設定 */
 
 .signIn {
-  width: 80%;
+  text-align: start;
 }
 
 .signIn--title {
-  padding-left: 80px;
+  color:#454545;
+  text-align: start;
   padding-top: 40px;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
   font-weight: 600;
   font-size: 40px;
   line-height: 52px;
-  /* identical to box height, or 130% */
   letter-spacing: 0.01em;
-
 }
 
 .signIn--item {
   /* display: flex; */
   padding-bottom: 20px;
-  text-align: right;
 }
 
 .signIn--input--XL {
   text-align: left;
   padding: 12px;
   font-size: 20px;
-  width: 550px;
+  width: 100%;
 }
 
 .signIn--input--L {
@@ -60,10 +88,9 @@ h1,h2,h3,h4,h5{
 }
 
 .signIn--input--M {
-  text-align: left;
   padding: 12px;
   font-size: 20px;
-  width: 230px;
+  width: 48%;
 }
 
 .signIn--label {
@@ -74,20 +101,24 @@ h1,h2,h3,h4,h5{
 }
 
 .signIn--submit{
+  width: 100%;
   font-size: 18px;
-  float:right;
   padding:15px;
-  background: #000;
+  background: #ED8C4E;
   color: #fff;
   border: none;
+}
+
+.signIn--submit:hover{
+  background: #CF5100;
 }
 
 .signIn--submitFin{
   font-size: 18px;
   float:right;
   padding:15px;
-  background: #ccc;
-  color: #9d2933;
+  background: #9d2933;
+  color: #fff;
   border: none;
 }
 
@@ -101,7 +132,8 @@ hr {
 }
 
 .errMsg{
-  color: #9d2933;
+  color: #CF5100;
+  /* #9d2933; */
   font-size: 0.5rem;
   text-align: right;
 }

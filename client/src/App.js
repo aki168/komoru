@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import axios from "axios";
 import BackstageAdmin from "./pages/BackstageAdmin";
 import BackstageLogin from "./pages/BackstageLogin";
@@ -48,11 +48,7 @@ export const logout = () => {
   localStorage.removeItem("token");
   window.location.reload("false"); //想重新渲染同頁面可以用這段
 };
-// 0622- aki 登出請調用該函式
-// export const logout = () => {
-//   localStorage.removeItem("token");
-//   window.location.reload("false"); //想重新渲染同頁面可以用這段
-// };
+
 
 function App() {
   //2022-06-23 ZH

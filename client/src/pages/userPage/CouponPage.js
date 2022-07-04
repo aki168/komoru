@@ -7,7 +7,7 @@ import Coupon from '../../components/User/Coupon'
 
 export default function CouponPage() {
 
-  //0623 aki - 若沒有token則跳轉登入頁
+  //0623 aki - 若沒有token則跳轉登入頁a
   let navigate = useNavigate()
   useEffect(() => {
     if (!localStorage.token) {

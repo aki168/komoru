@@ -1,8 +1,6 @@
-import { logout } from "../../App";
+// import { logout } from "../../App";
 import "./Navbar.css";
-import { Button } from "react-bootstrap";
-
-const token = localStorage.token;
+// import { Button } from "react-bootstrap";
 
 export default function Navbar() {
   return (
@@ -12,9 +10,9 @@ export default function Navbar() {
           <img className="navbar--logo" src="KOMORU_LOGO_White.png" alt="LOGO"></img>
         </a>
       </h1>
-      <ul className="navbar--menu">
+      {/* <ul className="navbar--menu">
         <li>
-          <a className="navbar--item" href="/hotelIntro">
+          <a className="navbar--item" href="/">
             房型介紹
           </a>
         </li>
@@ -39,13 +37,11 @@ export default function Navbar() {
           </a>
         </li>
         <li>
-          {token&& 
-            <Button variant="secondary" size="sm" onClick={logout}>
-              登出
-            </Button>
-          }
+          <Button variant="secondary" size="sm" onClick={logout}>
+            測試用登出
+          </Button>
         </li>
-      </ul>
+      </ul> */}
     </nav>
   );
 }

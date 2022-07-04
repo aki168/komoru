@@ -1,15 +1,17 @@
 import React from 'react';
-import Navbar from '../../components/Navbar/Navbar';
-import Confirm from '../../components/Confirm/Confirm'
+import Navbar from '../../components/Navbar/Navbar-simple';
 import ForgotPW from '../../components/ForgotPW/ForgotPW';
+import '../../components/ForgotPW/ForgotPW.css'
 
 export default function ForgotPWPage() {
   return (
-    <div className='wrap'>
+    <div className='forgotPW--wrap'>
       <Navbar />
       <div className='container'>
         <ForgotPW />
-        <Confirm />
+        <div className="forgotPW--Confirm">
+      <p className="Confirm--text">登入或註冊帳戶表示您同意本公司的條件和扣款以及隱私權說明</p>
+    </div>
       </div>
     </div>
   )

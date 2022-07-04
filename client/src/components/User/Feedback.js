@@ -1,7 +1,7 @@
 import React,{useState} from "react"
 import './Feedback.css'
 import { Button, Accordion, Form } from 'react-bootstrap'
-// import axios from "axios"
+import axios from "axios"
 
 
 export default function Feedback(props) {
@@ -10,21 +10,21 @@ export default function Feedback(props) {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    // axios({
-    //   method: 'POST',
-    //   url: '',
-    //   data: {
-    //     orderId:props.orderId,
-    //     feebackContent:feebackContent, 
-    //   }
-    // })
-    //   .then((res) => {
-    //     console.log(res)
-    //     setFinish(true)
-    //   })
-    //   .catch((err) => {
-    //     console.log(err) 
-    //   });
+    axios({
+      method: 'POST',
+      url: 'http://localhost:5000/feeback/alterFeeback',
+      data: {
+        orderId:props.orderId,
+        feebackContent:feedback, 
+      }
+    })
+      .then((res) => {
+        console.log(res)
+        window.location.reload("false")
+      })
+      .catch((err) => {
+        console.log(err) 
+      });
 
   }
 
@@ -42,7 +42,7 @@ export default function Feedback(props) {
           <Accordion.Header>
             <ul className="p-2 w-100 d-flex justify-content-between">
               <li className="pt-2 pb-1">{props.orderStartDate}</li>
-              <li className="ps-2 pt-2 pb-1 w-50">{props.roomDesc}</li>
+              <li className="ps-2 pt-2 pb-1 w-50"> {props.roomDesc} / {props.roomType? "私人房型":"背包客房"}</li>
               <li className="pt-2 pb-1">{props.memberName}</li>
             </ul>
           </Accordion.Header>
@@ -59,7 +59,8 @@ export default function Feedback(props) {
                     as="textarea" 
                     rows={5} 
                     placeholder="填寫活動反饋" 
-                    onChange={inputHandler} 
+                    onChange={inputHandler}
+                    value={feedback} 
                   />
                 </Form.Group>
               </Form>

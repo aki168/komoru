@@ -21,6 +21,34 @@ h5 {
   padding: 0;
 }
 
+.forgotPW--wrap{
+  text-align: center;  
+  animation:mymove 8s infinite; /*animation 時間 播放次數*/  
+  animation-direction:alternate; /*是否循環交替反向播放動畫*/ 
+  /*Safari 和 Chrome:*/
+  -webkit-animation:mymove 5s infinite;
+  background-repeat: no-repeat;
+  background-position: bottom 0px right 10%;
+  overflow: visible;
+  padding-bottom: 10px;
+}
+
+@keyframes mymove  
+{
+0% {background-image:url(../../../public/1.png)}  
+50% {background-image:url(../../../public/2.png)}  
+100% {background-image:url(../../../public/3.png)}  
+}  
+
+/*Safari 和 Chrome:*/
+@-webkit-keyframes mymove
+{
+0% {background-image:url(../../../public/1.png)}  
+50% {background-image:url(../../../public/2.png)}  
+100% {background-image:url(../../../public/3.png)}  
+}
+
+
 .container {
   margin: 0 auto;
   max-width: 976px;
@@ -56,8 +84,12 @@ h5 {
   margin-bottom: 30px;
 }
 
+.forgotPW--submit:hover{
+  background: #CF5100;
+}
+
 .forgotPW--submit{
-  background: #000;
+  background: #ED8C4E;
   color: #fff;
   border: none;
   font-size: 22px;
@@ -70,13 +102,18 @@ h5 {
 }
 
 .forgotPW--back{
-  text-decoration: none;
+  text-decoration:none;
   text-align: center;
   display: block;
   font-size: 22px;
   padding:15px;
   background: #D9D9D9;
-  color: #000;
+  color: #111;
   width: 100%;
   border: none;
+}
+
+.forgotPW--back:hover{
+  text-decoration:none;
+  color: #fff;
 }

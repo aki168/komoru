@@ -9,8 +9,9 @@ exports.getFeebeakByMemberId = async (memberId) => {
     "`Order`.`order_id`, `Order`.`order_number`,"+
     "`Hotel`.`Hotel_id`, `Hotel`.`hotel_title`, `Hotel`.`hotel_tel`, `Hotel`.`hotel_addr`,"+
     "`Order`.`order_start_date`, `Member`.`member_id`, `Member`.`member_name`,"+
+    "`Room`.`room_type`,"+
     "(`order_end_date` - `order_start_date`) AS`stay_night`, `Order`.`order_status`,"+
-    "CONCAT(`City`.`city_name`, '　', `Hotel`.`hotel_title`, '　/　', `Room`.`room_title`) AS`room_desc`"+
+    "CONCAT(`City`.`city_name`, '　', `Hotel`.`hotel_title`) AS`room_desc`"+
     "FROM`Order`"+
     "JOIN `Member` ON`Order`.`member_id` = `Member`.`member_id`"+
     "JOIN `Room` ON`Order`.`room_id` = `Room`.`room_id`"+
@@ -25,6 +26,31 @@ exports.getFeebeakByMemberId = async (memberId) => {
         reject(err);
       }
       resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};
+
+
+// 0701 aki 新增心得回饋
+exports.alterFeeback = async (orderId, feebackContent) => {
+  return new Promise((resolve, reject) => {
+    let sql = "INSERT INTO `Feeback`" +
+    " (`order_id`,`feeback_content`,`create_datetime`)"+
+    " VALUES (?, ?, ?);" ;
+    let value = [
+      orderId, 
+      feebackContent, 
+      db.getDateTimeNow()
+    ];
+
+    console.log(value)
+    db.con.query(sql, value, (err, res) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(
+        console.log('修改成功')
+      );
     });
   });
 };
