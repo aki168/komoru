@@ -10,13 +10,13 @@ const fs = require("fs");
 // roomTitle
 // cityName
 // return：json
-exports.getRoomDataListWithMainImgAndRoomNameAndCityName = async (
+exports.getRoomDataListWithMainImgAndHotelNameAndCityName = async (
   req,
   res,
   next
 ) => {
   await roomModel
-    .getRoomDataListWithMainImgAndRoomNameAndCityName()
+    .getRoomDataListWithMainImgAndHotelNameAndCityName()
     .then((result) => {
       Object.entries(result).forEach(([key, value]) => {
         // 將 enum 數值轉換為文字
