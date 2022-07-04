@@ -36,4 +36,7 @@ router.post('/isLogin',memberController.isLogin);
 // 0627 修改個人資料 - aki 
 router.post('/alertProfile',memberController.alertProfile);
 
+// 0704 取得會員coupon明細 - MJ
+router.post('/getCouponByMemberId', memberController.getCouponByMemberId)
+
 module.exports = router;
