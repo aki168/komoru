@@ -1,0 +1,12 @@
+a:active, a:focus, a:hover {
+  text-decoration: none;
+}
+.nav-pills .nav-link.active{
+    background-color:#EFA16A;
+    text-decoration: none;
+}
+a{
+    color:#FFFFFF;
+    text-decoration: none;
+
+}

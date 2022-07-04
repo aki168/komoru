@@ -6,33 +6,49 @@ import { RiGroupLine } from "react-icons/ri";
 import { RiSpyLine } from "react-icons/ri";
 import { RiBuildingLine } from "react-icons/ri";
 import { IoBedOutline } from "react-icons/io5";
-
+import LOGO from "../../assets/LOGO.png";
+import "./BackstageAdminSidebar.css";
 
 function Sidebar() {
   return (
     <>
-      <div className="bg-success sticky-top" id="sticky-sidebar">
+      <div
+        className="sticky-top "
+        id="sticky-sidebar"
+        style={{ background: "#ED8C4E" }}
+      >
         <ul
-          className=" nav flex-column text-start fs-4 d-block nav-pills"
+          className=" container-field  nav flex-column text-start fs-4 d-block nav-pills"
           style={{ height: "100vh" }}
         >
           <header className="text-center">
-            <h1 className="pt-2 text-light">KOMORU</h1>
+            <img style={{ width: "300px" }} src={LOGO} alt="" />
           </header>
           <li className="nav-item ">
-            <MyNavLink to="order"><RiGroupLine className="mx-2 ms-4"/>訂單管理</MyNavLink>
+            <MyNavLink to="order">
+              <RiGroupLine className="mx-2 ms-4" />
+              訂單管理
+            </MyNavLink>
           </li>
           <li className="nav-item">
-            <MyNavLink to="partnership"><RiSpyLine className="mx-2 ms-4"/>合作夥伴管理</MyNavLink>
+            <MyNavLink to="partnership">
+              <RiSpyLine className="mx-2 ms-4" />
+              合作夥伴管理
+            </MyNavLink>
           </li>
           <li className="nav-item dropdown">
             <a
               href="#submenu1"
               data-bs-toggle="collapse"
               className="nav-link dropdown-toggle "
-              aria-expanded="false"
+              // aria-expanded="false"
+              style={{ color: "#ffffff", textDecoration: "none" }}
             >
-              <span> <RiHome2Line className="mx-2 ms-4"/>飯店房型管理</span>
+              <span>
+                {" "}
+                <RiHome2Line className="mx-2 ms-4" />
+                飯店房型管理
+              </span>
             </a>
             <ul
               className="collapse nav hidden  flex-column h-50 "
@@ -40,16 +56,30 @@ function Sidebar() {
               data-bs-parent="#menu"
             >
               <li>
-                <MyNavLink to="hotel"><RiBuildingLine className="ms-5"/>飯店管理</MyNavLink>
+                <MyNavLink to="hotel">
+                  <RiBuildingLine className="ms-4" />
+                  飯店
+                </MyNavLink>
               </li>
               <li>
-                <MyNavLink to="room"><IoBedOutline className="ms-5"/>房型管理</MyNavLink>
+                <MyNavLink to="room">
+                  <IoBedOutline className="ms-4" />
+                  房型
+                </MyNavLink>
               </li>
             </ul>
           </li>
           <li className="nav-item">
-           
-            <MyNavLink to="dashboard"  ><RiBarChart2Line className="mx-2 ms-4"/>分區報表</MyNavLink>
+            <MyNavLink to="dashboard">
+              <RiBarChart2Line className="mx-2 ms-4" />
+              分區報表
+            </MyNavLink>
+          </li>
+          <li className="nav-item">
+            <MyNavLink to="employee">
+              <RiBarChart2Line className="mx-2 ms-4" />
+              員工專區
+            </MyNavLink>
           </li>
         </ul>
         <div className="row">

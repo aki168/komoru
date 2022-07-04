@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom'
+import { Container, Form } from "react-bootstrap";
 import LoginHeader from "../../components/BackstageAdminLoginHeader";
 
 function BackstageLogin() {
+  let navigate = useNavigate()
   const [account, setAccount] = useState("");
   const [passwd, setPasswd] = useState("");
 
@@ -63,12 +65,19 @@ function BackstageLogin() {
         method: "POST",
         url: "http://localhost:5000/employee/login",
         data: {
-          account: account,
-          passwd: passwd,
+          employeeAccount: account,
+          employeePasswd: passwd,
         },
+        withCredentials: true
       })
         .then((res) => {
-          console.log(res.data); // 印出撈到的資料看看
+          console.log(res.data);
+          if (res.data.status) {
+            console.log(res.data); // 印出撈到的資料看看
+            alert('登入成功！')
+            navigate('/BackstageAdmin', { replace: true })
+          }
+
           // console.log(res.data.token); // 印出撈到的token看看
 
           // if (
@@ -100,22 +109,7 @@ function BackstageLogin() {
         <LoginHeader />
       </div>
       <div>
-        <div className="header bg-gradient-info py-7 py-lg-8">
-          <Container>
-            <div className="header-body text-center  mt-5">
-              <Row className="justify-content-center">
-                <Col lg="5" md="6">
-                  <h1 className="text-muted">Welcome!</h1>
-                  <p className="text-muted">
-                    Use these awesome forms to login or create new account in
-                    your project for free.
-                  </p>
-                </Col>
-              </Row>
-            </div>
-          </Container>
-        </div>
-        <Container>
+        <Container style={{ marginTop: '180px' }}>
           <Form className="col-lg-6 offset-lg-3">
             <div className="mb-3 mt-3">
               <label htmlFor="account" className="form-label">
@@ -142,18 +136,8 @@ function BackstageLogin() {
                 onChange={inputPasswdHandler}
               />
             </div>
-            <div className="form-check mb-3">
-              <label className="form-check-label">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  name="remember"
-                />{" "}
-                Remember me
-              </label>
-            </div>
-            <button className="btn btn-primary col-md-12 " onClick={loginHandlerWithPW}>
-              Submit
+            <button className="btn col-md-12 " onClick={loginHandlerWithPW} style={{ background: '#ED8C4E', color: "#FFFFFF" }}>
+              登入
             </button>
           </Form>
         </Container>

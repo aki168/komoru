@@ -153,7 +153,7 @@ function Partnership() {
   return (
     <>
       <div className="mx-5  mb-5">
-        <h2 className="mt-5 mb-5">合作夥伴管理</h2>
+        <h2 className="mt-3 mb-5">合作夥伴管理</h2>
         <div>
           <div className="row ms-5 mb-3">
             <div className="col-sm-4">

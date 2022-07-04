@@ -20,7 +20,7 @@ router.use(
     resave: false,
     saveUninitialized: true,
     // 預設十分鐘過期
-    cookie: { maxAge: 600000  }
+    cookie: { maxAge: 60000  }
   })
 );
 

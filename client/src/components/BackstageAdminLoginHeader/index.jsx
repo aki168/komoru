@@ -1,10 +1,10 @@
 import React from "react";
+import LOGO from "../../assets/LOGO.png"
 
 function LoginHeader() {
   return (
-    <div className=" bg-primary pb-3 pt-3 align-items-center">
-        <h2 className=" ps-3">KOMORU</h2>
-        
+    <div className="d-flex align-items-center" style={{background:'#ED8C4E',height:"150px",paddingLeft:"159px"}}>
+        <img style={{width:'250px',height:"100px"}} src={LOGO} alt="" />
     </div>
   );
 }
