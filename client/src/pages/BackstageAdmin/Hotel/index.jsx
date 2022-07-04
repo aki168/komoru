@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
 import HotelAdd from "./HotelAdd";
-import HotelViewEdits from "./HotelViewEdits"
+import HotelViewEdits from "./HotelViewEdits";
 import { Modal } from "react-bootstrap";
-
+import { useNavigate } from 'react-router-dom'
 
 function Hotel() {
   /* 20220616 YN
@@ -27,7 +27,25 @@ function Hotel() {
   取當下選取列表時的data狀態初始化*/
   const [editData, setEditData] = useState();
 
-
+  /*20220704 YN
+  登入狀態為false自動轉跳Login頁面 */
+  let navigate = useNavigate();
+  useEffect(() => {
+    axios({
+      method: "POST",
+      url: "http://localhost:5000/employee/checkIsLogin",
+      withCredentials: true,
+    })
+      .then((res) => {
+        if (res.data.status === false) {
+          navigate("/BackstageLogin", { replace: true });
+          // console.log(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   /*20220622 YN
   新增表單時，modal顯示狀態設定*/
@@ -55,8 +73,6 @@ function Hotel() {
   總頁面資料個數 */
   const pageVisited = pageNumber * userPerPage;
 
-
-
   /*20220617 YN
   利用變數取畫面上顯示資料 */
   const arr = Object.values(data).map((values, index) => {
@@ -73,12 +89,11 @@ function Hotel() {
               width: "100%",
               height: "200px",
               backgroundImage: `url("http://localhost:5000${values.hotelImgPath}")`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
             }}
-          >
-          </div>
+          ></div>
         </td>
         <td className="col-sm-1">
           <button
@@ -114,12 +129,11 @@ function Hotel() {
   移除功能 */
   const deletFormHandle = (index) => {
     setData(
-      data.filter(dataList => {
-        return data[index].hotelId !== dataList.hotelId
+      data.filter((dataList) => {
+        return data[index].hotelId !== dataList.hotelId;
       })
     );
     // console.log(dataList.partnershipId);
-
   };
 
   /*20220622 YN
@@ -127,7 +141,7 @@ function Hotel() {
   const handleEditShow = (index) => {
     setEditShow(true);
     setEditData(data[index]);
-    console.log(data[index])
+    console.log(data[index]);
   };
 
   // const handleEditShow = () => setEditShow(true);
@@ -154,7 +168,7 @@ function Hotel() {
                   className=" form-select ms-1"
                   aria-label="Default select example"
                 >
-                  <option defaultValue="地區搜尋" >地區搜尋</option>
+                  <option defaultValue="地區搜尋">地區搜尋</option>
                   <option value="1">北區</option>
                   <option value="2">中區</option>
                   <option value="3">南區</option>
@@ -178,9 +192,7 @@ function Hotel() {
                   onHide={handleAddClose}
                 >
                   <Modal.Header closeButton></Modal.Header>
-                  <HotelAdd
-                    setAddShow={setAddShow}
-                  />
+                  <HotelAdd setAddShow={setAddShow} />
                 </Modal>
               </div>
             </div>

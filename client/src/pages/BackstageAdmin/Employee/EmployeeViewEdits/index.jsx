@@ -123,7 +123,7 @@ function EmployeeViewEdits({ setEditShow, editData }) {
           name="employeePasswd"
           // required="required"
           placeholder="password"
-          Value={shown ? `${editModalData.employeePasswd}` : "******"}
+          Value={shown ? "" : "******"}
           onChange={editFormChangeHandle}
           disabled={isDisabled}
         />
@@ -151,18 +151,6 @@ function EmployeeViewEdits({ setEditShow, editData }) {
           defaultValue={editModalData.employeePhone}
           onChange={editFormChangeHandle}
           disabled={isDisabled}
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>員工負責人</Form.Label>
-        <Form.Control
-          type="text"
-          name="operatorEmployeeId"
-          required="required"
-          placeholder="1"
-          defaultValue="1"
-          disabled={isDisabled}
-          onChange={editFormChangeHandle}
         />
       </Form.Group>
       <div className="mt-1 mb-1 d-flex justify-content-end">

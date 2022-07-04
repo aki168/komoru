@@ -94,9 +94,9 @@ function HotelViewEdits({ setEditShow, editData, data }) {
         });
 
         setMainImageData(mainArr[0].hotelImgPath);
-        setFirstImageData(otherArr[1].hotelImgPath);
-        setSecondImageData(otherArr[2].hotelImgPath);
-        setThirdImageData(otherArr[3].hotelImgPath);
+        setFirstImageData(typeof(otherArr[0].hotelImgPath) === "undefined" ? "":otherArr[0].hotelImgPath);
+        setSecondImageData(typeof(otherArr[1].hotelImgPath) === "undefined" ? "":otherArr[1].hotelImgPath);
+        setThirdImageData(typeof(otherArr[2].hotelImgPath) === "undefined" ? "":otherArr[2].hotelImgPath);
         // console.log(data.dataList.hotelImgDataList);
         // console.log(data.dataList.hotelImgDataList[0].hotelImgPath);
       })
@@ -126,7 +126,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
 
   /*20220622 YN
    取得輸入新增表單資料*/
-  const addFormChangeHandle = (event) => {
+  const editFormChangeHandle = (event) => {
     event.preventDefault();
     const fieldName = event.target.getAttribute("name");
     const fieldValue = event.target.value;
@@ -139,9 +139,8 @@ function HotelViewEdits({ setEditShow, editData, data }) {
   };
   /*20220622 YN
    送出時取得輸入新增表單資料，並傳到後端重整畫面*/
-  const addFormSubmitHandle = (event) => {
+  const editFormSubmitHandle = (event) => {
     event.preventDefault();
-    // 20220703 YN 沒更換照片傳的變數
     const newContact = {
       hotelTitle: editModalData.hotelTitle,
       cityId: editModalData.cityId,
@@ -150,70 +149,70 @@ function HotelViewEdits({ setEditShow, editData, data }) {
       hotelDesc: editModalData.hotelDesc,
       hotelContent: editModalData.hotelContent,
       employeeId: "1",
-      hotelImgPath: [
-        editData.hotelImgPath,
-        firstImageData,
-        secondImageData,
-        thirdImageData,
-      ],
+      hotelImgPath: {
+        mainHotelImgFile:mainImageData,
+        firstHotelImgFile:typeof(firstImageData) === "undefined" ? "":firstImageData,
+        secondHotelImgFile:typeof(secondImageData) === "undefined" ? "":secondImageData,
+        thirdHotelImgFile:typeof(thirdImageData) === "undefined" ? "":thirdImageData,
+      },
     };
     // 20220703 YN 有更換照片傳的變數
-    const editContact = {
-      hotelTitle: editModalData.hotelTitle,
-      cityId: editModalData.cityId,
-      hotelAddr: editModalData.hotelAddr,
-      hotelTel: editModalData.hotelTel,
-      hotelDesc: editModalData.hotelDesc,
-      hotelContent: editModalData.hotelContent,
-      employeeId: "1",
-      hotelImgPath: "",
-    };
+    // const editContact = {
+    //   hotelTitle: editModalData.hotelTitle,
+    //   cityId: editModalData.cityId,
+    //   hotelAddr: editModalData.hotelAddr,
+    //   hotelTel: editModalData.hotelTel,
+    //   hotelDesc: editModalData.hotelDesc,
+    //   hotelContent: editModalData.hotelContent,
+    //   employeeId: "1",
+    //   hotelImgPath: "",
+    // };
     // console.log(newContact);
     // setAddFormData(newContacts);
 
     if (editImage === true) {
       const formData = new FormData();
-      formData.append("roomDataList", JSON.stringify(editContact));
+      formData.append("roomDataList", JSON.stringify(newContact));
       formData.append("roomImgFile", selectedPrimaryFile);
       formData.append("roomImgFile", selectedFirstaryFile);
       formData.append("roomImgFile", selectedSecondFile);
       formData.append("roomImgFile", selectedThirdFile);
       console.log(...formData);
-      // fetch("http://localhost:5000/hotel/addHotel", {
-      //   method: "POST",
-      //   body: formData,
-      // })
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     if (data.status) {
-      //       setEditShow(false);
-      //       window.location.reload(false);
-      //     }
-      //     console.log(data);
-      //   })
-      //   .catch((e) => {
-      //     console.error(e);
-      //   });
+      fetch("http://localhost:5000/hotel/updateHotelByHotelId", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status) {
+            setEditShow(false);
+            window.location.reload(false);
+          }
+          console.log(data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     } else {
       const formData = new FormData();
       formData.append("roomDataList", JSON.stringify(newContact));
       formData.append("roomImgFile", []);
       console.log(...formData);
-      // fetch("http://localhost:5000/hotel/addHotel", {
-      //   method: "POST",
-      //   body: formData,
-      // })
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     if (data.status) {
-      //       setEditShow(false);
-      //       window.location.reload(false);
-      //     }
-      //     console.log(data);
-      //   })
-      //   .catch((e) => {
-      //     console.error(e);
-      //   });
+      fetch("http://localhost:5000/hotel/updateHotelByHotelId", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status) {
+            setEditShow(false);
+            window.location.reload(false);
+          }
+          console.log(data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     }
   };
   /*20220625 YN
@@ -291,7 +290,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
   };
 
   return (
-    <Form className="container row mt-3" onSubmit={addFormSubmitHandle}>
+    <Form className="container row mt-3" onSubmit={editFormSubmitHandle}>
       {!editImage && (
         <Form.Group className="col-6 d-flex ">
           <div className="container-fluid d-flex flex-column">
@@ -480,7 +479,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
             name="hotelTitle"
             required="required"
             defaultValue={editModalData.hotelTitle}
-            onChange={addFormChangeHandle}
+            onChange={editFormChangeHandle}
             disabled={isDisabled}
           />
         </Form.Group>
@@ -488,7 +487,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
           <Form.Select
             name="cityId"
             disabled={isDisabled}
-            onChange={addFormChangeHandle}
+            onChange={editFormChangeHandle}
           >
             <option defaultValue={editModalData.cityId}>
               {editData.cityName}
@@ -505,7 +504,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
             name="hotelAddr"
             required="required"
             defaultValue={editModalData.hotelAddr}
-            onChange={addFormChangeHandle}
+            onChange={editFormChangeHandle}
             disabled={isDisabled}
           />
         </Form.Group>
@@ -515,7 +514,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
             name="hotelTel"
             required="required"
             defaultValue={editModalData.hotelTel}
-            onChange={addFormChangeHandle}
+            onChange={editFormChangeHandle}
             disabled={isDisabled}
           />
         </Form.Group>
@@ -526,7 +525,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
             // required="required"
             placeholder="備註"
             defaultValue={editModalData.hotelDesc}
-            onChange={addFormChangeHandle}
+            onChange={editFormChangeHandle}
             disabled={isDisabled}
           />
         </Form.Group>
@@ -537,7 +536,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
             rows={3}
             defaultValue={editModalData.hotelContent}
             name="hotelContent"
-            onChange={addFormChangeHandle}
+            onChange={editFormChangeHandle}
             disabled={isDisabled}
           />
         </Form.Group>

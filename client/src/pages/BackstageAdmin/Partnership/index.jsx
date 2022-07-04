@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import PartnershipAdd from "./PartnershipAdd";
 import PartnershipEdit from "./PartnershipEdit/index";
 function Partnership() {
@@ -26,6 +27,26 @@ function Partnership() {
   /*20220624 YN
  初始化*/
   // const [deletData, setDeletData] = useState();
+
+  /*20220704 YN
+  登入狀態為false自動轉跳Login頁面 */
+  let navigate = useNavigate();
+  useEffect(() => {
+    axios({
+      method: "POST",
+      url: "http://localhost:5000/employee/checkIsLogin",
+      withCredentials: true,
+    })
+      .then((res) => {
+        if (res.data.status === false) {
+          navigate("/BackstageLogin", { replace: true });
+          // console.log(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   /*20220622 YN
   新增表單時，modal顯示狀態設定*/
@@ -127,7 +148,7 @@ function Partnership() {
         });
 
       window.location.reload(false);
-    } 
+    }
 
     // setData(
     //   data.filter((dataList) => {

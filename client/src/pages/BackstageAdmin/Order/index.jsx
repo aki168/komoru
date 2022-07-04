@@ -17,27 +17,25 @@ function Order() {
   入住資料狀態初始化*/
   const [orderData, setOrderData] = useState([]);
 
-
-  // let navigate = useNavigate()
-  // useEffect(() => {
-  //   axios({
-  //     method: "POST",
-  //     url: "http://localhost:5000/employee/checkIsLogin",
-  //     withCredentials: true
-  //   })
-  //     .then((res) => {
-  //       if (res.data.status === false) {
-  //         navigate('/BackstageLogin', { replace: true })
-  //         // console.log(res.data);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     });
-  // }, [])
-
-
-
+  /*20220704 YN
+  登入狀態為false自動轉跳Login頁面 */
+  let navigate = useNavigate()
+  useEffect(() => {
+    axios({
+      method: "POST",
+      url: "http://localhost:5000/employee/checkIsLogin",
+      withCredentials: true
+    })
+      .then((res) => {
+        if (res.data.status === false) {
+          navigate('/BackstageLogin', { replace: true })
+          // console.log(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  }, [])
 
 
   /*20220617 YN
@@ -255,11 +253,14 @@ function Order() {
                     containerClassName={"pagination"}
                     pageClassName={"page-item"}
                     pageLinkClassName={"page-link"}
-                    previousClassName={"page-item"}
+                    previousClassName={"page-item"} 
                     previousLinkClassName={"page-link"}
                     nextClassName={"page-item"}
                     nextLinkClassName={"page-link"}
                     activeClassName={"active"}
+                    pageRangeDisplayed={2} 
+                    marginPagesDisplayed={1}
+                    
                   />
                 </ul>
               </nav>

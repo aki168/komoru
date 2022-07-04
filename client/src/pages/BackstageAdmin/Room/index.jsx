@@ -4,6 +4,7 @@ import axios from "axios";
 import RoomViewEdits from "./RoomViewEdits";
 import RoomAdd from "./RoomAdd";
 import { Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function Room() {
   /* 20220616 YN
@@ -27,6 +28,26 @@ function Room() {
   /*20220622 YN
    飯店資料初始化*/
   const [hotelData, setHotelData] = useState([]);
+
+  /*20220704 YN
+  登入狀態為false自動轉跳Login頁面 */
+  let navigate = useNavigate();
+  useEffect(() => {
+    axios({
+      method: "POST",
+      url: "http://localhost:5000/employee/checkIsLogin",
+      withCredentials: true,
+    })
+      .then((res) => {
+        if (res.data.status === false) {
+          navigate("/BackstageLogin", { replace: true });
+          // console.log(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   /*20220617 YN
   接後端api取後端資料*/

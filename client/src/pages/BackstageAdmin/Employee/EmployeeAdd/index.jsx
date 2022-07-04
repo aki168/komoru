@@ -102,18 +102,6 @@ function EmployeeAdd({setAddShow }) {
           onChange={addFormChangeHandle}
         />
       </Form.Group>
-      <Form.Group>
-        <Form.Label>員工負責人</Form.Label>
-        <Form.Control
-          type="text"
-          name="operatorEmployeeId"
-          required="required"
-          placeholder="1"
-          defaultValue="1"
-          disabled
-          onChange={addFormChangeHandle}
-        />
-      </Form.Group>
       <div className="mt-1 mb-1 d-flex justify-content-end">
         <Button className="me-1" type="submit">
           新增

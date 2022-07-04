@@ -1,6 +1,6 @@
 import React ,{useState,useEffect}from "react";
 import axios from "axios";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate} from "react-router-dom";
 import Order from "../../pages/BackstageAdmin/Order";
 import Partnership from "../../pages/BackstageAdmin/Partnership";
 import Dashboard from "../../pages/BackstageAdmin/Dashboard";
@@ -11,6 +11,7 @@ import { GrLogout } from "react-icons/gr";
 
 function AdminHeader() {
   const [userName,setUserName] = useState("")
+
   useEffect(() => {
     axios({
       method: "POST",
@@ -18,18 +19,18 @@ function AdminHeader() {
       withCredentials: true
     })
       .then((res) => {
-        if (res.data.status) {
-          console.log(res.data); // 印出撈到的資料看看
+        if (res.data.status === true) {
+          // console.log(res.data); // 印出撈到的資料看看
           setUserName(res.data.dataList.employeeName)
-        } else {
-          console.log(res.data);
-
-        }
+        } 
       })
       .catch((err) => {
         console.log(err)
       });
   }, [])
+
+
+  
   return (
     <>
       <div
@@ -42,7 +43,7 @@ function AdminHeader() {
         </button>
       </div>
       <Routes>
-        <Route path="/order" element={<Order />}></Route>
+        <Route path="/order" element={<Order/>}></Route>
         <Route path="/partnership" element={<Partnership />}></Route>
         <Route path="/dashboard/*" element={<Dashboard />}></Route>
         <Route path="/hotel" element={<Hotel />}></Route>
