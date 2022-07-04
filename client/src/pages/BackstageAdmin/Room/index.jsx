@@ -127,12 +127,35 @@ function Room() {
   /*20220620 YN
   移除功能 */
   const deletFormHandle = (index) => {
-    setData(
-      data.filter((dataList) => {
-        return data[index].roomId !== dataList.roomId;
-      })
-    );
+    // setData(
+    //   data.filter((dataList) => {
+    //     return data[index].roomId !== dataList.roomId;
+    //   })
+    // );
     // console.log(dataList.partnershipId);
+    if (window.confirm("確定要移除嗎?")) {
+      const result = {
+        roomId: `${data[index].roomId}`,
+        employeeId: "1",
+      };
+
+      fetch("http://localhost:5000/room/delRoomByRoomId", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(result),
+      })
+        // .then((response) => response.json())
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+      window.location.reload(false);
+    }
   };
   /*20220622 YN
   新增表單時，modal顯示狀態設定*/
