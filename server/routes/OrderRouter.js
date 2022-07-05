@@ -30,8 +30,12 @@ router.post("/updateOrderStatusByOrderId", orderController.updateOrderStatusByOr
 router.post('/getAndSaveOrderData',orderController.getAndSaveOrderData) 
 
 // 2022-06-28 AKI MJ
-// 取得訂單資料byMemberId (只有標題)
+// 取得訂單資料byMemberId (前台token 轉換)
 router.post('/getOrderDataByMemberId',orderController.getOrderDataByMemberId) 
+
+// 2022-07-05 PG
+// 取得訂單資料 by memberId（後台 memberId）
+router.post('/getOrderDataWithActivePackByOrderId',orderController.getOrderDataWithActivePackByOrderId) 
 
 // 2022-06-29 MJ
 // 取得會員的coupon datalist By MemberId

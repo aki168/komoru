@@ -74,6 +74,62 @@ exports.enumValueToString = (tableName, column, value) => {
           break;
       }
       break;
+    case "ActivePack":
+      switch (column) {
+        case "activePackType":
+          switch (value) {
+            case "0":
+              transferString = "藝術家";
+              break;
+            case "1":
+              transferString = "霸道總裁";
+              break;
+            case "2":
+              transferString = "內向輔助";
+              break;
+            case "3":
+              transferString = "能言善道";
+              break;
+            case "4":
+              transferString = "冒險家";
+              break;
+            case null:
+              transferString = "無參與活動";
+              break;
+            default:
+              errCheck = false;
+              errMsg = "狀態值不存在";
+              break;
+          }
+          break;
+        default:
+          errCheck = false;
+          errMsg = "欄位不存在";
+          break;
+      }
+      break;
+    case "Member":
+      switch (column) {
+        case "gender":
+          switch (value) {
+            case "0":
+              transferString = "女";
+              break;
+            case "1":
+              transferString = "男";
+              break;
+            default:
+              errCheck = false;
+              errMsg = "狀態值不存在";
+              break;
+          }
+          break;
+        default:
+          errCheck = false;
+          errMsg = "欄位不存在";
+          break;
+      }
+      break;
     default:
       errCheck = false;
       errMsg = "資料表不存在";

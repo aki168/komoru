@@ -2,8 +2,8 @@ const db = require("./_ConfigDB");
 
 // 2022-06-18 PG
 // 取得訂單 DataList、入住天數、房型資訊
-// orderId orderNumber orderStartDate stayNight orderStatus 
-// memberName 
+// orderId orderNumber orderStartDate stayNight orderStatus
+// memberName
 // roomDesc
 // return：({})
 exports.getOrderDataListWithRoomDescAndStayNight = async () => {
@@ -54,7 +54,6 @@ exports.updateOrderStatusByOrderId = async (dataList) => {
   });
 };
 
-
 // 2022-06-22 MJ
 // 取得訂房資料
 // 傳入JSON格式資料如下
@@ -78,76 +77,83 @@ exports.getOrderData = (data) => {
   // 駝峰轉_
   function decamelize(string, options) {
     options = options || {};
-    var separator = options.separator || '_'
-    var split = options.split || /(?=[A-Z])/
-    return string.split(split).join(separator).toLowerCase()
+    var separator = options.separator || "_";
+    var split = options.split || /(?=[A-Z])/;
+    return string.split(split).join(separator).toLowerCase();
   }
 
   // 日期加天數Function
   Date.prototype.addDays = function (days) {
-    this.setDate(this.getDate() + days)
-    return this
-  }
+    this.setDate(this.getDate() + days);
+    return this;
+  };
 
   // 收到請求時加入創建訂單的時間
-  data['createDatetime'] = db.getDateTimeNow()
+  data["createDatetime"] = db.getDateTimeNow();
 
   // 取得入住日期並加上體驗天數
-  var date = new Date(data["orderStartDate"])
-  date = date.addDays(parseInt(data['expDays'])).toLocaleDateString()
+  var date = new Date(data["orderStartDate"]);
+  date = date.addDays(parseInt(data["expDays"])).toLocaleDateString();
 
   // 將體驗天數轉為退房日期並放入JSON資料中
-  data['orderEndDate'] = date
-  delete data['expDays']
+  data["orderEndDate"] = date;
+  delete data["expDays"];
 
   // console.log(data)
   // 把JSON中的駝峰改為_
   for (key in data) {
-    var newKey = decamelize(key)
+    var newKey = decamelize(key);
     if (newKey) {
-      data[newKey] = data[key]
-      delete data[key]
+      data[newKey] = data[key];
+      delete data[key];
     }
   }
-  return data
-}
+  return data;
+};
 
 // 2022-06-22 MJ
 // 將訂房資料存入SQL
 exports.saveOrderData = async (data) => {
-  data = this.getOrderData(data)
+  data = this.getOrderData(data);
   // 生成隨機亂碼做order_number
-  data['order_number'] = db.creatRandomPassword(8)
+  data["order_number"] = db.creatRandomPassword(8);
 
   //  檢查order_number是否重複
-  let check = await exports.isOnumExist(data['order_number'])
+  let check = await exports.isOnumExist(data["order_number"]);
   while (check) {
-    data['order_number'] = db.creatRandomPassword(8)
-    let doubleCheck = await exports.isOnumExist(data['order_number'])
+    data["order_number"] = db.creatRandomPassword(8);
+    let doubleCheck = await exports.isOnumExist(data["order_number"]);
     if (doubleCheck) {
-      break
+      break;
     }
   }
 
   // 存入SQL
   return new Promise(function (reslove, reject) {
-    let sql = "INSERT INTO `Order` " +
+    let sql =
+      "INSERT INTO `Order` " +
       "(`member_id`, `order_start_date`, `order_status`, `room_id`, `order_total`, `create_datetime`, `order_end_date`, `order_number`, `coupon_item_id`) " +
-      " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) "
-    value = [data['member_id'], data['order_start_date'], data['order_status'], data['room_id'], data['order_total'], data['create_datetime'], data['order_end_date'], data['order_number'], data['coupon_item_id']]
+      " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+    value = [
+      data["member_id"],
+      data["order_start_date"],
+      data["order_status"],
+      data["room_id"],
+      data["order_total"],
+      data["create_datetime"],
+      data["order_end_date"],
+      data["order_number"],
+      data["coupon_item_id"],
+    ];
     db.con.query(sql, value, function (error, results, fields) {
       if (error) {
-        reject(error)
+        reject(error);
+      } else {
+        reslove(data, console.log("The solution is: ", results));
       }
-      else {
-        reslove(
-          data,
-          console.log('The solution is: ', results)
-        )
-      }
-    })
-  })
-}
+    });
+  });
+};
 
 // 2022-06-28 MJ
 // 檢查orderNumber是否重複
@@ -157,17 +163,17 @@ exports.isOnumExist = (orderNum) => {
       "SELECT " +
       "`order_number`" +
       "FROM `Order`" +
-      "WHERE `order_number` = ?"
-    let value = orderNum
+      "WHERE `order_number` = ?";
+    let value = orderNum;
 
     db.con.query(sql, value, (err, result) => {
       if (err) {
-        reject(false)
+        reject(false);
       }
-      resolve(true)
-    })
-  })
-}
+      resolve(true);
+    });
+  });
+};
 
 // 2022-06-29 MJ
 // 取得會員couponItem dataList
@@ -180,23 +186,24 @@ exports.getCouponItemDataList = async (memberId) => {
       "FROM `CouponItem`" +
       "JOIN `Coupon` ON `CouponItem`.`coupon_id` = `Coupon`.`coupon_id`" +
       "WHERE `CouponItem`.`coupon_item_status` = '0'" +
-      "AND `CouponItem`.`member_id` = ?"
-    let value = memberId
+      "AND `CouponItem`.`member_id` = ?";
+    let value = memberId;
 
     db.con.query(sql, value, (err, rows, fields) => {
       if (err) {
-        reject(err)
+        reject(err);
       }
-      resolve(db.rowDataToCamelData(rows))
-    })
-  })
-}
+      resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};
 
 // 2022-06-30 MJ AKI
 // 取得訂單資料byMemberId
 exports.getOrderDataByMemberId = async (memberId) => {
   return new Promise((resolve, reject) => {
-    let sql = "SELECT" +
+    let sql =
+      "SELECT" +
       "`Order`.`order_id`, `Order`.`order_number`, `Order`.`room_id`, `Order`.`coupon_item_id`, `Order`.`order_status`, `Order`.`order_start_date`, `Order`.`order_end_date`, `Order`.`order_total`, `Order`.`create_datetime`, `OrderItem`.`order_item_date`, `OrderItem`.`is_active`, `OrderItem`.`order_item_price`, `Order`.`member_id`, `Member`.`member_mail`, `Member`.`member_name`, `Member`.`member_nick_name`, `Member`.`member_gender`, `Member`.`member_phone`, `Member`.`member_img_path`, `City`.`city_name`, `Hotel`.`hotel_title`, `Hotel`.`hotel_addr`, `Hotel`.`hotel_tel`, `Hotel`.`hotel_desc`, `Room`.`room_type`, `Room`.`room_desc`, `ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`active_pack_item_start_time`, `ActivePackItem`.`active_pack_item_end_time`, `OrderItem`.`active_pack_id`, `ActivePackItem`.`partnership_id`" +
       "FROM `Order`" +
       "LEFT JOIN OrderItem ON`Order`.`order_id` = `OrderItem`.`order_id`" +
@@ -208,16 +215,45 @@ exports.getOrderDataByMemberId = async (memberId) => {
       "LEFT JOIN `ActivePack` ON `OrderItem`.`active_pack_id` = `ActivePack`.`active_pack_id`" +
       "LEFT JOIN `ActivePackItem` ON `ActivePack`.`active_pack_id` = `ActivePackItem`.`active_pack_id`" +
       "WHERE `Order`.`member_id` = ? " +
-      "ORDER BY `order_start_date` DESC "
+      "ORDER BY `order_start_date` DESC ";
 
     db.con.query(sql, memberId, (err, rows, fields) => {
       if (err) {
-        reject(err)
+        reject(err);
       }
-      resolve(db.rowDataToCamelData(rows))
-    })
-  })
-}
+      resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};
+
+// 2022-07-05 PG
+// 取得訂單資料 by orderId
+exports.getOrderDataByOrderId = async (orderId) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "SELECT " +
+      "`Order`.`order_id`, `Order`.`order_number`, `Order`.`order_status`, `Order`.`order_start_date`, `Order`.`order_end_date`, `Order`.`order_total`, " +
+      "`Member`.`member_mail`, `Member`.`member_name`, `Member`.`member_nick_name`, `Member`.`member_gender`, `Member`.`member_phone`, " +
+      "CONCAT(`City`.`city_name`, '-', `Hotel`.`hotel_title`, '/') AS `room_detail`, " +
+      "IFNULL(`Coupon`.`coupon_title`,'無使用') AS `coupon_title`, " +
+      "`Room`.`room_type` " +
+      "FROM `Order` " +
+      "JOIN `Member` ON `Order`.`member_id` = `Member`.`member_id` " +
+      "JOIN `Room` ON `Order`.`room_id` = `Room`.`room_id` " +
+      "JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id` " +
+      "JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id` " +
+      "LEFT JOIN `CouponItem` ON `Order`.`coupon_item_id` = `CouponItem`.`coupon_item_id` " +
+      "LEFT JOIN `Coupon` ON `CouponItem`.`coupon_id` = `Coupon`.`coupon_id` " +
+      "WHERE `Order`.`order_id` = ?; ";
+
+    db.con.query(sql, orderId, (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};
 
 // 2022-07-01 MJ
 // 儲存OrderItemData
@@ -225,49 +261,55 @@ exports.getOrderDataByMemberId = async (memberId) => {
 exports.saveOrderIdToOrderItemAndExamItem = (data) => {
   return new Promise((resolve, reject) => {
     // 用orderNumber查出orderId
-    let orderNum = data['order_number']
-    let sql = "SELECT `order_id` FROM `Order` WHERE `order_number` = ? "
+    let orderNum = data["order_number"];
+    let sql = "SELECT `order_id` FROM `Order` WHERE `order_number` = ? ";
     db.con.query(sql, orderNum, (err, rows, fields) => {
       if (err) {
-        reject(err)
-      }
-      else {
-        let orderId = db.rowDataToCamelData(rows)[0]['orderId']
-        let joinTotal = data['join_total']
+        reject(err);
+      } else {
+        let orderId = db.rowDataToCamelData(rows)[0]["orderId"];
+        let joinTotal = data["join_total"];
 
         // 寫入OrderId到ExamItem
-        let examItemsql = "UPDATE `ExamItem` " +
+        let examItemsql =
+          "UPDATE `ExamItem` " +
           "SET `order_id` = ? " +
           "WHERE `member_id` = ? " +
           "ORDER BY `exam_item_id` DESC " +
-          "LIMIT 1"
+          "LIMIT 1";
 
-        let examValue = [orderId, data['member_id']]
+        let examValue = [orderId, data["member_id"]];
         db.con.query(examItemsql, examValue, (err, rows, fields) => {
           if (err) {
-            reject(err)
+            reject(err);
+          } else {
+            resolve(db.rowDataToCamelData(rows));
           }
-          else {
-            resolve(db.rowDataToCamelData(rows))
-          }
-        })
+        });
         // 依照總體驗天數寫入OrderId到對應的OrderItem
         for (i = 0; i < joinTotal; i++) {
           // 找到訂單號碼後存入OrderItem
-          let orderItemsql = "INSERT INTO `OrderItem`" +
+          let orderItemsql =
+            "INSERT INTO `OrderItem`" +
             "(`order_id`, `active_pack_id`, `order_item_date`, `is_active`, `create_datetime`, `order_item_price`)" +
-            " VALUES (?, ?, ?, ?, ?, ?) "
-          value = [orderId, data['active_pack_id'][i], data['order_start_date'], data['is_active'], data['create_datetime'], data['order_item_price']]
+            " VALUES (?, ?, ?, ?, ?, ?) ";
+          value = [
+            orderId,
+            data["active_pack_id"][i],
+            data["order_start_date"],
+            data["is_active"],
+            data["create_datetime"],
+            data["order_item_price"],
+          ];
           db.con.query(orderItemsql, value, (err, rows, fields) => {
             if (err) {
-              reject(err)
+              reject(err);
+            } else {
+              resolve(db.rowDataToCamelData(rows));
             }
-            else {
-              resolve(db.rowDataToCamelData(rows))
-            }
-          })
+          });
         }
       }
-    })
-  })
-}
+    });
+  });
+};
