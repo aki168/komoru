@@ -9,7 +9,7 @@ const BookingImgTainanPrivateRoom = () => {
   useEffect(() => {
     axios
       .post(
-        "http://localhost:5000/room/getRoomDataListWithMainImgAndHotelNameAndCityName"
+        "http://localhost:5000/room/getRoomDataWithImgByRoomId"
       )
       .then((res) => {
         

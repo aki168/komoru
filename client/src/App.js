@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 import BackstageAdmin from "./pages/BackstageAdmin";
 import BackstageLogin from "./pages/BackstageLogin";
@@ -17,12 +17,12 @@ import CouponPage from "./pages/userPage/CouponPage";
 //ZH
 import PsychologicalExam from "./pages/psychologicalExam/PsychologicalExam";
 import BookingHomepage from "./pages/bookingHomepage/BookingHomepage";
-import ExamResult from "./pages/psychologicalExam/examAll/ExamResult";
 import BookingOrderPage from "./pages/orderPage/BookingOrderPage";
 import CheckoutSucceeded from "./pages/checkoutSucceededPage/CheckoutSucceeded";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import { BookContext } from "./Helper/Context";
 import PartnerHotel from "./pages/partnerHotel/PartnerHotel";
+import ContactUs from "./pages/contactUs/ContactUs";
 
 // 0622 - 確認該用戶是否登入，可以連這隻api
 export const loginOrNot = () => {
@@ -48,7 +48,11 @@ export const logout = () => {
   localStorage.removeItem("token");
   window.location.reload("false"); //想重新渲染同頁面可以用這段
 };
-
+// 0622- aki 登出請調用該函式
+// export const logout = () => {
+//   localStorage.removeItem("token");
+//   window.location.reload("false"); //想重新渲染同頁面可以用這段
+// };
 
 function App() {
   //2022-06-23 ZH
@@ -58,6 +62,7 @@ function App() {
   const [cityState, setCityState] = useState([]);
   const [roomState, setRoomState] = useState("DEFAULT");
   const [couponState, setCouponState] = useState("");
+  const [couponData, setCouponData] = useState([]);
   const [activityState, setActivityState] = useState("");
   const [activity1Data, setActivity1Data] = useState("");
   const [activity2Data, setActivity2Data] = useState("");
@@ -79,6 +84,8 @@ function App() {
     setRoomState,
     couponState,
     setCouponState,
+    couponData,
+    setCouponData,
     activityState,
     setActivityState,
     activity1Data,
@@ -137,6 +144,7 @@ function App() {
         <Route path="checkoutSucceeded" element={<CheckoutSucceeded />} />
         <Route path="/404" element={<ErrorPage />} />
         <Route path="/hotelIntro" element={<PartnerHotel />} />
+        <Route path="/contactUs" element={<ContactUs />} />
       </Routes>
     </BrowserRouter>
   );

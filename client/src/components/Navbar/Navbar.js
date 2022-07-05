@@ -9,7 +9,11 @@ export default function Navbar() {
     <nav className="navbar">
       <h1>
         <a className="navbar--title" href="/">
-          <img className="navbar--logo" src="KOMORU_LOGO_White.png" alt="LOGO"></img>
+          <img
+            className="navbar--logo"
+            src="KOMORU_LOGO_White.png"
+            alt="LOGO"
+          ></img>
         </a>
       </h1>
       <ul className="navbar--menu">
@@ -19,7 +23,7 @@ export default function Navbar() {
           </a>
         </li>
         <li>
-          <a className="navbar--item" href="/">
+          <a className="navbar--item" href="/contactUs">
             聯絡我們
           </a>
         </li>
@@ -39,11 +43,11 @@ export default function Navbar() {
           </a>
         </li>
         <li>
-          {token&& 
+          {token && (
             <Button variant="secondary" size="sm" onClick={logout}>
               登出
             </Button>
-          }
+          )}
         </li>
       </ul>
     </nav>

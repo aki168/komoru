@@ -17,6 +17,7 @@ import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import "./PartnerHotel.css";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import Navbar from "../../components/Navbar/Navbar-simple";
 
 const PartnerHotel = () => {
   useEffect(() => {
@@ -93,6 +94,11 @@ const PartnerHotel = () => {
     //   </div>
     // </div>
     <>
+      <Navbar />
+      <div className="goBooking">
+        <h1>立即</h1>
+        <h1>預定</h1>
+      </div>
       <div className="hotelIntroTitle">
         <h1>合作飯店</h1>
         <h2>ROOMS</h2>
