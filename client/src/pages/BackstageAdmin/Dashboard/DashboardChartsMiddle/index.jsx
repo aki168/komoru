@@ -8,12 +8,15 @@ import DemoLiquidCoupon from "./DemoLiquidCoupon";
 import DemoLiquidFeedback from "./DemoLiquidFeedback";
 import { useEffect } from "react";
 
-function DashboardChartsMiddle() {
-  const [middleData,setMiddleData] = useState()
+function DashboardChartsMiddle({ dateData }) {
+  const [middleData, setMiddleData] = useState()
+  // const [dateData, setDateData] = useState({
+  //   dateRange: "2022-06",
+  // });
   useEffect(() => {
     const newContacts = {
       cityId: "2",
-      dateRange: "2022-06",
+      dateRange: `${dateData.dateRange}`,
     };
     fetch("http://localhost:5000/dashboard/getDashboardDataListByCondition", {
       method: "POST",
@@ -30,7 +33,7 @@ function DashboardChartsMiddle() {
       .catch((e) => {
         console.error(e);
       });
-  }, []);
+  }, [dateData]);
   return (
     <>
       <div className="mx-5 me-5">
@@ -45,25 +48,25 @@ function DashboardChartsMiddle() {
         <div className="row mb-5">
           <div className="col-4">
             <h3>參與活動率</h3>
-            {middleData && <DemoPieParticipate middleData={middleData}/>}
+            {middleData && <DemoPieParticipate middleData={middleData} />}
           </div>
           <div className="col-4">
             <h3>測驗後參與率</h3>
-            {middleData && <DemoPieExam middleData={middleData}/>}
+            {middleData && <DemoPieExam middleData={middleData} />}
           </div>
           <div className="col-4">
             <h3>活動類型</h3>
-            {middleData && <DemoPieActivityType middleData={middleData}/>}
+            {middleData && <DemoPieActivityType middleData={middleData} />}
           </div>
         </div>
         <div className="row mb-5">
           <div className="col-6">
             <h3>優惠卷使用率</h3>
-            {middleData && <DemoLiquidCoupon middleData={middleData}/>}
+            {middleData && <DemoLiquidCoupon middleData={middleData} />}
           </div>
           <div className="col-6">
             <h3>回饋率</h3>
-            {middleData && <DemoLiquidFeedback middleData={middleData}/>}
+            {middleData && <DemoLiquidFeedback middleData={middleData} />}
           </div>
         </div>
       </div>

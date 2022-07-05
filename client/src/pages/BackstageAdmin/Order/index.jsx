@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from 'react-router-dom'
+import { Modal } from "react-bootstrap";
 // import OrderData from "./db_OrderList.json";
+import OrderView from './OrderView'
 
 function Order() {
   /* 20220616 YG
@@ -16,6 +18,14 @@ function Order() {
   /*20220628 YN
   入住資料狀態初始化*/
   const [orderData, setOrderData] = useState([]);
+
+  /*20220622 YN
+  檢視表單modal顯示狀態初始化*/
+  const [editShow, setEditShow] = useState(false);
+
+  /*20220624 YN
+ 取當下選取列表時的data狀態初始化*/
+  const [editData, setEditData] = useState();
 
   /*20220704 YN
   登入狀態為false自動轉跳Login頁面 */
@@ -62,27 +72,30 @@ function Order() {
   const unCheckInHandle = () => {
     // console.log(orderData.orderStatus)
     if (orderData.orderStatus !== "未入住") {
-      const orderLists = {
-        orderId: orderData.orderId,
-        orderStatus: "0",
-        employeeId: "1",
-      };
-      console.log(orderLists);
-      fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify(orderLists),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
+      if (window.confirm("確定修改嗎?")) {
+        const orderLists = {
+          orderId: orderData.orderId,
+          orderStatus: "0",
+          employeeId: "1",
+        };
+        console.log(orderLists);
+        fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          body: JSON.stringify(orderLists),
         })
-        .catch((e) => {
-          console.error(e);
-        });
-      window.location.reload(false);
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+        window.location.reload(false);
+        alert("修改成功");
+      }
     } else {
       alert("目前以'未入住'狀態");
     }
@@ -127,26 +140,30 @@ function Order() {
   const checkOutHandle = () => {
     // console.log(orderData.orderStatus)
     if (orderData.orderStatus !== "已退房") {
-      const orderLists = {
-        orderId: orderData.orderId,
-        orderStatus: "2",
-        employeeId: "1",
-      };
-      console.log(orderLists);
-      fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify(orderLists),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
+      if (window.confirm("確定修改嗎?")) {
+        const orderLists = {
+          orderId: orderData.orderId,
+          orderStatus: "2",
+          employeeId: "1",
+        };
+        console.log(orderLists);
+        fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          body: JSON.stringify(orderLists),
         })
-        .catch((e) => {
-          console.error(e);
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+        window.location.reload(false);
+        alert("修改成功");
+      }
     } else {
       alert("目前以'已退房'狀態");
     }
@@ -158,7 +175,7 @@ function Order() {
   const arr = data.map((data, index) => {
     return (
       // console.log(values.hotelTitle)
-      <tr key={data.orderId} className="form-check-label">
+      <tr key={index} className="form-check-label">
         <td>
           <input
             className="form-check-input"
@@ -175,13 +192,28 @@ function Order() {
         <td>{data.stayNight}</td>
         <td>{data.orderStatus}</td>
         <td>
-          <a href="" className="btn btn-success">
+          <button
+            onClick={() => handleViewShow(index)}
+            className="btn btn-success"
+          >
             檢視
-          </a>
+          </button>
         </td>
       </tr>
     );
   });
+
+  /*20220705 YN
+ 檢視表單，modal顯示狀態設定*/
+  const handleViewShow = (index) => {
+    setEditShow(true);
+    setEditData(data[index]);
+    console.log(data[index])
+  };
+
+  // const handleEditShow = () => setEditShow(true);
+  const handleEditClose = () => setEditShow(false)
+
   /*20220616 YG
   設定畫面上資料個數*/
   const userPerPage = 10;
@@ -253,14 +285,14 @@ function Order() {
                     containerClassName={"pagination"}
                     pageClassName={"page-item"}
                     pageLinkClassName={"page-link"}
-                    previousClassName={"page-item"} 
+                    previousClassName={"page-item"}
                     previousLinkClassName={"page-link"}
                     nextClassName={"page-item"}
                     nextLinkClassName={"page-link"}
                     activeClassName={"active"}
-                    pageRangeDisplayed={2} 
+                    pageRangeDisplayed={2}
                     marginPagesDisplayed={1}
-                    
+
                   />
                 </ul>
               </nav>
@@ -287,6 +319,20 @@ function Order() {
           </div>
         </div>
       </div>
+      <Modal
+        size="lg"
+        // aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={editShow}
+        onHide={handleEditClose}
+      >
+        <Modal.Header closeButton></Modal.Header>
+        <OrderView
+          // editShow={editShow}
+          setEditShow={setEditShow}
+          editData={editData}
+        />
+      </Modal>
     </>
   );
 }

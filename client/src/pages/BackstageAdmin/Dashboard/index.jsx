@@ -1,13 +1,18 @@
-import React,{useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Routes, Route, Link, Outlet, Navigate } from "react-router-dom";
+import { Routes, Route, Link, Outlet, Navigate, useNavigate, NavLink } from "react-router-dom";
 import DashboardChartsNorth from "./DashboardChartsNorth";
 import DashboardChartsSouth from "./DashboardChartsSouth";
 import DashboardChartsMiddle from "./DashboardChartsMiddle";
 import DashboardChartsEast from "./DashboardChartsEast";
-import { useNavigate } from "react-router-dom";
+import './Dashboard.css'
 
 function Dashboard() {
+
+  const [dateData, setDateData] = useState({
+    dateRange: "2022-06",
+  });
+
   /*20220704 YN
   登入狀態為false自動轉跳Login頁面 */
   let navigate = useNavigate();
@@ -27,38 +32,56 @@ function Dashboard() {
         console.log(err);
       });
   }, []);
+
+  const dateRangeChangeHandle = (event) => {
+    event.preventDefault();
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+
+    const newEditFormData = { ...dateData };
+    newEditFormData[fieldName] = fieldValue;
+
+    setDateData(newEditFormData);
+    console.log(newEditFormData);
+  }
   return (
     <>
       <div className="mx-5  mb-5">
-        <h2 className="mt-3 mb-5">分區報表</h2>
+        <div className="d-flex mt-3 mb-5 justify-content-between">
+          <h2 >分區報表</h2>
+          <select name="dateRange" onChange={dateRangeChangeHandle}>
+            <option value="2022-06" selected>2022-06</option>
+            <option value="2022-07">2022-07</option>
+            <option value="2022-08">2022-08</option>
+            <option value="2022-09">2022-09</option>
+            <option value="2022-10">2022-10</option>
+            <option value="2022-11">2022-11</option>
+            <option value="2022-12">2022-12</option>
+          </select>
+        </div>
+
         <div className="row " style={{ height: "300px" }}>
-          <Link className="col bg-light me-5" to="north">
-            <div>台北</div>
-          </Link>
-          <Link className="col bg-light me-5" to="middle">
-            <div className="col bg-light me-5">
-              <span>台中</span>
-            </div>
-          </Link>
-          <Link className="col bg-light me-5" to="south">
-            <div className="col bg-light me-5">
-              <span>台南</span>
-            </div>
-          </Link>
-          <Link className="col bg-light " to="east">
-            <div className="col bg-light ">
-              <span>台東</span>
-            </div>
-          </Link>
+          <NavLink className="col me-5 main-nav" style={{ background: "#f0f0f0" }} to="north" >
+            台北
+          </NavLink>
+          <NavLink className="col me-5 main-nav" style={{ background: "#f0f0f0" }} to="middle">
+            <div>台中</div>
+          </NavLink>
+          <NavLink className="col me-5 main-nav" style={{ background: "#f0f0f0" }} to="south">
+            <div>台南</div>
+          </NavLink>
+          <NavLink className="col main-nav" style={{ background: "#f0f0f0" }} to="east">
+            <div>台東</div>
+          </NavLink>
         </div>
       </div>
       <Outlet />
 
       <Routes>
-        <Route path="north" element={<DashboardChartsNorth />} />
-        <Route path="middle" element={<DashboardChartsMiddle />} />
-        <Route path="south" element={<DashboardChartsSouth />} />
-        <Route path="east" element={<DashboardChartsEast />} />
+        <Route path="north" element={<DashboardChartsNorth dateData={dateData} />} />
+        <Route path="middle" element={<DashboardChartsMiddle dateData={dateData} />} />
+        <Route path="south" element={<DashboardChartsSouth dateData={dateData} />} />
+        <Route path="east" element={<DashboardChartsEast dateData={dateData} />} />
         <Route path="/" element={<Navigate to="north" />}></Route>
       </Routes>
     </>

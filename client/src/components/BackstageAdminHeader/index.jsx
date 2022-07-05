@@ -56,7 +56,7 @@ function AdminHeader() {
         className="d-flex  sticky-top justify-content-end align-items-center "
         style={{ background: "#EFA16A", height: "100px" }}
       >
-        <h6>您好, {userName}</h6>
+        <h6 className="fs-4">您好, {userName}</h6>
         <button className="btn" onClick={logOut}>
           <GrLogout size="2em" color="" />
         </button>

@@ -1,0 +1,6 @@
+.main-nav-active{
+    color:tomato !important
+}
+.main-nav:active{
+    color:red;
+}

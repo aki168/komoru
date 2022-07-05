@@ -7,12 +7,12 @@ import DemoPieActivityType from "./DemoPieActivityType";
 import DemoLiquidCoupon from "./DemoLiquidCoupon";
 import DemoLiquidFeedback from "./DemoLiquidFeedback";
 
-function DashboardChartsNorth() {
+function DashboardChartsNorth({dateData}) {
   const [northData, setNorthData] = useState();
   useEffect(() => {
     const newContacts = {
       cityId: "1",
-      dateRange: "2022-06",
+      dateRange: `${dateData.dateRange}`,
     };
     fetch("http://localhost:5000/dashboard/getDashboardDataListByCondition", {
       method: "POST",
@@ -29,7 +29,7 @@ function DashboardChartsNorth() {
       .catch((e) => {
         console.error(e);
       });
-  }, []);
+  }, [dateData]);
   return (
     <>
       <div className="mx-5 me-5">
