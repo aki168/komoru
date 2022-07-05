@@ -172,12 +172,12 @@ exports.getCouponByMemberId = async (req, res) => {
 
 // 0704 勉勵金句抽卡 - MJ
 exports.getRainbowCard = async (req, res) => {
-  // const { token } = req.body;
-  // if (token) {
-  //   //   解碼
-  //   const decoded = await promisify(jwt.verify)(token, "jwtSecret")
-  //   const { memberId } = decoded
-  let memberId = 3
+  const { token } = req.body;
+  if (token) {
+    //   解碼
+    const decoded = await promisify(jwt.verify)(token, "jwtSecret")
+    const { memberId } = decoded
+  
 
   if (memberId) {
     try {
@@ -192,9 +192,9 @@ exports.getRainbowCard = async (req, res) => {
   } else {
     configController.sendJsonMsg(res, false, "memberId Error", "")
   }
-  // } else {
-  //   res.json({ message: "該用戶尚未登入" })
-  // }
+  } else {
+    res.json({ message: "該用戶尚未登入" })
+  }
 }
 
 exports.createCoupon = async (req, res) => {
@@ -203,7 +203,7 @@ exports.createCoupon = async (req, res) => {
   let couponId = data['coupon_id']
   let count = data['count']
   for (i = 0; i < count; i++) {
-    await memberModel.creatCoupon(memberId, couponId)
+    await memberModel.createCoupon(memberId, couponId)
   }
   configController.sendJsonMsg(res, true, "", 'done')
 }
