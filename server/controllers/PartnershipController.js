@@ -19,6 +19,32 @@ exports.getPartnershipDataListWithCityName = async (req, res, next) => {
     });
 };
 
+// 2022-07-05 PG
+// 取得合作夥伴 dataList By 關鍵字、城市
+// partnershipId partnershipName partnershipAddr partnershipTel partnershipContactPerson
+// cityName
+// return：json
+exports.getPartnershipDataListByKeywordAndCityId = async (req, res, next) => {
+  let data = req.body;
+  let checkDataResult = checkData(data, ["keyword", "cityId"]);
+
+  // 判斷是否有空值、沒有傳需要的資料
+  if (checkDataResult.errCheck) {
+    await partnershipModel
+      .getPartnershipDataListByKeywordAndCityId(data)
+      .then((result) => {
+        configController.sendJsonMsg(res, true, "", result);
+      })
+      .catch((err) => {
+        // 目前不確定這邊要怎改
+        console.log(err);
+        res.status(500).json({ message: "Server error" });
+      });
+  } else {
+    configController.sendJsonMsg(res, false, checkDataResult.errMsg, []);
+  }
+};
+
 // 2022-06-15 PG
 // 取得合作夥伴 Data By partnershipId
 // return：json
@@ -156,13 +182,20 @@ const checkData = (dataList, dataColumns) => {
   dataColumns.forEach((value) => {
     switch (value) {
       case "partnershipDesc":
+      case "keyword":
         if (typeof dataList[value] === "undefined") {
           errMsg += value + " 不可為空。";
           errCheck = false;
         }
         break;
       default:
-        if (
+        if (value == "cityId" && typeof dataList.keyword !== "undefined") {
+          if (typeof dataList[value] === "undefined") {
+            errMsg += value + " 不可為空。";
+            errCheck = false;
+          }
+          break;
+        } else if (
           typeof dataList[value] === "undefined" ||
           !dataList[value] ||
           typeof dataList[value] === ""

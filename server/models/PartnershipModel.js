@@ -23,6 +23,48 @@ exports.getPartnershipDataListWithCityName = async () => {
   });
 };
 
+// 2022-07-05 PG
+// 取得合作夥伴 dataList By 關鍵字、城市
+// partnershipId partnershipName partnershipAddr partnershipTel partnershipContactPerson
+// cityName
+// return：({})
+exports.getPartnershipDataListByKeywordAndCityId = async (dataList) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "SELECT " +
+      "`Partnership`.`partnership_id`,`Partnership`.`partnership_name`,`Partnership`.`partnership_addr`,`Partnership`.`partnership_tel`,`Partnership`.`partnership_contact_person`," +
+      "`City`.`city_name` " +
+      "FROM `Partnership` " +
+      "JOIN `City` ON `Partnership`.`city_id` = `City`.`city_id` " +
+      "WHERE (`Partnership`.`partnership_name` LIKE '%" +
+      dataList.keyword +
+      "%' " +
+      "OR `Partnership`.`partnership_addr` LIKE '%" +
+      dataList.keyword +
+      "%' " +
+      "OR `Partnership`.`partnership_tel` LIKE '%" +
+      dataList.keyword +
+      "%' " +
+      "OR `Partnership`.`partnership_contact_person` LIKE '%" +
+      dataList.keyword +
+      "%') ";
+
+    if (dataList.cityId == "") {
+      sql += "AND `Partnership`.`is_invalid` = '1';";
+    } else {
+      sql +=
+        "AND `Partnership`.`is_invalid` = '1' " + "AND `City`.`city_id` = ?;";
+    }
+    let value = [dataList.cityId == "" ? "" : dataList.cityId];
+    db.con.query(sql, value, (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(rows.length == 0 ? rows : db.rowDataToCamelData(rows));
+    });
+  });
+};
+
 // 2022-06-15 PG
 // 取得合作夥伴 Data By partnershipId
 // return：({})
@@ -60,7 +102,7 @@ exports.addPartnership = async (dataList) => {
       dataList.partnershipContactPerson,
       dataList.partnershipDesc,
       dataList.employeeId,
-      db.getDateTimeNow()
+      db.getDateTimeNow(),
     ];
     db.con.query(sql, value, (err, result) => {
       if (err) {
@@ -92,14 +134,14 @@ exports.updatePartnershipByPartnershipId = async (dataList) => {
       dataList.partnershipDesc,
       dataList.employeeId,
       db.getDateTimeNow(),
-      dataList.partnershipId
+      dataList.partnershipId,
     ];
     db.con.query(sql, value, (err, result) => {
       if (err) {
         reject(err);
       }
       resolve({
-        status: result.serverStatus
+        status: result.serverStatus,
       });
     });
   });
@@ -118,14 +160,14 @@ exports.delPartnershipByPartnershipId = async (dataList) => {
       "0",
       dataList.employeeId,
       db.getDateTimeNow(),
-      dataList.partnershipId
+      dataList.partnershipId,
     ];
     db.con.query(sql, value, (err, result) => {
       if (err) {
         reject(err);
       }
       resolve({
-        status: result.serverStatus
+        status: result.serverStatus,
       });
     });
   });

@@ -16,6 +16,13 @@ router.use(bodyParser.json());
 // cityName
 router.post("/getPartnershipDataListWithCityName", partnershipController.getPartnershipDataListWithCityName);
 
+// 2022-07-05 PG
+// 取得合作夥伴 dataList By 關鍵字、城市
+// partnershipId partnershipName partnershipAddr partnershipTel partnershipContactPerson
+// cityName
+router.post("/getPartnershipDataListByKeywordAndCityId", partnershipController.getPartnershipDataListByKeywordAndCityId);
+
+
 // 2022-06-15 PG
 // 取得合作夥伴 Data By partnershipId
 router.post("/getPartnershipDataByPartnershipId", partnershipController.getPartnershipDataByPartnershipId);
