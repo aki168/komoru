@@ -71,7 +71,7 @@ exports.addRoomWithImg = async (req, res, next) => {
   if (checkFieldsResult.errCheck) {
     let data = JSON.parse(req.body.roomDataList);
     let checkDataResult = checkData(data, [
-      "roomId",
+      "hotelId",
       "roomType",
       "liveNum",
       "roomDesc",

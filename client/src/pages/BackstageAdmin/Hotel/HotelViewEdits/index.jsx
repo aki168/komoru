@@ -154,6 +154,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
   const editFormSubmitHandle = (event) => {
     event.preventDefault();
     const newContact = {
+      hotelId: editModalData.hotelId,
       hotelTitle: editModalData.hotelTitle,
       cityId: editModalData.cityId,
       hotelAddr: editModalData.hotelAddr,
@@ -162,13 +163,10 @@ function HotelViewEdits({ setEditShow, editData, data }) {
       hotelContent: editModalData.hotelContent,
       employeeId: "1",
       hotelImgPath: {
-        mainHotelImgFile: mainImageData,
-        firstHotelImgFile:
-          typeof firstImageData === "undefined" ? "" : firstImageData,
-        secondHotelImgFile:
-          typeof secondImageData === "undefined" ? "" : secondImageData,
-        thirdHotelImgFile:
-          typeof thirdImageData === "undefined" ? "" : thirdImageData,
+        mainHotelImgFile:mainImageData,
+        firstHotelImgFile:typeof(firstImageData) === "undefined" ? "":firstImageData,
+        secondHotelImgFile:typeof(secondImageData) === "undefined" ? "":secondImageData,
+        thirdHotelImgFile:typeof(thirdImageData) === "undefined" ? "":thirdImageData,
       },
     };
     // 20220703 YN 有更換照片傳的變數
@@ -182,16 +180,16 @@ function HotelViewEdits({ setEditShow, editData, data }) {
     //   employeeId: "1",
     //   hotelImgPath: "",
     // };
-    // console.log(newContact);
+    console.log(newContact);
     // setAddFormData(newContacts);
 
     if (editImage === true) {
       const formData = new FormData();
-      formData.append("roomDataList", JSON.stringify(newContact));
-      formData.append("roomImgFile", selectedPrimaryFile);
-      formData.append("roomImgFile", selectedFirstaryFile);
-      formData.append("roomImgFile", selectedSecondFile);
-      formData.append("roomImgFile", selectedThirdFile);
+      formData.append("hotelDataList", JSON.stringify(newContact));
+      formData.append("mainHotelImgFile", selectedPrimaryFile);
+      formData.append("firstHotelImgFile", selectedFirstaryFile);
+      formData.append("secondHotelImgFile", selectedSecondFile);
+      formData.append("thirdHotelImgFile", selectedThirdFile);
       if (selectedPrimaryFile === null) {
         alert("請選擇主要照片");
       }
@@ -213,8 +211,8 @@ function HotelViewEdits({ setEditShow, editData, data }) {
         });
     } else {
       const formData = new FormData();
-      formData.append("roomDataList", JSON.stringify(newContact));
-      formData.append("roomImgFile", []);
+      formData.append("hotelDataList", JSON.stringify(newContact));
+      formData.append("hotelImgFile", []);
       console.log(...formData);
       fetch("http://localhost:5000/hotel/updateHotelByHotelId", {
         method: "POST",

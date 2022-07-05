@@ -88,6 +88,7 @@ function RoomAdd({ setAddShow, data, hotelData }) {
     打包成formData傳給後端*/
     // for (var index in newContact) {
     // }
+    console.log(newContact)
     const formData = new FormData();
     formData.append("roomDataList", JSON.stringify(newContact));
     formData.append("roomImgFile", selectedFile);
