@@ -220,7 +220,7 @@ exports.saveRainbowCard = async (memberId, ranbowCardId) => {
 }
 
 // 0705 生成coupon - MJ 
-exports.creatCoupon = async (memberId, couponId) => {
+exports.createCoupon = async (memberId, couponId) => {
   return new Promise((resolve, reject) => {
     let sql = "INSERT INTO `CouponItem` " +
       "(`member_id`, `coupon_id`, `coupon_item_status`, `create_datetime`, `update_datetime`) " +

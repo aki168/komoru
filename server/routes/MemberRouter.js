@@ -43,6 +43,6 @@ router.post('/getCouponByMemberId', memberController.getCouponByMemberId)
 router.post('/getRainbowCard', memberController.getRainbowCard)
 
 // 0705 coupon生成 - MJ
-router.post('/creatCoupon', memberController.creatCoupon)
+router.post('/createCoupon', memberController.createCoupon)
 
 module.exports = router;

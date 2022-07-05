@@ -197,7 +197,7 @@ exports.getRainbowCard = async (req, res) => {
   // }
 }
 
-exports.creatCoupon = async (req, res) => {
+exports.createCoupon = async (req, res) => {
   let data = req.body
   let memberId = data['member_id']
   let couponId = data['coupon_id']
