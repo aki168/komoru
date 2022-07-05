@@ -22,6 +22,33 @@ exports.getHotelDataListWithMainImgAndCityName = async (req, res, next) => {
     });
 };
 
+// 2022-07-05 PG
+// 取得飯店 dataList By 關鍵字、城市
+// hotelId hotelTitle hotelAddr hotelTel hotelContent checkInTime checkOutTime
+// hotelImgPath
+// cityName
+// return：json
+exports.getHotelDataListByKeywordAndCityId = async (req, res, next) => {
+  let data = req.body;
+  let checkDataResult = checkData(data, ["keyword", "cityId"]);
+
+  // 判斷是否有空值、沒有傳需要的資料
+  if (checkDataResult.errCheck) {
+    await hotelModel
+      .getHotelDataListByKeywordAndCityId(data)
+      .then((result) => {
+        configController.sendJsonMsg(res, true, "", result);
+      })
+      .catch((err) => {
+        // 目前不確定這邊要怎改
+        console.log(err);
+        res.status(500).json({ message: "Server error" });
+      });
+  } else {
+    configController.sendJsonMsg(res, false, checkDataResult.errMsg, []);
+  }
+};
+
 // 2022-06-15 PG
 // 取得飯店資料和照片 By hotelId
 // return：json
@@ -267,7 +294,7 @@ exports.updateHotelWithImgByHotelId = async (req, res, next) => {
 exports.delHotelWithImgByHotelId = async (req, res, next) => {
   let data = req.body;
   let checkDataResult = checkData(data, ["hotelId", "employeeId"]);
-  
+
   // 判斷是否有空值、沒有傳需要的資料
   if (checkDataResult.errCheck) {
     let delHotelResult = await delHotelByHotelId(data, res);
@@ -337,13 +364,20 @@ const checkData = (dataList, dataColumns) => {
   dataColumns.forEach((value) => {
     switch (value) {
       case "hotelDesc":
+      case "keyword":
         if (typeof dataList[value] === "undefined") {
           errMsg += value + " 不可為空。";
           errCheck = false;
         }
         break;
       default:
-        if (
+        if (value == "cityId" && typeof dataList.keyword !== "undefined") {
+          if (typeof dataList[value] === "undefined") {
+            errMsg += value + " 不可為空。";
+            errCheck = false;
+          }
+          break;
+        } else if (
           typeof dataList[value] === "undefined" ||
           !dataList[value] ||
           typeof dataList[value] === ""

@@ -28,13 +28,55 @@ exports.getHotelDataListWithMainImgAndCityName = async () => {
   });
 };
 
+// 2022-07-05 PG
+// 取得飯店列表、主圖、所屬縣市名 By 關鍵字、城市
+// hotelId hotelTitle hotelAddr hotelTel hotelContent checkInTime checkOutTime
+// hotelImgPath
+// cityName
+// return：({})
+exports.getHotelDataListByKeywordAndCityId = async (dataList) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "SELECT" +
+      "`Hotel`.`hotel_id`,`Hotel`.`hotel_title`,`Hotel`.`hotel_addr`,`Hotel`.`hotel_tel`,`Hotel`.`hotel_content`, " +
+      "`HotelImg`.`hotel_img_path`," +
+      "`City`.`city_name` " +
+      "FROM `Hotel` " +
+      "JOIN `HotelImg` ON `Hotel`.`hotel_id` = `HotelImg`.`hotel_id` " +
+      "JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id`" +
+      "WHERE (`Hotel`.`hotel_title` LIKE '%" +
+      dataList.keyword +
+      "%' " +
+      "OR `Hotel`.`hotel_addr` LIKE '%" +
+      dataList.keyword +
+      "%' " +
+      "OR `Hotel`.`hotel_tel` LIKE '%" +
+      dataList.keyword +
+      "%') " +
+      "AND `HotelImg`.`hotel_img_is_main` = '0' ";
+
+    if (dataList.cityId == "") {
+      sql += "AND `Hotel`.`is_invalid` = '1';";
+    } else {
+      sql += "AND `Hotel`.`is_invalid` = '1' " + "AND `City`.`city_id` = ?;";
+    }
+    let value = [dataList.cityId == "" ? "" : dataList.cityId];
+    db.con.query(sql, value, (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(rows.length == 0 ? rows : db.rowDataToCamelData(rows));
+    });
+  });
+};
+
 // 2022-06-15 PG
 // 取得飯店資料 By hotelId
 // return：({})
 exports.getHotelDataByHotelId = async (hotelId) => {
   return new Promise((resolve, reject) => {
     let sql =
-      "SELECT *" +
+      "SELECT * " +
       "FROM `Hotel` " +
       "WHERE `Hotel`.`hotel_id` = ? " +
       "AND `Hotel`.`is_invalid` = '1';";

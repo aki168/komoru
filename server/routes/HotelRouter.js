@@ -36,6 +36,13 @@ router.post(
   hotelController.getHotelDataListWithMainImgAndCityName
 );
 
+// 2022-07-05 PG
+// 取得飯店列表、主圖、所屬縣市名 By 關鍵字、城市
+// hotelId hotelTitle hotelAddr hotelTel hotelContent checkInTime checkOutTime
+// hotelImgPath
+// cityName
+router.post("/getHotelDataListByKeywordAndCityId", hotelController.getHotelDataListByKeywordAndCityId);
+
 // 2022-06-15 PG
 // 取得飯店資料和照片 By hotelId
 router.post(
