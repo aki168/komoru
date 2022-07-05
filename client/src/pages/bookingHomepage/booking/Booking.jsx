@@ -18,8 +18,24 @@ import { BookContext } from "../../../Helper/Context";
 import { IoMdAlert } from "react-icons/io";
 
 function Booking() {
+  //獲取memberId
   const [memberId, setMemberId] = useState("");
-  const [couponData, setCouponData] = useState([]);
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: "http://localhost:5000/member/isLogin",
+      data: {
+        token: localStorage.token,
+      },
+    })
+      .then((res) => {
+        console.log(res.data[0].memberId);
+        setMemberId(res.data[0].memberId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   //入住天數
   const { date, setDate } = useContext(BookContext);
@@ -31,6 +47,8 @@ function Booking() {
   const { cityIdValue, setCityIdValue } = useContext(BookContext);
   //優惠代碼
   const { couponState, setCouponState } = useContext(BookContext);
+  //根據會員ID有的優惠票券
+  const { couponData, setCouponData } = useContext(BookContext);
   //是否參與活動
   const { activityState, setActivityState } = useContext(BookContext);
 
@@ -150,16 +168,22 @@ function Booking() {
   };
 
   //獲取coupon資料
-
   useEffect(() => {
-    axios
-      .post("http://localhost:5000/order/getCouponData", { memberId: memberId })
+    axios({
+      method: "post",
+      url: "http://localhost:5000/order/getCouponData",
+      data: {
+        memberId: memberId,
+      },
+    })
       .then((res) => {
-        // console.log(res.data.dataList);
+        console.log(res.data);
         setCouponData(res.data.dataList);
       })
-      .catch((err) => console.log(err));
-  }, []);
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [memberId]);
 
   /*將coupon資料map成coupon選項*/
   const couponArr = Object.values(couponData).map((values, index) => {
@@ -357,7 +381,7 @@ function Booking() {
             )}
           </div>
           <div>
-            <p className="line"></p>
+            <div className="bookingPageLine"></div>
             <button className="headerBtn" onClick={handleSearch}>
               下一步
             </button>

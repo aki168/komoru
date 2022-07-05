@@ -8,11 +8,9 @@ const BookingImgTaitungBackpackerRoom = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .post(
-        "http://localhost:5000/room/getRoomDataListWithMainImgAndHotelNameAndCityName"
-      )
+      .post("http://localhost:5000/room/getRoomDataWithImgByRoomId")
       .then((res) => {
-        
+        // console.log(res.data.dataList.roomImgPath);
         setData(res.data.dataList);
       })
       .catch((err) => console.log(err));

@@ -5,15 +5,19 @@ import { Steps } from "rsuite";
 import { BookContext } from "../../Helper/Context";
 import ActivityBag from "./ActivityBag";
 import axios from "axios";
+import Navbar from "../../components/Navbar/Navbar-simple";
 
 function BookingOrderPage() {
   const location = useLocation();
   // console.log(location);
   const [activityPack, setActivityPack] = useState(location.state.activityPack);
-  const [activePackItemContent, setActivePackItemContent] = useState("");
-  const [activePackItemEndTime, setActivePackItemEndTime] = useState("");
-  const [activePackItemStartTime, setActivePackItemStartTime] = useState("");
-  const [activePackItemTitle, setActivePackItemTitle] = useState("");
+  // const [activePackItemContent, setActivePackItemContent] = useState("");
+  // const [activePackItemEndTime, setActivePackItemEndTime] = useState("");
+  // const [activePackItemStartTime, setActivePackItemStartTime] = useState("");
+  // const [activePackItemTitle, setActivePackItemTitle] = useState("");
+  const [activePackD1, setActivePackD1] = useState({});
+  const [activePackD2, setActivePackD2] = useState({});
+  const [activePackD3, setActivePackD3] = useState({});
 
   const {
     date,
@@ -22,6 +26,7 @@ function BookingOrderPage() {
     cityIdValue,
     roomState,
     couponState,
+    couponData,
     activityState,
     activity1Data,
     activity2Data,
@@ -33,25 +38,31 @@ function BookingOrderPage() {
 
   //獲取活動包
   useEffect(() => {
-    axios
-      .post("http://localhost:5000/activePack/getActivePackData", {
+    axios({
+      method: "post",
+      url: "http://localhost:5000/activePack/getActivePackData",
+      data: {
         isActive: activityState,
-        jionTotal: countActivity,
+        joinTotal: countActivity,
         cityId: cityIdValue,
         activePackType: activityPack,
-      })
+      },
+    })
       .then((res) => {
         console.log(res.data);
-        setActivePackItemContent(res.data.dataList[0].activePackItemContent);
-        setActivePackItemEndTime(res.data.dataList[0].activePackItemEndTime);
-        setActivePackItemStartTime(
-          res.data.dataList[0].activePackItemStartTime
-        );
-        setActivePackItemTitle(res.data.dataList[0].activePackItemTitle);
-
-        // setShowActivityPack(res.data.dataList.activePackItemContent.activePackItemEndTime.activePackItemStartTime.activePackItemTitle);
+        if (activity1Data === "1") {
+          setActivePackD1(res.data.dataList.D1[0]);
+        }
+        if (activity2Data === "3") {
+          setActivePackD2(res.data.dataList.D2[0]);
+        }
+        if (activity3Data === "5") {
+          setActivePackD3(res.data.dataList.D3[0]);
+        }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   const [memberId, setMemberId] = useState("");
@@ -74,7 +85,7 @@ function BookingOrderPage() {
       .then((res) => {
         //有登入的話，回傳「會員資訊」在res.data[0] ｜ 沒登入則回傳message
         let userData = res.data[0];
-        // console.log(userData);
+        console.log(userData);
         setMemberId(userData.memberId);
         setMemberNickName(userData.memberNickName);
         setMemberName(userData.memberName);
@@ -115,35 +126,41 @@ function BookingOrderPage() {
   //根據不同roomState顯示不同房間名稱
   const handleroomStateData = () => {
     if (roomState === "5") {
-      return <p>台北:夾腳拖的家-私人套房</p>;
+      return <p>夾腳拖的家/私人套房</p>;
     } else if (roomState === "8") {
-      return <p>台北:夾腳拖的家-背包客房</p>;
+      return <p>夾腳拖的家/背包客房</p>;
     } else if (roomState === "1") {
-      return <p>台中:Star Hostel-私人套房</p>;
+      return <p>Star Hostel/私人套房</p>;
     } else if (roomState === "2") {
-      return <p>台中:Star Hostel-背包客房</p>;
+      return <p>Star Hostel/背包客房</p>;
     } else if (roomState === "3") {
-      return <p>台南:快活慢行-私人套房</p>;
+      return <p>快活慢行/私人套房</p>;
     } else if (roomState === "6") {
-      return <p>台南:快活慢行-背包客房</p>;
+      return <p>快活慢行/背包客房</p>;
     } else if (roomState === "4") {
-      return <p>台東:山林山鄰-私人套房</p>;
+      return <p>山林山鄰/私人套房</p>;
     } else if (roomState === "7") {
-      return <p>台東:山林山鄰-背包客房</p>;
+      return <p>山林山鄰/背包客房</p>;
     }
   };
 
   //顯示優惠碼名稱
   const handleCouponStateData = () => {
-    if (couponState === "1") {
-      return <p>新會員優惠碼</p>;
+    if (couponState != "") {
+      return <p>{couponData[0].couponTitle}</p>;
     }
   };
+
+  console.log(couponState);
+  // console.log("first");
+  console.log(couponData[0].couponTitle);
+  // const couponDiscount = Number(couponData[0].discount);
+  console.log(Number(couponData[0].discount));
 
   //顯示優惠折扣欄
   const [showCoupon, setShowCoupon] = useState(false);
   useEffect(() => {
-    if (couponState === "1") {
+    if (couponState != "") {
       setShowCoupon(true);
     }
   }, [couponState]);
@@ -151,9 +168,9 @@ function BookingOrderPage() {
   // 顯示是否參與活動;
   const handleActivityStateData = () => {
     if (activityState === "0") {
-      return <p>是</p>;
+      return <p>參加</p>;
     } else if (activityState === "1") {
-      return <p>否</p>;
+      return <p>不參加</p>;
     }
   };
 
@@ -181,15 +198,32 @@ function BookingOrderPage() {
     }
   };
 
+  //獲取相對應的activePackId
+  const [activePackId, setactivePackId] = useState([]);
+  const PackId = [];
+  useEffect(() => {
+    if (activity1Data === "1") {
+      PackId.push(`${activePackD1.activePackType}`);
+    }
+    if (activity2Data === "3") {
+      PackId.push(`${activePackD2.activePackType}`);
+    }
+    if (activity3Data === "5") {
+      PackId.push(`${activePackD3.activePackType}`);
+    }
+    setactivePackId(PackId);
+  }, []);
+  console.log(activePackId);
+
   //顯示第一天活動包
   const showAvtivity1Bag = () => {
     if (activity1Data === "1") {
       return (
         <>
-          <p>{activePackItemTitle}</p>
-          <p>開始時間:{activePackItemStartTime}</p>
-          <p>結束時間:{activePackItemEndTime}</p>
-          <p>{activePackItemContent}</p>
+          <p>{activePackD1.activePackItemTitle}</p>
+          <p>開始時間:{activePackD1.activePackItemStartTime}</p>
+          <p>結束時間:{activePackD1.activePackItemEndTime}</p>
+          <p>{activePackD1.activePackItemContent}</p>
         </>
       );
     }
@@ -200,10 +234,10 @@ function BookingOrderPage() {
     if (activity2Data === "3") {
       return (
         <>
-          <p>{activePackItemTitle}</p>
-          <p>開始時間:{activePackItemStartTime}</p>
-          <p>結束時間:{activePackItemEndTime}</p>
-          <p>{activePackItemContent}</p>
+          <p>{activePackD2.activePackItemTitle}</p>
+          <p>開始時間:{activePackD2.activePackItemStartTime}</p>
+          <p>結束時間:{activePackD2.activePackItemEndTime}</p>
+          <p>{activePackD2.activePackItemContent}</p>
         </>
       );
     }
@@ -214,10 +248,10 @@ function BookingOrderPage() {
     if (activity3Data === "5") {
       return (
         <>
-          <p>{activePackItemTitle}</p>
-          <p>開始時間:{activePackItemStartTime}</p>
-          <p>結束時間:{activePackItemEndTime}</p>
-          <p>{activePackItemContent}</p>
+          <p>{activePackD3.activePackItemTitle}</p>
+          <p>開始時間:{activePackD3.activePackItemStartTime}</p>
+          <p>結束時間:{activePackD3.activePackItemEndTime}</p>
+          <p>{activePackD3.activePackItemContent}</p>
         </>
       );
     }
@@ -246,7 +280,9 @@ function BookingOrderPage() {
   //計算總金額，如果有優惠券，折200元
   useEffect(() => {
     if (couponState === "1") {
-      setSumActivity(countActivity * 700 + roomSum - 200);
+      setSumActivity(
+        countActivity * 700 + roomSum - Number(couponData[0].discount)
+      );
     } else {
       setSumActivity(countActivity * 700 + roomSum);
     }
@@ -265,6 +301,9 @@ function BookingOrderPage() {
       roomId: roomState,
       couponItemId: couponState,
       orderTotal: sumActivity,
+      activePackId: activePackId,
+      isActive: activityState,
+      joinTotal: countActivity,
     };
     console.log({
       memberId: memberId,
@@ -274,6 +313,9 @@ function BookingOrderPage() {
       roomId: roomState,
       couponItemId: couponState,
       orderTotal: sumActivity,
+      activePackId: activePackId,
+      isActive: activityState,
+      joinTotal: countActivity,
     });
     fetch("http://localhost:5000/order/getAndSaveOrderData", {
       method: "POST",
@@ -289,73 +331,99 @@ function BookingOrderPage() {
     navigate("/checkoutSucceeded");
   };
 
-  //獲取活動包後端資料
-  // useEffect(() => {
-  //   axios({
-  //     method: "post",
-  //     url: "http://localhost:5000/activePack/getActivePackData",
-  //     data: { cityId: cityIdValue, activePackType: "3" },
-  //   })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       setGetActivityPack(res.data.dataList);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
   return (
     <>
+      <Navbar />
       <div className="orderContainer">
-        <div className="contentContainer">
-          <div className="orderList">
-            <div className="list">
-              <p>入住日期:</p>
-              <span>{date}</span>
-            </div>
-            <div className="list">
-              <p>探索天數:</p>
-              <span>{dayState}天</span>
-            </div>
-            <div className="list">
-              <p>青旅/房型:</p>
-              <span>{handleroomStateData()}</span>
-            </div>
-            <div className="list">
-              <p>優惠券使用:</p>
-              <span>{handleCouponStateData()}</span>
-            </div>
-            <div className="list">
-              <p>是否要參與活動:</p>
-              <span>{handleActivityStateData()}</span>
-            </div>
-            <div className="list">
-              <p>活動包共{countActivity}天</p>
-            </div>
+        <div className="memberCheckout">
+          <div className="memberCheckoutHeader">
+            <h1>訂購者資料確認</h1>
+            <p>
+              確認資料無誤後選擇付款方式，簡單快速的下訂流程讓你立即體驗旅程！
+            </p>
           </div>
-          <div className="memberCheckout">
-            <div className="memberContent">
-              <p>訂購者資料</p>
-              <p>帳號:{memberMail}</p>
-              <p>姓名:{memberName}</p>
-              <p>暱稱:{memberNickName}</p>
-              <p>性別:{gender()}</p>
-              <p>手機:{memberPhone}</p>
-              <p>付款方式</p>
-              <select
-                id="expDays"
-                defaultValue={"default"}
-                className="headerDaySelect"
-              >
-                <option value="default" disabled hidden>
-                  請選擇要付款的方式
-                </option>
-                <option value="1">信用卡</option>
-              </select>
+
+          <table className="memberCheckoutTable">
+            <tbody>
+              <tr>
+                <td>
+                  <b>帳號:</b>
+                  <span>{memberMail}</span>
+                </td>
+                <td>
+                  <b>手機:</b>
+                  <span className="specialSpan">{memberPhone}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>姓名:</b>
+                  <span>{memberName}</span>
+                </td>
+                <td>
+                  <b>性別:</b>
+                  <span className="specialSpan">{gender()}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>暱稱:</b>
+                  <span>{memberNickName}</span>
+                </td>
+                <td>
+                  <div className="payMethodContent">
+                    <b>付款方式</b>
+
+                    <span>
+                      <select id="expDays" defaultValue={"default"}>
+                        <option value="default" disabled hidden>
+                          請選擇要付款的方式
+                        </option>
+                        <option value="1">信用卡</option>
+                      </select>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="orderList">
+          <div className="orderListHeader">
+            <h1>訂購者資料確認</h1>
+            <p>
+              一條龍記錄您的訂單及活動行程，並即時更新在會員中心讓您隨時查看。
+            </p>
+          </div>
+          <div className="orderListBody">
+            <div className="orderListImg">
+              <img src="https://picsum.photos/500/300" alt="" />
             </div>
-            <div className="memberImg">
-              <img src="https://picsum.photos/80/100" alt="" />
+            <div className="orderListAll">
+              <div className="list">
+                <p>入住日期</p>
+                <span>{date}</span>
+              </div>
+              <div className="list">
+                <p>探索天數</p>
+                <span>{dayState}天</span>
+              </div>
+              <div className="list">
+                <p>青旅/房型</p>
+                <span>{handleroomStateData()}</span>
+              </div>
+              <div className="list">
+                <p>優惠票券</p>
+                <span>{handleCouponStateData()}</span>
+              </div>
+              <div className="list">
+                <p>活動參與</p>
+                <span>{handleActivityStateData()}</span>
+              </div>
+              <div className="list">
+                <p>活動天數</p>
+                <span>{countActivity}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -382,15 +450,16 @@ function BookingOrderPage() {
             </div>
           )}
         </div>
-        <div className="marginContainer">
+        <div className="line"></div>
+        <div className="marginContainer plusBuy">
           <h5>KOMORU Star Hostel 背包客房型 加購活動確認</h5>
-
-          <p>活動參與天數*{countActivity} </p>
-          <p>NT${countActivity * 700}</p>
+          <p>
+            活動參與天數{countActivity}天<span>共NT${countActivity * 700}</span>
+          </p>
         </div>
         <div className="marginContainer">
           <p>下定金額 NT${roomSum}</p>
-          {showCoupon && <p>優惠折扣:200元</p>}
+          {showCoupon && <p>優惠折扣:{Number(couponData[0].discount)}元</p>}
           <p>應付金額 NT$ {sumActivity}</p>
           <button className="checkoutBtn" onClick={CheckoutOrderHandler}>
             下一步去結帳

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import ExamAll from "./examAll/ExamAll";
 import "./PsychologicalExam.css";
-// import { Steps } from "rsuite";
+import Navbar from "../../components/Navbar/Navbar-simple";
 
 function PsychologicalExam() {
   // const location = useLocation();
@@ -16,11 +16,14 @@ function PsychologicalExam() {
   // );
 
   return (
-    <div className="ExamFrame">
-      <div className="examContainer">
-        <ExamAll />
+    <>
+      <Navbar />
+      <div className="ExamFrame">
+        <div className="examContainer">
+          <ExamAll />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
