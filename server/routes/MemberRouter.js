@@ -39,4 +39,10 @@ router.post('/alertProfile',memberController.alertProfile);
 // 0704 取得會員coupon明細 - MJ
 router.post('/getCouponByMemberId', memberController.getCouponByMemberId)
 
+// 0704 勉勵金句抽卡 - MJ
+router.post('/getRainbowCard', memberController.getRainbowCard)
+
+// 0705 coupon生成 - MJ
+router.post('/creatCoupon', memberController.creatCoupon)
+
 module.exports = router;

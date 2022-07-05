@@ -169,3 +169,41 @@ exports.getCouponByMemberId = async (req, res) => {
     res.json({ message: "該用戶尚未登入" })
   }
 }
+
+// 0704 勉勵金句抽卡 - MJ
+exports.getRainbowCard = async (req, res) => {
+  // const { token } = req.body;
+  // if (token) {
+  //   //   解碼
+  //   const decoded = await promisify(jwt.verify)(token, "jwtSecret")
+  //   const { memberId } = decoded
+  let memberId = 3
+
+  if (memberId) {
+    try {
+      let getRainbowCard = await memberModel.getRainbowCard()
+      let rainbowCardId = getRainbowCard[0].rainbowCardId
+      let saveRainbowCard = await memberModel.saveRainbowCard(memberId, rainbowCardId)
+      configController.sendJsonMsg(res, true, "", { getRainbowCard, saveRainbowCard })
+    } catch (error) {
+      configController.sendJsonMsg(res, false, "sqlError", error["sqlMessage"])
+      console.log(error)
+    }
+  } else {
+    configController.sendJsonMsg(res, false, "memberId Error", "")
+  }
+  // } else {
+  //   res.json({ message: "該用戶尚未登入" })
+  // }
+}
+
+exports.creatCoupon = async (req, res) => {
+  let data = req.body
+  let memberId = data['member_id']
+  let couponId = data['coupon_id']
+  let count = data['count']
+  for (i = 0; i < count; i++) {
+    await memberModel.creatCoupon(memberId, couponId)
+  }
+  configController.sendJsonMsg(res, true, "", 'done')
+}
