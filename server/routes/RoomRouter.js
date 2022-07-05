@@ -37,9 +37,22 @@ router.post(
   roomController.getRoomDataListWithMainImgAndHotelNameAndCityName
 );
 
+// 2022-07-05 PG
+// 取得房型列表、主圖、所屬飯店名、所屬區域名 By 關鍵字、城市
+// roomId hotelId roomType liveNum
+// roomImgPath
+// hotelTitle
+router.post(
+  "/getRoomDataListByKeywordAndCityId",
+  roomController.getRoomDataListByKeywordAndCityId
+);
+
 // 2022-06-15 PG
 // 取得房型資料和照片 By roomId
-router.post("/getRoomDataWithImgByRoomId", roomController.getRoomDataWithImgByRoomId);
+router.post(
+  "/getRoomDataWithImgByRoomId",
+  roomController.getRoomDataWithImgByRoomId
+);
 
 // 2022-06-29 PG
 // 新增房型

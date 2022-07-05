@@ -30,6 +30,48 @@ exports.getRoomDataListWithMainImgAndHotelNameAndCityName = async () => {
   });
 };
 
+// 2022-07-05 PG
+// 取得房型列表、主圖、所屬飯店名、所屬區域名 By 關鍵字、城市
+// roomId hotelId roomType liveNum
+// roomImgPath
+// hotelTitle
+// cityName
+// return：({})
+exports.getRoomDataListByKeywordAndCityId = async (dataList) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "SELECT " +
+      "`Room`.`room_id`,`Room`.`hotel_id`,`Room`.`room_type`,`Room`.`live_num`," +
+      "`RoomImg`.`room_img_path`," +
+      "`Hotel`.`hotel_title`," +
+      "`City`.`city_id`,`City`.`city_name` " +
+      "FROM `Room` " +
+      "JOIN `RoomImg` ON `Room`.`room_id` = `RoomImg`.`room_id` " +
+      "JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id` " +
+      "JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id` " +
+      "WHERE (`Hotel`.`hotel_title` LIKE '%" +
+      dataList.keyword +
+      "%' " +
+      "OR `Room`.`live_num` LIKE '%" +
+      dataList.keyword +
+      "%') " +
+      "AND `RoomImg`.`room_img_is_main` = '0' ";
+
+    if (dataList.cityId == "") {
+      sql += "AND `Room`.`is_invalid` = '1';";
+    } else {
+      sql += "AND `Room`.`is_invalid` = '1' " + "AND `City`.`city_id` = ?;";
+    }
+    let value = [dataList.cityId == "" ? "" : dataList.cityId];
+    db.con.query(sql, value, (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};
+
 // 2022-06-15 PG
 // 取得房型資料和照片 By roomId
 // return：({})

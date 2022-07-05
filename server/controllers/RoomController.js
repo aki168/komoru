@@ -39,6 +39,33 @@ exports.getRoomDataListWithMainImgAndHotelNameAndCityName = async (
     });
 };
 
+// 2022-07-05 PG
+// 取得房型列表、主圖、所屬飯店名、所屬區域名 By 關鍵字、城市
+// roomId hotelId roomType liveNum
+// roomImgPath
+// hotelTitle
+// return：json
+exports.getRoomDataListByKeywordAndCityId = async (req, res, next) => {
+  let data = req.body;
+  let checkDataResult = checkData(data, ["keyword", "cityId"]);
+
+  // 判斷是否有空值、沒有傳需要的資料
+  if (checkDataResult.errCheck) {
+    await roomModel
+      .getRoomDataListByKeywordAndCityId(data)
+      .then((result) => {
+        configController.sendJsonMsg(res, true, "", result);
+      })
+      .catch((err) => {
+        // 目前不確定這邊要怎改
+        console.log(err);
+        res.status(500).json({ message: "Server error" });
+      });
+  } else {
+    configController.sendJsonMsg(res, false, checkDataResult.errMsg, []);
+  }
+};
+
 // 2022-06-15 PG
 // 取得房型資料和照片 By roomId
 // return：json
@@ -206,7 +233,7 @@ exports.updateRoomWithImgByRoomId = async (req, res, next) => {
 exports.delRoomWithImgByRoomId = async (req, res, next) => {
   let data = req.body;
   let checkDataResult = checkData(data, ["roomId", "employeeId"]);
-  
+
   // 判斷是否有空值、沒有傳需要的資料
   if (checkDataResult.errCheck) {
     let delRoomResult = await delRoomByRoomId(data, res);
@@ -265,7 +292,6 @@ const delRoomImgByRoomId = async (dataList, res) => {
   return roomImgDataList;
 };
 
-
 // 2022-06-18 PG
 // 檢查資料
 // dataList：要檢查的資料（前端傳來的）
@@ -278,13 +304,20 @@ const checkData = (dataList, dataColumns) => {
     switch (value) {
       case "roomDesc":
       case "roomImgPath":
+      case "keyword":
         if (typeof dataList[value] === "undefined") {
           errMsg += value + " 不可為空。";
           errCheck = false;
         }
         break;
       default:
-        if (
+        if (value == "cityId" && typeof dataList.keyword !== "undefined") {
+          if (typeof dataList[value] === "undefined") {
+            errMsg += value + " 不可為空。";
+            errCheck = false;
+          }
+          break;
+        } else if (
           typeof dataList[value] === "undefined" ||
           !dataList[value] ||
           typeof dataList[value] === ""
