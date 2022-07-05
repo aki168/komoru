@@ -199,37 +199,21 @@ function BookingOrderPage() {
   };
 
   //獲取相對應的activePackId
-
-  const activePackId = [];
-  if (activity1Data === "1") {
-    activePackId.push(`${activePackD1.activePackType}`);
-  }
-  if (activity2Data === "3") {
-    activePackId.push(`${activePackD2.activePackType}`);
-  }
-  if (activity3Data === "5") {
-    activePackId.push(`${activePackD3.activePackType}`);
-  }
+  const [activePackId, setactivePackId] = useState([]);
+  const PackId = [];
+  useEffect(() => {
+    if (activity1Data === "1") {
+      PackId.push(`${activePackD1.activePackType}`);
+    }
+    if (activity2Data === "3") {
+      PackId.push(`${activePackD2.activePackType}`);
+    }
+    if (activity3Data === "5") {
+      PackId.push(`${activePackD3.activePackType}`);
+    }
+    setactivePackId(PackId);
+  }, []);
   console.log(activePackId);
-
-  //紀錄activePackID
-  // const activePackD1Id = <p>{activePackD1.activePackType}</p>;
-  // const activePackD2Id = <>{activePackD2.activePackType}</>;
-  // const activePackD3Id = <>{activePackD3.activePackType}</>;
-  // console.log(activePackD2.activePackType);
-  // console.log(activePackD1Id);
-
-  // const activePackID = ()=>{
-  //   if(activity1Data === "1"){
-  //     return <>{activePackD1.activePackId}</>
-  //   }
-  //   if(activity1Data === "3"){
-  //     return <>{activePackD2.activePackId}</>
-  //   }
-  //   if(activity1Data === "5"){
-  //     return <>{activePackD3.activePackId}</>
-  //   }
-  // }
 
   //顯示第一天活動包
   const showAvtivity1Bag = () => {
