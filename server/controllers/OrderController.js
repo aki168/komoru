@@ -143,39 +143,70 @@ const checkData = (dataList, dataColumns) => {
 // 取得訂單資料byMemberId
 exports.getOrderDataByMemberId = async (req, res) => {
   const { token } = req.body;
-  // if (token) {
-  //   //   解碼
-  //   const decoded = await promisify(jwt.verify)(token, "jwtSecret");
-  //   const { memberId } = decoded;
-  let memberId = 8763
-  // 解碼完後對照資料庫，有的話回傳該訂單資料
+  if (token) {
+    //   解碼
+    const decoded = await promisify(jwt.verify)(token, "jwtSecret");
+    const { memberId } = decoded;
+    // let memberId = 8763
+    // 解碼完後對照資料庫，有的話回傳該訂單資料
 
-  try {
-    let getOrderDataByMemberId = await orderModel.getOrderDataByMemberId(memberId)
-    let orderItemDataList = await orderModel.getOrderItemDataListByMemberId(memberId)
+    try {
+      let getOrderDataByMemberId = await orderModel.getOrderDataByMemberId(memberId)
+      let orderItemDataList = await orderModel.getOrderItemDataListByMemberId(memberId)
 
-    // 將 enum 數值轉換為文字
-    Object.entries(getOrderDataByMemberId).forEach(([key, value]) => {
-      let valueToString = configController.enumValueToString(
-        "Room",
-        "roomType",
-        value.roomType
-      );
-      // 如果檢查結果是正常，即將值取代為對應的文字，否則輸出錯誤訊息
-      getOrderDataByMemberId[key].roomType = valueToString.errCheck
-        ? valueToString.transferString
-        : valueToString.errMsg;
-    });
-    configController.sendJsonMsg(res, true, "", { getOrderDataByMemberId, orderItemDataList });
+      // 將 enum 數值轉換為文字
+      Object.entries(getOrderDataByMemberId).forEach(([key, value]) => {
+        let valueToString = configController.enumValueToString(
+          "Room",
+          "roomType",
+          value.roomType
+        );
+        let orderStatusValueToString = configController.enumValueToString(
+          "Order",
+          "orderStatus",
+          value.orderStatus
+        );
+        let memberGenderValueToString = configController.enumValueToString(
+          "Member",
+          "gender",
+          value.memberGender
+        );
+
+        // 如果檢查結果是正常，即將值取代為對應的文字，否則輸出錯誤訊息
+        getOrderDataByMemberId[key].roomType = valueToString.errCheck
+          ? valueToString.transferString
+          : valueToString.errMsg;
+
+        getOrderDataByMemberId[key].orderStatus = orderStatusValueToString.errCheck
+          ? orderStatusValueToString.transferString
+          : orderStatusValueToString.errMsg;
+
+        getOrderDataByMemberId[key].memberGender = memberGenderValueToString.errCheck
+          ? memberGenderValueToString.transferString
+          : memberGenderValueToString.errMsg;
+
+
+      });
+      Object.entries(orderItemDataList).forEach(([key, value]) => {
+        let activePackTypeValueToString = configController.enumValueToString(
+          "ActivePack",
+          "activePackType",
+          value.activePackType
+        );
+        orderItemDataList[key].activePackType = activePackTypeValueToString.errCheck
+          ? activePackTypeValueToString.transferString
+          : activePackTypeValueToString.errMsg;
+      })
+      configController.sendJsonMsg(res, true, "", { getOrderDataByMemberId, orderItemDataList });
+    }
+    catch (error) {
+      // 目前不確定這邊要怎改
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    }
+  } else {
+    res.json({ message: "該用戶尚未登入" });
   }
-  catch (error) {
-    // 目前不確定這邊要怎改
-    console.log(err);
-    res.status(500).json({ message: "Server error" });
-  }
-  // } else {
-  //   res.json({ message: "該用戶尚未登入" });
-  // }
 };
 
 

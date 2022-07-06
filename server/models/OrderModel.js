@@ -229,7 +229,7 @@ exports.getOrderItemDataListByMemberId = async (memberId) => {
   return new Promise((resolve, reject) => {
     let sql =
       "SELECT" +
-      "`OrderItem`.`order_item_date`, `OrderItem`.`is_active`, `OrderItem`.`order_item_price`, `Order`.`member_id`, `ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`active_pack_item_start_time`, `ActivePackItem`.`active_pack_item_end_time`, `OrderItem`.`active_pack_id`, `ActivePackItem`.`partnership_id`" +
+      "`OrderItem`.`order_item_date`, `OrderItem`.`is_active`, `OrderItem`.`order_item_price`, `Order`.`member_id`, `ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`active_pack_item_start_time`, `ActivePackItem`.`active_pack_item_end_time`, `OrderItem`.`active_pack_id`, `ActivePackItem`.`partnership_id`, `ActivePack`.`active_pack_type` " +
       "FROM `Order`" +
       "LEFT JOIN OrderItem ON`Order`.`order_id` = `OrderItem`.`order_id`" +
       "LEFT JOIN `Member` ON`Order`.`member_id` = `Member`.`member_id`" +
@@ -282,7 +282,6 @@ exports.getOrderDataByOrderId = async (orderId) => {
 
 // 2022-07-01 MJ
 // 儲存OrderItemData
-// data要改傳更多資料 *
 exports.saveOrderIdToOrderItemAndExamItem = (data) => {
   return new Promise((resolve, reject) => {
     // 用orderNumber查出orderId
@@ -294,7 +293,7 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
       } else {
         let orderId = db.rowDataToCamelData(rows)[0]["orderId"];
         let joinTotal = data["join_total"];
-
+        let isActive = data['is_active'];
         // 寫入OrderId到ExamItem
         let examItemsql =
           "UPDATE `ExamItem` " +
@@ -311,9 +310,32 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
             resolve(db.rowDataToCamelData(rows));
           }
         });
-        // 依照總體驗天數寫入OrderId到對應的OrderItem
-        for (i = 0; i < joinTotal; i++) {
-          // 找到訂單號碼後存入OrderItem
+        if (!isActive) {
+          // 依照總體驗天數寫入OrderId到對應的OrderItem
+          for (i = 0; i < joinTotal; i++) {
+            // 找到訂單號碼後存入OrderItem
+            let orderItemsql =
+              "INSERT INTO `OrderItem`" +
+              "(`order_id`, `active_pack_id`, `order_item_date`, `is_active`, `create_datetime`, `order_item_price`)" +
+              " VALUES (?, ?, ?, ?, ?, ?) ";
+            value = [
+              orderId,
+              data["active_pack_id"][i],
+              data["order_start_date"],
+              data["is_active"],
+              data["create_datetime"],
+              data["order_item_price"],
+            ];
+            db.con.query(orderItemsql, value, (err, rows, fields) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(db.rowDataToCamelData(rows));
+              }
+            });
+          };
+        }
+        else {
           let orderItemsql =
             "INSERT INTO `OrderItem`" +
             "(`order_id`, `active_pack_id`, `order_item_date`, `is_active`, `create_datetime`, `order_item_price`)" +
@@ -333,8 +355,8 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
               resolve(db.rowDataToCamelData(rows));
             }
           });
-        }
-      }
+        };
+      };
     });
   });
 };
