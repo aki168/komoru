@@ -210,6 +210,19 @@ exports.delEmployeeByEmployeeId = async (req, res, next) => {
   }
 };
 
+
+// 2022-07-06 MJ
+// 聯絡我們
+exports.contactUs = async (req, res) => {
+  let data = req.body
+  try {
+    await employeeModel.contactUs(data)
+    configController.sendJsonMsg(res, true, '', 'Message sent successfully!');
+  } catch (error) {
+    configController.sendJsonMsg(res, false, 'error', error);
+  }
+}
+
 // 2022-06-18 PG
 // 檢查資料
 // dataList：要檢查的資料（前端傳來的）

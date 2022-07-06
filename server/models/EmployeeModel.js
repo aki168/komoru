@@ -1,4 +1,5 @@
 const db = require("./_ConfigDB");
+const nodemailer = require('nodemailer');
 
 // 2022-06-30 PG
 // 取得員工 Data By employeeAccount
@@ -139,3 +140,36 @@ exports.delEmployeeByEmployeeId = async (dataList) => {
     });
   });
 };
+
+// 0706 聯絡我們API - MJ
+exports.contactUs = async (data) => {
+  return new Promise((resolve, reject) => {
+    let address = data.address
+    let subject = data.subject
+    let html = data.html
+    let transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: '17komoru@gmail.com',
+        pass: 'ecyppavarpuyspcw',
+      },
+    });
+    let message = {
+      from: '"Komoru" <smtp.gmail.com>', // sender address
+      to: address,
+      subject: subject,
+      html: html,
+    }
+
+    transporter.sendMail(message, (error, info) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(info);
+    });
+  });
+}
+
+

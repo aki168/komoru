@@ -58,4 +58,8 @@ router.post("/updateEmployeeByEmployeeId", employeeController.updateEmployeeByEm
 // 刪除員工資料 By employeeId
 router.post("/delEmployeeByEmployeeId", employeeController.delEmployeeByEmployeeId);
 
+// 2022-07-06 MJ
+// 聯絡我們API 
+router.post('/contactUs', employeeController.contactUs)
+
 module.exports = router;
