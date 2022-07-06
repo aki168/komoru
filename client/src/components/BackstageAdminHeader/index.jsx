@@ -7,7 +7,7 @@ import Dashboard from "../../pages/BackstageAdmin/Dashboard";
 import Hotel from "../../pages/BackstageAdmin/Hotel";
 import Room from "../../pages/BackstageAdmin/Room";
 import Employee from "../../pages/BackstageAdmin/Employee";
-import { GrLogout } from "react-icons/gr";
+import { FiLogOut } from "react-icons/fi";
 import { useNavigate } from 'react-router-dom'
 
 
@@ -56,9 +56,9 @@ function AdminHeader() {
         className="d-flex  sticky-top justify-content-end align-items-center "
         style={{ background: "#EFA16A", height: "100px" }}
       >
-        <h6 className="fs-4">您好, {userName}</h6>
-        <button className="btn" onClick={logOut}>
-          <GrLogout size="2em" color="" />
+        <h6 className="fs-4 text-white me-4">您好, {userName}</h6>
+        <button className="btn me-5" onClick={logOut}>
+          <FiLogOut size="2em" color="white" />
         </button>
       </div>
       <Routes>

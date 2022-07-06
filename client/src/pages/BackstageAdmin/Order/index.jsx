@@ -208,7 +208,7 @@ function Order() {
   const handleViewShow = (index) => {
     setEditShow(true);
     setEditData(data[index]);
-    console.log(data[index])
+    // console.log(data[index].orderId)
   };
 
   // const handleEditShow = () => setEditShow(true);
@@ -326,12 +326,12 @@ function Order() {
         show={editShow}
         onHide={handleEditClose}
       >
-        <Modal.Header closeButton></Modal.Header>
-        <OrderView
+        <Modal.Header closeButton style={{border:"none"}}></Modal.Header>
+        {editData &&<OrderView
           // editShow={editShow}
           setEditShow={setEditShow}
           editData={editData}
-        />
+        />}
       </Modal>
     </>
   );
