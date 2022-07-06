@@ -144,7 +144,6 @@ exports.delEmployeeByEmployeeId = async (dataList) => {
 // 0706 聯絡我們API - MJ
 exports.contactUs = async (data) => {
   return new Promise((resolve, reject) => {
-    let address = data.address
     let subject = data.subject
     let html = data.html
     let transporter = nodemailer.createTransport({
@@ -157,8 +156,8 @@ exports.contactUs = async (data) => {
       },
     });
     let message = {
-      from: '"Komoru" <smtp.gmail.com>', // sender address
-      to: address,
+      from: '"Komoru" <17komoru@gmail.com>', // sender address
+      to: '17komoru@gmail.com',
       subject: subject,
       html: html,
     }
