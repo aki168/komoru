@@ -37,7 +37,7 @@ function Sidebar() {
               合作夥伴管理
             </MyNavLink>
           </li>
-          <li className="mb-2 nav-item dropdown">
+          <li className="mb-3 nav-item dropdown">
             <a
               href="#submenu1"
               data-bs-toggle="collapse"

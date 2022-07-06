@@ -107,8 +107,8 @@ function OrderView({ setEditShow, editData }) {
               <p className="mb-3 col-4">{orderMemberData.orderStartDate}</p>
             </div>
             <div className=" d-flex align-items-center ">
-              <h5 className="mb-3 col-4">旅程天數</h5>
-              <p className="mb-3 col-4">旅程天數?</p>
+              <h5 className="mb-3 col-4">退房日期</h5>
+              <p className="mb-3 col-4">{orderMemberData.orderEndDate}</p>
             </div>
             <div className=" d-flex align-items-center ">
               <h5 className="mb-3 col-4">青旅/房型</h5>

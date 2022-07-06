@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { nanoid } from "nanoid";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import "./PartnershipAdd.css"
+// import {GoAlert} from 'react-icons/go'
 
 function PartnershipAdd({ data, setAddShow }) {
   /*20220622 YN
@@ -58,7 +58,6 @@ function PartnershipAdd({ data, setAddShow }) {
     event.preventDefault();
 
     const newContact = {
-      id: nanoid(),
       partnershipContactPerson: addFormData.partnershipContactPerson,
       partnershipName: addFormData.partnershipName,
       cityId: addFormData.cityId,
@@ -101,7 +100,10 @@ function PartnershipAdd({ data, setAddShow }) {
           placeholder="請輸入商家名稱"
           onChange={addFormChangeHandle}
         />
+       
+        
       </Form.Group>
+      
       <Form.Group className="mb-2">
         <Form.Control
           type="text"

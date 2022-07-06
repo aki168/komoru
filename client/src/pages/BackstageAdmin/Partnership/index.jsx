@@ -24,6 +24,8 @@ function Partnership() {
   取當下選取列表時的data狀態初始化*/
   const [editData, setEditData] = useState();
 
+  /*20220706 YN
+  篩選功能輸入狀態初始化*/
   const [sreachData, setSreachData] = useState({
     keyword: "",
     cityId: ""
@@ -220,14 +222,10 @@ function Partnership() {
         } else {
           setData(data.dataList)
         }
-        // window.location.reload(false);
       })
       .catch((e) => {
         console.error(e);
       });
-    // // data.push(newContacts);
-    // setAddShow(false);
-    // window.location.reload(false);
   }
 
   return (
