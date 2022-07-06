@@ -5,6 +5,9 @@ const { application } = require("express");
 const { promisify } = require('util'); // nodejs原生
 const db = require("../models/_ConfigDB");
 const { encode } = require("punycode");
+const fs = require("fs");
+const { Console } = require("console");
+
 
 // 0616 秀出全部的會員 - aki
 exports.showAllMember = async (req, res, next) => {
@@ -66,7 +69,7 @@ exports.loginAuth = async (req, res) => {
     });
 };
 
-// 0619 確認帳密，允許登入（下） - aki // 仍在調整中
+// 0619 確認帳密，允許登入（下） - aki 
 exports.verifyJWT = (req, res, next) => {
   const token = req.headers["x-access-token"]
 
@@ -128,11 +131,11 @@ exports.isLogin = async (req, res, next) => {
 }
 
 // 0627 修改個人資料 - aki 
-exports.alertProfile = async (req, res) => {
+exports.alterProfile = async (req, res) => {
   console.log(req.body);
   const { mail, name, nickName, sex, phone } = req.body;
   await memberModel
-    .alertProfile(mail, name, nickName, sex, phone)
+    .alterProfile(mail, name, nickName, sex, phone)
     .then((result) => {
       console.log(result)
       res.setHeader("Content-Type", "application/json");
@@ -178,9 +181,9 @@ exports.getRainbowCard = async (req, res) => {
     const decoded = await promisify(jwt.verify)(token, "jwtSecret")
     const { memberId } = decoded
   
-
-  if (memberId) {
-    try {
+    
+    if (memberId) {
+      try {
       let getRainbowCard = await memberModel.getRainbowCard()
       let rainbowCardId = getRainbowCard[0].rainbowCardId
       let saveRainbowCard = await memberModel.saveRainbowCard(memberId, rainbowCardId)
@@ -206,4 +209,37 @@ exports.createCoupon = async (req, res) => {
     await memberModel.createCoupon(memberId, couponId)
   }
   configController.sendJsonMsg(res, true, "", 'done')
+
 }
+
+  // 0705 - AKI 會員專區 : 修改頭貼照片 by mail
+  exports.updateMemberIcon = async (req, res) => {
+      const { mail } = req.body;
+  
+      // 取上傳圖檔
+      let img  = req.files.icon[0];
+      // 設訂檔案名稱，使用mail去除特殊符號
+      let fileName = mail.replace(/[^A-Za-z0-9]/g,'');
+      // 設定檔案路徑
+      let iconFilePath = '/images/member/'+ fileName ;
+  
+      await memberModel
+        .updateMemberIcon(iconFilePath, mail )
+        .then((result) => {
+          console.log(result)
+  
+          //副檔名讀取代調整
+          fs.rename( img.destination + img.filename , "./public" + iconFilePath +'.PNG' ,
+          function (err) {
+            if (err) configController.sendJsonMsg(res, false, err, []);
+          } );
+  
+          res.setHeader("Content-Type", "application/json")
+          res.end(JSON.stringify(result));
+  
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).json({ message: "Server error" });
+        });
+      }

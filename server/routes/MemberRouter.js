@@ -8,6 +8,23 @@ const memberController = require("../controllers/MemberController");
 const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 
+
+// 2022-07-05 AKI (參考PG) 
+// 上傳檔案初始化
+const multer = require("multer");
+// 自定義行為模式
+const storage = multer.diskStorage({
+  // 指定儲存路徑
+  destination: function (req, file, cb) {
+    cb(null, "./public/images/member/");
+  },
+  // 檔名更改
+  filename: function (req, file, cb) {
+    cb(null, "user" + "-" + file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
+
 // ----------------------------------------------------------------------------------------------------------------------
 
 // 0616 秀出全部的會員 - aki
@@ -34,7 +51,7 @@ router.post('/isLogin',memberController.isLogin);
 // router.post('/logout',memberController.logout)
 
 // 0627 修改個人資料 - aki 
-router.post('/alertProfile',memberController.alertProfile);
+router.post('/alterProfile',memberController.alterProfile);
 
 // 0704 取得會員coupon明細 - MJ
 router.post('/getCouponByMemberId', memberController.getCouponByMemberId)
@@ -45,4 +62,11 @@ router.post('/getRainbowCard', memberController.getRainbowCard)
 // 0705 coupon生成 - MJ
 router.post('/createCoupon', memberController.createCoupon)
 
+// 0705 - AKI 會員專區 : 修改頭貼照片 by mail
+router.post("/updateMemberIcon",
+upload.fields([{ name: "icon" }, { name: "mail" }]), 
+memberController.updateMemberIcon);
+
 module.exports = router;
+
+

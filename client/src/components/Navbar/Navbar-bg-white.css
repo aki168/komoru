@@ -30,8 +30,8 @@ a{
   text-decoration: none;
 }
 
-.navbar{
-  background: #ED8C4E;
+.navbar--bgWhite{
+  background: #fff;
   display: flex;
   justify-content: space-between;
   padding: 0 2rem;
@@ -44,29 +44,26 @@ a{
   padding-bottom: 30px;
 }
 
-.navbar--title:hover{
-  text-decoration: none;
-  color: #fff;
-}
-
 .navbar--menu{
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.navbar--item{
-  color: #fff;
+.navbar--item--bgWhite{
+  color: #808080;
   text-decoration: none;
   padding: 15px;
-  font-size:1.5rem;
+  font-size:1rem;
+  font-family: 'Poppins';
+  font-size: 1.5rem;
 }
 
-.navbar--item:hover{
+.navbar--item--bgWhite:hover{
   text-decoration: none;
-  color: #fff;
+  color: #ED8C4E;
 }
 
 .navbar--logo{
-  width: 60%;
+  width: 70%;
 }

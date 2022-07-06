@@ -40,9 +40,9 @@ export default function Feedback(props) {
       <Accordion defaultActiveKey="0">
         <Accordion.Item eventKey="1">
           <Accordion.Header>
-            <ul className="p-2 w-100 d-flex justify-content-between">
+            <ul className="acco-header p-2 w-100 d-flex justify-content-between">
               <li className="pt-2 pb-1">{props.orderStartDate}</li>
-              <li className="ps-2 pt-2 pb-1 w-50"> {props.roomDesc} / {props.roomType? "私人房型":"背包客房"}</li>
+              <li className="ps-2 pt-2 pb-1 w-75"> {props.roomDesc} / {props.roomType? "私人房型":"背包客房"}</li>
               <li className="pt-2 pb-1">{props.memberName}</li>
             </ul>
           </Accordion.Header>

@@ -87,9 +87,7 @@ exports.isLogin = async (memberId) => {
 // 0627 修改個人資料 - aki 
 // 更新(修改)一筆資料
 // UPDATE `資料表` SET `欄位2` = '資料2'  WHERE `欄位1` = '資料1'  ;
-// 一般用法：UPDATE `table` SET `name` = 'newaurora'  WHERE `id` = '12'
-
-exports.alertProfile = async (mail, name, nickName, sex, phone) => {
+exports.alterProfile = async (mail, name, nickName, sex, phone) => {
   return new Promise((resolve, reject) => {
     let sql = "UPDATE `Member`" +
       " SET `member_name`=?, `member_nick_name`=?, `member_gender`=?, `member_phone`=?,`update_datetime`=?" +
@@ -167,16 +165,17 @@ exports.getUnusableCouponByMemberId = (memberId) => {
   })
 }
 
+
 // 0704 勉勵金句抽卡 - MJ
 exports.getRainbowCard = async () => {
   return new Promise((resolve, reject) => {
     let random = Math.floor(Math.random() * 15 + 1)
     let sql =
-      "SELECT " +
-      "`rainbow_card_content`, `rainbow_card_id` " +
-      "FROM `RainbowCard` " +
-      "WHERE `rainbow_card_id` = ? "
-
+    "SELECT " +
+    "`rainbow_card_content`, `rainbow_card_id` " +
+    "FROM `RainbowCard` " +
+    "WHERE `rainbow_card_id` = ? "
+    
     db.con.query(sql, random, (err, rows, fields) => {
       if (err) {
         reject(err)
@@ -203,14 +202,14 @@ exports.saveRainbowCard = async (memberId, ranbowCardId) => {
         }
         else {
           let sql =
-            "INSERT INTO `RainbowCardItem` " +
+          "INSERT INTO `RainbowCardItem` " +
             "(`member_id`, `rainbow_card_id`)" +
             "VALUE (?, ?) "
-
-          db.con.query(sql, value, (err, results, fields) => {
-            if (err) {
-              reject(err)
-            }
+            
+            db.con.query(sql, value, (err, results, fields) => {
+              if (err) {
+                reject(err)
+              }
             resolve('儲存成功')
           })
         }
@@ -227,7 +226,7 @@ exports.createCoupon = async (memberId, couponId) => {
       "VALUE (?, ?, '0', ?, ?) "
     let time = db.getDateTimeNow()
     let value = [memberId, couponId, time, time]
-
+    
     db.con.query(sql, value, (err, results, fields) => {
       if (err) {
         reject(err)
@@ -237,3 +236,27 @@ exports.createCoupon = async (memberId, couponId) => {
 
   })
 }
+
+// 0705 - AKI 會員專區 : 修改頭貼照片 by mail
+exports.updateMemberIcon = async (iconFilePath, mail) => {
+  return new Promise((resolve, reject) => {
+    let sql = "UPDATE `Member`" +
+      " SET `member_img_path`=?,`update_datetime`=?" +
+      " WHERE `member_mail` = ? ";
+    let value = [
+      iconFilePath+'.PNG',
+      db.getDateTimeNow(),
+      mail
+    ];
+
+    console.log(value)
+    db.con.query(sql, value, (err, res) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(
+        console.log('修改成功')
+      );
+    });
+  });
+};

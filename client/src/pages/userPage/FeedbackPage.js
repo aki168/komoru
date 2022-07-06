@@ -57,7 +57,7 @@ export default function FeedbackPage() {
   }
 
   return (
-    <div className='wrap'>
+    <div className='User--wrap'>
       <Navbar />
       <div className='User--container'>
         <div className="Feedback">
@@ -70,18 +70,31 @@ export default function FeedbackPage() {
 
           
           {!isOrder && // 若無任何訂單的畫面
-            <div className="Feedback--card--none">
-              <p>目前沒有可供評論的訂單，現在就出發！</p>
-              <Button size="lg" variant="secondary" onClick={toBooking}>
-                Book Now
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-arrow-right-short" viewBox="0 0 16 16">
-                  <path fillRule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
-                </svg>
-              </Button>
-            </div>}
+            <div className="Feedback--card--none"> 
+            <div class="card--title">
+                <h3>訂單活動回饋</h3>
+                <p>寫下對於此趟旅程的心得分享給 KOMORU官方平台，讓大家一同改變、成長。</p>
+              </div>
+              <img className="img-fluid mb-4 w-100" src="https://dummyimage.com/1000x200/F2EAE4/ED8C4E.png&text=banner" alt="profile-banner" />
+              <section>
+                <h2>目前沒有可供評論的訂單，現在就出發！</h2>
+                <Button className="user--btn--M mt-3 fs-3" onClick={toBooking}>
+                  前往預定
+                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                    <path fillRule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                  </svg>
+                </Button>
+              </section>
+            </div> 
+            }
 
           {isOrder && // 訂單記錄畫面
             <div className="Feedback--card">
+              <div class="card--title">
+                <h3>訂單活動回饋</h3>
+                <p>寫下對於此趟旅程的心得分享給 KOMORU官方平台，讓大家一同改變、成長。</p>
+              </div>
+              <img className="img-fluid mb-4 w-100" src="https://dummyimage.com/1000x200/F2EAE4/ED8C4E.png&text=banner" alt="profile-banner" />
               {feebacks}
             </div>
           }

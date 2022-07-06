@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Button } from "react-bootstrap"
+import { Button, Alert } from "react-bootstrap"
 import './User.css'
 import axios from 'axios'
 
@@ -27,6 +27,14 @@ export default function User(props) {
       // phone: ""
     }
   )
+
+  // aki - 頭貼上傳初始化設定
+  const [uploadErr, setUploadErr] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  /* 預覽照片狀態初始化 */
+  const [imgPreview, setImgPreview] = useState(null);
+  const [uploadSuccess, setUploadSuccess] = useState(null);
+
   // 跳轉後即刻渲染資料「初始化」
   useEffect(() => {
     setFormData({
@@ -34,7 +42,8 @@ export default function User(props) {
       name: props.name,
       nickName: props.nickName,
       sex: props.sex,
-      phone: props.phone
+      phone: props.phone,
+      iconPath: props.iconPath
     })
   }, [props])
 
@@ -77,10 +86,63 @@ export default function User(props) {
       })
   }
 
+  // aki - 0705 預覽上傳大頭照
+  const handleImageChange = (e) => {
+    const selected = e.target.files[0];
+    const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+    if (selected && ALLOWED_TYPES.includes(selected.type)) {
+      let reader = new FileReader();
+      reader.onloadend = () => {
+        setImgPreview(reader.result);
+        setSelectedFile(selected);
+      };
+      reader.readAsDataURL(selected);
+
+    } else {
+      setUploadErr(true);
+    }
+  }
+
+  // aki - 0705 正式上傳頭貼
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (selectedFile){
+    let param = new FormData()
+    param.append("icon", selectedFile)
+    param.append("mail", formData.mail)
+    // console.log(param.get("icon"))
+
+    let config = {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    }
+
+    axios.post(
+      "http://localhost:5000/member/updateMemberIcon",
+      param, config
+
+    ).then((res) => {
+      console.log('上傳成功')
+      console.log(res)
+      // window.location.reload("false")
+      setUploadSuccess(true)
+
+    }).catch((err) => {
+      console.log(err)
+
+    })
+  } else {
+    alert('尚未選取圖檔')
+  }
+
+  }
+
+
+
 
   return (
     <div className="User">
-      <ul className="OrderList--menu">
+      <ul className="user--menu">
         <li><a href="/user" className="menu--item--on">基本資料</a></li>
         <li><a href="/member-order" className="menu--item">訂單記錄</a></li>
         <li><a href="/member-feedback" className="menu--item">活動回饋</a></li>
@@ -89,87 +151,135 @@ export default function User(props) {
 
 
       <div className="user--card">
-        <div className="user--icon">
-          <div className="icon--pic">
-            <img src="avatar-pl.png" alt="ICON" />
-          </div>
-          <Button className="user--btn--L" size="sm" variant="secondary">上傳照片</Button>
-          <Button className="user--btn--L" size="sm" variant="secondary">更換封面</Button>
+        <div className="card--title">
+          <h3>會員基本資料</h3>
+          <p>完善的會員中心系統，一鍵增修會員資料、隨心所欲更換喜愛頭像，放上最耀眼的自己！</p>
         </div>
-        <ul className="user--form">
-          <li className="user--item">
-            <label htmlFor="mail">帳號　</label>
-            <span className="fs-4">{formData.mail}</span>
-            {/* <input
+        <img className="img-fluid mb-4 w-100" src="https://dummyimage.com/1000x200/F2EAE4/ED8C4E.png&text=banner" alt="profile-banner" />
+
+        {/* 會員頭像區 --------------------------------- */}
+        <div className="user--card--inner">
+          <div className="user--icon">
+            <div
+              className="icon--pic"
+              style={{
+                background: imgPreview
+                  ? `url("${imgPreview}") no-repeat center/cover`
+                  : `url("${formData.iconPath ? `http://localhost:5000${formData.iconPath}` :
+                    `avatar-pl.png`}")no-repeat center/cover`
+              }}
+            >
+              {/* <img className="img-fluid" src={imgPreview? imgPreview:"avatar-pl.png"} alt="ICON" /> */}
+            </div>
+            <input
+              className="fs-5 mb-1"
+              name="iconFileUpload"
+              id="iconFileUpload"
+              type="file"
+              onChange={handleImageChange}
+            />
+            <p className="errMsg">請上傳png、jpg、jpeg格式</p>
+
+            <Button className="user--btn--L fs-4" onClick={onSubmit}>上傳/修改頭像</Button>
+
+            {
+              uploadErr &&
+              <Alert variant="danger" onClose={() => setUploadErr(false)} dismissible>
+                <h5>上傳格式錯誤，請再試一次</h5>
+              </Alert>
+            }
+            {
+              uploadSuccess &&
+              <Alert variant="success" onClose={() => setUploadSuccess(false)} dismissible>
+                <h5> - 上傳成功 SUCCESS - </h5>
+              </Alert>
+            }
+
+          </div>
+
+          {/* 會員個人資料區 --------------------------------- */}
+          <ul className="user--form pt-3 pb-3">
+            <li className="user--item">
+              {/* <label htmlFor="mail">帳號　</label> */}
+              <span className="fs-4"> 帳號　{formData.mail}</span>
+              {/* <input
               type="text"
               name="mail"
               id="mail"
               value={formData.mail}
               onChange={inputHandler}
             />  */}
-          </li>
-          <li className="user--item">
-            <label htmlFor="name">姓名　</label>
-            {!alertData && <span className="fs-4">{formData.name}</span>}
-            {alertData && <input
-              type="text"
-              name="name"
-              id="name"
-              value={formData.name}
-              onChange={inputHandler}
-            />}
-          </li>
-          <li className="user--item">
-            <label htmlFor="nickName">暱稱　</label>
-            {!alertData && <span className="fs-4">{formData.nickName}</span>}
-            {alertData && <input
-              type="text"
-              name="nickName"
-              id="nickName"
-              value={formData.nickName}
-              onChange={inputHandler}
-            />}
-          </li>
-          <li className="user--item">
-            <label htmlFor="sex">性別　</label>
-            {!alertData && <span className="fs-4">{formData.sex==='1'? `男性` : `女性`}</span>}
-            {alertData && <select
-              name="sex"
-              id="sex"
-              value={formData.sex}
-              onChange={inputHandler}
-            >
-              <option value="1">男性</option>
-              <option value="0">女性</option>
-            </select>}
-          </li>
-          <li className="user--item">
-            <label htmlFor="phone">手機　</label>
-            {!alertData && <span className="fs-4">{formData.phone}</span>}
-            {alertData && <input
-              type="text"
-              name="phone"
-              id="phone"
-              value={formData.phone}
-              onChange={inputHandler}
-            />}
-          </li>
-        </ul>
-        <div className="user--btnBar">
-          <Button
-            className="user--btn--M"
-            size="s"
-            variant="secondary"
-            onClick={alertSwitch}
-          >修改
-          </Button>
+            </li>
+            <li className="user--item">
+              {/* <label htmlFor="name">姓名　</label> */}
+              {!alertData && <span className="fs-4">姓名　{formData.name}</span>}
+              {alertData && <input
+                type="text"
+                name="name"
+                id="name"
+                value={formData.name}
+                onChange={inputHandler}
+              />}
+            </li>
+            <li className="user--item">
+              {/* <label htmlFor="nickName">暱稱　</label> */}
+              {!alertData && <span className="fs-4">暱稱　{formData.nickName}</span>}
+              {alertData && <input
+                type="text"
+                name="nickName"
+                id="nickName"
+                value={formData.nickName}
+                onChange={inputHandler}
+              />}
+            </li>
+            <li className="user--item">
+              {/* <label htmlFor="sex">性別　</label> */}
+              {!alertData && <span className="fs-4">性別　{formData.sex === '1' ? `男性` : `女性`}</span>}
+              {alertData && <select
+                name="sex"
+                id="sex"
+                value={formData.sex}
+                onChange={inputHandler}
+              >
+                <option value="1">男性</option>
+                <option value="0">女性</option>
+              </select>}
+            </li>
+            <li className="user--item">
+              {/* <label htmlFor="phone">手機　</label> */}
+              {!alertData && <span className="fs-4">手機　{formData.phone}</span>}
+              {alertData && <input
+                type="text"
+                name="phone"
+                id="phone"
+                value={formData.phone}
+                onChange={inputHandler}
+              />}
+            </li>
+          </ul>
+          <div className="user--btnBar">
 
-          <Button className="user--btn--M" size="s" variant="secondary" onClick={alterProfile}>儲存</Button>
+            {!alertData &&
+              <Button
+                className="user--btn--M fs-4"
+                onClick={alertSwitch}
+              >修改
+              </Button>
+            }
+            {alertData &&
+              <Button
+                className="user--btn--M fs-4"
+                onClick={alterProfile}
+              >儲存
+              </Button>
+            }
+          </div>
+
         </div>
       </div>
 
 
-    
+
 
 
 

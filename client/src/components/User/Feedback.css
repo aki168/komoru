@@ -1,17 +1,13 @@
 .Feedback a{
   display: block;
   text-decoration: none;
-  color: #000;
+
 }
 
 .Feedback a:hover{
   text-decoration: none;
 }
 
-.User--container {
-  margin: 0 auto;
-  max-width: 1024px;
-}
 
 .Feedback {
   display: flex;
@@ -19,51 +15,37 @@
 }
 
 .Feedback--menu {
-  width: 25%;
+  width: 20%;
   line-height: 2;
   font-weight: bold;
-  border-left: 1px solid #111;
-}
-
-.menu--item {
-  font-family: 'Inter';
-  font-size: 28px;
-  padding-left: 20px;
-  margin: 10px 0;
-}
-
-.menu--item--on {
-  font-size: 28px;
-  border-left: 8px solid #ccc;
-  padding-left: 12px;
+  border-left:1px solid #D9D9D9 ;
 }
 
 
 .Feedback--card {
-  padding: 10px 10px;
-  text-align: center;
-  width: 75%;
+  padding: 50px 40px;
+  width: 80%;
   min-height: 500px;
-  background: #D9D9D9;
+  background: #fff;
   font-family: 'Poppins';
   letter-spacing: 0.01em;
   color: #333333;
 }
 
 .Feedback--card--none {
-  padding: 200px 10px;
-  text-align: center;
-  width: 75%;
+  padding: 50px 40px;
+  width: 80%;
   min-height: 500px;
-  /* display: flex; */
-  /* flex-wrap: wrap; */
-  /* border: 1px solid #111; */
-  background: #D9D9D9;
   font-family: 'Poppins';
   font-weight: 700;
-  font-size: 40px;
   letter-spacing: 0.01em;
   color: #333333;
+  background: #fff;
+}
+
+.Feedback--card--none section{
+  padding: 200px 80px;
+  background:#F4F5F7;
 }
 
 .Feedback--title{
@@ -71,9 +53,17 @@
 }
 
 .Feedback--btn{
+  /* padding: 4px 30px; */
+  background: #ED8C4E;
+  border: none;
   width: 70px;
   align-self: flex-end;
 }
+
+.Feedback--btn:hover{
+  background: #CF5100;
+}
+
 
 
 @media (max-width:768px) {

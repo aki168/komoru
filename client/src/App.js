@@ -24,6 +24,8 @@ import { BookContext } from "./Helper/Context";
 import PartnerHotel from "./pages/partnerHotel/PartnerHotel";
 import ContactUs from "./pages/contactUs/ContactUs";
 
+// import ReactLoading from 'react-loading';
+
 // 0622 - 確認該用戶是否登入，可以連這隻api
 export const loginOrNot = () => {
   axios({
@@ -99,6 +101,9 @@ function App() {
     sumActivity,
     setSumActivity,
   };
+
+
+
   return (
     <BrowserRouter>
       <Routes>
