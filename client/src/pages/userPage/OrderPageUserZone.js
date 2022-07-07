@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../../components/Navbar/Navbar'
-import '../../components/User/User.css'
-import OrderList from '../../components/User/OrderList'
+import '../../components/User/OrderList/OrderList.css'
+import OrderList from '../../components/User/OrderList/OrderList'
 import axios from 'axios'
 import { Button } from 'react-bootstrap'
 
@@ -10,6 +10,7 @@ import { Button } from 'react-bootstrap'
 export default function OrderPage() {
 
   const [orderData, setOrderData] = useState([])
+  // const [orderItemData, setOrderItemData] = useState([])
   const [isOrder, setIsOrder] = useState(false)
 
 
@@ -23,7 +24,7 @@ export default function OrderPage() {
 
   //  0628 aki 抓取該會員的訂單記錄
   useEffect(() => {
-    // if(userData){
+    
     axios({
       method: "post",
       url: "http://localhost:5000/order/getOrderDataByMemberId",
@@ -31,17 +32,29 @@ export default function OrderPage() {
         token: localStorage.token
       }
     }).then((res) => {
-      if (res.data.dataList.length) {
-        let postOrderData = res.data.dataList;
-        setOrderData(postOrderData)//想辦法把值取出來
+      if (res.data.dataList.getOrderDataByMemberId.length) { //訂單資料 by 會員
+        let postOrderData = res.data.dataList.getOrderDataByMemberId;
+        setOrderData(postOrderData)
         setIsOrder(true)
       }
-      console.log(res.data.dataList)
+      console.log(res.data.dataList.getOrderDataByMemberId)
+      console.log(res.data)
+
+      // if (res.data.dataList.orderItemDataList.length) { // 訂單明細（活動） by 會員
+      //   let postOrderItemData = res.data.dataList.orderItemDataList;
+      //   setOrderItemData(postOrderItemData)
+      // }
+      // console.log(res.data.dataList.orderItemDataList)
+
+
     }).catch((err) => {
       console.log(err)
     })
-    // }
+    
   }, [])
+
+  console.log(orderData)
+
 
   // 0629 aki 接收到的資料設定入元件
   const orders = orderData.map(item => {
@@ -53,6 +66,16 @@ export default function OrderPage() {
       />
     )
   })
+
+    // // 0707 aki 接收到的資料設定入元件
+    // const orderItems = orderItemData.map(item => {
+    //   return (
+    //     <OrderItems 
+    //       key={item.activePackId}
+    //       {...item}
+    //     />
+    //   )
+    // })
 
   const toBooking = () => {
     navigate('/bookingHomepage', { replace: true })
@@ -77,7 +100,7 @@ export default function OrderPage() {
                 <h3>訂單歷史紀錄</h3>
                 <p>完整的訂單記錄，讓你方便查看所有訂單內容，每一次都將有不同的體驗！</p>
               </div>
-              <img className="img-fluid mb-4 w-100" src="https://dummyimage.com/1000x200/F2EAE4/ED8C4E.png&text=banner" alt="profile-banner" />
+              <img className="img-fluid mb-4 w-100" src="komoru_member.png" alt="profile-banner" />
               <section>
                 <h2>目前沒有訂單紀錄，現在就開始旅程！</h2>
                 <Button className="user--btn--M mt-3 fs-3" onClick={toBooking}>
@@ -97,7 +120,7 @@ export default function OrderPage() {
                 <h3>訂單歷史紀錄</h3>
                 <p>完整的訂單記錄，讓你方便查看所有訂單內容，每一次都將有不同的體驗！</p>
               </div>
-              <img className="img-fluid mb-4 w-100" src="https://dummyimage.com/1000x200/F2EAE4/ED8C4E.png&text=banner" alt="profile-banner" />
+              <img className="img-fluid mb-4 w-100" src="komoru_member.png" alt="profile-banner" />
               {orders}
             </div>
           }
