@@ -49,6 +49,13 @@
   color: #ED8C4E;
 }
 
+
+.menu--item:visited,
+.menu--item--on:visited {
+  text-decoration: none;
+  color:none;
+}
+
 .menu--item--on {
   color: #ED8C4E;
   font-size: 28px;
