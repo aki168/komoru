@@ -3,11 +3,47 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom'
 import { Container, Form } from "react-bootstrap";
 import LoginHeader from "../../components/BackstageAdminLoginHeader";
+import Background from "../../assets/BackstageLoginKOMORU.png"
+import "./BackstageLogin.css"
+import LOGO_OG from "../../assets/KOMORU_LOGO_OG.png"
+import LoginModal from "./LoginModal"
+import { Modal, Button } from "react-bootstrap"
+
+
+
+
+
+function MyVerticallyCenteredModal(props) {
+  return (
+    <Modal
+      {...props}
+      size="xs"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered  
+    >
+      <Modal.Header style={{ border: "none" }} closeButton>
+      </Modal.Header>
+      <Modal.Body>
+        <h4>Centered Modal</h4>
+        <p>
+          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+          consectetur ac, vestibulum at eros.
+        </p>
+      </Modal.Body>
+      <Modal.Footer className="justify-content-center" style={{ border: "none" }}>
+        {/* <Button onClick={()=>setLoginShow(true)}>Close</Button> */}
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
 
 function BackstageLogin() {
   let navigate = useNavigate()
   const [account, setAccount] = useState("");
   const [passwd, setPasswd] = useState("");
+  const [loginShow, setLoginShow] = useState(false);
 
   const inputAccountHandler = (e) => {
     setAccount(() => e.target.value);
@@ -19,39 +55,6 @@ function BackstageLogin() {
     //console.log(passwd) //動態追蹤輸入的pw值
   };
 
-  // 0620 aki - 驗證網站是否有該會員：有的人才能輸入密碼＆向他打招呼
-  // 若該mail網站沒有，將會導向註冊頁面
-  // const loginHandler = () => {
-  //   if (mail !== "") {
-  //     axios({
-  //       method: "POST",
-  //       url: "http://localhost:5000/member/checkMailIsExisted",
-  //       data: {
-  //         mail: mail,
-  //       },
-  //     })
-  //       .then((res) => {
-  //         console.log(res.data); // 印出資料庫回傳的資料看看（若尚未註冊不會顯示）
-  //         if (res.data[0].memberMail === mail) {
-  //           setMailCheck(
-  //             (prevMailCheck) =>
-  //               `親愛的${res.data[0].memberNickName}，歡迎您回來`
-  //           ); //輸入mail與資料庫資料吻合setOK
-  //         }
-  //       })
-  //       .catch((e) => {
-  //         console.log(mail); //動態追蹤輸入的mail值
-  //         alert("該mail尚未註冊，將為您跳轉至註冊頁");
-  //         navigate(
-  //           "/register",
-  //           { state: { userMail: mail } },
-  //           { replace: true }
-  //         );
-  //       });
-  //   } else if (mail === "") {
-  //     alert("請輸入電子信箱");
-  //   }
-  // };
 
   // 0620 aki - 正式驗證帳號及密碼：登入驗證
   const loginHandlerWithPW = (event) => {
@@ -71,26 +74,16 @@ function BackstageLogin() {
         withCredentials: true
       })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.status) {
             console.log(res.data); // 印出撈到的資料看看
-            alert('登入成功！')
-            navigate('/BackstageAdmin', { replace: true })
+            console.log(loginShow)
+            setLoginShow(true)
+            navigate('/BackstageAdmin', { replace: true }) 
           }
-
+          
           // console.log(res.data.token); // 印出撈到的token看看
 
-          // if (
-          //   res.data.result[0].memberMail === mail &&
-          //   res.data.result[0].memberPasswd === passwd
-          // ) {
-          //   localStorage.setItem("token", res.data.token);
-          //   // setUserIsLogin({isLoginMail:mail, isLoginToken:res.data.token})
-          //   setLoginStatus(true); // 插入驗證事情
-          // } else {
-          //   console.log(mail, passwd); //動態追蹤輸入的mail值
-          //   alert("帳號或密碼錯誤"); // 簡易版
-          // }
         })
         .catch((err) => {
           console.log(err)
@@ -105,33 +98,29 @@ function BackstageLogin() {
 
   return (
     <>
-      <div>
+      {/* <div>
         <LoginHeader />
-      </div>
-      <div>
-        <Container style={{ marginTop: '180px' }}>
+      </div> */}
+      <div className="BackstageLogin-backgorund" style={{ height: "100vh" }}>
+        <Container className="text-center ">
+          <img style={{ marginTop: '150px' }} src={LOGO_OG} alt="" />
+          <h3 className="mt-4">後台管理系統</h3>
           <Form className="col-lg-6 offset-lg-3">
-            <div className="mb-3 mt-3">
-              <label htmlFor="account" className="form-label">
-                Account:
-              </label>
+            <div className="mb-4 mt-4">
               <input
                 className="form-control"
                 // id="account"
-                placeholder="Enter account"
+                placeholder="請輸入帳號"
                 name="account"
                 onChange={inputAccountHandler}
               />
             </div>
-            <div className="mb-3">
-              <label htmlFor="pwd" className="form-label">
-                Password:
-              </label>
+            <div className="mb-4">
               <input
                 // type="password"
                 className="form-control"
                 // id="pwd"
-                placeholder="Enter password"
+                placeholder="請輸入密碼"
                 name="pswd"
                 onChange={inputPasswdHandler}
               />
@@ -141,6 +130,13 @@ function BackstageLogin() {
             </button>
           </Form>
         </Container>
+        <button>OK</button>
+        <MyVerticallyCenteredModal
+        show={loginShow}
+        onHide={() => setLoginShow(false)}
+        // setLoginShow={setLoginShow}
+      />
+      
       </div>
     </>
   );
