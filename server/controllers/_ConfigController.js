@@ -46,6 +46,20 @@ exports.enumValueToString = (tableName, column, value) => {
               break;
           }
           break;
+        case "payment":
+          switch (value) {
+            case "0":
+              transferString = "現金";
+              break;
+            case "1":
+              transferString = "信用卡";
+              break;
+            default:
+              errCheck = false;
+              errMsg = "狀態值不存在";
+              break;
+          }
+          break;
         default:
           errCheck = false;
           errMsg = "欄位不存在";

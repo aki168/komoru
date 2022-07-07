@@ -151,8 +151,12 @@ exports.getOrderDataByMemberId = async (req, res) => {
     // 解碼完後對照資料庫，有的話回傳該訂單資料
 
     try {
-      let getOrderDataByMemberId = await orderModel.getOrderDataByMemberId(memberId)
-      let orderItemDataList = await orderModel.getOrderItemDataListByMemberId(memberId)
+      let getOrderDataByMemberId = await orderModel.getOrderDataByMemberId(
+        memberId
+      );
+      let orderItemDataList = await orderModel.getOrderItemDataListByMemberId(
+        memberId
+      );
 
       // 將 enum 數值轉換為文字
       Object.entries(getOrderDataByMemberId).forEach(([key, value]) => {
@@ -177,15 +181,15 @@ exports.getOrderDataByMemberId = async (req, res) => {
           ? valueToString.transferString
           : valueToString.errMsg;
 
-        getOrderDataByMemberId[key].orderStatus = orderStatusValueToString.errCheck
-          ? orderStatusValueToString.transferString
-          : orderStatusValueToString.errMsg;
+        getOrderDataByMemberId[key].orderStatus =
+          orderStatusValueToString.errCheck
+            ? orderStatusValueToString.transferString
+            : orderStatusValueToString.errMsg;
 
-        getOrderDataByMemberId[key].memberGender = memberGenderValueToString.errCheck
-          ? memberGenderValueToString.transferString
-          : memberGenderValueToString.errMsg;
-
-
+        getOrderDataByMemberId[key].memberGender =
+          memberGenderValueToString.errCheck
+            ? memberGenderValueToString.transferString
+            : memberGenderValueToString.errMsg;
       });
       Object.entries(orderItemDataList).forEach(([key, value]) => {
         let activePackTypeValueToString = configController.enumValueToString(
@@ -193,13 +197,16 @@ exports.getOrderDataByMemberId = async (req, res) => {
           "activePackType",
           value.activePackType
         );
-        orderItemDataList[key].activePackType = activePackTypeValueToString.errCheck
-          ? activePackTypeValueToString.transferString
-          : activePackTypeValueToString.errMsg;
-      })
-      configController.sendJsonMsg(res, true, "", { getOrderDataByMemberId, orderItemDataList });
-    }
-    catch (error) {
+        orderItemDataList[key].activePackType =
+          activePackTypeValueToString.errCheck
+            ? activePackTypeValueToString.transferString
+            : activePackTypeValueToString.errMsg;
+      });
+      configController.sendJsonMsg(res, true, "", {
+        getOrderDataByMemberId,
+        orderItemDataList,
+      });
+    } catch (error) {
       // 目前不確定這邊要怎改
       console.log(err);
       res.status(500).json({ message: "Server error" });
@@ -208,7 +215,6 @@ exports.getOrderDataByMemberId = async (req, res) => {
     res.json({ message: "該用戶尚未登入" });
   }
 };
-
 
 // 2022-07-05 PG
 // 取得訂單資料 by memberId（後台 memberId）
@@ -252,7 +258,10 @@ exports.getOrderDataWithActivePackByOrderId = async (req, res) => {
   if (typeof data.orderId !== "undefined") {
     let result = {
       orderData: await getOrderDataByOrderId(data.orderId, res),
-      orderItemDataList: await getOrderItemDataListWithActivePackByOrderId(data.orderId, res),
+      orderItemDataList: await getOrderItemDataListWithActivePackByOrderId(
+        data.orderId,
+        res
+      ),
     };
     configController.sendJsonMsg(res, true, "", result);
   } else {
@@ -280,6 +289,11 @@ const getOrderDataByOrderId = async (orderId, res) => {
         "orderStatus",
         result[0].orderStatus
       );
+      let paymentValueToString = configController.enumValueToString(
+        "Order",
+        "payment",
+        result[0].payment
+      );
       let memberGenderValueToString = configController.enumValueToString(
         "Member",
         "gender",
@@ -294,6 +308,10 @@ const getOrderDataByOrderId = async (orderId, res) => {
       result[0].orderStatus = orderStatusValueToString.errCheck
         ? orderStatusValueToString.transferString
         : orderStatusValueToString.errMsg;
+
+      result[0].payment = paymentValueToString.errCheck
+        ? paymentValueToString.transferString
+        : paymentValueToString.errMsg;
 
       result[0].memberGender = memberGenderValueToString.errCheck
         ? memberGenderValueToString.transferString
