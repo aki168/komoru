@@ -51,18 +51,18 @@ function Sidebar() {
               </span>
             </a>
             <ul
-              className="collapse nav hidden  flex-column h-50 "
+              className="collapse nav hidden flex-column h-50 mt-1 "
               id="submenu1"
               data-bs-parent="#menu"
             >
               <li>
-                <MyNavLink className="ps-5 ms-5 mb-2" to="hotel">
-                  飯店
+                <MyNavLink className="nav-link mb-2  text-center" to="hotel">
+                  <p style={{paddingRight:"80px"}}>飯店</p>
                 </MyNavLink>
               </li>
               <li>
-                <MyNavLink className="ps-5 ms-5"to="room">
-                  房型
+                <MyNavLink className=" nav-link text-center"to="room">
+                <p style={{paddingRight:"80px"}}>房型</p>
                 </MyNavLink>
               </li>
             </ul>

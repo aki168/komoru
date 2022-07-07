@@ -5,6 +5,7 @@ import { Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import PartnershipAdd from "./PartnershipAdd";
 import PartnershipEdit from "./PartnershipEdit/index";
+import BackstageLoding from "../../../components/BackstageLoading";
 function Partnership() {
   /* 20220616 YN
   初始化使用者資料
@@ -30,6 +31,11 @@ function Partnership() {
     keyword: "",
     cityId: ""
   });
+
+  /*20220707 YN
+資料載入過程初始化*/
+  const [loading, setLoading] = useState(false);
+
 
   /*20220624 YN
  初始化*/
@@ -85,6 +91,7 @@ function Partnership() {
       .then((res) => {
         // console.log(res.data.dataList);
         setData(res.data.dataList);
+        setLoading(true)
       })
       .catch((err) => console.log(err));
   }, []);
@@ -164,6 +171,7 @@ function Partnership() {
     // );
     // console.log(dataList.partnershipId);
   };
+
   /*20220617 YN
   arr變數(畫面)進行slice顯示資料 */
   const displayUsers = arr.slice(pageVisited, pageVisited + userPerPage);
@@ -317,18 +325,20 @@ function Partnership() {
           </div>
           <div className="row ms-5">
             <div className="col-sm-10">
-              <table className="table table-hover  text-center align-middle ">
-                <thead>
-                  <tr>
-                    <td>夥伴名稱</td>
-                    <td>區域</td>
-                    <td>地址</td>
-                    <td>聯絡電話</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>{displayUsers}</tbody>
-              </table>
+              {loading ? <>
+                <table className="table table-hover  text-center align-middle ">
+                  <thead>
+                    <tr>
+                      <td>夥伴名稱</td>
+                      <td>區域</td>
+                      <td>地址</td>
+                      <td>聯絡電話</td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>{displayUsers}</tbody>
+                </table>
+              </> : <div  className="d-flex justify-content-center"><BackstageLoding /></div>}
             </div>
           </div>
         </div>

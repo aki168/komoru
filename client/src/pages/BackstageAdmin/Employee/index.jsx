@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import EmployeeAdd from "./EmployeeAdd";
 import EmployeeViewEdits from "./EmployeeViewEdits";
+import BackstageLoding from "../../../components/BackstageLoading";
+
 function Employee() {
   /* 20220616 YN
   初始化使用者資料
@@ -23,6 +25,11 @@ function Employee() {
   /*20220624 YN
   取當下選取列表時的data狀態初始化*/
   const [editData, setEditData] = useState();
+
+  /*20220707 YN
+資料載入過程初始化*/
+  const [loading, setLoading] = useState(false);
+
 
   /*20220624 YN
  初始化*/
@@ -69,6 +76,7 @@ function Employee() {
       const dataResult = json.dataList;
       // console.log(dataResult);
       setData(dataResult);
+      setLoading(true);
     };
     // call the function
     fetchData()
@@ -251,18 +259,21 @@ function Employee() {
           </div>
           <div className="row ms-5">
             <div className="col-sm-10">
-              <table className="table table-hover  text-center align-middle ">
-                <thead>
-                  <tr>
-                    <td>員工編號</td>
-                    <td>員工帳號</td>
-                    <td>員工姓名</td>
-                    <td>員工電話</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>{displayUsers}</tbody>
-              </table>
+              {loading ?
+                <>
+                  <table className="table table-hover  text-center align-middle ">
+                    <thead>
+                      <tr>
+                        <td>員工編號</td>
+                        <td>員工帳號</td>
+                        <td>員工姓名</td>
+                        <td>員工電話</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>{displayUsers}</tbody>
+                  </table>
+                </> : <div className="d-flex justify-content-center"><BackstageLoding /></div>}
             </div>
           </div>
         </div>
