@@ -143,11 +143,11 @@ const checkData = (dataList, dataColumns) => {
 // 取得訂單資料byMemberId
 exports.getOrderDataByMemberId = async (req, res) => {
   const { token } = req.body;
-  if (token) {
-    //   解碼
-    const decoded = await promisify(jwt.verify)(token, "jwtSecret");
-    const { memberId } = decoded;
-    // let memberId = 8763
+  // if (token) {
+  //   //   解碼
+  //   const decoded = await promisify(jwt.verify)(token, "jwtSecret");
+  //   const { memberId } = decoded;
+    let memberId = 8763
     // 解碼完後對照資料庫，有的話回傳該訂單資料
 
     try {
@@ -204,9 +204,9 @@ exports.getOrderDataByMemberId = async (req, res) => {
       console.log(err);
       res.status(500).json({ message: "Server error" });
     }
-  } else {
-    res.json({ message: "該用戶尚未登入" });
-  }
+  // } else {
+  //   res.json({ message: "該用戶尚未登入" });
+  // }
 };
 
 
