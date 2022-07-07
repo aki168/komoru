@@ -24,6 +24,13 @@ function Partnership() {
   取當下選取列表時的data狀態初始化*/
   const [editData, setEditData] = useState();
 
+  /*20220706 YN
+  篩選功能輸入狀態初始化*/
+  const [sreachData, setSreachData] = useState({
+    keyword: "",
+    cityId: ""
+  });
+
   /*20220624 YN
  初始化*/
   // const [deletData, setDeletData] = useState();
@@ -171,36 +178,96 @@ function Partnership() {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+
+
+  /*20220706 YN
+    取得搜尋關鍵字及選擇值*/
+  const sreachChangeHandle = (event) => {
+    event.preventDefault();
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...sreachData };
+    newFormData[fieldName] = fieldValue;
+    console.log(newFormData)
+    setSreachData(newFormData);
+
+  };
+  /*20220706 YN
+  送出搜尋關鍵字及選擇值進行篩選*/
+  const sreachSubmitHandle = (event) => {
+    event.preventDefault();
+    const newContact = {
+      keyword: sreachData.keyword,
+      cityId: sreachData.cityId,
+    };
+    console.log(newContact)
+
+
+    // setAddFormData(newContacts);
+    fetch("http://localhost:5000/partnership/getPartnershipDataListByKeywordAndCityId", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(newContact),
+    })
+      .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
+      .then((data) => {
+        let result = data.dataList
+        console.log(data)
+        if (result.length === 0) {
+          alert("查無此資料")
+          setData(data.dataList)
+        } else {
+          setData(data.dataList)
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
+
   return (
     <>
       <div className="mx-5  mb-5">
         <h2 className="mt-3 mb-5">合作夥伴管理</h2>
         <div>
           <div className="row ms-5 mb-3">
-            <div className="col-sm-4">
-              <div className="d-flex justify-content-start">
-                <input
-                  className="form-control me-2 "
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button className="btn btn-success" type="submit">
-                  Search
-                </button>
-                <select
-                  className=" form-select ms-1"
-                  aria-label="Default select example"
-                >
-                  <option defaultValue="地區搜尋">地區搜尋</option>
-                  <option value="1">北區</option>
-                  <option value="2">中區</option>
-                  <option value="3">南區</option>
-                  <option value="4">東區</option>
-                </select>
+            <div className="col-sm-5">
+              <div className="row g-0 justify-content-start">
+                <div className="col-4">
+                  <input
+                    name="keyword"
+                    className="form-control col-1 "
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                    onChange={sreachChangeHandle}
+                  />
+                </div>
+                <div className="col-3">
+                  <select
+                    name="cityId"
+                    className=" form-select col-2"
+                    aria-label="Default select example"
+                    onChange={sreachChangeHandle}
+                  >
+                    <option value="" selected>地區搜尋</option>
+                    <option value="1">北區</option>
+                    <option value="2">中區</option>
+                    <option value="3">南區</option>
+                    <option value="4">東區</option>
+                  </select>
+                </div>
+                <div className="col-2">
+                  <button className="btn btn-success" type="submit" onClick={sreachSubmitHandle}>
+                    搜尋
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="col-sm-4">
+            <div className="col-sm-3">
               <div className="d-flex justify-content-end">
                 <button
                   onClick={handleAddShow}
@@ -216,7 +283,7 @@ function Partnership() {
                   show={addShow}
                   onHide={handleAddClose}
                 >
-                  <Modal.Header closeButton></Modal.Header>
+                  <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
                   <PartnershipAdd
                     data={data}
                     addShow={addShow}
@@ -225,8 +292,8 @@ function Partnership() {
                 </Modal>
               </div>
             </div>
-            <div className="col-sm-2 d-flex justify-content-end">
-              <nav aria-label="Page navigation example">
+            <div className="col-sm-2 d-flex justify-content-end ">
+              <nav aria-label="Page navigation example ">
                 <ul className="pagination">
                   <ReactPaginate
                     nextLabel=">"
@@ -273,7 +340,7 @@ function Partnership() {
         show={editShow}
         onHide={handleEditClose}
       >
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
         <PartnershipEdit
           // editShow={editShow}
           setEditShow={setEditShow}

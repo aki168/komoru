@@ -13,30 +13,31 @@ function Sidebar() {
   return (
     <>
       <div
-        className="sticky-top "
+        className=" container sticky-top"
         id="sticky-sidebar"
-        style={{ background: "#ED8C4E" }}
+        style={{ background: "#EFA16A" }}
       >
+
         <ul
-          className=" container-field  nav flex-column text-start fs-4 d-block nav-pills"
-          style={{ height: "100vh" }}
+          className=" container nav flex-column text-start fs-4 d-block nav-pills"
+          style={{ height: "100vh", }}
         >
-          <header className="text-center">
+          <div className="pt-4 pb-5 text-center ">
             <img style={{ width: "300px" }} src={LOGO} alt="" />
-          </header>
-          <li className="nav-item ">
+          </div>
+          <li className="mb-3 nav-item ">
             <MyNavLink to="order">
               <RiGroupLine className="mx-2 ms-4" />
               訂單管理
             </MyNavLink>
           </li>
-          <li className="nav-item">
+          <li className="mb-3 nav-item">
             <MyNavLink to="partnership">
               <RiSpyLine className="mx-2 ms-4" />
               合作夥伴管理
             </MyNavLink>
           </li>
-          <li className="nav-item dropdown">
+          <li className="mb-3 nav-item dropdown">
             <a
               href="#submenu1"
               data-bs-toggle="collapse"
@@ -45,7 +46,6 @@ function Sidebar() {
               style={{ color: "#ffffff", textDecoration: "none" }}
             >
               <span>
-                {" "}
                 <RiHome2Line className="mx-2 ms-4" />
                 飯店房型管理
               </span>
@@ -56,20 +56,18 @@ function Sidebar() {
               data-bs-parent="#menu"
             >
               <li>
-                <MyNavLink to="hotel">
-                  <RiBuildingLine className="ms-4" />
+                <MyNavLink className="ps-5 ms-5 mb-2" to="hotel">
                   飯店
                 </MyNavLink>
               </li>
               <li>
-                <MyNavLink to="room">
-                  <IoBedOutline className="ms-4" />
+                <MyNavLink className="ps-5 ms-5"to="room">
                   房型
                 </MyNavLink>
               </li>
             </ul>
           </li>
-          <li className="nav-item">
+          <li className="mb-3 nav-item">
             <MyNavLink to="dashboard">
               <RiBarChart2Line className="mx-2 ms-4" />
               分區報表
