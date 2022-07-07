@@ -54,6 +54,18 @@ exports.getRoomDataListByKeywordAndCityId = async (req, res, next) => {
     await roomModel
       .getRoomDataListByKeywordAndCityId(data)
       .then((result) => {
+        Object.entries(result).forEach(([key, value]) => {
+          // 將 enum 數值轉換為文字
+          let valueToString = configController.enumValueToString(
+            "Room",
+            "roomType",
+            value.roomType
+          );
+          // 如果檢查結果是正常，即將值取代為對應的文字，否則輸出錯誤訊息
+          result[key].roomType = valueToString.errCheck
+            ? valueToString.transferString
+            : valueToString.errMsg;
+        });
         configController.sendJsonMsg(res, true, "", result);
       })
       .catch((err) => {
