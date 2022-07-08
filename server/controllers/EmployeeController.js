@@ -84,14 +84,14 @@ exports.getEmployeeDataList = async (req, res, next) => {
 // 取得合作夥伴 dataList By 關鍵字、城市
 // 取得員工 dataList By 關鍵字
 // return：json
-exports.getEmployeeDataListByKeywordAndCityId = async (req, res, next) => {
+exports.getEmployeeDataListByKeyword = async (req, res, next) => {
   let data = req.body;
   let checkDataResult = checkData(data, ["keyword"]);
 
   // 判斷是否有空值、沒有傳需要的資料
   if (checkDataResult.errCheck) {
     await employeeModel
-      .getEmployeeDataListByKeywordAndCityId(data)
+      .getEmployeeDataListByKeyword(data)
       .then((result) => {
         configController.sendJsonMsg(res, true, "", result);
       })

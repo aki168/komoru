@@ -39,7 +39,7 @@ exports.getEmployeeDataList = async () => {
 // 2022-07-08 PG
 // 取得員工 dataList By 關鍵字
 // return：({})
-exports.getEmployeeDataListByKeywordAndCityId = async (dataList) => {
+exports.getEmployeeDataListByKeyword = async (dataList) => {
   return new Promise((resolve, reject) => {
     let sql =
       "SELECT " +
