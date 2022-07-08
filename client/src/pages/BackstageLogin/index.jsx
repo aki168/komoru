@@ -2,37 +2,60 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'
 import { Container, Form } from "react-bootstrap";
-import LoginHeader from "../../components/BackstageAdminLoginHeader";
-import Background from "../../assets/BackstageLoginKOMORU.png"
 import "./BackstageLogin.css"
 import LOGO_OG from "../../assets/KOMORU_LOGO_OG.png"
-import LoginModal from "./LoginModal"
 import { Modal, Button } from "react-bootstrap"
+import { BsFillCheckCircleFill } from "react-icons/bs";
+import { BsFillExclamationCircleFill } from "react-icons/bs";
+// import LoginHeader from "../../components/BackstageAdminLoginHeader";
+// import Background from "../../assets/BackstageLoginKOMORU.png"
 
 
 
+//20220708 登入成功彈跳視窗
+// function LoginModal(props) {
+//   let navigate = useNavigate()
+//   return (
+//     <Modal
+//       {...props}
+//       size="xs"
+//       aria-labelledby="contained-modal-title-vcenter"
+//       centered
+//     >
+//       <Modal.Header style={{ border: "none" }} closeButton>
+//       </Modal.Header>
+//       <Modal.Body >
+//         <div className="text-center">
+//           <BsFillCheckCircleFill size="8em" color="green" />
+//           <h4 className="mt-4">登入成功!</h4>
+//         </div>
+//       </Modal.Body>
+//       <Modal.Footer className="justify-content-center" style={{ border: "none" }}>
+//       </Modal.Footer>
+//     </Modal>
+//   );
+// }
 
+//20220708 登入錯誤彈跳視窗
+function ErrorModal(props) {
+  
 
-function MyVerticallyCenteredModal(props) {
   return (
     <Modal
       {...props}
       size="xs"
       aria-labelledby="contained-modal-title-vcenter"
-      centered  
+      centered
     >
       <Modal.Header style={{ border: "none" }} closeButton>
       </Modal.Header>
-      <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
+      <Modal.Body >
+        <div className="text-center">
+          <BsFillExclamationCircleFill size="7em" color="#cc5522" />
+          <h4 className="mt-4">帳號或密碼錯誤!</h4>
+        </div>
       </Modal.Body>
       <Modal.Footer className="justify-content-center" style={{ border: "none" }}>
-        {/* <Button onClick={()=>setLoginShow(true)}>Close</Button> */}
       </Modal.Footer>
     </Modal>
   );
@@ -40,10 +63,16 @@ function MyVerticallyCenteredModal(props) {
 
 
 function BackstageLogin() {
-  let navigate = useNavigate()
   const [account, setAccount] = useState("");
   const [passwd, setPasswd] = useState("");
-  const [loginShow, setLoginShow] = useState(false);
+
+  //20220708 登入成功彈跳視窗狀態初始
+  const [loginShow, setLoginShow] = useState(true);
+
+  //20220708 登入成功彈跳視窗狀態初始
+  const [errorShow, setErrorShow] = useState(false);
+
+  let navigate = useNavigate()
 
   const inputAccountHandler = (e) => {
     setAccount(() => e.target.value);
@@ -54,7 +83,6 @@ function BackstageLogin() {
     setPasswd(() => e.target.value);
     //console.log(passwd) //動態追蹤輸入的pw值
   };
-
 
   // 0620 aki - 正式驗證帳號及密碼：登入驗證
   const loginHandlerWithPW = (event) => {
@@ -77,24 +105,26 @@ function BackstageLogin() {
           // console.log(res.data);
           if (res.data.status) {
             console.log(res.data); // 印出撈到的資料看看
-            console.log(loginShow)
-            setLoginShow(true)
-            navigate('/BackstageAdmin', { replace: true }) 
+            // console.log(loginShow)
+            // setLoginShow(true)
+            navigate('/BackstageAdmin', { replace: true })
+          } else {
+            setErrorShow(true)
+            // alert(res.data.errMsg)
           }
-          
+
           // console.log(res.data.token); // 印出撈到的token看看
 
         })
         .catch((err) => {
           console.log(err)
-          // if (e.response.error) {
-          // alert("帳號或密碼錯誤"); // 進階版
-          // }
         });
+
     } else if (account === "" || passwd === "") {
       alert("請填寫帳號及密碼");
     }
   };
+
 
   return (
     <>
@@ -102,41 +132,49 @@ function BackstageLogin() {
         <LoginHeader />
       </div> */}
       <div className="BackstageLogin-backgorund" style={{ height: "100vh" }}>
-        <Container className="text-center ">
-          <img style={{ marginTop: '150px' }} src={LOGO_OG} alt="" />
-          <h3 className="mt-4">後台管理系統</h3>
-          <Form className="col-lg-6 offset-lg-3">
-            <div className="mb-4 mt-4">
-              <input
-                className="form-control"
-                // id="account"
-                placeholder="請輸入帳號"
-                name="account"
-                onChange={inputAccountHandler}
-              />
-            </div>
-            <div className="mb-4">
-              <input
-                // type="password"
-                className="form-control"
-                // id="pwd"
-                placeholder="請輸入密碼"
-                name="pswd"
-                onChange={inputPasswdHandler}
-              />
-            </div>
-            <button className="btn col-md-12 " onClick={loginHandlerWithPW} style={{ background: '#ED8C4E', color: "#FFFFFF" }}>
-              登入
-            </button>
-          </Form>
+        <Container className="text-center" style={{padding:"0 200px 0 200px"}} >
+          <div style={{ paddingTop: '150px' }}></div>
+          <div style={{boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px'}}>
+            <img src={LOGO_OG} alt="" />
+            <h3 className="mt-4">後台管理系統</h3>
+            <Form className="col-lg-8 offset-lg-2">
+              <div className="mb-4 mt-4">
+                <input
+                  className="form-control"
+                  // id="account"
+                  placeholder="請輸入帳號"
+                  name="account"
+                  onChange={inputAccountHandler}
+                  style={{ height: "50px" }}
+                />
+              </div>
+              <div className="mb-4">
+                <input
+                  type="password"
+                  className="form-control"
+                  // id="pwd"
+                  placeholder="請輸入密碼"
+                  name="pswd"
+                  onChange={inputPasswdHandler}
+                  style={{ height: "50px" }}
+                />
+              </div>
+              <button className="btn col-md-12 " onClick={loginHandlerWithPW} style={{ background: '#ED8C4E', color: "#FFFFFF",margin:"0 0 120px 0" }}>
+                登入
+              </button>
+            </Form>
+          </div>
+
         </Container>
-        <button>OK</button>
-        <MyVerticallyCenteredModal
-        show={loginShow}
-        onHide={() => setLoginShow(false)}
-        // setLoginShow={setLoginShow}
-      />
-      
+        {/* <LoginModal
+          show={loginShow}
+          onHide={() => setLoginShow(false)}
+        /> */}
+        <ErrorModal
+          show={errorShow}
+          onHide={() => setErrorShow(false)}
+        />
+
       </div>
     </>
   );

@@ -10,7 +10,7 @@ function BackstageAdmin() {
         >
           <Sidebar />
         </div>
-        <div className="col-md-10" style={{ boxShadow: "6px 0px 5px rgba(0, 0, 0, 1)" }}>
+        <div className="col-md-10" style={{backgroundColor:"#F4F5F7"}} >
           <AdminHeader />
         </div>
       </div>

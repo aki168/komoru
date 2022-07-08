@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import PartnershipAdd from "./PartnershipAdd";
 import PartnershipEdit from "./PartnershipEdit/index";
 import BackstageLoding from "../../../components/BackstageLoading";
+
 function Partnership() {
   /* 20220616 YN
   初始化使用者資料
@@ -105,7 +106,7 @@ function Partnership() {
 
   const arr = data.map((data, index) => {
     return (
-      <tr key={index} className="form-check-label">
+      <tr key={index} className="form-check-label km-tr">
         <td className="col-sm-1">{data.partnershipName}</td>
         <td className="col-sm-1">{data.cityName}</td>
         <td className="col-sm-2">{data.partnershipAddr}</td>
@@ -113,13 +114,15 @@ function Partnership() {
         <td className="col-sm-1">
           <button
             onClick={() => handleEditShow(index)}
-            className="me-1 btn btn-success"
+            className="me-1 btn "
+            style={{backgroundColor:'#06CAD7',color:"white"}}
           >
             檢視/修改
           </button>
           <button
             onClick={() => deletFormHandle(index)}
-            className="btn btn-success"
+            className="btn"
+            style={{backgroundColor:'#E83015',color:"white"}}
           >
             移除
           </button>
@@ -239,47 +242,15 @@ function Partnership() {
   return (
     <>
       <div className="mx-5  mb-5">
-        <h2 className="mt-3 mb-5">合作夥伴管理</h2>
+        <h6 className="ms-5 mt-4 mb-5">系統後台&gt;合作夥伴管理</h6>
         <div>
-          <div className="row ms-5 mb-3">
-            <div className="col-sm-5">
-              <div className="row g-0 justify-content-start">
-                <div className="col-4">
-                  <input
-                    name="keyword"
-                    className="form-control col-1 "
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                    onChange={sreachChangeHandle}
-                  />
-                </div>
-                <div className="col-3">
-                  <select
-                    name="cityId"
-                    className=" form-select col-2"
-                    aria-label="Default select example"
-                    onChange={sreachChangeHandle}
-                  >
-                    <option value="" selected>地區搜尋</option>
-                    <option value="1">北區</option>
-                    <option value="2">中區</option>
-                    <option value="3">南區</option>
-                    <option value="4">東區</option>
-                  </select>
-                </div>
-                <div className="col-2">
-                  <button className="btn btn-success" type="submit" onClick={sreachSubmitHandle}>
-                    搜尋
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="col-sm-3">
-              <div className="d-flex justify-content-end">
+          <div className="row ms-5 mb-5">
+            <div className="col-sm-4">
+              <div className="d-flex justify-content-start">
                 <button
                   onClick={handleAddShow}
-                  className="btn btn-success ms-2"
+                  className="btn  ms-2"
+                  style={{backgroundColor:'#7BA23F',color:'white'}}
                 >
                   新增夥伴
                 </button>
@@ -299,34 +270,46 @@ function Partnership() {
                   />
                 </Modal>
               </div>
+
             </div>
-            <div className="col-sm-2 d-flex justify-content-end ">
-              <nav aria-label="Page navigation example ">
-                <ul className="pagination">
-                  <ReactPaginate
-                    nextLabel=">"
-                    previousLabel="<"
-                    pageCount={pageCount}
-                    onPageChange={changePage}
-                    breakClassName={"page-item"}
-                    breakLinkClassName={"page-link"}
-                    containerClassName={"pagination"}
-                    pageClassName={"page-item"}
-                    pageLinkClassName={"page-link"}
-                    previousClassName={"page-item"}
-                    previousLinkClassName={"page-link"}
-                    nextClassName={"page-item"}
-                    nextLinkClassName={"page-link"}
-                    activeClassName={"active"}
+            <div className="col-sm-7 ms-5">
+              <div className="row g-0 justify-content-end">
+                <div className="col-3 me-2">
+                  <input
+                    name="keyword"
+                    className="form-control col-1 "
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                    onChange={sreachChangeHandle}
                   />
-                </ul>
-              </nav>
+                </div>
+                <div className="col-3 me-2">
+                  <select
+                    name="cityId"
+                    className=" form-select col-2"
+                    aria-label="Default select example"
+                    onChange={sreachChangeHandle}
+                  >
+                    <option value="" selected>地區搜尋</option>
+                    <option value="1">北區</option>
+                    <option value="2">中區</option>
+                    <option value="3">南區</option>
+                    <option value="4">東區</option>
+                  </select>
+                </div>
+                <div className="col-2 ">
+                  <button className="btn" type="submit" onClick={sreachSubmitHandle} style={{backgroundColor:'#7BA23F',color:"white"}}>
+                    搜尋
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
           <div className="row ms-5">
-            <div className="col-sm-10">
+            <div className="col-sm-11">
               {loading ? <>
-                <table className="table table-hover  text-center align-middle ">
+                <table className="table table-hover  text-center align-middle" style={{height:'1000px',fontSize:'18px'}}>
                   <thead>
                     <tr>
                       <td>夥伴名稱</td>
@@ -338,7 +321,29 @@ function Partnership() {
                   </thead>
                   <tbody>{displayUsers}</tbody>
                 </table>
-              </> : <div  className="d-flex justify-content-center"><BackstageLoding /></div>}
+              </> : <div className="d-flex justify-content-center"><BackstageLoding /></div>}
+              <div className="d-flex justify-content-center">
+                <nav aria-label="Page navigation example ">
+                  <ul className="pagination">
+                    <ReactPaginate
+                      nextLabel=">"
+                      previousLabel="<"
+                      pageCount={pageCount}
+                      onPageChange={changePage}
+                      breakClassName={"page-item"}
+                      breakLinkClassName={"page-link"}
+                      containerClassName={"pagination"}
+                      pageClassName={"page-item"}
+                      pageLinkClassName={"page-link"}
+                      previousClassName={"page-item"}
+                      previousLinkClassName={"page-link"}
+                      nextClassName={"page-item"}
+                      nextLinkClassName={"page-link"}
+                      activeClassName={"active"}
+                    />
+                  </ul>
+                </nav>
+              </div>
             </div>
           </div>
         </div>

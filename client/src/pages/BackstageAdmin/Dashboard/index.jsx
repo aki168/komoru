@@ -6,6 +6,10 @@ import DashboardChartsSouth from "./DashboardChartsSouth";
 import DashboardChartsMiddle from "./DashboardChartsMiddle";
 import DashboardChartsEast from "./DashboardChartsEast";
 import './Dashboard.css'
+import northImage from '../../../assets/area/north.jpg'
+import eastImage from '../../../assets/area/east.jpg'
+import sorthImage from '../../../assets/area/sorth.jpg'
+import middleImage from '../../../assets/area/middle.jpg'
 
 function Dashboard() {
 
@@ -61,17 +65,25 @@ function Dashboard() {
         </div>
 
         <div className="row " style={{ height: "300px" }}>
-          <NavLink className="col me-5 main-nav" style={{ background: "#f0f0f0" }} to="north" >
-            台北
+          <NavLink className="col me-5 main-nav" to="north" >
+            <div class="tabs-img">
+              <img class="cover-fit" src={northImage} alt="" />
+            </div>
           </NavLink>
-          <NavLink className="col me-5 main-nav" style={{ background: "#f0f0f0" }} to="middle">
-            <div>台中</div>
+          <NavLink className="col me-5 main-nav" to="middle">
+            <div class="tabs-img">
+              <img class="cover-fit" src={middleImage} alt="" />
+            </div>
           </NavLink>
-          <NavLink className="col me-5 main-nav" style={{ background: "#f0f0f0" }} to="south">
-            <div>台南</div>
+          <NavLink className="col me-5 main-nav" to="south">
+            <div class="tabs-img">
+              <img class="cover-fit" src={sorthImage} alt="" />
+            </div>
           </NavLink>
-          <NavLink className="col main-nav" style={{ background: "#f0f0f0" }} to="east">
-            <div>台東</div>
+          <NavLink className="col main-nav"to="east">
+            <div class="tabs-img">
+              <img class="cover-fit" src={eastImage} alt="" />
+            </div>
           </NavLink>
         </div>
       </div>

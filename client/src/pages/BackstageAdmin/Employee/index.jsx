@@ -183,7 +183,7 @@ function Employee() {
   return (
     <>
       <div className="mx-5  mb-5">
-        <h2 className="mt-3 mb-5">員工專區</h2>
+      <div className="row ms-5"><h3 className="mt-5 mb-5">員工管理</h3></div>
         <div>
           <div className="row ms-5 mb-3">
             <div className="col-sm-4">

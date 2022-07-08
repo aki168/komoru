@@ -6,7 +6,8 @@ export default class MyNavLink extends Component {
   render() {
     return (
         <NavLink className="nav-link" {...this.props} 
-        style={{color:'#ffffff',textDecoration: "none" }}/>
+        // style={{color:'#ffffff',textDecoration: "none" }}
+        />
     )
   }
 }

@@ -22,7 +22,7 @@ function AdminHeader() {
     })
       .then((res) => {
         if (res.data.status === true) {
-          // console.log(res.data); // 印出撈到的資料看看
+          // console.log(res.data);
           setUserName(res.data.dataList.employeeName);
         }
       })
@@ -40,7 +40,7 @@ function AdminHeader() {
     })
       .then((res) => {
         if (res.data.status === true) {
-          console.log(res.data); // 印出撈到的資料看看
+          console.log(res.data); 
           alert("已登出");
           navigate("/BackstageLogin", { replace: true });
         }
@@ -54,7 +54,7 @@ function AdminHeader() {
     <>
       <div
         className="d-flex  sticky-top justify-content-end align-items-center "
-        style={{ background: "#EFA16A", height: "100px" }}
+        style={{ background: "#EFA16A", height: "100px" ,boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)" }}
       >
         <h6 className="fs-4 text-white me-4">您好, {userName}</h6>
         <button className="btn me-5" onClick={logOut}>

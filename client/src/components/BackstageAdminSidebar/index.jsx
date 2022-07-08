@@ -4,9 +4,10 @@ import { RiBarChart2Line } from "react-icons/ri";
 import { RiHome2Line } from "react-icons/ri";
 import { RiGroupLine } from "react-icons/ri";
 import { RiSpyLine } from "react-icons/ri";
+import { BiUser } from "react-icons/bi";
 import { RiBuildingLine } from "react-icons/ri";
 import { IoBedOutline } from "react-icons/io5";
-import LOGO from "../../assets/LOGO.png";
+import LOGO from "../../assets/my-logo.png";
 import "./BackstageAdminSidebar.css";
 
 function Sidebar() {
@@ -15,7 +16,8 @@ function Sidebar() {
       <div
         className=" container sticky-top"
         id="sticky-sidebar"
-        style={{ background: "#EFA16A" }}
+        // style={{ background: "#EFA16A" }}
+        style={{ background: "white",fontSize:'20px' }}
       >
 
         <ul
@@ -23,7 +25,7 @@ function Sidebar() {
           style={{ height: "100vh", }}
         >
           <div className="pt-4 pb-5 text-center ">
-            <img style={{ width: "300px" }} src={LOGO} alt="" />
+            <img style={{  width: "210px",height:"70px",marginLeft:"20px" }} src={LOGO} alt="" />
           </div>
           <li className="mb-3 nav-item ">
             <MyNavLink to="order">
@@ -43,9 +45,9 @@ function Sidebar() {
               data-bs-toggle="collapse"
               className="nav-link dropdown-toggle "
               // aria-expanded="false"
-              style={{ color: "#ffffff", textDecoration: "none" }}
+              style={{textDecoration: "none" }}
             >
-              <span>
+              <span className="kmr-font-color-primary">
                 <RiHome2Line className="mx-2 ms-4" />
                 飯店房型管理
               </span>
@@ -75,7 +77,7 @@ function Sidebar() {
           </li>
           <li className="nav-item">
             <MyNavLink to="employee">
-              <RiBarChart2Line className="mx-2 ms-4" />
+              <BiUser className="mx-2 ms-4" />
               員工專區
             </MyNavLink>
           </li>

@@ -260,7 +260,7 @@ function Order() {
                 </button>
               </div>
             </div>
-            <div className="col-sm-5">
+            <div className="col-sm-7">
               <div className="d-flex justify-content-end">
                 <button onClick={unCheckInHandle} className=" btn btn-success">
                   未入住
@@ -282,24 +282,7 @@ function Order() {
             <div className="col-sm-2 d-flex justify-content-end">
               <nav aria-label="Page navigation example">
                 <ul className="pagination">
-                  <ReactPaginate
-                    nextLabel=">"
-                    previousLabel="<"
-                    pageCount={pageCount}
-                    onPageChange={changePage}
-                    breakClassName={"page-item"}
-                    breakLinkClassName={"page-link"}
-                    containerClassName={"pagination"}
-                    pageClassName={"page-item"}
-                    pageLinkClassName={"page-link"}
-                    previousClassName={"page-item"}
-                    previousLinkClassName={"page-link"}
-                    nextClassName={"page-item"}
-                    nextLinkClassName={"page-link"}
-                    activeClassName={"active"}
-                    pageRangeDisplayed={2}
-                    marginPagesDisplayed={1}
-                  />
+
                 </ul>
               </nav>
             </div>
@@ -323,7 +306,28 @@ function Order() {
                   <tbody>{displayUsers}</tbody>
                 </table>
               </> : <div className="d-flex justify-content-center"><BackstageLoding /></div>}
+              <div className="d-flex justify-content-center">
+                <ReactPaginate 
+                  nextLabel=">"
+                  previousLabel="<"
+                  pageCount={pageCount}
+                  onPageChange={changePage}
+                  breakClassName={"page-item"}
+                  breakLinkClassName={"page-link"}
+                  containerClassName={"pagination"}
+                  pageClassName={"page-item"}
+                  pageLinkClassName={"page-link"}
+                  previousClassName={"page-item"}
+                  previousLinkClassName={"page-link"}
+                  nextClassName={"page-item"}
+                  nextLinkClassName={"page-link"}
+                  activeClassName={"active"}
+                  pageRangeDisplayed={2}
+                  marginPagesDisplayed={1}
+                />
+              </div>
             </div>
+
           </div>
         </div>
       </div>
