@@ -30,7 +30,6 @@ exports.getActivePackData = async (req, res) => {
                 break
             case 3:
                 configController.sendJsonMsg(res, true, '', { D1, D2, D3 })
-                break
         }
     }
     else {

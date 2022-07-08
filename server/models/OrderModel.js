@@ -198,51 +198,88 @@ exports.getCouponItemDataList = async (memberId) => {
   });
 };
 
-// 2022-06-30 MJ AKI
-// 取得訂單資料byMemberId
-exports.getOrderDataByMemberId = async (memberId) => {
+// 2022-07-07 MJ
+// 取得orderId BY memberId
+exports.getOrdeIdByMemberId = async (memberId) => {
   return new Promise((resolve, reject) => {
-    let sql =
-      "SELECT" +
-      "`Order`.`order_id`, `Order`.`order_number`, `Order`.`room_id`, `Order`.`coupon_item_id`, `Order`.`order_status`, `Order`.`order_start_date`, `Order`.`order_end_date`, `Order`.`order_total`, `Order`.`create_datetime`, `Order`.`member_id`, `Member`.`member_mail`, `Member`.`member_name`, `Member`.`member_nick_name`, `Member`.`member_gender`, `Member`.`member_phone`, `Member`.`member_img_path`, `City`.`city_name`, `Hotel`.`hotel_title`, `Hotel`.`hotel_addr`, `Hotel`.`hotel_tel`, `Hotel`.`hotel_desc`, `Room`.`room_type`, `Room`.`room_desc`" +
-      "FROM `Order`" +
-      "LEFT JOIN `Member` ON`Order`.`member_id` = `Member`.`member_id`" +
-      "LEFT JOIN `Room` ON `Order`.`room_id` = `Room`.`room_id`" +
-      "LEFT JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id`" +
-      "LEFT JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id`" +
-      "LEFT JOIN `CouponItem` ON `Order`.`coupon_item_id` = `CouponItem`.`coupon_item_id`" +
-      "WHERE `Order`.`member_id` = ? " +
-      "ORDER BY `Order`.`order_id` DESC ";
-
+    let sql = "SELECT `Order`.`order_id` FROM `Order` WHERE `member_id` = ? "
     db.con.query(sql, memberId, (err, rows, fields) => {
       if (err) {
         reject(err);
       }
       resolve(db.rowDataToCamelData(rows));
-    });
+    })
+  })
+}
+
+// 2022-07-08 MJ 
+// 處理OrderArray
+exports.splitOrderIdArray = async (orderIdArray) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      var orderData = []
+      for (let i = 0; i < orderIdArray.length; i++) {
+        await exports.getOrderDatalistByOrderId(orderIdArray[i]['orderId'])
+          .then((result) => {
+            orderData.push(result[0]);
+          })
+        await exports.getOrderItemDataListByOrderId(orderIdArray[i]['orderId'])
+          .then((result) => {
+            // console.log(result);
+            orderData[i]['OrderItem'] = result
+          })
+      };
+      resolve(orderData);
+    } catch (error) {
+      reject(error)
+    }
   });
 };
 
-// 2022-06-30 MJ AKI
-// 取得orderItemDataList byMemberId
-exports.getOrderItemDataListByMemberId = async (memberId) => {
+// 2022-07-08 MJ
+// 取得訂單資料ByOrderId
+exports.getOrderDatalistByOrderId = async (orderId) => {
   return new Promise((resolve, reject) => {
     let sql =
       "SELECT" +
-      "`OrderItem`.`order_item_date`, `OrderItem`.`is_active`, `OrderItem`.`order_item_price`, `Order`.`member_id`, `ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`active_pack_item_start_time`, `ActivePackItem`.`active_pack_item_end_time`, `OrderItem`.`active_pack_id`, `ActivePackItem`.`partnership_id`, `ActivePack`.`active_pack_type` " +
+      "`Order`.`order_id`, `Order`.`order_number`, `Order`.`room_id`, `Order`.`coupon_item_id`, `Order`.`order_status`, `Order`.`order_start_date`, `Order`.`order_end_date`, `Order`.`order_total`, `Order`.`create_datetime`, `Order`.`member_id`, `Member`.`member_mail`, `Member`.`member_name`, `Member`.`member_nick_name`, `Member`.`member_gender`, `Member`.`member_phone`, `Member`.`member_img_path`, `City`.`city_name`, `Hotel`.`hotel_title`, `Hotel`.`hotel_addr`, `Hotel`.`hotel_tel`, `Hotel`.`hotel_desc`, `Room`.`room_type`, `Room`.`room_desc`, `RoomImg`.`room_img_path` " +
+      "FROM `Order`" +
+      "LEFT JOIN `Member` ON`Order`.`member_id` = `Member`.`member_id` " +
+      "LEFT JOIN `Room` ON `Order`.`room_id` = `Room`.`room_id`" +
+      "LEFT JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id` " +
+      "LEFT JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id` " +
+      "LEFT JOIN `CouponItem` ON `Order`.`coupon_item_id` = `CouponItem`.`coupon_item_id` " +
+      "LEFT JOIN `RoomImg` ON `Room`.`room_id` = `RoomImg`.`room_id` " +
+      "WHERE `Order`.`order_id` = ? " +
+      "ORDER BY `Order`.`order_id` DESC ";
+
+    db.con.query(sql, orderId, (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(
+        db.rowDataToCamelData(rows)
+      )
+    })
+  })
+}
+
+// 2022-06-30 MJ AKI
+// 取得orderItemDataList byMemberId
+exports.getOrderItemDataListByOrderId = async (orderId) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "SELECT" +
+      "`OrderItem`.`order_item_date`, `OrderItem`.`is_active`, `OrderItem`.`order_item_price`, `ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`active_pack_item_content2`, `ActivePackItem`.`active_pack_item_content3`, `OrderItem`.`active_pack_id`, `ActivePackItem`.`partnership_id`, `Partnership`.`partnership_name`, `Partnership`.`partnership_addr` " +
       "FROM `Order`" +
       "LEFT JOIN OrderItem ON`Order`.`order_id` = `OrderItem`.`order_id`" +
-      "LEFT JOIN `Member` ON`Order`.`member_id` = `Member`.`member_id`" +
-      "LEFT JOIN `Room` ON `Order`.`room_id` = `Room`.`room_id`" +
-      "LEFT JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id`" +
-      "LEFT JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id`" +
-      "LEFT JOIN `CouponItem` ON `Order`.`coupon_item_id` = `CouponItem`.`coupon_item_id`" +
       "LEFT JOIN `ActivePack` ON `OrderItem`.`active_pack_id` = `ActivePack`.`active_pack_id`" +
       "LEFT JOIN `ActivePackItem` ON `ActivePack`.`active_pack_id` = `ActivePackItem`.`active_pack_id`" +
-      "WHERE `Order`.`member_id` = ? " +
+      "LEFT JOIN `Partnership` ON `ActivePackItem`.`partnership_id` = `Partnership`.`partnership_id` " +
+      "WHERE `Order`.`order_id` = ? " +
       "ORDER BY `order_item_id` DESC ";
 
-    db.con.query(sql, memberId, (err, rows, fields) => {
+    db.con.query(sql, orderId, (err, rows, fields) => {
       if (err) {
         reject(err);
       }
@@ -292,7 +329,7 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
         reject(err);
       } else {
         let orderId = db.rowDataToCamelData(rows)[0]["orderId"];
-        let joinTotal = data["join_total"];
+        let length = data["active_pack_id"].length
         let isActive = data['is_active'];
         // 寫入OrderId到ExamItem
         let examItemsql =
@@ -310,9 +347,9 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
             resolve(db.rowDataToCamelData(rows));
           }
         });
-        if (!isActive) {
+        if (isActive === '0') {
           // 依照總體驗天數寫入OrderId到對應的OrderItem
-          for (i = 0; i < joinTotal; i++) {
+          for (i = 0; i < length; i++) {
             // 找到訂單號碼後存入OrderItem
             let orderItemsql =
               "INSERT INTO `OrderItem`" +

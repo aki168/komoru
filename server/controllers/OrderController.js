@@ -147,63 +147,63 @@ exports.getOrderDataByMemberId = async (req, res) => {
   //   //   解碼
   //   const decoded = await promisify(jwt.verify)(token, "jwtSecret");
   //   const { memberId } = decoded;
-    let memberId = 8763
-    // 解碼完後對照資料庫，有的話回傳該訂單資料
+  let memberId = 8763
+  // 解碼完後對照資料庫，有的話回傳該訂單資料
 
-    try {
-      let getOrderDataByMemberId = await orderModel.getOrderDataByMemberId(memberId)
-      let orderItemDataList = await orderModel.getOrderItemDataListByMemberId(memberId)
+  try {
+    // 1.用memberId查orderId
+    let getOrdeIdByMemberId = await orderModel.getOrdeIdByMemberId(memberId);
+    // 2.用orderId查訂單詳細內容
+    let getOrderDatalistByOrderId = await orderModel.splitOrderIdArray(getOrdeIdByMemberId)
+    // 將 enum 數值轉換為文字
+    for (let i = 0; i < getOrderDatalistByOrderId.length; i++) {
+      let valueToString = configController.enumValueToString(
+        "Room",
+        "roomType",
+        getOrderDatalistByOrderId[i].roomType
+      );
+      let orderStatusValueToString = configController.enumValueToString(
+        "Order",
+        "orderStatus",
+        getOrderDatalistByOrderId[i].orderStatus
+      );
+      let memberGenderValueToString = configController.enumValueToString(
+        "Member",
+        "gender",
+        getOrderDatalistByOrderId[i].memberGender
+      );
 
-      // 將 enum 數值轉換為文字
-      Object.entries(getOrderDataByMemberId).forEach(([key, value]) => {
-        let valueToString = configController.enumValueToString(
-          "Room",
-          "roomType",
-          value.roomType
-        );
-        let orderStatusValueToString = configController.enumValueToString(
-          "Order",
-          "orderStatus",
-          value.orderStatus
-        );
-        let memberGenderValueToString = configController.enumValueToString(
-          "Member",
-          "gender",
-          value.memberGender
-        );
+      // 如果檢查結果是正常，即將值取代為對應的文字，否則輸出錯誤訊息
+      getOrderDatalistByOrderId[i].roomType = valueToString.errCheck
+        ? valueToString.transferString
+        : valueToString.errMsg;
 
-        // 如果檢查結果是正常，即將值取代為對應的文字，否則輸出錯誤訊息
-        getOrderDataByMemberId[key].roomType = valueToString.errCheck
-          ? valueToString.transferString
-          : valueToString.errMsg;
+      getOrderDatalistByOrderId[i].orderStatus = orderStatusValueToString.errCheck
+        ? orderStatusValueToString.transferString
+        : orderStatusValueToString.errMsg;
 
-        getOrderDataByMemberId[key].orderStatus = orderStatusValueToString.errCheck
-          ? orderStatusValueToString.transferString
-          : orderStatusValueToString.errMsg;
-
-        getOrderDataByMemberId[key].memberGender = memberGenderValueToString.errCheck
-          ? memberGenderValueToString.transferString
-          : memberGenderValueToString.errMsg;
-
-
-      });
-      Object.entries(orderItemDataList).forEach(([key, value]) => {
-        let activePackTypeValueToString = configController.enumValueToString(
-          "ActivePack",
-          "activePackType",
-          value.activePackType
-        );
-        orderItemDataList[key].activePackType = activePackTypeValueToString.errCheck
-          ? activePackTypeValueToString.transferString
-          : activePackTypeValueToString.errMsg;
-      })
-      configController.sendJsonMsg(res, true, "", { getOrderDataByMemberId, orderItemDataList });
+      getOrderDatalistByOrderId[i].memberGender = memberGenderValueToString.errCheck
+        ? memberGenderValueToString.transferString
+        : memberGenderValueToString.errMsg;
     }
-    catch (error) {
-      // 目前不確定這邊要怎改
-      console.log(err);
-      res.status(500).json({ message: "Server error" });
-    }
+    configController.sendJsonMsg(res, true, "", getOrderDatalistByOrderId)
+
+    // Object.entries(orderItemDataList).forEach(([key, value]) => {
+    //   let activePackTypeValueToString = configController.enumValueToString(
+    //     "ActivePack",
+    //     "activePackType",
+    //     value.activePackType
+    //   );
+    //   orderItemDataList[key].activePackType = activePackTypeValueToString.errCheck
+    //     ? activePackTypeValueToString.transferString
+    //     : activePackTypeValueToString.errMsg;
+    // })
+  }
+  catch (error) {
+    // 目前不確定這邊要怎改
+    console.log(error);
+    res.status(500).json({ message: "Server error" });
+  }
   // } else {
   //   res.json({ message: "該用戶尚未登入" });
   // }

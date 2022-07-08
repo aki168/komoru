@@ -5,7 +5,7 @@ const db = require("./_ConfigDB");
 exports.getActivePackDataByTypeAndCity = async (packType, cityId) => {
     return new Promise((resolve, reject) => {
         let sql = "SELECT" +
-            "`ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`active_pack_item_start_time`, `ActivePackItem`.`active_pack_item_end_time`, `ActivePack`.`active_pack_type`, `ActivePack`.`city_id`, `ActivePackItem`.`active_pack_item_id` " +
+            "`ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`active_pack_item_content2`, `ActivePackItem`.`active_pack_item_content3`, `ActivePack`.`active_pack_id` " +
             "FROM `ActivePackItem`" +
             "JOIN `ActivePack` ON `ActivePackItem`.`active_pack_id` = `ActivePack`.`active_pack_id`" +
             "WHERE `ActivePack`.`active_pack_type` = ?" +
