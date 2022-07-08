@@ -1,20 +1,28 @@
 import React from 'react';
 import Navbar from '../components/Navbar/Navbar';
-import {loginOrNot} from '../App'
+import { loginOrNot } from '../App'
+import ActionAreaCard from '../components/Card/Card';
+import Example from '../components/Carousel/Carousel';
 
+import "../pages/Home.css"
 
 
 export default function Home() {
   return (
     <div className='wrap'>
       <Navbar />
-      <div className='container'>
+      <div>
+        <img className='backImg' src='1.png'>
+        </img>
+      </div>
+
+      <div className='container-xxl'>
 
         <button onClick={loginOrNot}>是否有登入，有的話回傳檔案在res.data[0]</button>
 
         <br />
         <br />
-        <h3>這是一個虛擬的首頁，待Matt製作</h3>
+        <h3>KOMORU 亞洲第一日租旅人平台</h3>
         <br />
         <p>Section 1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
           "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."1914 translation by H. Rackham
@@ -22,7 +30,31 @@ export default function Home() {
         </p>
         <br />
         <br />
+        <div className='Komoruthree'>
+
+          <div>
+            <ActionAreaCard />
+          </div>
+
+          <div>
+            <ActionAreaCard />
+          </div>
+
+          <div>
+            <ActionAreaCard />
+          </div>
+
+        </div>
+        <br />
+        <br />
+        <div className='Stepseven'>
+        <Example />
+        
+        </div>
+<br/>
+<br/>
       </div>
+
     </div>
   )
 }

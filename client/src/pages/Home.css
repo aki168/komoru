@@ -1,0 +1,15 @@
+.Komoruthree{
+    display: flex;
+    justify-content: space-around;
+}
+
+.backImg{
+width: 1920px;
+height: 950px;
+}
+
+.Stepseven{
+    margin-left : auto;
+	margin-right: auto;
+    width: 1200px;
+}
