@@ -20,16 +20,7 @@ exports.getActivePackData = async (req, res) => {
         let D2 = await activePackModel.getActivePackDataByTypeAndCity(D2ActivePack, cityId)
         let D3 = await activePackModel.getActivePackDataByTypeAndCity(D3ActivePack, cityId)
 
-        // 判斷參加幾天就給幾個行程
-        switch (join) {
-            case 1:
-                configController.sendJsonMsg(res, true, '', { D1 })
-                break
-            case 2:
-                configController.sendJsonMsg(res, true, '', { D1, D2 })
-                break
-            case 3:
-                configController.sendJsonMsg(res, true, '', { D1, D2, D3 })
+        configController.sendJsonMsg(res, true, '', { D1, D2, D3 })
         }
     }
     else {
