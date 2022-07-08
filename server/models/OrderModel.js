@@ -10,7 +10,7 @@ exports.getOrderDataListWithRoomDescAndStayNight = async () => {
   return new Promise((resolve, reject) => {
     let sql =
       "SELECT " +
-      "`Order`.`order_id`, `Order`.`order_number`, `Order`.`order_start_date`, (`order_end_date` - `order_start_date`) AS `stay_night`, `Order`.`order_status`, " +
+      "`Order`.`order_id`, `Order`.`order_number`, `Order`.`order_start_date`, `Order`.`order_end_date`, (`order_end_date` - `order_start_date`) AS `stay_night`, `Order`.`order_status`, " +
       "`Member`.`member_name`, " +
       "`City`.`city_name`, " +
       "`Room`.`room_type` " +
@@ -20,6 +20,58 @@ exports.getOrderDataListWithRoomDescAndStayNight = async () => {
       "JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id` " +
       "JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id`;";
     db.con.query(sql, (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};
+
+// 2022-07-08 PG
+// 取得訂單 DataList、房型資訊、入住天數 By 關鍵字、訂單狀態
+// orderId orderNumber orderStartDate stayNight orderStatus
+// memberName
+// roomDesc
+// return：({})
+exports.getOrderDataListByKeywordAndOrderStatus = async (dataList) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "SELECT " +
+      "`Order`.`order_id`, `Order`.`order_number`, `Order`.`order_start_date`, `Order`.`order_end_date`, (`order_end_date` - `order_start_date`) AS `stay_night`, `Order`.`order_status`, " +
+      "`Member`.`member_name`, " +
+      "`City`.`city_name`, " +
+      "`Room`.`room_type` " +
+      "FROM `Order` " +
+      "JOIN `Member` ON `Order`.`member_id` = `Member`.`member_id` " +
+      "JOIN `Room` ON `Order`.`room_id` = `Room`.`room_id` " +
+      "JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id` " +
+      "JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id` " +
+      "WHERE (`Order`.`order_number` LIKE '%" +
+      dataList.keyword +
+      "%' " +
+      "OR `Order`.`order_start_date` LIKE '%" +
+      dataList.keyword +
+      "%' " +
+      "OR `Order`.`order_start_date` LIKE '%" +
+      dataList.keyword +
+      "%' " +
+      "OR `Order`.`order_end_date` LIKE '%" +
+      dataList.keyword +
+      "%' " +
+      "OR `Member`.`member_name` LIKE '%" +
+      dataList.keyword +
+      "%' " +
+      "OR `City`.`city_name` LIKE '%" +
+      dataList.keyword +
+      "%') ";
+
+    if (dataList.orderStatus != "") {
+      sql += "AND `Order`.`order_status` = ?;";
+    }
+
+    let value = [dataList.orderStatus == "" ? "" : dataList.orderStatus];
+    db.con.query(sql, value, (err, rows, fields) => {
       if (err) {
         reject(err);
       }
@@ -293,7 +345,7 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
       } else {
         let orderId = db.rowDataToCamelData(rows)[0]["orderId"];
         let joinTotal = data["join_total"];
-        let isActive = data['is_active'];
+        let isActive = data["is_active"];
         // 寫入OrderId到ExamItem
         let examItemsql =
           "UPDATE `ExamItem` " +
@@ -333,9 +385,8 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
                 resolve(db.rowDataToCamelData(rows));
               }
             });
-          };
-        }
-        else {
+          }
+        } else {
           let orderItemsql =
             "INSERT INTO `OrderItem`" +
             "(`order_id`, `active_pack_id`, `order_item_date`, `is_active`, `create_datetime`, `order_item_price`)" +
@@ -355,8 +406,8 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
               resolve(db.rowDataToCamelData(rows));
             }
           });
-        };
-      };
+        }
+      }
     });
   });
 };
