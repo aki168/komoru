@@ -138,7 +138,11 @@ export default function Login(props) {
       <ul className="login--other">
         <li className="login--block">Google</li>
         <li className="login--block">Facebook</li>
-        <li className="login--block">LINE</li>
+        <li className="login--block" onClick={(()=>{
+        // 注意這邊導向的Client 以及url須在官方設定
+        // 因為token要在後端處理會比較好所以callback_url我是給後端的並非前端喔
+          window.location.replace("https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657284267&redirect_uri=http://localhost:5000/member/lineLogin&state=login&scope=openid%20profile") ;
+        }) }>LINE</li>
       </ul>
 
     </div>

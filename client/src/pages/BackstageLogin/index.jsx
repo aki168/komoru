@@ -132,12 +132,12 @@ function BackstageLogin() {
         <LoginHeader />
       </div> */}
       <div className="BackstageLogin-backgorund" style={{ height: "100vh" }}>
-        <Container className="text-center" style={{padding:"0 200px 0 200px"}} >
+        <Container className="text-center" style={{padding:"0 230px 0 230px"}} >
           <div style={{ paddingTop: '150px' }}></div>
-          <div style={{boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px'}}>
-            <img src={LOGO_OG} alt="" />
+          <div style={{boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px',height:"500px",padding:"50px" }}>
+            <img src={LOGO_OG} alt="" className="mt-2" />
             <h3 className="mt-4">後台管理系統</h3>
-            <Form className="col-lg-8 offset-lg-2">
+            <Form className="col-lg-12">
               <div className="mb-4 mt-4">
                 <input
                   className="form-control"
@@ -159,7 +159,7 @@ function BackstageLogin() {
                   style={{ height: "50px" }}
                 />
               </div>
-              <button className="btn col-md-12 " onClick={loginHandlerWithPW} style={{ background: '#ED8C4E', color: "#FFFFFF",margin:"0 0 120px 0" }}>
+              <button className="btn col-md-12 " onClick={loginHandlerWithPW} style={{ background: '#ED8C4E', color: "#FFFFFF" }}>
                 登入
               </button>
             </Form>

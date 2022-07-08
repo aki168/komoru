@@ -2,7 +2,7 @@ import React from "react";
 import MyNavLink from "../BackstageAdminMyNarLink";
 import { RiBarChart2Line } from "react-icons/ri";
 import { RiHome2Line } from "react-icons/ri";
-import { RiGroupLine } from "react-icons/ri";
+import { RiFileList3Line } from "react-icons/ri";
 import { RiSpyLine } from "react-icons/ri";
 import { BiUser } from "react-icons/bi";
 import { RiBuildingLine } from "react-icons/ri";
@@ -17,19 +17,19 @@ function Sidebar() {
         className=" container sticky-top"
         id="sticky-sidebar"
         // style={{ background: "#EFA16A" }}
-        style={{ background: "white",fontSize:'20px' }}
+        style={{ background: "white" }}
       >
 
         <ul
           className=" container nav flex-column text-start fs-4 d-block nav-pills"
           style={{ height: "100vh", }}
         >
-          <div className="pt-4 pb-5 text-center ">
+          <div className="pt-4 pb-5  ">
             <img style={{  width: "210px",height:"70px",marginLeft:"20px" }} src={LOGO} alt="" />
           </div>
-          <li className="mb-3 nav-item ">
+          <li className="mb-3 nav-item " >
             <MyNavLink to="order">
-              <RiGroupLine className="mx-2 ms-4" />
+              <RiFileList3Line className="mx-2 ms-4" />
               訂單管理
             </MyNavLink>
           </li>
