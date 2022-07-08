@@ -109,7 +109,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* YN */}
-        <Route path="/BackstageLogin" element={<BackstageLogin />}></Route>
+        <Route path="/BackstageLogin" element={<BackstageLogin/>}></Route>
         <Route path="/BackstageAdmin/*" element={<BackstageAdmin />}></Route>
 
         {/* AKI */}

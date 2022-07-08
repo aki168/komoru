@@ -1,7 +1,8 @@
 import React from "react";
+import { BookContext } from "../../Helper/Context";
 
 const ActivityBag = () => {
-  return <div>活動包</div>;
+  return <p>活動包</p>;
 };
 
 export default ActivityBag;
