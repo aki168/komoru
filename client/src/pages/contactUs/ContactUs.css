@@ -1,0 +1,61 @@
+.ContactUsContainer {
+  display: flex;
+  margin: 174px 150px auto;
+}
+
+.leftContent {
+  width: 815px;
+  height: 616px;
+  background-color: #ed8c4e;
+}
+
+.contactForm {
+  position: relative;
+  width: 805px;
+  height: 616px;
+  border: 1px solid black;
+}
+
+.contactForm > h1 {
+  color: #808080;
+  margin: 40px 0px 40px 60px;
+}
+
+.contactForm > input {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.contactForm > p {
+  display: flex;
+  margin-left: 50px;
+}
+
+.contactIcon {
+  font-size: 50px;
+  color: #808080;
+}
+
+.basicText {
+  font-size: 20px;
+  width: 650px;
+  height: 64px;
+}
+
+.messegeText {
+  font-size: 20px;
+  width: 650px;
+  height: 200px;
+  line-height: 50px;
+}
+
+.submitBtn {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 70px;
+  height: 32px;
+  font-size: 16px;
+  background-color: #ed8c4e;
+  color: white;
+}

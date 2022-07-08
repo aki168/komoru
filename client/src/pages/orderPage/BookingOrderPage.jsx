@@ -36,20 +36,34 @@ function BookingOrderPage() {
     setSumActivity,
   } = useContext(BookContext);
 
+  const [getAllActivePackData, setGetAllActivePackData] = useState();
+
+  //activityState(要或不要參加<值:0或1>)
+  //countActivity(活動天數<值:0或1或2或3>)
+  //cityIdValue(城市的ID)
+  //activityPack(活動包總類，在心理測驗完後獲取)
   //獲取活動包
+  console.log(0);
   useEffect(() => {
+    console.log(
+      activityState,
+      JSON.stringify(countActivity),
+      cityIdValue,
+      activityPack
+    );
     axios({
       method: "post",
       url: "http://localhost:5000/activePack/getActivePackData",
       data: {
         isActive: activityState,
-        joinTotal: countActivity,
+        joinTotal: JSON.stringify(countActivity),
         cityId: cityIdValue,
         activePackType: activityPack,
       },
     })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.dataList);
+        setGetAllActivePackData(res.data.dataList);
         if (activity1Data === "1") {
           setActivePackD1(res.data.dataList.D1[0]);
         }
@@ -59,11 +73,80 @@ function BookingOrderPage() {
         if (activity3Data === "5") {
           setActivePackD3(res.data.dataList.D3[0]);
         }
+        if (activity1Data === "2" && activity2Data === "3") {
+          setActivePackD2(res.data.dataList.D1[0]);
+        }
+        if (
+          activity1Data === "2" &&
+          activity2Data === "4" &&
+          activity3Data === "5"
+        ) {
+          setActivePackD3(res.data.dataList.D1[0]);
+        }
+
+        console.log(getAllActivePackData);
+
+        console.log(activePackD1, activePackD2, activePackD3);
       })
       .catch((err) => {
         console.log(err);
       });
+    // }
   }, []);
+  const PackId = [];
+  if (activity1Data === "1") {
+    PackId.push(activePackD1.activePackType);
+  }
+  if (activity2Data === "3") {
+    PackId.push(activePackD2.activePackType);
+  }
+  if (activity3Data === "5") {
+    PackId.push(activePackD3.activePackType);
+  }
+
+  console.log(PackId);
+
+  //顯示第一天活動包
+  const showAvtivity1Bag = () => {
+    if (activity1Data === "1") {
+      return (
+        <>
+          <p>{activePackD1.activePackItemTitle}</p>
+          <p>開始時間:{activePackD1.activePackItemStartTime}</p>
+          <p>結束時間:{activePackD1.activePackItemEndTime}</p>
+          <p>{activePackD1.activePackItemContent}</p>
+        </>
+      );
+    }
+  };
+
+  //顯示第二天活動包
+  const showAvtivity2Bag = () => {
+    if (activity2Data === "3") {
+      return (
+        <>
+          <p>{activePackD2.activePackItemTitle}</p>
+          <p>開始時間:{activePackD2.activePackItemStartTime}</p>
+          <p>結束時間:{activePackD2.activePackItemEndTime}</p>
+          <p>{activePackD2.activePackItemContent}</p>
+        </>
+      );
+    }
+  };
+
+  //顯示第三天活動包
+  const showAvtivity3Bag = () => {
+    if (activity3Data === "5") {
+      return (
+        <>
+          <p>{activePackD3.activePackItemTitle}</p>
+          <p>開始時間:{activePackD3.activePackItemStartTime}</p>
+          <p>結束時間:{activePackD3.activePackItemEndTime}</p>
+          <p>{activePackD3.activePackItemContent}</p>
+        </>
+      );
+    }
+  };
 
   const [memberId, setMemberId] = useState("");
   const [memberNickName, setMemberNickName] = useState("");
@@ -106,22 +189,6 @@ function BookingOrderPage() {
     }
   };
 
-  //判斷活動包
-  const [activityBag1Visible, setactivityBag1Visible] = useState(false);
-  const [activityBag2Visible, setactivityBag2Visible] = useState(false);
-  const [activityBag3Visible, setactivityBag3Visible] = useState(false);
-  useEffect(() => {
-    activity1Data === "1"
-      ? setactivityBag1Visible(true)
-      : setactivityBag1Visible(false);
-    activity2Data === "3"
-      ? setactivityBag2Visible(true)
-      : setactivityBag2Visible(false);
-    activity3Data === "5"
-      ? setactivityBag3Visible(true)
-      : setactivityBag3Visible(false);
-  }, [activity1Data, activity2Data, activity3Data]);
-
   //2022-06-23 ZH
   //根據不同roomState顯示不同房間名稱
   const handleroomStateData = () => {
@@ -151,12 +218,6 @@ function BookingOrderPage() {
     }
   };
 
-  console.log(couponState);
-  // console.log("first");
-  console.log(couponData[0].couponTitle);
-  // const couponDiscount = Number(couponData[0].discount);
-  console.log(Number(couponData[0].discount));
-
   //顯示優惠折扣欄
   const [showCoupon, setShowCoupon] = useState(false);
   useEffect(() => {
@@ -173,6 +234,22 @@ function BookingOrderPage() {
       return <p>不參加</p>;
     }
   };
+
+  //判斷活動包是否出現在畫面上
+  const [activityBag1Visible, setactivityBag1Visible] = useState(false);
+  const [activityBag2Visible, setactivityBag2Visible] = useState(false);
+  const [activityBag3Visible, setactivityBag3Visible] = useState(false);
+  useEffect(() => {
+    activity1Data === "1"
+      ? setactivityBag1Visible(true)
+      : setactivityBag1Visible(false);
+    activity2Data === "3"
+      ? setactivityBag2Visible(true)
+      : setactivityBag2Visible(false);
+    activity3Data === "5"
+      ? setactivityBag3Visible(true)
+      : setactivityBag3Visible(false);
+  }, [activity1Data, activity2Data, activity3Data]);
 
   // const array = activityData.map();
   //顯示哪幾天參與
@@ -195,65 +272,6 @@ function BookingOrderPage() {
       return <p>第三天→要</p>;
     } else if (activity3Data === "6") {
       return <p>第三天→否</p>;
-    }
-  };
-
-  //獲取相對應的activePackId
-  const [activePackId, setactivePackId] = useState([]);
-  const PackId = [];
-  useEffect(() => {
-    if (activity1Data === "1") {
-      PackId.push(`${activePackD1.activePackType}`);
-    }
-    if (activity2Data === "3") {
-      PackId.push(`${activePackD2.activePackType}`);
-    }
-    if (activity3Data === "5") {
-      PackId.push(`${activePackD3.activePackType}`);
-    }
-    setactivePackId(PackId);
-  }, []);
-  console.log(activePackId);
-
-  //顯示第一天活動包
-  const showAvtivity1Bag = () => {
-    if (activity1Data === "1") {
-      return (
-        <>
-          <p>{activePackD1.activePackItemTitle}</p>
-          <p>開始時間:{activePackD1.activePackItemStartTime}</p>
-          <p>結束時間:{activePackD1.activePackItemEndTime}</p>
-          <p>{activePackD1.activePackItemContent}</p>
-        </>
-      );
-    }
-  };
-
-  //顯示第二天活動包
-  const showAvtivity2Bag = () => {
-    if (activity2Data === "3") {
-      return (
-        <>
-          <p>{activePackD2.activePackItemTitle}</p>
-          <p>開始時間:{activePackD2.activePackItemStartTime}</p>
-          <p>結束時間:{activePackD2.activePackItemEndTime}</p>
-          <p>{activePackD2.activePackItemContent}</p>
-        </>
-      );
-    }
-  };
-
-  //顯示第三天活動包
-  const showAvtivity3Bag = () => {
-    if (activity3Data === "5") {
-      return (
-        <>
-          <p>{activePackD3.activePackItemTitle}</p>
-          <p>開始時間:{activePackD3.activePackItemStartTime}</p>
-          <p>結束時間:{activePackD3.activePackItemEndTime}</p>
-          <p>{activePackD3.activePackItemContent}</p>
-        </>
-      );
     }
   };
 
@@ -301,7 +319,7 @@ function BookingOrderPage() {
       roomId: roomState,
       couponItemId: couponState,
       orderTotal: sumActivity,
-      activePackId: activePackId,
+      activePackId: PackId,
       isActive: activityState,
       joinTotal: countActivity,
     };
@@ -313,7 +331,7 @@ function BookingOrderPage() {
       roomId: roomState,
       couponItemId: couponState,
       orderTotal: sumActivity,
-      activePackId: activePackId,
+      activePackId: PackId,
       isActive: activityState,
       joinTotal: countActivity,
     });
@@ -405,8 +423,8 @@ function BookingOrderPage() {
                 <span>{date}</span>
               </div>
               <div className="list">
-                <p>探索天數</p>
-                <span>{dayState}天</span>
+                <p>住宿幾晚</p>
+                <span>{dayState}</span>
               </div>
               <div className="list">
                 <p>青旅/房型</p>
@@ -428,37 +446,47 @@ function BookingOrderPage() {
           </div>
         </div>
         <div className="marginContainer">
-          {activityBag1Visible && (
-            <div className="activityList">
-              {/* 第一天活動包 */}
-              {handleActivity1Data()}
-              {showAvtivity1Bag()}
-            </div>
+          {getAllActivePackData && (
+            <>
+              {activityBag1Visible && (
+                <div className="activityList">
+                  {handleActivity1Data()}
+                  {showAvtivity1Bag()}
+                </div>
+              )}
+            </>
           )}
-          {activityBag2Visible && (
-            <div className="activityList">
-              {/* 第二天活動包 */}
-              {handleActivity2Data()}
-              {showAvtivity2Bag()}
-            </div>
+          {getAllActivePackData && (
+            <>
+              {activityBag2Visible && (
+                <div className="activityList">
+                  {handleActivity2Data()}
+                  {showAvtivity2Bag()}
+                </div>
+              )}
+            </>
           )}
-          {activityBag3Visible && (
-            <div className="activityList">
-              {/* 第三天活動包 */}
-              {handleActivity3Data()}
-              {showAvtivity3Bag()}
-            </div>
+          {getAllActivePackData && (
+            <>
+              {activityBag3Visible && (
+                <div className="activityList">
+                  {handleActivity3Data()}
+                  {showAvtivity3Bag()}
+                </div>
+              )}
+            </>
           )}
         </div>
         <div className="line"></div>
         <div className="marginContainer plusBuy">
           <h5>KOMORU Star Hostel 背包客房型 加購活動確認</h5>
           <p>
-            活動參與天數{countActivity}天<span>共NT${countActivity * 700}</span>
+            活動參與天數{countActivity}天
+            <span>總共NT${countActivity * 700}</span>
           </p>
         </div>
         <div className="marginContainer">
-          <p>下定金額 NT${roomSum}</p>
+          <p>房間總共 NT${roomSum}</p>
           {showCoupon && <p>優惠折扣:{Number(couponData[0].discount)}元</p>}
           <p>應付金額 NT$ {sumActivity}</p>
           <button className="checkoutBtn" onClick={CheckoutOrderHandler}>

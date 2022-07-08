@@ -1,12 +1,31 @@
 .goBooking {
   position: fixed;
-  width: 10rem;
-  height: 10rem;
+  width: 170px;
+  height: 4rem;
   border: 1px solid black;
-  border-radius: 50%;
   cursor: pointer;
-  margin-left: 10px;
-  bottom: 10px;
+  right: 0px;
+  bottom: 30px;
+  font-size: 40px;
+  padding: 2px;
+  border-radius: 10px;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+  transition: all 0.2s;
+  transform: translateX(-10%);
+}
+
+.goBooking:hover {
+  background-color: rgba(241, 164, 97, 0.9);
+  color: white;
+}
+
+.goBooking:active {
+  transform: translate(-10%, 10px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+}
+
+.goBooking:focus {
+  outline: none;
 }
 
 .goBooking > h1:first-child {
@@ -33,80 +52,80 @@
 
 .image {
   width: 800px;
-  height: 650px;
+  height: 500px;
   object-fit: cover;
-  border-radius: 10px;
   overflow: hidden;
   transition-duration: 2s;
+  margin-bottom: 30px;
+  box-shadow: 0px 12px 18px -6px rgba(0, 0, 0, 0.3);
 }
 
 /* 圖在左 */
 .sliderleft {
+  width: 1450px;
   position: relative;
-  height: 600px;
-  width: 1500px;
   display: flex;
-  margin-bottom: 300px;
   left: 240px;
-  /* box-shadow: 0px 12px 18px -6px rgba(0, 0, 0, 0.3); */
+  z-index: 0;
 }
 
 .sizeRight {
   border: 1px solid black;
-  /* margin: 0px 0px 0px 10px; */
   width: 650px;
-  height: 650px;
-  background-color: white;
-  text-align: center;
-  font-size: 32px;
+  height: 500px;
+  font-size: 30px;
+  line-height: 60px;
+  padding: 10px;
+  box-shadow: 0px 12px 18px -6px rgba(0, 0, 0, 0.3);
+  z-index: 0;
 }
 
 .sliderleft-left-arrow {
   position: absolute;
-  top: 50%;
-  left: 30px;
+  top: 45%;
+  left: 0%;
   font-size: 3rem;
   color: rgb(255, 255, 255);
-  z-index: 10;
+  z-index: 1;
   cursor: pointer;
   user-select: none;
 }
 
 .sliderleft-right-arrow {
   position: absolute;
-  top: 50%;
-  right: 50%;
+  top: 45%;
+  left: 750px;
   font-size: 3rem;
   color: rgb(255, 255, 255);
-  z-index: 10;
+  z-index: 1;
   cursor: pointer;
   user-select: none;
 }
 
 /* 圖在右 */
 .sliderRight {
+  width: 1450px;
   position: relative;
-  height: 650px;
-  width: 1550px;
   display: flex;
-  margin-bottom: 300px;
   left: 240px;
-  /* box-shadow: 0px 12px 18px -6px rgba(0, 0, 0, 0.3); */
-  border-radius: 10px;
+  z-index: 0;
 }
 
 .sizeLeft {
   border: 1px solid black;
   width: 650px;
-  height: 650px;
-  text-align: center;
-  font-size: 32px;
+  height: 500px;
+  font-size: 30px;
+  line-height: 60px;
+  padding: 10px;
+  box-shadow: 0px 12px 18px -6px rgba(0, 0, 0, 0.3);
+  z-index: 0;
 }
 
 .sliderRight-left-arrow {
   position: absolute;
-  top: 50%;
-  left: 45%;
+  top: 45%;
+  left: 37%;
   font-size: 3rem;
   color: rgb(255, 255, 255);
   z-index: 10;
@@ -116,8 +135,8 @@
 
 .sliderRight-right-arrow {
   position: absolute;
-  top: 50%;
-  right: 10%;
+  top: 45%;
+  right: 26%;
   font-size: 3rem;
   color: rgb(255, 255, 255);
   z-index: 10;

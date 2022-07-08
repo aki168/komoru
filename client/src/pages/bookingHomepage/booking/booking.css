@@ -2,9 +2,18 @@
   display: flex;
 }
 
+.fixedProgressItem {
+  position: absolute;
+  border: 1px solid black;
+  margin-top: 40px;
+  font-size: 16px;
+  left: 100px;
+}
+
 .leftContainer {
   width: 480px;
-  top: 90px;
+  max-height: 850px;
+  top: 80px;
   left: 159px;
   /* margin: 50px 0px 0px 60px; */
   line-height: 40px;
@@ -12,6 +21,7 @@
   position: relative;
   padding: 36px;
 }
+
 .bookingTitle {
   top: 36px;
   left: 42px;
@@ -105,9 +115,10 @@
   height: 63px;
   font-size: 20px;
   cursor: pointer;
-  bottom: 18px;
   background-color: #0e78ff;
   color: white;
+  position: absolute;
+  bottom: 20px;
 }
 
 .getActivity {

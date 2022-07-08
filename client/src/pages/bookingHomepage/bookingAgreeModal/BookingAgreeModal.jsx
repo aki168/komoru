@@ -24,20 +24,23 @@ function BookingAgreeModal() {
         // onClose={handleClose}
       >
         <Modal.Header>
-          <Modal.Title>同意書</Modal.Title>
+          <Modal.Title>Before Booking must Read</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni
-            deleniti doloribus ullam nam ratione esse asperiores perspiciatis
-            nobis doloremque quae fuga eum, iusto, ex tempore harum animi
-            quaerat iure nihil!
+            入房時間：下午16:00至22:00，逾時且無事先來電告知則取消訂房，恕不退費及保留房間
           </p>
+          <p>請於入住當天，攜帶附照片之身份證明文件（身份證/護照）之正本。</p>
+          <p>
+            最後入住時間為
+            22:00，逾時且無事先來電告知則取消訂房，恕不退費及保留房間。
+          </p>
+          <p>為保有其他住客安靜休息的權利，本館不提供寵物入住。</p>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={handleClose} appearance="primary">
-            我同意
+            OK
           </Button>
         </Modal.Footer>
       </Modal>
