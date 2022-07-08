@@ -75,7 +75,7 @@ export default function FeedbackPage() {
                 <h3>訂單活動回饋</h3>
                 <p>寫下對於此趟旅程的心得分享給 KOMORU官方平台，讓大家一同改變、成長。</p>
               </div>
-              <img className="img-fluid mb-4 w-100" src="https://dummyimage.com/1000x200/F2EAE4/ED8C4E.png&text=banner" alt="profile-banner" />
+              <img className="img-fluid mb-4 w-100" src="komoru_member.png" alt="profile-banner" />
               <section>
                 <h2>目前沒有可供評論的訂單，現在就出發！</h2>
                 <Button className="user--btn--M mt-3 fs-3" onClick={toBooking}>
@@ -94,7 +94,7 @@ export default function FeedbackPage() {
                 <h3>訂單活動回饋</h3>
                 <p>寫下對於此趟旅程的心得分享給 KOMORU官方平台，讓大家一同改變、成長。</p>
               </div>
-              <img className="img-fluid mb-4 w-100" src="https://dummyimage.com/1000x200/F2EAE4/ED8C4E.png&text=banner" alt="profile-banner" />
+              <img className="img-fluid mb-4 w-100" src="komoru_member.png" alt="profile-banner" />
               {feebacks}
             </div>
           }

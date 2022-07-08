@@ -1,0 +1,9 @@
+
+.BackstageLogin-backgorund {
+    background-image: url(../../assets/BackstageLoginKOMORU.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    z-index: 999;
+}

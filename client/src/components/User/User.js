@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
+// import Menu from "./Menu"
 import { Button, Alert } from "react-bootstrap"
 import './User.css'
 import axios from 'axios'
@@ -142,11 +144,12 @@ export default function User(props) {
 
   return (
     <div className="User">
+      {/* <Menu /> */}
       <ul className="user--menu">
-        <li><a href="/user" className="menu--item--on">基本資料</a></li>
-        <li><a href="/member-order" className="menu--item">訂單記錄</a></li>
-        <li><a href="/member-feedback" className="menu--item">活動回饋</a></li>
-        <li><a href="/member-coupon" className="menu--item">優惠表單</a></li>
+        <li><Link to="/user" className="menu--item--on">基本資料</Link></li>
+        <li><Link to="/member-order" className="menu--item">訂單記錄</Link></li>
+        <li><Link to="/member-feedback" className="menu--item">活動回饋</Link></li>
+        <li><Link to="/member-coupon" className="menu--item">優惠表單</Link></li>
       </ul>
 
 
@@ -155,7 +158,7 @@ export default function User(props) {
           <h3>會員基本資料</h3>
           <p>完善的會員中心系統，一鍵增修會員資料、隨心所欲更換喜愛頭像，放上最耀眼的自己！</p>
         </div>
-        <img className="img-fluid mb-4 w-100" src="https://dummyimage.com/1000x200/F2EAE4/ED8C4E.png&text=banner" alt="profile-banner" />
+        <img className="img-fluid mb-4 w-100" src="komoru_member.png" alt="profile-banner" />
 
         {/* 會員頭像區 --------------------------------- */}
         <div className="user--card--inner">

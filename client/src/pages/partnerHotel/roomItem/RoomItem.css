@@ -1,0 +1,78 @@
+.roomContainer {
+  display: flex;
+  margin-bottom: 200px;
+  margin-left: 240px;
+  justify-content: space-between;
+  width: 1450px;
+  z-index: -1;
+}
+
+.privateRoom {
+  border: 1px solid black;
+  width: 720px;
+  height: 250px;
+  left: 240px;
+  text-align: center;
+  line-height: 250px;
+}
+
+.privateRoom > span {
+  display: block;
+  width: 720px;
+  height: 250px;
+  font-size: 50px;
+  font-weight: 500;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.privateRoom {
+  background-size: cover;
+  background-position: center;
+}
+
+.backPackerRoom {
+  border: 1px solid black;
+  width: 720px;
+  height: 250px;
+  text-align: center;
+  line-height: 250px;
+}
+
+.backPackerRoom > span {
+  display: block;
+  width: 720px;
+  height: 250px;
+  font-size: 50px;
+  font-weight: 500;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.backPackerRoom {
+  background-size: cover;
+  background-position: center;
+}
+
+.parent {
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.child {
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s; */
+  transition: all 0.5s;
+}
+.parent:hover .child {
+  /* -ms-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  -o-transform: scale(1.1); */
+  transform: scale(1.1);
+}

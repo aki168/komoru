@@ -13,7 +13,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
     partnershipAddr: "",
     partnershipTel: "",
     employeeId: "1",
-    partnershipDesc:"",
+    partnershipDesc: "",
   })
   // const [editFormData, setEditFormData] = useState({
   //   partnershipId: "",
@@ -126,18 +126,22 @@ function PartnershipEdit({ setEditShow, editData, data }) {
         body: JSON.stringify(newContacts),
       }
     )
-      .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
+      .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        if (data.status) {
+          window.location.reload(false);
+          setEditShow(false);
+          alert("修改成功")
+        } else {
+          console.log(data);
+        }
       })
       .catch((e) => {
         console.error(e);
       });
-    setEditShow(false);
-    window.location.reload(false);
+
   };
-  //   const revisedForm=()=>{
-  // console.log(cityData.cityName);
+
   return (
     <Form
       className="container"

@@ -42,6 +42,10 @@ router.post("/logout", employeeController.logout);
 // 取得員工資料 dataList
 router.post("/getEmployeeDataList", employeeController.getEmployeeDataList);
 
+// 2022-07-08 PG
+// 取得員工 dataList By 關鍵字
+router.post("/getEmployeeDataListByKeyword", employeeController.getEmployeeDataListByKeyword);
+
 // 2022-07-02 PG
 // 取得員工資料 Data By employeeId
 router.post("/getEmployeeDataByEmployeeId", employeeController.getEmployeeDataByEmployeeId);

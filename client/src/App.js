@@ -13,6 +13,7 @@ import UserPage from "./pages/userPage/userPage";
 import OrderPageUserZone from "./pages/userPage/OrderPageUserZone";
 import FeedbackPage from "./pages/userPage/FeedbackPage";
 import CouponPage from "./pages/userPage/CouponPage";
+import UserHomePage from "./pages/userPage/UserHomePage";
 
 //ZH
 import PsychologicalExam from "./pages/psychologicalExam/PsychologicalExam";
@@ -108,7 +109,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* YN */}
-        <Route path="/BackstageLogin" element={<BackstageLogin />}></Route>
+        <Route path="/BackstageLogin" element={<BackstageLogin/>}></Route>
         <Route path="/BackstageAdmin/*" element={<BackstageAdmin />}></Route>
 
         {/* AKI */}
@@ -120,6 +121,8 @@ function App() {
         <Route path="/member-order" element={<OrderPageUserZone />} />
         <Route path="/member-feedback" element={<FeedbackPage />} />
         <Route path="/member-coupon" element={<CouponPage />} />
+        <Route path="/user-home" element={<UserHomePage />} />
+
         {/* ZH */}
         <Route
           path="/bookingHomepage"

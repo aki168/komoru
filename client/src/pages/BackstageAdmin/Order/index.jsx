@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { Modal } from "react-bootstrap";
 // import OrderData from "./db_OrderList.json";
 import OrderView from './OrderView'
+import BackstageLoding from "../../../components/BackstageLoading";
 
 function Order() {
   /* 20220616 YG
@@ -26,6 +27,10 @@ function Order() {
   /*20220624 YN
  取當下選取列表時的data狀態初始化*/
   const [editData, setEditData] = useState();
+
+  /*20220707 YN
+ 資料載入過程初始化*/
+  const [loading, setLoading] = useState(false);
 
   /*20220704 YN
   登入狀態為false自動轉跳Login頁面 */
@@ -58,6 +63,7 @@ function Order() {
       .then((res) => {
         // console.log(res.data.dataList);
         setData(res.data.dataList);
+        setLoading(true)
       })
       .catch((err) => console.log(err));
   }, []);
@@ -234,6 +240,7 @@ function Order() {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+  // console.log(loading)
   return (
     <>
       <div className="mx-5  mb-5">
@@ -292,7 +299,6 @@ function Order() {
                     activeClassName={"active"}
                     pageRangeDisplayed={2}
                     marginPagesDisplayed={1}
-
                   />
                 </ul>
               </nav>
@@ -300,21 +306,23 @@ function Order() {
           </div>
           <div className="row ms-5">
             <div className="col-sm-10">
-              <table className="table table-hover text-center align-middle data-click-to-select='true' ">
-                <thead>
-                  <tr>
-                    <td></td>
-                    <td>訂單編號</td>
-                    <td>訂購姓名</td>
-                    <td>區域/房型</td>
-                    <td>入住日期</td>
-                    <td>入住天數</td>
-                    <td>入住狀態</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>{displayUsers}</tbody>
-              </table>
+              {loading ? <>
+                <table className="table table-hover text-center align-middle data-click-to-select='true' ">
+                  <thead>
+                    <tr>
+                      <td></td>
+                      <td>訂單編號</td>
+                      <td>訂購姓名</td>
+                      <td>區域/房型</td>
+                      <td>入住日期</td>
+                      <td>入住天數</td>
+                      <td>入住狀態</td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>{displayUsers}</tbody>
+                </table>
+              </> : <div className="d-flex justify-content-center"><BackstageLoding /></div>}
             </div>
           </div>
         </div>
@@ -326,8 +334,8 @@ function Order() {
         show={editShow}
         onHide={handleEditClose}
       >
-        <Modal.Header closeButton style={{border:"none"}}></Modal.Header>
-        {editData &&<OrderView
+        <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
+        {editData && <OrderView
           // editShow={editShow}
           setEditShow={setEditShow}
           editData={editData}

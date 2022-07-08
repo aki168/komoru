@@ -16,6 +16,9 @@ function BookingHomepage() {
     <>
       <BookingAgreeModal />
       <Navbar />
+      <div className="fixedProgressItem">
+        <p>即刻預定</p>
+      </div>
       <div className="bookingHomepageContainer">
         <Booking />
       </div>

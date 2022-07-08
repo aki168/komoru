@@ -80,6 +80,31 @@ exports.getEmployeeDataList = async (req, res, next) => {
     });
 };
 
+// 2022-07-08 PG
+// 取得合作夥伴 dataList By 關鍵字、城市
+// 取得員工 dataList By 關鍵字
+// return：json
+exports.getEmployeeDataListByKeyword = async (req, res, next) => {
+  let data = req.body;
+  let checkDataResult = checkData(data, ["keyword"]);
+
+  // 判斷是否有空值、沒有傳需要的資料
+  if (checkDataResult.errCheck) {
+    await employeeModel
+      .getEmployeeDataListByKeyword(data)
+      .then((result) => {
+        configController.sendJsonMsg(res, true, "", result);
+      })
+      .catch((err) => {
+        // 目前不確定這邊要怎改
+        console.log(err);
+        res.status(500).json({ message: "Server error" });
+      });
+  } else {
+    configController.sendJsonMsg(res, false, checkDataResult.errMsg, []);
+  }
+};
+
 // 2022-07-02 PG
 // 取得員工資料 Data By employeeId
 // return：json
@@ -210,18 +235,17 @@ exports.delEmployeeByEmployeeId = async (req, res, next) => {
   }
 };
 
-
 // 2022-07-06 MJ
 // 聯絡我們
 exports.contactUs = async (req, res) => {
-  let data = req.body
+  let data = req.body;
   try {
-    await employeeModel.contactUs(data)
-    configController.sendJsonMsg(res, true, '', 'Message sent successfully!');
+    await employeeModel.contactUs(data);
+    configController.sendJsonMsg(res, true, "", "Message sent successfully!");
   } catch (error) {
-    configController.sendJsonMsg(res, false, 'error', error);
+    configController.sendJsonMsg(res, false, "error", error);
   }
-}
+};
 
 // 2022-06-18 PG
 // 檢查資料
@@ -232,13 +256,23 @@ const checkData = (dataList, dataColumns) => {
   let errMsg = "";
   let errCheck = true;
   dataColumns.forEach((value) => {
-    if (
-      typeof dataList[value] === "undefined" ||
-      !dataList[value] ||
-      typeof dataList[value] === ""
-    ) {
-      errMsg += value + " 不可為空。";
-      errCheck = false;
+    switch (value) {
+      case "keyword":
+        if (typeof dataList[value] === "undefined") {
+          errMsg += value + " 不可為空。";
+          errCheck = false;
+        }
+        break;
+      default:
+        if (
+          typeof dataList[value] === "undefined" ||
+          !dataList[value] ||
+          typeof dataList[value] === ""
+        ) {
+          errMsg += value + " 不可為空。";
+          errCheck = false;
+        }
+        break;
     }
   });
   return {

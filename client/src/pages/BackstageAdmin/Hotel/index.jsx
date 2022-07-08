@@ -5,7 +5,7 @@ import HotelAdd from "./HotelAdd";
 import HotelViewEdits from "./HotelViewEdits";
 import { Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
+import BackstageLoding from "../../../components/BackstageLoading";
 function Hotel() {
   /* 20220616 YN
   初始化使用者資料
@@ -33,6 +33,11 @@ function Hotel() {
     keyword: "",
     cityId: "",
   });
+
+  /*20220707 YN
+資料載入過程初始化*/
+  const [loading, setLoading] = useState(false);
+
 
   /*20220704 YN
   登入狀態為false自動轉跳Login頁面 */
@@ -69,6 +74,7 @@ function Hotel() {
       .then((res) => {
         console.log(res.data);
         setData(res.data.dataList);
+        setLoading(true)
       })
       .catch((err) => console.log(err));
   }, []);
@@ -315,28 +321,31 @@ function Hotel() {
           </div>
           <div className="row ms-5">
             <div className=" col-sm-10">
-              <table className=" table table-hover  text-center align-middle ">
-                <thead>
-                  <tr>
-                    <td className="col-sm-1">飯店名稱</td>
-                    <td className="col-sm-1">區域</td>
-                    <td className="col-sm-1">地址</td>
-                    <td className="col-sm-1">聯絡電話</td>
-                    <td className="col-sm-1">圖片</td>
-                    <td className="col-sm-1"></td>
-                  </tr>
-                </thead>
-                <tbody
-                  style={{
-                    height: " 600px",
-                    width: " 1217px",
-                    overflowY: "auto",
-                    position: "absolute",
-                  }}
-                >
-                  {displayUsers}
-                </tbody>
-              </table>
+              {loading ?
+                <>
+                  <table className=" table table-hover  text-center align-middle ">
+                    <thead>
+                      <tr>
+                        <td className="col-sm-1">飯店名稱</td>
+                        <td className="col-sm-1">區域</td>
+                        <td className="col-sm-1">地址</td>
+                        <td className="col-sm-1">聯絡電話</td>
+                        <td className="col-sm-1">圖片</td>
+                        <td className="col-sm-1"></td>
+                      </tr>
+                    </thead>
+                    <tbody
+                      style={{
+                        height: " 600px",
+                        width: " 1217px",
+                        overflowY: "auto",
+                        position: "absolute",
+                      }}
+                    >
+                      {displayUsers}
+                    </tbody>
+                  </table>
+                </> : <div className="d-flex justify-content-center" ><BackstageLoding /></div>}
             </div>
           </div>
         </div>

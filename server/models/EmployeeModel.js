@@ -36,6 +36,35 @@ exports.getEmployeeDataList = async () => {
   });
 };
 
+// 2022-07-08 PG
+// 取得員工 dataList By 關鍵字
+// return：({})
+exports.getEmployeeDataListByKeyword = async (dataList) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "SELECT " +
+      "`Employee`.* " +
+      "FROM `Employee` " +
+      "WHERE (`Employee`.`employee_account` LIKE '%" +
+      dataList.keyword +
+      "%' " +
+      "OR `Employee`.`employee_name` LIKE '%" +
+      dataList.keyword +
+      "%' " +
+      "OR `Employee`.`employee_phone` LIKE '%" +
+      dataList.keyword +
+      "%'); ";
+      
+    db.con.query(sql, (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(rows.length == 0 ? rows : db.rowDataToCamelData(rows));
+    });
+  });
+};
+
+
 // 2022-07-02 PG
 // 取得員工資料 Data By employeeId
 // return：({})
