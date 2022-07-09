@@ -43,7 +43,6 @@ function BookingOrderPage() {
   //cityIdValue(城市的ID)
   //activityPack(活動包總類，在心理測驗完後獲取)
   //獲取活動包
-  console.log(0);
   useEffect(() => {
     console.log(
       activityState,
@@ -56,7 +55,7 @@ function BookingOrderPage() {
       url: "http://localhost:5000/activePack/getActivePackData",
       data: {
         isActive: activityState,
-        joinTotal: JSON.stringify(countActivity),
+        joinTotal: countActivity,
         cityId: cityIdValue,
         activePackType: activityPack,
       },
@@ -64,6 +63,8 @@ function BookingOrderPage() {
       .then((res) => {
         console.log(res.data.dataList);
         setGetAllActivePackData(res.data.dataList);
+
+        // console.log(res.data.dataList);
         if (activity1Data === "1") {
           setActivePackD1(res.data.dataList.D1[0]);
         }
@@ -84,24 +85,34 @@ function BookingOrderPage() {
           setActivePackD3(res.data.dataList.D1[0]);
         }
 
-        console.log(getAllActivePackData);
+        // console.log(getAllActivePackData);
 
-        console.log(activePackD1, activePackD2, activePackD3);
+        // console.log(activePackD1, activePackD2, activePackD3);
       })
       .catch((err) => {
         console.log(err);
       });
     // }
   }, []);
+  console.log(activePackD1);
   const PackId = [];
   if (activity1Data === "1") {
-    PackId.push(activePackD1.activePackType);
+    PackId.push(activePackD1.activePackId);
+  }
+  if (activity1Data === "2") {
+    PackId.push(null);
   }
   if (activity2Data === "3") {
-    PackId.push(activePackD2.activePackType);
+    PackId.push(activePackD2.activePackId);
+  }
+  if (activity1Data === "4") {
+    PackId.push(null);
   }
   if (activity3Data === "5") {
-    PackId.push(activePackD3.activePackType);
+    PackId.push(activePackD3.activePackId);
+  }
+  if (activity1Data === "6") {
+    PackId.push(null);
   }
 
   console.log(PackId);
@@ -111,10 +122,13 @@ function BookingOrderPage() {
     if (activity1Data === "1") {
       return (
         <>
-          <p>{activePackD1.activePackItemTitle}</p>
-          <p>開始時間:{activePackD1.activePackItemStartTime}</p>
-          <p>結束時間:{activePackD1.activePackItemEndTime}</p>
-          <p>{activePackD1.activePackItemContent}</p>
+          <ActivityBag
+            date={date}
+            activePackItemTitle={activePackD1.activePackItemTitle}
+            activePackItemContent={activePackD1.activePackItemContent}
+            activePackItemContent2={activePackD1.activePackItemContent2}
+            activePackItemContent3={activePackD1.activePackItemContent3}
+          />
         </>
       );
     }
@@ -126,9 +140,9 @@ function BookingOrderPage() {
       return (
         <>
           <p>{activePackD2.activePackItemTitle}</p>
-          <p>開始時間:{activePackD2.activePackItemStartTime}</p>
-          <p>結束時間:{activePackD2.activePackItemEndTime}</p>
           <p>{activePackD2.activePackItemContent}</p>
+          <p>{activePackD2.activePackItemContent2}</p>
+          <p>{activePackD2.activePackItemContent3}</p>
         </>
       );
     }
@@ -140,9 +154,9 @@ function BookingOrderPage() {
       return (
         <>
           <p>{activePackD3.activePackItemTitle}</p>
-          <p>開始時間:{activePackD3.activePackItemStartTime}</p>
-          <p>結束時間:{activePackD3.activePackItemEndTime}</p>
           <p>{activePackD3.activePackItemContent}</p>
+          <p>{activePackD3.activePackItemContent2}</p>
+          <p>{activePackD3.activePackItemContent3}</p>
         </>
       );
     }
@@ -251,29 +265,28 @@ function BookingOrderPage() {
       : setactivityBag3Visible(false);
   }, [activity1Data, activity2Data, activity3Data]);
 
-  // const array = activityData.map();
-  //顯示哪幾天參與
-  const handleActivity1Data = () => {
-    if (activity1Data === "1") {
-      return <p>第一天→要</p>;
-    } else if (activity1Data === "2") {
-      return <p>第一天→否</p>;
-    }
-  };
-  const handleActivity2Data = () => {
-    if (activity2Data === "3") {
-      return <p>第二天→要</p>;
-    } else if (activity2Data === "4") {
-      return <p>第二天→否</p>;
-    }
-  };
-  const handleActivity3Data = () => {
-    if (activity3Data === "5") {
-      return <p>第三天→要</p>;
-    } else if (activity3Data === "6") {
-      return <p>第三天→否</p>;
-    }
-  };
+  // //顯示哪幾天參與
+  // const handleActivity1Data = () => {
+  //   if (activity1Data === "1") {
+  //     return <p>第一天→要</p>;
+  //   } else if (activity1Data === "2") {
+  //     return <p>第一天→否</p>;
+  //   }
+  // };
+  // const handleActivity2Data = () => {
+  //   if (activity2Data === "3") {
+  //     return <p>第二天→要</p>;
+  //   } else if (activity2Data === "4") {
+  //     return <p>第二天→否</p>;
+  //   }
+  // };
+  // const handleActivity3Data = () => {
+  //   if (activity3Data === "5") {
+  //     return <p>第三天→要</p>;
+  //   } else if (activity3Data === "6") {
+  //     return <p>第三天→否</p>;
+  //   }
+  // };
 
   //計算房間金額
   const [roomSum, setRoomSum] = useState(Number(0));
@@ -445,12 +458,13 @@ function BookingOrderPage() {
             </div>
           </div>
         </div>
+
         <div className="marginContainer">
           {getAllActivePackData && (
             <>
               {activityBag1Visible && (
                 <div className="activityList">
-                  {handleActivity1Data()}
+                  {/* {handleActivity1Data()} */}
                   {showAvtivity1Bag()}
                 </div>
               )}
@@ -460,7 +474,7 @@ function BookingOrderPage() {
             <>
               {activityBag2Visible && (
                 <div className="activityList">
-                  {handleActivity2Data()}
+                  {/* {handleActivity2Data()} */}
                   {showAvtivity2Bag()}
                 </div>
               )}
@@ -470,7 +484,7 @@ function BookingOrderPage() {
             <>
               {activityBag3Visible && (
                 <div className="activityList">
-                  {handleActivity3Data()}
+                  {/* {handleActivity3Data()} */}
                   {showAvtivity3Bag()}
                 </div>
               )}

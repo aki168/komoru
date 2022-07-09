@@ -20,7 +20,6 @@ import PsychologicalExam from "./pages/psychologicalExam/PsychologicalExam";
 import BookingHomepage from "./pages/bookingHomepage/BookingHomepage";
 import BookingOrderPage from "./pages/orderPage/BookingOrderPage";
 import CheckoutSucceeded from "./pages/checkoutSucceededPage/CheckoutSucceeded";
-import ErrorPage from "./pages/errorPage/ErrorPage";
 import { BookContext } from "./Helper/Context";
 import PartnerHotel from "./pages/partnerHotel/PartnerHotel";
 import ContactUs from "./pages/contactUs/ContactUs";
@@ -103,13 +102,11 @@ function App() {
     setSumActivity,
   };
 
-
-
   return (
     <BrowserRouter>
       <Routes>
         {/* YN */}
-        <Route path="/BackstageLogin" element={<BackstageLogin/>}></Route>
+        <Route path="/BackstageLogin" element={<BackstageLogin />}></Route>
         <Route path="/BackstageAdmin/*" element={<BackstageAdmin />}></Route>
 
         {/* AKI */}
@@ -150,7 +147,6 @@ function App() {
           }
         />
         <Route path="checkoutSucceeded" element={<CheckoutSucceeded />} />
-        <Route path="/404" element={<ErrorPage />} />
         <Route path="/hotelIntro" element={<PartnerHotel />} />
         <Route path="/contactUs" element={<ContactUs />} />
       </Routes>

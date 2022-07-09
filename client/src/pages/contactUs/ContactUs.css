@@ -7,6 +7,17 @@
   width: 815px;
   height: 616px;
   background-color: #ed8c4e;
+  color: white;
+  padding: 80px 70px;
+}
+.leftContent > h1 {
+  font-size: 50px;
+  margin-bottom: 50px;
+}
+
+.leftContent > p {
+  font-size: 16px;
+  margin-bottom: 100px;
 }
 
 .contactForm {
