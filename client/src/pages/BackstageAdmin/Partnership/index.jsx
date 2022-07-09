@@ -244,7 +244,7 @@ function Partnership() {
       <div className="mx-5  mb-5">
         <h6 className="ms-5 mt-4 mb-5">系統後台&gt;合作夥伴管理</h6>
         <div>
-          <div className="row ms-5 mb-5">
+          <div className="row ms-5 mb-5 g-0">
             <div className="col-sm-4">
               <div className="d-flex justify-content-start">
                 <button
@@ -261,6 +261,7 @@ function Partnership() {
                   centered
                   show={addShow}
                   onHide={handleAddClose}
+                  
                 >
                   <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
                   <PartnershipAdd
@@ -322,7 +323,7 @@ function Partnership() {
                   <tbody>{displayUsers}</tbody>
                 </table>
               </> : <div className="d-flex justify-content-center"><BackstageLoding /></div>}
-              <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-center" >
                 <nav aria-label="Page navigation example ">
                   <ul className="pagination">
                     <ReactPaginate

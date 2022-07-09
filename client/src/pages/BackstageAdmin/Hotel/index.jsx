@@ -291,7 +291,7 @@ function Hotel() {
                   show={addShow}
                   onHide={handleAddClose}
                 >
-                  <Modal.Header closeButton></Modal.Header>
+                  <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
                   <HotelAdd setAddShow={setAddShow} />
                 </Modal>
               </div>

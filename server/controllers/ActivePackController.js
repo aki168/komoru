@@ -22,7 +22,7 @@ exports.getActivePackData = async (req, res) => {
 
         configController.sendJsonMsg(res, true, '', { D1, D2, D3 })
         }
-    }
+    }   
     else {
         configController.sendJsonMsg(res, false, 'activePackType有誤', [])
     }

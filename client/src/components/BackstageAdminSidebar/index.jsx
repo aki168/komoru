@@ -17,7 +17,7 @@ function Sidebar() {
         className=" container sticky-top"
         id="sticky-sidebar"
         // style={{ background: "#EFA16A" }}
-        style={{ background: "white" }}
+        style={{ background: "white"}}
       >
 
         <ul
@@ -78,7 +78,7 @@ function Sidebar() {
           <li className="nav-item">
             <MyNavLink to="employee">
               <BiUser className="mx-2 ms-4" />
-              員工專區
+              員工管理
             </MyNavLink>
           </li>
         </ul>

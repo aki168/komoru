@@ -30,6 +30,12 @@ function Employee() {
 資料載入過程初始化*/
   const [loading, setLoading] = useState(false);
 
+  /*20220706 YN
+  篩選功能輸入狀態初始化*/
+  const [sreachData, setSreachData] = useState({
+    keyword: "",
+    cityId: "",
+  });
 
   /*20220624 YN
  初始化*/
@@ -180,11 +186,130 @@ function Employee() {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+
+  /*20220706 YN
+    取得搜尋關鍵字及選擇值*/
+  const sreachChangeHandle = (event) => {
+    event.preventDefault();
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...sreachData };
+    newFormData[fieldName] = fieldValue;
+    console.log(newFormData);
+    setSreachData(newFormData);
+  };
+
+  /*20220706 YN
+  送出搜尋關鍵字及選擇值進行篩選*/
+  const sreachSubmitHandle = (event) => {
+    event.preventDefault();
+    const newContact = {
+      keyword: sreachData.keyword,
+      cityId: sreachData.cityId,
+    };
+    console.log(newContact);
+
+    // setAddFormData(newContacts);
+    // fetch("http://localhost:5000/partnership/getPartnershipDataListByKeywordAndCityId", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json; charset=utf-8",
+    //   },
+    //   body: JSON.stringify(newContact),
+    // })
+    //   .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
+    //   .then((data) => {
+    //     let result = data.dataList
+    //     console.log(data)
+    //     if (result.length === 0) {
+    //       alert("查無此資料")
+    //       setData(data.dataList)
+    //     } else {
+    //       setData(data.dataList)
+    //     }
+    //   })
+    //   .catch((e) => {
+    //     console.error(e);
+    //   });
+  };
+
   return (
     <>
       <div className="mx-5  mb-5">
-      <div className="row ms-5"><h3 className="mt-5 mb-5">員工管理</h3></div>
+        <div className="row ms-5">
+          <h3 className="mt-5 mb-5">員工管理</h3>
+        </div>
         <div>
+          <div className="row ms-5 mb-5 g-0">
+            <div className="col-sm-4">
+              <div className="d-flex justify-content-start">
+                <button
+                  onClick={handleAddShow}
+                  className="btn  ms-2"
+                  style={{ backgroundColor: "#7BA23F", color: "white" }}
+                >
+                  新增員工
+                </button>
+
+                <Modal
+                  size="lg"
+                  // aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                  show={addShow}
+                  onHide={handleAddClose}
+                >
+                  <Modal.Header closeButton></Modal.Header>
+                  <EmployeeAdd
+                    data={data}
+                    addShow={addShow}
+                    setAddShow={setAddShow}
+                  />
+                </Modal>
+              </div>
+            </div>
+            <div className="col-sm-7 ms-5">
+              <div className="row g-0 justify-content-end">
+                <div className="col-3 me-2">
+                  <input
+                    name="keyword"
+                    className="form-control col-1 "
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                    onChange={sreachChangeHandle}
+                  />
+                </div>
+                <div className="col-3 me-2">
+                  <select
+                    name="cityId"
+                    className=" form-select col-2"
+                    aria-label="Default select example"
+                    onChange={sreachChangeHandle}
+                  >
+                    <option value="" selected>
+                      地區搜尋
+                    </option>
+                    <option value="1">北區</option>
+                    <option value="2">中區</option>
+                    <option value="3">南區</option>
+                    <option value="4">東區</option>
+                  </select>
+                </div>
+                <div className="col-2 ">
+                  <button
+                    className="btn"
+                    type="submit"
+                    onClick={sreachSubmitHandle}
+                    style={{ backgroundColor: "#7BA23F", color: "white" }}
+                  >
+                    搜尋
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="row ms-5 mb-3">
             <div className="col-sm-4">
               {/* <div className="d-flex justify-content-start">
@@ -234,34 +359,12 @@ function Employee() {
                 </Modal>
               </div>
             </div>
-            <div className="col-sm-2 d-flex justify-content-end">
-              <nav aria-label="Page navigation example">
-                <ul className="pagination">
-                  <ReactPaginate
-                    nextLabel=">"
-                    previousLabel="<"
-                    pageCount={pageCount}
-                    onPageChange={changePage}
-                    breakClassName={"page-item"}
-                    breakLinkClassName={"page-link"}
-                    containerClassName={"pagination"}
-                    pageClassName={"page-item"}
-                    pageLinkClassName={"page-link"}
-                    previousClassName={"page-item"}
-                    previousLinkClassName={"page-link"}
-                    nextClassName={"page-item"}
-                    nextLinkClassName={"page-link"}
-                    activeClassName={"active"}
-                  />
-                </ul>
-              </nav>
-            </div>
           </div>
           <div className="row ms-5">
-            <div className="col-sm-10">
-              {loading ?
+            <div className="col-sm-11">
+              {loading ? (
                 <>
-                  <table className="table table-hover  text-center align-middle ">
+                  <table className="table table-hover  text-center align-middle" style={{height:'1000px',fontSize:'18px'}}>
                     <thead>
                       <tr>
                         <td>員工編號</td>
@@ -273,7 +376,34 @@ function Employee() {
                     </thead>
                     <tbody>{displayUsers}</tbody>
                   </table>
-                </> : <div className="d-flex justify-content-center"><BackstageLoding /></div>}
+                </>
+              ) : (
+                <div className="d-flex justify-content-center">
+                  <BackstageLoding />
+                </div>
+              )}
+              <div className="d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                  <ul className="pagination">
+                    <ReactPaginate
+                      nextLabel=">"
+                      previousLabel="<"
+                      pageCount={pageCount}
+                      onPageChange={changePage}
+                      breakClassName={"page-item"}
+                      breakLinkClassName={"page-link"}
+                      containerClassName={"pagination"}
+                      pageClassName={"page-item"}
+                      pageLinkClassName={"page-link"}
+                      previousClassName={"page-item"}
+                      previousLinkClassName={"page-link"}
+                      nextClassName={"page-item"}
+                      nextLinkClassName={"page-link"}
+                      activeClassName={"active"}
+                    />
+                  </ul>
+                </nav>
+              </div>
             </div>
           </div>
         </div>
