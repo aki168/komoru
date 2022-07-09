@@ -19,10 +19,8 @@ exports.getActivePackData = async (req, res) => {
         let D1 = await activePackModel.getActivePackDataByTypeAndCity(packType, cityId)
         let D2 = await activePackModel.getActivePackDataByTypeAndCity(D2ActivePack, cityId)
         let D3 = await activePackModel.getActivePackDataByTypeAndCity(D3ActivePack, cityId)
-
         configController.sendJsonMsg(res, true, '', { D1, D2, D3 })
-        }
-    }   
+    }
     else {
         configController.sendJsonMsg(res, false, 'activePackType有誤', [])
     }
