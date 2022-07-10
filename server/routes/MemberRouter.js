@@ -53,15 +53,6 @@ router.post('/isLogin',memberController.isLogin);
 // 0627 修改個人資料 - aki 
 router.post('/alterProfile',memberController.alterProfile);
 
-// 0704 取得會員coupon明細 - MJ
-router.post('/getCouponByMemberId', memberController.getCouponByMemberId)
-
-// 0704 勉勵金句抽卡 - MJ
-router.post('/getRainbowCard', memberController.getRainbowCard)
-
-// 0705 coupon生成 - MJ
-router.post('/createCoupon', memberController.createCoupon)
-
 // 0705 - AKI 會員專區 : 修改頭貼照片 by mail
 router.post("/updateMemberIcon",
 upload.fields([{ name: "icon" }, { name: "mail" }]), 

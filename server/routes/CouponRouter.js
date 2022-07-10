@@ -9,6 +9,11 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 
 // ----------------------------------------------------------------------------------------------------------------------
+// 0704 取得會員coupon明細 - MJ
+router.post('/getCouponByMemberId', couponController.getCouponByMemberId)
+
+// 0705 coupon生成 - MJ
+router.post('/createCoupon', couponController.createCoupon)
 
 
 
