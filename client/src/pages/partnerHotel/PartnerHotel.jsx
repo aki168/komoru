@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { Hotel1Img, Hotel2Img, Hotel3Img, Hotel4Img } from "./roomImg/RoomImg";
 // import HotelDescription from "./hotelDescription/HotelDescription";
 import axios from "axios";
-import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import "./PartnerHotel.css";
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -12,6 +11,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import RoomItem from "./roomItem/RoomItem";
 import PrivateRoomModal from "./roomModal/PrivateRoomModal";
 import BackPackerRoomModal from "./roomModal/BackPackerRoomModal";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 const PartnerHotel = () => {
   useEffect(() => {
@@ -219,11 +219,8 @@ const PartnerHotel = () => {
       </div>
 
       <section className="sliderleft" data-aos="fade-right">
-        <FaArrowAltCircleLeft
-          className="sliderleft-left-arrow"
-          onClick={prevSlide3}
-        />
-        <FaArrowAltCircleRight
+        <BsChevronLeft className="sliderleft-left-arrow" onClick={prevSlide3} />
+        <BsChevronRight
           className="sliderleft-right-arrow"
           onClick={nextSlide3}
         />
@@ -262,15 +259,18 @@ const PartnerHotel = () => {
         backPackerUrl="http://localhost:5000/images/room/room-10.jpeg"
       />
 
-      <section className="sliderleft">
-        <FaArrowAltCircleLeft
-          className="sliderleft-left-arrow"
-          onClick={prevSlide1}
-        />
-        <FaArrowAltCircleRight
+      <section className="sliderleft" data-aos="fade-left">
+        <BsChevronLeft className="sliderleft-left-arrow" onClick={prevSlide1} />
+        <BsChevronRight
           className="sliderleft-right-arrow"
           onClick={nextSlide1}
         />
+        <div className="sizeLeft">
+          <p>台中-Star Hostel</p>
+          <p>台中市西區公益路68號15樓</p>
+          <p> 15F, No.68, Gongyi Rd., West Dist., Taichung, Taiwan</p>
+          <p>TEL:+886 4 2321-9696</p>
+        </div>
         {Hotel1Img.map((Taipeiimg, index) => {
           return (
             <div
@@ -283,12 +283,6 @@ const PartnerHotel = () => {
             </div>
           );
         })}
-        <div className="sizeRight">
-          <p>台中-Star Hostel</p>
-          <p>台中市西區公益路68號15樓</p>
-          <p> 15F, No.68, Gongyi Rd., West Dist., Taichung, Taiwan</p>
-          <p>TEL:+886 4 2321-9696</p>
-        </div>
       </section>
       <RoomItem
         privateClick={openPrivateModal1Click}
@@ -297,24 +291,15 @@ const PartnerHotel = () => {
         backPackerUrl="http://localhost:5000/images/room/room-5.jpeg"
       />
 
-      <section className="sliderRight " data-aos="fade-left">
-        <FaArrowAltCircleLeft
+      <section className="sliderRight " data-aos="fade-right">
+        <BsChevronLeft
           className="sliderRight-left-arrow"
           onClick={prevSlide2}
         />
-        <FaArrowAltCircleRight
+        <BsChevronRight
           className="sliderRight-right-arrow"
           onClick={nextSlide2}
         />
-        <div className="sizeLeft">
-          <p>台南-快活慢行</p>
-          <p>連絡電話:06-2229255</p>
-          <p>信箱:hii@hiihubs.com</p>
-          <p>702 台南市南區樹林街二段420號</p>
-          <p>
-            No.420, Sec. 2, Shulin St., South Dist., Tainan City 702, Taiwan
-          </p>
-        </div>
         {Hotel2Img.map((Taichungimg, index) => {
           return (
             <div
@@ -327,6 +312,15 @@ const PartnerHotel = () => {
             </div>
           );
         })}
+        <div className="sizeRight">
+          <p>台南-快活慢行</p>
+          <p>連絡電話:06-2229255</p>
+          <p>信箱:hii@hiihubs.com</p>
+          <p>702 台南市南區樹林街二段420號</p>
+          <p>
+            No.420, Sec. 2, Shulin St., South Dist., Tainan City 702, Taiwan
+          </p>
+        </div>
       </section>
       <RoomItem
         privateClick={openPrivateModal2Click}
@@ -336,11 +330,11 @@ const PartnerHotel = () => {
       />
 
       <section className="sliderRight" data-aos="fade-left">
-        <FaArrowAltCircleLeft
+        <BsChevronLeft
           className="sliderRight-left-arrow"
           onClick={prevSlide4}
         />
-        <FaArrowAltCircleRight
+        <BsChevronRight
           className="sliderRight-right-arrow"
           onClick={nextSlide4}
         />
