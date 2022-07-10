@@ -5,16 +5,6 @@ import { Button, Alert } from "react-bootstrap"
 import './User.css'
 import axios from 'axios'
 
-// memberGender: "0"
-// memberId: 12
-// memberImgPath: null
-// memberMail: "gina@gmail.com"
-// memberName: "沈吉娜"
-// memberNickName: "GINA"
-// memberPasswd: "gina"
-// memberPhone: "0977444555"
-// registerType: "0"
-// updateDatetime: "2022-06-21 15:59:19"
 
 export default function User(props) {
 
@@ -27,6 +17,7 @@ export default function User(props) {
       // nickName: "",
       // sex: "",
       // phone: ""
+      // registerType:""
     }
   )
 
@@ -45,7 +36,8 @@ export default function User(props) {
       nickName: props.nickName,
       sex: props.sex,
       phone: props.phone,
-      iconPath: props.iconPath
+      iconPath: props.iconPath,
+      registerType: props.registerType
     })
   }, [props])
 
@@ -139,6 +131,26 @@ export default function User(props) {
 
   }
 
+  // // 0710 會員性別判斷
+  // const memberGender = {
+  //   0: '女性',
+  //   1: '男性',
+  //   2: 'NULL'
+  // };
+  
+  // const getCollectIssueSeverity = (s) => {
+  //   switch (severityCode) {
+  //     case COLLECT_ISSUE_SEVERITY.low:
+  //       return 'Low';
+  //     case COLLECT_ISSUE_SEVERITY.medium:
+  //       return 'Medium';
+  //     case COLLECT_ISSUE_SEVERITY.high:
+  //       return 'High';
+  //     default:
+  //       return 'Indeterminate';
+  //   }
+  // };
+
 
 
 
@@ -168,11 +180,11 @@ export default function User(props) {
               style={{
                 background: imgPreview
                   ? `url("${imgPreview}") no-repeat center/cover`
-                  : `url("${formData.iconPath ? `http://localhost:5000${formData.iconPath}` :
-                    `avatar-pl.png`}")no-repeat center/cover`
+                  : `url("${formData.iconPath ? ((formData.registerType === '2')? formData.iconPath : `http://localhost:5000${formData.iconPath}`) :
+                                                  `avatar-pl.png`}") no-repeat center/cover`
               }}
             >
-              {/* <img className="img-fluid" src={imgPreview? imgPreview:"avatar-pl.png"} alt="ICON" /> */}
+
             </div>
             <input
               className="fs-5 mb-1"
@@ -203,7 +215,6 @@ export default function User(props) {
           {/* 會員個人資料區 --------------------------------- */}
           <ul className="user--form pt-3 pb-3">
             <li className="user--item">
-              {/* <label htmlFor="mail">帳號　</label> */}
               <span className="fs-4"> 帳號　{formData.mail}</span>
               {/* <input
               type="text"
@@ -214,7 +225,6 @@ export default function User(props) {
             />  */}
             </li>
             <li className="user--item">
-              {/* <label htmlFor="name">姓名　</label> */}
               {!alertData && <span className="fs-4">姓名　{formData.name}</span>}
               {alertData && <input
                 type="text"
@@ -225,7 +235,6 @@ export default function User(props) {
               />}
             </li>
             <li className="user--item">
-              {/* <label htmlFor="nickName">暱稱　</label> */}
               {!alertData && <span className="fs-4">暱稱　{formData.nickName}</span>}
               {alertData && <input
                 type="text"
@@ -236,8 +245,11 @@ export default function User(props) {
               />}
             </li>
             <li className="user--item">
-              {/* <label htmlFor="sex">性別　</label> */}
-              {!alertData && <span className="fs-4">性別　{formData.sex === '1' ? `男性` : `女性`}</span>}
+              {!alertData && 
+                <span className="fs-4">
+                  性別　{formData.sex === '1' ? `男性` :
+                        formData.sex === '0' ? `女性`:<span className="text-muted">尚未設定</span>}
+                </span>}
               {alertData && <select
                 name="sex"
                 id="sex"
@@ -249,14 +261,17 @@ export default function User(props) {
               </select>}
             </li>
             <li className="user--item">
-              {/* <label htmlFor="phone">手機　</label> */}
-              {!alertData && <span className="fs-4">手機　{formData.phone}</span>}
+              {!alertData && 
+              <span className="fs-4">
+                手機　{formData.phone? formData.phone:<span className="text-muted">尚未設定</span>}
+              </span>}
               {alertData && <input
                 type="text"
                 name="phone"
                 id="phone"
                 value={formData.phone}
                 onChange={inputHandler}
+                placeholder="請輸入手機號碼"
               />}
             </li>
           </ul>

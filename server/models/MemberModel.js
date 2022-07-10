@@ -17,7 +17,9 @@ exports.showAllMember = async () => {
 exports.checkMailIsExisted = async (mail) => {
   return new Promise((resolve, reject) => {
     let sql =
-      " SELECT * FROM Member WHERE `member_mail` =  ? AND `register_type` = 0; ";
+      " SELECT * FROM Member WHERE `member_mail` =  ? ; ";
+      //0710 有點怪怪的先註解掉 by aki
+      // " SELECT * FROM Member WHERE `member_mail` =  ? AND `register_type` = 0; ";
     db.con.query(sql, mail, (err, rows, fields) => {
       if (err) {
         reject(err);

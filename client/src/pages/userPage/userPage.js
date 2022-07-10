@@ -86,6 +86,7 @@ export default function UserPage() {
           sex={userData.memberGender}
           phone={userData.memberPhone}
           iconPath={userData.memberImgPath}
+          registerType={userData.registerType}
         />
       </div>
     </div>
