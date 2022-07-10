@@ -21,3 +21,10 @@
   color: #808080;
   padding-left: 20px;
 }
+
+.BsFillRecordFill {
+  font-size: 12px;
+  position: static;
+  margin-top: -5px;
+  margin-right: 7px;
+}

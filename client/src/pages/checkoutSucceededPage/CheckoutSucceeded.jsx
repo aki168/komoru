@@ -1,15 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./CheckoutSucceeded.css";
+import Navbar from "../../components/Navbar/Navbar-simple";
+import { AiOutlineRight } from "react-icons/ai";
 
 const CheckoutSucceeded = () => {
   return (
-    <div className="checkoutSucceededContainer">
-      <p>下定成功!</p>
-      <p>
-        快到會員中心查看→<Link to="/member-order">訂單紀錄</Link>
-      </p>
-    </div>
+    <>
+      <Navbar />
+      <div className="bookingBreadcrumbs">
+        <Link to="/">首頁</Link>
+        <span>
+          <AiOutlineRight />
+        </span>
+        <Link to="/bookingHomePage">即刻預定</Link>
+        <span>
+          <AiOutlineRight />
+        </span>
+        <p>心理測驗</p>
+        <span>
+          <AiOutlineRight />
+        </span>
+        <p>訂單確認</p>
+        <span>
+          <AiOutlineRight />
+        </span>
+        <p>結帳成功</p>
+      </div>
+      <div className="checkoutSucceededContainer">
+        <span>下定成功!</span>
+        <p>
+          快到會員中心查看→
+          <Link to="/member-order" className="checkoutSucceededLink">
+            訂單紀錄
+          </Link>
+        </p>
+      </div>
+    </>
   );
 };
 
