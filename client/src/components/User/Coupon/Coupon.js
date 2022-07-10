@@ -17,7 +17,7 @@ useEffect(()=>{
 
   axios({
     method:"post",
-    url:"http://localhost:5000/member/getCouponByMemberId",
+    url:"http://localhost:5000/coupon/getCouponByMemberId",
     data:{
       token:localStorage.token
     }

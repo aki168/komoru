@@ -21,7 +21,7 @@ export default function RainbowCard(props) {
   useEffect(() => {
     axios({
       method: "post",
-      url: "http://localhost:5000/member/getRainbowCard",
+      url: "http://localhost:5000/rainbowCard/getRainbowCard",
       data: {
         token: localStorage.token
       }
