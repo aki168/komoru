@@ -12,9 +12,9 @@ export default function OrderList(props) {
   // 計算旅程天數
   let end = Date.parse(props.orderEndDate);
   let start = Date.parse(props.orderStartDate);
-  let stayNight = (end - start) / 86400000 + 1;
+  let stayNight = (end - start) / 86400000 ;
 
-  // roomPic
+  // roomPic 暫時寫死
   const getRoomPic = (roomId) => {
       if (props.roomId === 1) return 1;
       if (props.roomId === 2) return 5;
@@ -46,7 +46,8 @@ export default function OrderList(props) {
             <div className="orderDetails--card row">
               <div className="card--pic col-5">
                 <img className="img-fluid rounded" 
-                      src={`http://localhost:5000/images/room/room-${ getRoomPic(props.roomId) }.jpeg`} 
+                      // src={`http://localhost:5000/images/room/room-${ getRoomPic(props.roomId) }.jpeg`} 
+                      src={`http://localhost:5000/${props.roomImgPath}`} 
                       alt="room-pic" />
 
               </div>
@@ -66,18 +67,30 @@ export default function OrderList(props) {
                     <span className="col-3 ">飯店/房型</span>
                     <span className="fw-light col-8">{props.hotelTitle} / {props.roomType}</span>
                   </li>
-                  <li className="card--list--item fs-4 row">
+                  {/* <li className="card--list--item fs-4 row">
                     <span className="col-3 ">優惠編號</span>
                     <span className="fw-light col-8">{props.couponItemId? props.couponItemId:"無" }</span>
+                  </li> */}
+                  <li className="card--list--item fs-4 row">
+                    <span className="col-3 ">飯店地址</span>
+                    <span className="fw-light col-8">{props.hotelAddr}</span>
                   </li>
                   <li className="card--list--item fs-4 row">
+                    <span className="col-3 ">聯絡電話</span>
+                    <span className="fw-light col-8">{props.hotelTel}</span>
+                  </li>
+                  <li className="card--list--item fs-4 row">
+                    <span className="col-3 ">住宿金額</span>
+                    <span className="fw-light col-8">＄{props.orderTotal}元</span>
+                  </li>
+                  {/* <li className="card--list--item fs-4 row">
                     <span className="col-3 ">活動參與</span>
                     <span className="fw-light col-8"> </span>
                   </li>
                   <li className="card--list--item fs-4 row">
                     <span className="col-3 ">活動天數</span>
                     <span className="fw-light col-8"> </span>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
               <OrderListDaily
