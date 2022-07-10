@@ -4,6 +4,8 @@ import Navbar from '../../components/Navbar/Navbar-bg-white'
 import '../../components/User/User.css'
 import axios from 'axios'
 import User from '../../components/User/User'
+
+import RainbowCard from '../../components/RainbowCard/RainbowCard'
 // import { NavItem } from 'react-bootstrap'
 // import { loginOrNot } from '../../App'
 // import RainbowCard from '../../components/RainbowCard/RainbowCard'
@@ -13,7 +15,10 @@ import User from '../../components/User/User'
 
 export default function UserPage() {
 
+  // 獲取會員資料
   const [userData, setUserData] = useState({})
+  // 0708 aki-金句內容資料獲取
+  // const [rainbowCard, setRainbowCard] = useState('')
 
 
   //0623 aki - 若沒有token則跳轉登入頁
@@ -39,11 +44,35 @@ export default function UserPage() {
     }
   }, [])
 
-
   console.log(userData)
+
+  // 0708 獲取金句資料
+  // useEffect(() => {
+  //   axios({
+  //     method: "post",
+  //     url: "http://localhost:5000/member/getRainbowCard",
+  //     data: {
+  //       token: localStorage.token
+  //     }
+  //   }).then((res) => {
+  //     console.log(res)
+  //     setRainbowCard(res.data.dataList.getRainbowCard[0])
+  //     console.log(res.data.dataList.getRainbowCard[0])
+  //   })
+  //   .catch((err) => {
+  //     console.log(err)
+  //   })
+  // }
+  //   , [])
+
+
 
   return (
     <div className='User--wrap'>
+      <RainbowCard 
+      // key={rainbowCard.rainbowCardId}
+      // rainbowCardContent={rainbowCard.rainbowCardContent}
+      />
       <Navbar />
       <div className='User--titleBar'>
         <h2>簡單、多功能的會員中心系統</h2>

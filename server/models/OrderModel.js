@@ -254,7 +254,8 @@ exports.getCouponItemDataList = async (memberId) => {
 // 取得orderId BY memberId
 exports.getOrdeIdByMemberId = async (memberId) => {
   return new Promise((resolve, reject) => {
-    let sql = "SELECT `Order`.`order_id` FROM `Order` WHERE `member_id` = ? "
+    let sql = "SELECT `Order`.`order_id` FROM `Order` WHERE `member_id` = ? " +
+    "ORDER BY `Order`.`order_id` DESC ";
     db.con.query(sql, memberId, (err, rows, fields) => {
       if (err) {
         reject(err);
