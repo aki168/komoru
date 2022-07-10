@@ -32,11 +32,11 @@ export default function OrderPage() {
         token: localStorage.token
       }
     }).then((res) => {
-      // if (res.data.dataList.length) { //訂單資料 by 會員
+       if (res.data.dataList.length) { //訂單資料 by 會員
         let postOrderData = res.data.dataList;
         setOrderData(postOrderData)
         setIsOrder(true)
-      // }
+       }
       console.log(res.data.dataList.getOrderDataByMemberId)
       console.log(res)
 
