@@ -132,6 +132,9 @@ exports.enumValueToString = (tableName, column, value) => {
             case "1":
               transferString = "男";
               break;
+            case "2":
+              transferString = "無";
+              break;
             default:
               errCheck = false;
               errMsg = "狀態值不存在";
@@ -232,6 +235,7 @@ exports.getEnumValue = (tableName, column) => {
           valueObj = {
             sexFmale: "0",
             sexMale: "1",
+            sexNull: "2",
           };
           break;
         default:

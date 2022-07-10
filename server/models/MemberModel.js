@@ -16,8 +16,24 @@ exports.showAllMember = async () => {
 // 0616 是否有該會員email在資料庫 - aki
 exports.checkMailIsExisted = async (mail) => {
   return new Promise((resolve, reject) => {
-    let sql = ' SELECT * FROM Member WHERE `member_mail` =  ? ; ';
+    let sql =
+      " SELECT * FROM Member WHERE `member_mail` =  ? AND `register_type` = 0; ";
     db.con.query(sql, mail, (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};
+
+// 2022-07-08 PG
+// 確認第三方 id 是否存在
+exports.checkThirdPartyRegisterIdIdExisted = async (thirdPartyRegisterId) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      " SELECT * FROM `Member` WHERE `Member`.`third_party_register_id` =  ? ; ";
+    db.con.query(sql, thirdPartyRegisterId, (err, rows, fields) => {
       if (err) {
         reject(err);
       }
@@ -31,7 +47,7 @@ exports.checkMailIsExisted = async (mail) => {
 // passwd暫時先由前端判斷
 exports.loginAuth = async (mail, passwd) => {
   return new Promise((resolve, reject) => {
-    let sql = ' SELECT * FROM Member WHERE `member_mail` =  ? ; ';
+    let sql = " SELECT * FROM Member WHERE `member_mail` =  ? ; ";
     db.con.query(sql, mail, (err, rows, fields) => {
       if (err) {
         reject(err);
@@ -42,11 +58,23 @@ exports.loginAuth = async (mail, passwd) => {
 };
 
 // 0621 註冊會員  - aki
-exports.register = async (mail, passwd, forgetPasswordAns, name, nickName, sex, phone) => {
+exports.register = async (
+  mail,
+  passwd,
+  forgetPasswordAns,
+  name,
+  nickName,
+  sex,
+  phone,
+  memberImgPath = NULL,
+  registerType,
+  thirdPartyRegisterId = NULL
+) => {
   return new Promise((resolve, reject) => {
-    let sql = "INSERT INTO `Member`" +
-      " (`member_mail`, `member_passwd`, `member_forget_passwd_ans`, `member_name`, `member_nick_name`, `member_gender`, `member_phone`,`create_datetime`,`update_datetime`)" +
-      " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    let sql =
+      "INSERT INTO `Member`" +
+      " (`member_mail`, `member_passwd`, `member_forget_passwd_ans`, `member_name`, `member_nick_name`, `member_gender`, `member_phone`, `member_img_path`,`register_type`, `third_party_register_id`, `create_datetime`)" +
+      " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     let value = [
       mail,
       passwd,
@@ -55,17 +83,23 @@ exports.register = async (mail, passwd, forgetPasswordAns, name, nickName, sex, 
       nickName,
       sex,
       phone,
+      memberImgPath,
+      registerType,
+      thirdPartyRegisterId,
       db.getDateTimeNow(),
-      db.getDateTimeNow()
     ];
 
-    console.log(value)
-    db.con.query(sql, value, (err, result) => {
+    console.log(value);
+    db.con.query(sql, value, (err, rows, result) => {
       if (err) {
         reject(err);
       }
       resolve(
-        console.log('新增成功')
+        {
+          status: rows.serverStatus,
+          memberId: rows.insertId,
+        },
+        console.log("新增成功")
       );
     });
   });
@@ -74,7 +108,7 @@ exports.register = async (mail, passwd, forgetPasswordAns, name, nickName, sex, 
 //  0622 是否有登入 - aki
 exports.isLogin = async (memberId) => {
   return new Promise((resolve, reject) => {
-    let sql = ' SELECT * FROM Member WHERE `member_id` =  ? ; ';
+    let sql = " SELECT * FROM Member WHERE `member_id` =  ? ; ";
     db.con.query(sql, memberId, (err, rows, fields) => {
       if (err) {
         reject(err);
@@ -84,31 +118,23 @@ exports.isLogin = async (memberId) => {
   });
 };
 
-// 0627 修改個人資料 - aki 
+// 0627 修改個人資料 - aki
 // 更新(修改)一筆資料
 // UPDATE `資料表` SET `欄位2` = '資料2'  WHERE `欄位1` = '資料1'  ;
 exports.alterProfile = async (mail, name, nickName, sex, phone) => {
   return new Promise((resolve, reject) => {
-    let sql = "UPDATE `Member`" +
+    let sql =
+      "UPDATE `Member`" +
       " SET `member_name`=?, `member_nick_name`=?, `member_gender`=?, `member_phone`=?,`update_datetime`=?" +
       " WHERE `member_mail` = ? ";
-    let value = [
-      name,
-      nickName,
-      sex,
-      phone,
-      db.getDateTimeNow(),
-      mail
-    ];
+    let value = [name, nickName, sex, phone, db.getDateTimeNow(), mail];
 
-    console.log(value)
+    console.log(value);
     db.con.query(sql, value, (err, res) => {
       if (err) {
         reject(err);
       }
-      resolve(
-        console.log('修改成功')
-      );
+      resolve(console.log("修改成功"));
     });
   });
 };
@@ -132,17 +158,17 @@ exports.getUsableCouponByMemberId = (memberId) => {
       "FROM `CouponItem`" +
       "JOIN `Coupon` ON `CouponItem`.`coupon_id` = `Coupon`.`coupon_id`" +
       "WHERE `CouponItem`.`coupon_item_status` = '0'" +
-      "AND `CouponItem`.`member_id` = ?"
-    let value = memberId
+      "AND `CouponItem`.`member_id` = ?";
+    let value = memberId;
 
     db.con.query(sql, value, (err, rows, fields) => {
       if (err) {
-        reject(err)
+        reject(err);
       }
-      resolve(db.rowDataToCamelData(rows))
-    })
-  })
-}
+      resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};
 
 // 0704 取得已使用的coupon - MJ
 exports.getUnusableCouponByMemberId = (memberId) => {
@@ -153,110 +179,102 @@ exports.getUnusableCouponByMemberId = (memberId) => {
       "FROM `CouponItem`" +
       "JOIN `Coupon` ON `CouponItem`.`coupon_id` = `Coupon`.`coupon_id`" +
       "WHERE `CouponItem`.`coupon_item_status` = '1'" +
-      "AND `CouponItem`.`member_id` = ?"
-    let value = memberId
+      "AND `CouponItem`.`member_id` = ?";
+    let value = memberId;
 
     db.con.query(sql, value, (err, rows, fields) => {
       if (err) {
-        reject(err)
+        reject(err);
       }
-      resolve(db.rowDataToCamelData(rows))
-    })
-  })
-}
-
+      resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};
 
 // 0704 勉勵金句抽卡 - MJ
 exports.getRainbowCard = async () => {
   return new Promise((resolve, reject) => {
-    let random = Math.floor(Math.random() * 15 + 1)
+    let random = Math.floor(Math.random() * 15 + 1);
     let sql =
-    "SELECT " +
-    "`rainbow_card_content`, `rainbow_card_id` " +
-    "FROM `RainbowCard` " +
-    "WHERE `rainbow_card_id` = ? "
-    
+      "SELECT " +
+      "`rainbow_card_content`, `rainbow_card_id` " +
+      "FROM `RainbowCard` " +
+      "WHERE `rainbow_card_id` = ? ";
+
     db.con.query(sql, random, (err, rows, fields) => {
       if (err) {
-        reject(err)
+        reject(err);
       }
-      resolve(db.rowDataToCamelData(rows))
-    })
-  })
-}
+      resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};
 
 // 0704 勉勵金句儲存 - MJ
 exports.saveRainbowCard = async (memberId, ranbowCardId) => {
   return new Promise((resolve, reject) => {
     // 檢查金句是否已經存在
-    let sqlCheck = "SELECT 1 FROM `RainbowCardItem` WHERE `member_id` = ? AND `rainbow_card_id` = ? LIMIT 1 "
-    let value = [memberId, ranbowCardId]
+    let sqlCheck =
+      "SELECT 1 FROM `RainbowCardItem` WHERE `member_id` = ? AND `rainbow_card_id` = ? LIMIT 1 ";
+    let value = [memberId, ranbowCardId];
     let exist = db.con.query(sqlCheck, value, (err, results, fields) => {
       if (err) {
-        reject(err)
-      }
-      else {
+        reject(err);
+      } else {
         if (results[0]) {
-          resolve('already exist',
-            console.log('already exist'))
-        }
-        else {
+          resolve("already exist", console.log("already exist"));
+        } else {
           let sql =
-          "INSERT INTO `RainbowCardItem` " +
+            "INSERT INTO `RainbowCardItem` " +
             "(`member_id`, `rainbow_card_id`)" +
-            "VALUE (?, ?) "
-            
-            db.con.query(sql, value, (err, results, fields) => {
-              if (err) {
-                reject(err)
-              }
-            resolve('儲存成功')
-          })
+            "VALUE (?, ?) ";
+
+          db.con.query(sql, value, (err, results, fields) => {
+            if (err) {
+              reject(err);
+            }
+            resolve("儲存成功");
+          });
         }
       }
-    })
-  })
-}
+    });
+  });
+};
 
-// 0705 生成coupon - MJ 
+// 0705 生成coupon - MJ
 exports.createCoupon = async (memberId, couponId) => {
   return new Promise((resolve, reject) => {
-    let sql = "INSERT INTO `CouponItem` " +
+    let sql =
+      "INSERT INTO `CouponItem` " +
       "(`member_id`, `coupon_id`, `coupon_item_status`, `create_datetime`, `update_datetime`) " +
-      "VALUE (?, ?, '0', ?, ?) "
-    let time = db.getDateTimeNow()
-    let value = [memberId, couponId, time, time]
-    
+      "VALUE (?, ?, '0', ?, ?) ";
+    let time = db.getDateTimeNow();
+    let value = [memberId, couponId, time, time];
+
     db.con.query(sql, value, (err, results, fields) => {
       if (err) {
-        reject(err)
+        reject(err);
       }
-      resolve('The solution is: ', results)
-    })
-
-  })
-}
+      resolve("The solution is: ", results);
+    });
+  });
+};
 
 // 0705 - AKI 會員專區 : 修改頭貼照片 by mail
 exports.updateMemberIcon = async (iconFilePath, mail) => {
   return new Promise((resolve, reject) => {
-    let sql = "UPDATE `Member`" +
+    let sql =
+      "UPDATE `Member`" +
       " SET `member_img_path`=?,`update_datetime`=?" +
       " WHERE `member_mail` = ? ";
-    let value = [
-      iconFilePath+'.PNG',
-      db.getDateTimeNow(),
-      mail
-    ];
+    let value = [iconFilePath + ".PNG", db.getDateTimeNow(), mail];
 
-    console.log(value)
+    console.log(value);
     db.con.query(sql, value, (err, res) => {
       if (err) {
         reject(err);
       }
-      resolve(
-        console.log('修改成功')
-      );
+      resolve(console.log("修改成功"));
     });
   });
 };

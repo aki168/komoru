@@ -67,6 +67,9 @@ router.post("/updateMemberIcon",
 upload.fields([{ name: "icon" }, { name: "mail" }]), 
 memberController.updateMemberIcon);
 
+// 0619 確認帳密，允許登入 - aki
+router.post("/lineLogin", memberController.lineLogin);
+
 module.exports = router;
 
 
