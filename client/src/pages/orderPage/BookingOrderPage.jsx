@@ -363,9 +363,21 @@ function BookingOrderPage() {
         //         },
         isActive: activityState,
         joinTotal: countActivity,
-        orderItemPrice: 8763
+        orderItemPrice: 8763,
       };
-      console.log(orderDetails);
+      console.log({
+        memberId: memberId,
+        orderStartDate: date,
+        expDays: dayState,
+        orderStatus: "0",
+        roomId: roomState,
+        couponItemId: couponState,
+        orderTotal: sumActivity,
+        activePackId: PackId,
+        isActive: activityState,
+        joinTotal: countActivity,
+        orderItemPrice: 8763,
+      });
       fetch("http://localhost:5000/order/getAndSaveOrderData", {
         method: "POST",
         headers: {
