@@ -109,7 +109,7 @@ function Hotel() {
         </td>
         <td className="col-sm-1">
           <button
-            className="me-1 btn"
+            className="me-1 btn km-page-content"
             onClick={() => handleEditShow(index)}
             style={{ backgroundColor: "#06CAD7", color: "white"}}
           >
@@ -117,7 +117,7 @@ function Hotel() {
           </button>
           <button
             onClick={() => deletFormHandle(index)}
-            className="btn"
+            className="btn km-page-content"
             style={{ backgroundColor: "#E83015", color: "white" }}
           >
             移除
@@ -233,7 +233,7 @@ function Hotel() {
     <>
       <div className="mx-5  mb-5">
         <div className="ms-5">
-          <h3 className="mt-5 mb-5">飯店房型管理&gt;飯店</h3>
+          <h3 className="mt-5 mb-5 km-page-title">飯店房型管理&gt;飯店</h3>
         </div>
         <div>
           <div className="row ms-5 mb-5 g-0">
@@ -241,21 +241,23 @@ function Hotel() {
               <div className="d-flex justify-content-start">
                 <button
                   onClick={handleAddShow}
-                  className="btn"
+                  className="btn km-page-header"
                   style={{
                     backgroundColor: "#7BA23F",
                     color: "white",
-                    fontSize: "20px",
                   }}
                 >
                   新增飯店
                 </button>
                 <Modal
-                  size="xl"
+                  size="lg"
                   // aria-labelledby="contained-modal-title-vcenter"
-                  centered
+                  // centered
                   show={addShow}
                   onHide={handleAddClose}
+                  style={{
+                    margin: '0 0 0 170px',
+                  }}
                 >
                   <Modal.Header
                     closeButton
@@ -270,21 +272,19 @@ function Hotel() {
                 <div className="col-3 me-2">
                   <input
                     name="keyword"
-                    className="form-control col-1 "
+                    className="form-control col-1 km-page-header"
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
                     onChange={sreachChangeHandle}
-                    style={{ fontSize: "20px" }}
                   />
                 </div>
                 <div className="col-3 me-2">
                   <select
                     name="cityId"
-                    className=" form-select col-2"
+                    className=" form-select col-2 km-page-header"
                     aria-label="Default select example"
                     onChange={sreachChangeHandle}
-                    style={{ fontSize: "20px" }}
                   >
                     <option value="" selected>
                       地區搜尋
@@ -297,13 +297,12 @@ function Hotel() {
                 </div>
                 <div className="col-2">
                   <button
-                    className="btn"
+                    className="btn km-page-header"
                     type="submit"
                     onClick={sreachSubmitHandle}
                     style={{
                       backgroundColor: "#7BA23F",
                       color: "white",
-                      fontSize: "20px",
                     }}
                   >
                     搜尋
@@ -322,8 +321,7 @@ function Hotel() {
               {loading ? (
                 <>
                   <table
-                    className="table table-sm table-hover text-center align-middle"
-                    style={{ fontSize: "18px" }}
+                    className="table table-sm table-hover text-center align-middle km-page-content"
                   >
                     <thead>
                       <tr>
@@ -386,9 +384,10 @@ function Hotel() {
       <Modal
         size="xl"
         // aria-labelledby="contained-modal-title-vcenter"
-        centered
+        // centered
         show={editShow}
         onHide={handleEditClose}
+        style={{ margin:'-50px 0 0 170px' }}
       >
         <Modal.Header closeButton></Modal.Header>
         <HotelViewEdits

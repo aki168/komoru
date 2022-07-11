@@ -43,13 +43,14 @@ const DemoPieParticipate = ({northData}) => {
     data,
     angleField: 'value',
     colorField: 'type',
+    color: ['#51a49a', '#ed8c4e'],
     radius: 0.9,
     label: {
       type: 'inner',
       offset: '-30%',
       content: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
       style: {
-        fontSize: 14,
+        fontSize: 20,
         textAlign: 'center',
       },
     },

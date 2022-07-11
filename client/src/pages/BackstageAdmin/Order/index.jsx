@@ -40,6 +40,10 @@ function Order() {
     orderStatus: "",
   });
 
+  /*20220711 YN
+  判斷有無選取狀態初始化*/
+  const [inputHandle, setInputHandle] = useState(false);
+
   /*20220704 YN
   登入狀態為false自動轉跳Login頁面 */
   let navigate = useNavigate();
@@ -68,7 +72,7 @@ function Order() {
         "http://localhost:5000/order/getOrderDataListWithRoomDescAndStayNight"
       )
       .then((res) => {
-        // console.log(res.data.dataList);
+        console.log(res.data.dataList);
         setData(res.data.dataList);
         setLoading(true);
       })
@@ -79,73 +83,81 @@ function Order() {
   取得目前選取列表orderData資料，並設定orderData狀態*/
   const orderStatusChange = (index) => {
     setOrderData(data[index].orderStatus);
+    setInputHandle(true);
     // console.log(data[index])
   };
   /*20220628 YN
   判斷目前取得的orderStatus狀態資料是否為"未入住"，並轉換狀態*/
   const unCheckInHandle = () => {
     // console.log(orderData.orderStatus)
-    if (orderData.orderStatus !== "未入住") {
-      if (window.confirm("確定修改嗎?")) {
-        const orderLists = {
-          orderId: orderData.orderId,
-          orderStatus: "0",
-          employeeId: "1",
-        };
-        console.log(orderLists);
-        fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-          },
-          body: JSON.stringify(orderLists),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            window.location.reload(false);
-            alert("修改成功");
-          })
-          .catch((e) => {
-            console.error(e);
-          });
-      }
+    if (inputHandle === false) {
+      alert("請選取項目");
     } else {
-      alert("目前以'未入住'狀態");
+      if (orderData.orderStatus !== "未入住") {
+        if (window.confirm("確定修改嗎?")) {
+          const orderLists = {
+            orderId: orderData.orderId,
+            orderStatus: "0",
+            employeeId: "1",
+          };
+          console.log(orderLists);
+          fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify(orderLists),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              window.location.reload(false);
+              alert("修改成功");
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+        }
+      } else {
+        alert("目前以'未入住'狀態");
+      }
     }
   };
   /*20220628 YN
   判斷目前取得的orderStatus狀態資料是否為"已入住"，並轉換狀態*/
   const checkInHandle = () => {
     // console.log(orderData.orderStatus)
-
-    if (orderData.orderStatus !== "已入住") {
-      if (window.confirm("確定修改嗎?")) {
-        const orderLists = {
-          orderId: orderData.orderId,
-          orderStatus: "1",
-          employeeId: "1",
-        };
-        console.log(orderLists);
-        fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-          },
-          body: JSON.stringify(orderLists),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            window.location.reload(false);
-            alert("修改成功");
-          })
-          .catch((e) => {
-            console.error(e);
-          });
-      }
+    if (inputHandle === false) {
+      alert("請選取項目");
     } else {
-      alert("目前為'已入住'狀態");
+      if (orderData.orderStatus !== "已入住") {
+        if (window.confirm("確定修改嗎?")) {
+          const orderLists = {
+            orderId: orderData.orderId,
+            orderStatus: "1",
+            employeeId: "1",
+          };
+          console.log(orderLists);
+          fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify(orderLists),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              window.location.reload(false);
+              alert("修改成功");
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+        }
+      } else {
+        alert("目前為'已入住'狀態");
+      }
     }
   };
 
@@ -153,33 +165,37 @@ function Order() {
   判斷目前取得的orderStatus狀態資料是否為"已退房"，並轉換狀態*/
   const checkOutHandle = () => {
     // console.log(orderData.orderStatus)
-    if (orderData.orderStatus !== "已退房") {
-      if (window.confirm("確定修改嗎?")) {
-        const orderLists = {
-          orderId: orderData.orderId,
-          orderStatus: "2",
-          employeeId: "1",
-        };
-        console.log(orderLists);
-        fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-          },
-          body: JSON.stringify(orderLists),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            window.location.reload(false);
-            alert("修改成功");
-          })
-          .catch((e) => {
-            console.error(e);
-          });
-      }
+    if (inputHandle === false) {
+      alert("請選取項目");
     } else {
-      alert("目前以'已退房'狀態");
+      if (orderData.orderStatus !== "已退房") {
+        if (window.confirm("確定修改嗎?")) {
+          const orderLists = {
+            orderId: orderData.orderId,
+            orderStatus: "2",
+            employeeId: "1",
+          };
+          console.log(orderLists);
+          fetch("http://localhost:5000/order/updateOrderStatusByOrderId", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify(orderLists),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              window.location.reload(false);
+              alert("修改成功");
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+        }
+      } else {
+        alert("目前以'已退房'狀態");
+      }
     }
   };
 
@@ -192,14 +208,15 @@ function Order() {
         <td className="col-sm-1">
           <input
             className="form-check-input"
+            id="flexRadioDefault"
             type="radio"
             value={data.orderId}
             name="flexRadioDefault"
             onChange={() => orderStatusChange(index)}
           />
         </td>
-        <td className="col-sm-1">{data.orderId}</td>
         <td className="col-sm-1">{data.orderNumber}</td>
+        <td className="col-sm-1">{data.memberName}</td>
         <td className="col-sm-2">{data.roomType}</td>
         <td className="col-sm-1">{data.orderStartDate}</td>
         <td className="col-sm-1">{data.stayNight}</td>
@@ -207,7 +224,7 @@ function Order() {
         <td className="col-sm-1">
           <button
             onClick={() => handleViewShow(index)}
-            className="btn "
+            className="btn km-page-content"
             style={{ backgroundColor: "#06CAD7", color: "white" }}
           >
             檢視
@@ -315,11 +332,10 @@ function Order() {
                 ) : (
                   <button
                     onClick={unCheckInHandle}
-                    className=" btn "
+                    className=" btn km-page-header"
                     style={{
                       backgroundColor: "#7BA23F",
                       color: "white",
-                      fontSize: "20px",
                     }}
                   >
                     未入住
@@ -331,11 +347,10 @@ function Order() {
                 ) : (
                   <button
                     onClick={checkInHandle}
-                    className="btn ms-2"
+                    className="btn ms-2 km-page-header"
                     style={{
                       backgroundColor: "#7BA23F",
                       color: "white",
-                      fontSize: "20px",
                     }}
                   >
                     已入住
@@ -347,11 +362,10 @@ function Order() {
                 ) : (
                   <button
                     onClick={checkOutHandle}
-                    className="btn ms-2"
+                    className="btn ms-2 km-page-header"
                     style={{
                       backgroundColor: "#7BA23F",
                       color: "white",
-                      fontSize: "20px",
                     }}
                   >
                     已退房
@@ -364,21 +378,19 @@ function Order() {
                 <div className="col-3 me-2">
                   <input
                     name="keyword"
-                    className="form-control col-1 "
+                    className="form-control col-1 km-page-header"
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
                     onChange={sreachChangeHandle}
-                    style={{ fontSize: "20px" }}
                   />
                 </div>
                 <div className="col-3 me-2">
                   <select
                     name="orderStatus"
-                    className=" form-select col-2"
+                    className=" form-select col-2 km-page-header"
                     aria-label="Default select example"
                     onChange={sreachChangeHandle}
-                    style={{ fontSize: "20px" }}
                   >
                     <option value="" selected>
                       入住狀態搜尋
@@ -390,13 +402,12 @@ function Order() {
                 </div>
                 <div className="col-2 ">
                   <button
-                    className="btn"
+                    className="btn km-page-header"
                     type="submit"
                     onClick={sreachSubmitHandle}
                     style={{
                       backgroundColor: "#7BA23F",
                       color: "white",
-                      fontSize: "20px",
                     }}
                   >
                     搜尋
@@ -409,10 +420,7 @@ function Order() {
             <div className="col-sm-11">
               {loading ? (
                 <>
-                  <table
-                    className="table table-hover text-center align-middle data-click-to-select='true' "
-                    style={{ fontSize: "18px" }}
-                  >
+                  <table className="table table-hover text-center align-middle km-page-content">
                     <thead>
                       <tr>
                         <td></td>
@@ -422,7 +430,7 @@ function Order() {
                         <td>入住日期</td>
                         <td>入住天數</td>
                         <td>入住狀態</td>
-                        <td></td>
+                        <td>功能</td>
                       </tr>
                     </thead>
                     <tbody>{displayUsers}</tbody>

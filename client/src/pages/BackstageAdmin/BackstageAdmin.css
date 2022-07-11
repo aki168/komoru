@@ -1,8 +1,27 @@
+.table>:not(:first-child) {
+    border-top: 1.5px solid #808080;
+}
+
 .km-page-title{
     font-size: 18px;
 }
 
-.table>:not(:first-child) {
-    border-top: 1.5px solid #808080;
+.km-page-header{
+    font-size: 14px;
+}
 
+.km-page-content{
+    font-size: 14px;
+}
+
+.km-modal-title{
+    font-size: 18px;
+}
+
+.km-modal-header{
+    font-size: 14px;
+}
+
+.km-modal-content{
+    font-size: 18px;
 }

@@ -2,14 +2,14 @@
     box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px 
 }
 
-.tabs-img:hover img {
+/* .tabs-img:hover img {
     transform: scale(1.2);
-}
+} */
 
 .cover-fit {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* object-fit: cover; */
     
 }
 
@@ -22,7 +22,72 @@
 .tabs-img img {
     width: 100%;
     height: 100%;
-    transition: .5s;
-    overflow: hidden;
+    /* transition: .5s;    
+    overflow: hidden; */
    
+}
+.km-dashboard-text{
+    color:white;
+    text-decoration: none;
+}
+
+.km-dashboard-hover:hover{
+    border: 1px solid #efa16a;
+    color:white;
+    text-decoration: none;
+}
+
+.km-dashboard-img-north{
+    background-image: url('../../../assets/area/north-gray.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+.km-dashboard-img-middle{
+    background-image: url('../../../assets/area/middle-gray.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+.km-dashboard-img-sorth{
+    background-image: url('../../../assets/area/sorth-gray.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+.km-dashboard-img-east{
+    background-image: url('../../../assets/area/east-gray.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+
+.km-img-north:focus,.km-img-north:active{
+    /* background-color: #ed8c4e; */
+    background-image: url('../../../assets/area/north-or.jpg');
+    color:white;
+    text-decoration: none;
+    /* border: 2px solid #ed8c4e */
+}
+.km-img-middle:focus,.km-img-middle:active{
+    /* background-color: #ed8c4e; */
+    background-image: url('../../../assets/area/middle-or.jpg');
+    color:white;
+    text-decoration: none;
+    /* border: 2px solid #ed8c4e */
+}
+.km-img-sorth:focus,.km-img-sorth:active{
+    /* background-color: #ed8c4e; */
+    background-image: url('../../../assets/area/sorth-or.jpg');
+    color:white;
+    text-decoration: none;
+    /* border: 2px solid #ed8c4e */
+}
+.km-img-east:focus,.km-img-east:active{
+    /* background-color: #ed8c4e; */
+    background-image: url('../../../assets/area/east-or.jpg');
+    color:white;
+    text-decoration: none;
+    /* border: 2px solid #ed8c4e */
 }

@@ -55,14 +55,16 @@ const DemoPieActivityType = ({northData}) => {
     appendPadding: 10,
     data,
     angleField: 'value',
+    color: '#ed8c4e',
     colorField: 'type',
+    color: ['#ED8C4E', '#EFA16A', '#F3B486', '#F5C5A7', '#F6CEBF'],
     radius: 0.9,
     label: {
       type: 'inner',
       offset: '-30%',
       content: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
       style: {
-        fontSize: 14,
+        fontSize: 20,
         textAlign: 'center',
       },
     },

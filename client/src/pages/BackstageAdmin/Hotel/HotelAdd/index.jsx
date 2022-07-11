@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { BsFillArrowUpSquareFill } from "react-icons/bs";
+import { IoAlertCircleSharp } from "react-icons/io5";
+import { HiOutlineRefresh } from "react-icons/hi";
+import { MdOutlineFileUpload } from "react-icons/md";
 
 function HotelAdd({ setAddShow, data }) {
   /*20220622 YN
@@ -37,9 +40,13 @@ function HotelAdd({ setAddShow, data }) {
   /*20220630 YN
      選擇照片狀態初始化*/
   const [selectedPrimaryFile, setSelectedPrimaryFile] = useState(null);
-  const [selectedFirstaryFile, setSelectedFirstaryFile] = useState(null);
+  const [selectedFirstFile, setSelectedFirstFile] = useState(null);
   const [selectedSecondFile, setSelectedSecondFile] = useState(null);
   const [selectedThirdFile, setSelectedThirdFile] = useState(null);
+
+  /*20220710 YN
+  當輸入框為""，出現警示狀態初始化 */
+  const [alertImg, setAlertImg] = useState(false);
 
   /*20220622 YN
      取得後端飯店資料*/
@@ -110,7 +117,7 @@ function HotelAdd({ setAddShow, data }) {
     const formData = new FormData();
     formData.append("hotelDataList", JSON.stringify(newContact));
     formData.append("mainHotelImgFile", selectedPrimaryFile);
-    formData.append("firstHotelImgFile", selectedFirstaryFile);
+    formData.append("firstHotelImgFile", selectedFirstFile);
     formData.append("secondHotelImgFile", selectedSecondFile);
     formData.append("thirdHotelImgFile", selectedThirdFile);
     // if (selectedPrimaryFile === null) {
@@ -124,22 +131,37 @@ function HotelAdd({ setAddShow, data }) {
     // } else {
     // }
     console.log(...formData);
-
-    fetch("http://localhost:5000/hotel/addHotel", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status) {
-          setAddShow(false);
-          window.location.reload(false);
-        }
-        console.log(data);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    if (
+      addFormData.hotelTitle === "" ||
+      addFormData.cityId === "" ||
+      addFormData.hotelAddr === "" ||
+      addFormData.hotelTel === "" ||
+      addFormData.hotelDesc === "" ||
+      addFormData.hotelContent === "" ||
+      selectedPrimaryFile === null ||
+      selectedFirstFile === null ||
+      selectedSecondFile === null ||
+      selectedThirdFile === null
+    ) {
+      setAlertImg(true);
+    } else {
+      setAlertImg(false);
+      // fetch("http://localhost:5000/hotel/addHotel", {
+      //   method: "POST",
+      //   body: formData,
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     if (data.status) {
+      //       setAddShow(false);
+      //       window.location.reload(false);
+      //     }
+      //     console.log(data);
+      //   })
+      //   .catch((e) => {
+      //     console.error(e);
+      //   });
+    }
   };
 
   /*20220625 YN
@@ -168,7 +190,7 @@ function HotelAdd({ setAddShow, data }) {
       let reader = new FileReader();
       reader.onloadend = () => {
         setFirstImgPreview(reader.result);
-        setSelectedFirstaryFile(selected);
+        setSelectedFirstFile(selected);
         console.log(selected);
       };
       reader.readAsDataURL(selected);
@@ -217,138 +239,256 @@ function HotelAdd({ setAddShow, data }) {
   }, []);
 
   return (
-    <Form className="container row mt-3" onSubmit={addFormSubmitHandle}>
-      <Form.Group className="col-6 d-flex ">
-        <div className="container-fluid d-flex flex-column">
+    <Form className="row me-5 ms-5 mb-3 mt-3" onSubmit={addFormSubmitHandle}>
+      <Form.Group className="col-6 d-flex g-0">
+        <div className="container d-flex flex-column">
           <div
-            className="col-12 h-75 justify-content-center d-flex flex-column align-items-center"
+            className="col-12"
             style={{
+              height: "70%",
               background: primaryImgPreview
                 ? `url("${primaryImgPreview}") no-repeat center/cover`
-                : "#d3d3d3",
+                : "#f4f5f7",
             }}
           >
-            {!primaryImgPreview && (
-              <>
-                <label className="btn text-white " htmlFor="primaryfileUpload">
-                  <BsFillArrowUpSquareFill size="4em" />
-                </label>
-                <input
-                  id="primaryfileUpload"
-                  type="file"
-                  style={{ display: "none" }}
-                  onChange={primaryImageChangeHandle}
+            {primaryImgPreview && (
+              <button
+                style={{ border: "none", background: "none" }}
+                onClick={() => setPrimaryImgPreview(null)}
+              >
+                <HiOutlineRefresh
+                  size="30px"
+                  color="#ed8c4e"
+                  style={{ marginTop: "10px" }}
                 />
-                <p className="text-white">請選擇主要圖片</p>
-              </>
+              </button>
             )}
-            {primaryError && (
-              <p className="text-center text-danger">不支援此檔案</p>
-            )}
-            <div>
-              {primaryImgPreview && (
-                <button onClick={() => setPrimaryImgPreview(null)}>
-                  更換照片
-                </button>
-              )}
-            </div>
-          </div>
-          <div className="mt-2 col-md-12 d-flex h-25 container-fuield">
-            <div
-              className="me-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
-              style={{
-                background: firstImgPreview
-                  ? `url("${firstImgPreview}") no-repeat center/cover`
-                  : "#d3d3d3",
-              }}
+            <Form.Group
+              className="d-flex justify-content-center "
+              style={{ paddingTop: "100px" }}
             >
-              {!firstImgPreview && (
-                <>
-                  <label className="btn text-white " htmlFor="firstFileUpload">
-                    <BsFillArrowUpSquareFill size="2em" />
-                  </label>
-                  <input
-                    id="firstFileUpload"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={firstImageChangeHandle}
-                  />
-                </>
-              )}
-              {firstError && (
-                <p className="text-center text-danger">不支援此檔案</p>
-              )}
-              <div>
+              <div className="d-flex flex-column">
+                {!primaryImgPreview && (
+                  <>
+                    <label
+                      className="btn text-white "
+                      htmlFor="primaryfileUpload"
+                    >
+                      <MdOutlineFileUpload size="5em" color="#efa16a" />
+                    </label>
+                    <input
+                      id="primaryfileUpload"
+                      type="file"
+                      style={{ display: "none" }}
+                      onChange={primaryImageChangeHandle}
+                    />
+                    {selectedPrimaryFile === null && (
+                      <>
+                        {alertImg && (
+                          <p
+                            className="d-flex align-items-center"
+                            style={{ color: "red" }}
+                          >
+                            <IoAlertCircleSharp size="20px" color="red" />
+                            請上傳檔案
+                          </p>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+                {primaryError && (
+                  <p className="text-center text-danger">不支援此檔案</p>
+                )}
+              </div>
+            </Form.Group>
+          </div>
+
+          <div className="mt-2 col-md-12 d-flex">
+            <div className="col-md-4" style={{ paddingRight: "5px" }}>
+              <div
+                style={{
+                  height: "130px",
+                  background: firstImgPreview
+                    ? `url("${firstImgPreview}") no-repeat center/cover`
+                    : "#f4f5f7",
+                }}
+              >
                 {firstImgPreview && (
-                  <button onClick={() => setFirstImgPreview(null)}>
-                    更換照片
+                  <button
+                    style={{ border: "none", background: "none" }}
+                    onClick={() => setFirstImgPreview(null)}
+                  >
+                    <HiOutlineRefresh
+                      size="20px"
+                      color="#ed8c4e"
+                      style={{ marginTop: "10px" }}
+                    />
                   </button>
                 )}
+                <Form.Group
+                  className="d-flex justify-content-center "
+                  style={{ paddingTop: "35px" }}
+                >
+                  <div className="d-flex flex-column">
+                    {!firstImgPreview && (
+                      <>
+                        <label
+                          className="btn text-white "
+                          htmlFor="firstFileUpload"
+                        >
+                          <MdOutlineFileUpload size="2em" color="#efa16a" />
+                        </label>
+                        <input
+                          id="firstFileUpload"
+                          type="file"
+                          style={{ display: "none" }}
+                          onChange={firstImageChangeHandle}
+                        />
+                        {selectedFirstFile === null && (
+                          <>
+                            {alertImg && (
+                              <p
+                                className="d-flex align-items-center"
+                                style={{ color: "red" }}
+                              >
+                                <IoAlertCircleSharp size="20px" color="red" />
+                                請上傳檔案
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                    {firstError && (
+                      <p className="text-center text-danger">不支援此檔案</p>
+                    )}
+                  </div>
+                </Form.Group>
               </div>
             </div>
 
-            <div
-              className="col-md-4 d-flex flex-column justify-content-center align-items-center"
-              style={{
-                background: secondImgPreview
-                  ? `url("${secondImgPreview}") no-repeat center/cover`
-                  : "#d3d3d3",
-              }}
-            >
-              {!secondImgPreview && (
-                <>
-                  <label className="btn text-white " htmlFor="secondfileUpload">
-                    <BsFillArrowUpSquareFill size="2em" />
-                  </label>
-                  <input
-                    id="secondfileUpload"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={secondImageChangeHandle}
-                  />
-                </>
-              )}
-              {secondError && (
-                <p className="text-center text-danger">不支援此檔案</p>
-              )}
-              <div>
+            <div className="col-md-4" style={{ paddingRight: "2.5px",paddingLeft:'2.5px' }}>
+              <div
+                style={{
+                  height: "130px",
+                  background: secondImgPreview
+                    ? `url("${secondImgPreview}") no-repeat center/cover`
+                    : "#f4f5f7",
+                }}
+              >
                 {secondImgPreview && (
-                  <button onClick={() => setSecondImgPreview(null)}>
-                    更換照片
+                  <button
+                    style={{ border: "none", background: "none" }}
+                    onClick={() => setSecondImgPreview(null)}
+                  >
+                    <HiOutlineRefresh
+                      size="20px"
+                      color="#ed8c4e"
+                      style={{ marginTop: "10px" }}
+                    />
                   </button>
                 )}
+                <Form.Group
+                  className="d-flex justify-content-center "
+                  style={{ paddingTop: "35px" }}
+                >
+                  <div className="d-flex flex-column">
+                    {!secondImgPreview && (
+                      <>
+                        <label
+                          className="btn text-white "
+                          htmlFor="secondfileUpload"
+                        >
+                          <MdOutlineFileUpload size="2em" color="#efa16a" />
+                        </label>
+                        <input
+                          id="secondfileUpload"
+                          type="file"
+                          style={{ display: "none" }}
+                          onChange={secondImageChangeHandle}
+                        />
+                        {selectedSecondFile === null && (
+                          <>
+                            {alertImg && (
+                              <p
+                                className="d-flex align-items-center"
+                                style={{ color: "red" }}
+                              >
+                                <IoAlertCircleSharp size="20px" color="red" />
+                                請上傳檔案
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                    {secondError && (
+                      <p className="text-center text-danger">不支援此檔案</p>
+                    )}
+                  </div>
+                </Form.Group>
               </div>
             </div>
-            <div
-              className="ms-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
-              style={{
-                background: thirdImgPreview
-                  ? `url("${thirdImgPreview}") no-repeat center/cover`
-                  : "#d3d3d3",
-              }}
-            >
-              {!thirdImgPreview && (
-                <>
-                  <label className="btn text-white " htmlFor="fileUpload">
-                    <BsFillArrowUpSquareFill size="2em" />
-                  </label>
-                  <input
-                    id="fileUpload"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={thirdImageChangeHandle}
-                  />
-                </>
-              )}
-              {thirdError && (
-                <p className="text-center text-danger">不支援此檔案</p>
-              )}
-              <div>
+
+            <div  className="col-md-4" style={{paddingLeft:'5px'}}>
+              <div
+                style={{
+                  height:'130px',
+                  background: thirdImgPreview
+                    ? `url("${thirdImgPreview}") no-repeat center/cover`
+                    : "#f4f5f7",
+                }}
+              >
                 {thirdImgPreview && (
-                  <button onClick={() => setThirdImgPreview(null)}>
-                    更換照片
+                  <button
+                    style={{ border: "none", background: "none" }}
+                    onClick={() => setThirdImgPreview(null)}
+                  >
+                    <HiOutlineRefresh
+                      size="20px"
+                      color="#ed8c4e"
+                      style={{ marginTop: "10px" }}
+                    />
                   </button>
                 )}
+
+                <Form.Group
+                  className="d-flex justify-content-center "
+                  style={{ paddingTop: "35px" }}
+                >
+                  <div className="d-flex flex-column">
+                    {!thirdImgPreview && (
+                      <>
+                        <label className="btn text-white " htmlFor="fileUpload">
+                          <MdOutlineFileUpload size="2em" color="#efa16a" />
+                        </label>
+                        <input
+                          id="fileUpload"
+                          type="file"
+                          style={{ display: "none" }}
+                          onChange={thirdImageChangeHandle}
+                        />
+                        {selectedThirdFile === null && (
+                          <>
+                            {alertImg && (
+                              <p
+                                className="d-flex align-items-center"
+                                style={{ color: "red" }}
+                              >
+                                <IoAlertCircleSharp size="20px" color="red" />
+                                請上傳檔案
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                    {thirdError && (
+                      <p className="text-center text-danger">不支援此檔案</p>
+                    )}
+                  </div>
+                </Form.Group>
               </div>
             </div>
           </div>
@@ -359,59 +499,169 @@ function HotelAdd({ setAddShow, data }) {
           <Form.Control
             type="text"
             name="hotelTitle"
-            required="required"
+            // required="required"
             placeholder="請輸入飯店名稱"
+            className="km-modal-content"
             onChange={addFormChangeHandle}
           />
         </Form.Group>
-        <Form.Group>
-          <Form.Select name="cityId" onChange={addFormChangeHandle}>
+        {addFormData.hotelTitle === "" && (
+          <>
+            {alertImg && (
+              <div
+                className="d-flex"
+                style={{ color: "red", marginTop: "5px" }}
+              >
+                <IoAlertCircleSharp
+                  size="20px"
+                  color="red"
+                  style={{ marginRight: "5px" }}
+                />
+                <p>飯店不可空白</p>
+              </div>
+            )}
+          </>
+        )}
+        <Form.Group className="mt-3">
+          <Form.Select
+            name="cityId"
+            onChange={addFormChangeHandle}
+            className="km-modal-content"
+          >
             <option defaultValue>請選擇區域</option>
-            <option value={1}>台北市</option>
-            <option value={2}>台中市</option>
-            <option value={3}>台南市</option>
-            <option value={4}>台東市</option>
+            <option value="1">台北市</option>
+            <option value="2">台中市</option>
+            <option value="3">台南市</option>
+            <option value="4">台東市</option>
           </Form.Select>
         </Form.Group>
-        <Form.Group>
+        {addFormData.cityId === "" && (
+          <>
+            {alertImg && (
+              <div
+                className="d-flex"
+                style={{ color: "red", marginTop: "5px" }}
+              >
+                <IoAlertCircleSharp
+                  size="20px"
+                  color="red"
+                  style={{ marginRight: "5px" }}
+                />
+                <p>區域不可空白</p>
+              </div>
+            )}
+          </>
+        )}
+        <Form.Group className="mt-3">
           <Form.Control
             type="text"
             name="hotelAddr"
-            required="required"
+            // required="required"
             placeholder="請輸入地址"
             onChange={addFormChangeHandle}
+            className="km-modal-content"
           />
         </Form.Group>
-        <Form.Group>
+        {addFormData.hotelAddr === "" && (
+          <>
+            {alertImg && (
+              <div
+                className="d-flex"
+                style={{ color: "red", marginTop: "5px" }}
+              >
+                <IoAlertCircleSharp
+                  size="20px"
+                  color="red"
+                  style={{ marginRight: "5px" }}
+                />
+                <p>地址不可空白</p>
+              </div>
+            )}
+          </>
+        )}
+        <Form.Group className="mt-3">
           <Form.Control
             type="text"
             name="hotelTel"
-            required="required"
+            // required="required"
             placeholder="請輸入聯絡電話"
             onChange={addFormChangeHandle}
+            className="km-modal-content"
           />
         </Form.Group>
-        <Form.Group>
+        {addFormData.hotelTel === "" && (
+          <>
+            {alertImg && (
+              <div
+                className="d-flex"
+                style={{ color: "red", marginTop: "5px" }}
+              >
+                <IoAlertCircleSharp
+                  size="20px"
+                  color="red"
+                  style={{ marginRight: "5px" }}
+                />
+                <p>聯絡電話不可空白</p>
+              </div>
+            )}
+          </>
+        )}
+        <Form.Group className="mt-3">
           <Form.Control
             type="text"
             name="hotelDesc"
-            required="required"
+            // required="required"
             placeholder="備註"
             onChange={addFormChangeHandle}
+            className="km-modal-content"
           />
         </Form.Group>
-        <Form.Group>
-          <Form.Label></Form.Label>
+        {addFormData.hotelDesc === "" && (
+          <>
+            {alertImg && (
+              <div
+                className="d-flex"
+                style={{ color: "red", marginTop: "5px" }}
+              >
+                <IoAlertCircleSharp
+                  size="20px"
+                  color="red"
+                  style={{ marginRight: "5px" }}
+                />
+                <p>備註不可空白</p>
+              </div>
+            )}
+          </>
+        )}
+        <Form.Group className="mt-3">
           <Form.Control
             as="textarea"
             rows={3}
             placeholder="請輸入飯店介紹"
             name="hotelContent"
             onChange={addFormChangeHandle}
+            className="km-modal-content"
           />
         </Form.Group>
+        {addFormData.hotelContent === "" && (
+          <>
+            {alertImg && (
+              <div
+                className="d-flex"
+                style={{ color: "red", marginTop: "5px" }}
+              >
+                <IoAlertCircleSharp
+                  size="20px"
+                  color="red"
+                  style={{ marginRight: "5px" }}
+                />
+                <p>飯店介紹不可空白</p>
+              </div>
+            )}
+          </>
+        )}
       </Form.Group>
-      <div className="mt-1 mb-1 d-flex justify-content-end">
+      <div className="d-flex justify-content-end">
         <Button className="mt-3 mb-3" type="submit">
           新增
         </Button>
