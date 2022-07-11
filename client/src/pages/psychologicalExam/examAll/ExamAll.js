@@ -35,6 +35,7 @@ const ExamAll = () => {
   const [personality, setPersonality] = useState("");
   const [personalityDescribe, setPersonalityDescribe] = useState("");
   const [activityPack, setActivityPack] = useState("");
+  const [examImg, setExamImg] = useState();
 
   const [page, setPage] = useState(0);
   const FormTitles = ["問題一.", "問題二.", "問題三.", "問題四.", "問題五."];
@@ -191,7 +192,7 @@ const ExamAll = () => {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data.dataList.personality);
+            console.log(data.dataList);
             // let personality = res.dataList.personality;
             // let personalityDescribe = res.dataList.personalityDescribe;
             setPersonality(data.dataList.personality);
