@@ -342,25 +342,7 @@ function BookingOrderPage() {
         roomId: roomState,
         couponItemId: couponState,
         orderTotal: sumActivity,
-        // activePackId: PackId,
-        //         activePackId: {
-        //           D1:{
-        // roomprice:700
-        // activeprice:700
-        // isActive:0
-        // PackId:1-5
-        //           },
-        //           D2:{
-        //             roomprice:700
-        //             activeprice:(isActive==0)?"":700
-        //             isActive:isActive
-        //             PackId:(isActive==0)?"":213
-        //           },
-        //           D3:{
-
-        //           }
-
-        //         },
+        activePackId: PackId,
         isActive: activityState,
         joinTotal: countActivity,
         orderItemPrice: 8763

@@ -129,9 +129,16 @@ exports.updateOrderStatusByOrderId = async (req, res, next) => {
 exports.getAndSaveOrderData = async (req, res) => {
   var data = req.body;
   console.log(data);
+  console.log('data.couponItemId');
+  console.log(data.couponItemId);
+  if (data.couponItemId === "") {
+    data.couponItemId = null
+  }
   try {
     console.log('start');
     await orderModel.saveOrderData(data).then(async (result) => {
+      console.log('res');
+      console.log(result);
       await orderModel.saveOrderIdToOrderItemAndExamItem(result)
     })
       .then(() => {
