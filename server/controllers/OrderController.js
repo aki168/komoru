@@ -130,13 +130,15 @@ exports.getAndSaveOrderData = async (req, res) => {
   var data = req.body;
   console.log(data);
   try {
-    console.log('start');
-    await orderModel.saveOrderData(data).then(async (result) => {
-      await orderModel.saveOrderIdToOrderItemAndExamItem(result)
-    })
+    console.log("start");
+    await orderModel
+      .saveOrderData(data)
+      .then(async (result) => {
+        await orderModel.saveOrderIdToOrderItemAndExamItem(result);
+      })
       .then(() => {
         configController.sendJsonMsg(res, true, "", "儲存成功");
-      })
+      });
   } catch (error) {
     configController.sendJsonMsg(
       res,
@@ -151,7 +153,7 @@ exports.getAndSaveOrderData = async (req, res) => {
 // 取得coupon By memberId
 exports.getCouponData = async (req, res) => {
   var data = req.body;
-  var memberId = data['memberId'];
+  var memberId = data["memberId"];
   if (memberId) {
     try {
       let done = await orderModel.getCouponItemDataList(memberId);
@@ -180,7 +182,9 @@ exports.getOrderDataByMemberId = async (req, res) => {
       // 1.用memberId查orderId
       let getOrdeIdByMemberId = await orderModel.getOrdeIdByMemberId(memberId);
       // 2.用orderId查訂單詳細內容
-      let getOrderDatalistByOrderId = await orderModel.splitOrderIdArray(getOrdeIdByMemberId)
+      let getOrderDatalistByOrderId = await orderModel.splitOrderIdArray(
+        getOrdeIdByMemberId
+      );
       // 將 enum 數值轉換為文字
       for (let i = 0; i < getOrderDatalistByOrderId.length; i++) {
         let valueToString = configController.enumValueToString(
@@ -204,19 +208,18 @@ exports.getOrderDataByMemberId = async (req, res) => {
           ? valueToString.transferString
           : valueToString.errMsg;
 
-        getOrderDatalistByOrderId[i].orderStatus = orderStatusValueToString.errCheck
-          ? orderStatusValueToString.transferString
-          : orderStatusValueToString.errMsg;
+        getOrderDatalistByOrderId[i].orderStatus =
+          orderStatusValueToString.errCheck
+            ? orderStatusValueToString.transferString
+            : orderStatusValueToString.errMsg;
 
-        getOrderDatalistByOrderId[i].memberGender = memberGenderValueToString.errCheck
-          ? memberGenderValueToString.transferString
-          : memberGenderValueToString.errMsg;
+        getOrderDatalistByOrderId[i].memberGender =
+          memberGenderValueToString.errCheck
+            ? memberGenderValueToString.transferString
+            : memberGenderValueToString.errMsg;
       }
-      configController.sendJsonMsg(res, true, "", getOrderDatalistByOrderId)
-
-
-    }
-    catch (error) {
+      configController.sendJsonMsg(res, true, "", getOrderDatalistByOrderId);
+    } catch (error) {
       // 目前不確定這邊要怎改
       console.log(error);
       res.status(500).json({ message: "Server error" });

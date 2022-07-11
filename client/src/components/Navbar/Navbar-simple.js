@@ -1,14 +1,18 @@
 // import { logout } from "../../App";
 import "./Navbar.css";
 // import { Button } from "react-bootstrap";
-
+import { Link } from "react-router-dom";
 export default function Navbar() {
   return (
     <nav className="navbar">
       <h1>
-        <a className="navbar--title" href="/">
-          <img className="navbar--logo" src="KOMORU_LOGO_White.png" alt="LOGO"></img>
-        </a>
+        <Link className="navbar--title" to="/">
+          <img
+            className="navbar--logo"
+            src="KOMORU_LOGO_White.png"
+            alt="LOGO"
+          ></img>
+        </Link>
       </h1>
       {/* <ul className="navbar--menu">
         <li>

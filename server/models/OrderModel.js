@@ -117,7 +117,6 @@ exports.updateOrderStatusByOrderId = async (dataList) => {
     "orderStatus": "0",
     "roomId": "5",
     "orderTotal": 8787,
-
     "activePackId": [9,8,7],
     "orderItemPrice": 8763,
     "isActive":"0",
@@ -253,37 +252,40 @@ exports.getCouponItemDataList = async (memberId) => {
 // 取得orderId BY memberId
 exports.getOrdeIdByMemberId = async (memberId) => {
   return new Promise((resolve, reject) => {
-    let sql = "SELECT `Order`.`order_id` FROM `Order` WHERE `member_id` = ? " +
+    let sql =
+      "SELECT `Order`.`order_id` FROM `Order` WHERE `member_id` = ? " +
       "ORDER BY `Order`.`order_start_date` DESC ";
     db.con.query(sql, memberId, (err, rows, fields) => {
       if (err) {
         reject(err);
       }
       resolve(db.rowDataToCamelData(rows));
-    })
-  })
-}
+    });
+  });
+};
 
-// 2022-07-08 MJ 
+// 2022-07-08 MJ
 // 處理OrderArray
 exports.splitOrderIdArray = async (orderIdArray) => {
   return new Promise(async (resolve, reject) => {
     try {
-      var orderData = []
+      var orderData = [];
       for (let i = 0; i < orderIdArray.length; i++) {
-        await exports.getOrderDatalistByOrderId(orderIdArray[i]['orderId'])
+        await exports
+          .getOrderDatalistByOrderId(orderIdArray[i]["orderId"])
           .then((result) => {
             orderData.push(result[0]);
-          })
-        await exports.getOrderItemDataListByOrderId(orderIdArray[i]['orderId'])
+          });
+        await exports
+          .getOrderItemDataListByOrderId(orderIdArray[i]["orderId"])
           .then((result) => {
             // console.log(result);
-            orderData[i]['OrderItem'] = result
-          })
-      };
+            orderData[i]["OrderItem"] = result;
+          });
+      }
       resolve(orderData);
     } catch (error) {
-      reject(error)
+      reject(error);
     }
   });
 };
@@ -309,12 +311,10 @@ exports.getOrderDatalistByOrderId = async (orderId) => {
       if (err) {
         reject(err);
       }
-      resolve(
-        db.rowDataToCamelData(rows)
-      )
-    })
-  })
-}
+      resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};
 
 // 2022-06-30 MJ AKI
 // 取得orderItemDataList byMemberId
@@ -381,8 +381,8 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
         reject(err);
       } else {
         let orderId = db.rowDataToCamelData(rows)[0]["orderId"];
-        let length = data["active_pack_id"].length
-        let isActive = data['is_active'];
+        let length = data["active_pack_id"].length;
+        let isActive = data["is_active"];
         // 寫入OrderId到ExamItem
         let examItemsql =
           "UPDATE `ExamItem` " +
@@ -396,7 +396,7 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
           if (err) {
             reject(err);
           } else {
-            if (isActive === '0') {
+            if (isActive === "0") {
               // 依照總體驗天數寫入OrderId到對應的OrderItem
               for (i = 0; i < length; i++) {
                 // 找到訂單號碼後存入OrderItem
