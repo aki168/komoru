@@ -30,13 +30,12 @@ function Partnership() {
   篩選功能輸入狀態初始化*/
   const [sreachData, setSreachData] = useState({
     keyword: "",
-    cityId: ""
+    cityId: "",
   });
 
   /*20220707 YN
 資料載入過程初始化*/
   const [loading, setLoading] = useState(false);
-
 
   /*20220624 YN
  初始化*/
@@ -92,7 +91,7 @@ function Partnership() {
       .then((res) => {
         // console.log(res.data.dataList);
         setData(res.data.dataList);
-        setLoading(true)
+        setLoading(true);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -106,23 +105,23 @@ function Partnership() {
 
   const arr = data.map((data, index) => {
     return (
-      <tr key={index} className="form-check-label km-tr">
+      <tr key={index} className="form-check-label">
         <td className="col-sm-1">{data.partnershipName}</td>
         <td className="col-sm-1">{data.cityName}</td>
-        <td className="col-sm-2">{data.partnershipAddr}</td>
+        <td className="col-sm-1">{data.partnershipAddr}</td>
         <td className="col-sm-1">{data.partnershipTel}</td>
         <td className="col-sm-1">
           <button
             onClick={() => handleEditShow(index)}
             className="me-1 btn "
-            style={{backgroundColor:'#06CAD7',color:"white"}}
+            style={{ backgroundColor: "#06CAD7", color: "white" }}
           >
             檢視/修改
           </button>
           <button
             onClick={() => deletFormHandle(index)}
             className="btn"
-            style={{backgroundColor:'#E83015',color:"white"}}
+            style={{ backgroundColor: "#E83015", color: "white" }}
           >
             移除
           </button>
@@ -159,12 +158,13 @@ function Partnership() {
         // .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
         .then((res) => {
           console.log(res);
+          alert("移除成功")
+          window.location.reload(false);
         })
         .catch((e) => {
           console.error(e);
         });
 
-      window.location.reload(false);
     }
 
     // setData(
@@ -190,7 +190,6 @@ function Partnership() {
     setPageNumber(selected);
   };
 
-
   /*20220706 YN
     取得搜尋關鍵字及選擇值*/
   const sreachChangeHandle = (event) => {
@@ -200,9 +199,8 @@ function Partnership() {
 
     const newFormData = { ...sreachData };
     newFormData[fieldName] = fieldValue;
-    console.log(newFormData)
+    console.log(newFormData);
     setSreachData(newFormData);
-
   };
   /*20220706 YN
   送出搜尋關鍵字及選擇值進行篩選*/
@@ -212,45 +210,49 @@ function Partnership() {
       keyword: sreachData.keyword,
       cityId: sreachData.cityId,
     };
-    console.log(newContact)
-
+    console.log(newContact);
 
     // setAddFormData(newContacts);
-    fetch("http://localhost:5000/partnership/getPartnershipDataListByKeywordAndCityId", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(newContact),
-    })
+    fetch(
+      "http://localhost:5000/partnership/getPartnershipDataListByKeywordAndCityId",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(newContact),
+      }
+    )
       .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
       .then((data) => {
-        let result = data.dataList
-        console.log(data)
+        let result = data.dataList;
+        console.log(data);
         if (result.length === 0) {
-          alert("查無此資料")
-          setData(data.dataList)
+          alert("查無此資料");
+          setData(data.dataList);
         } else {
-          setData(data.dataList)
+          setData(data.dataList);
         }
       })
       .catch((e) => {
         console.error(e);
       });
-  }
+  };
 
   return (
     <>
       <div className="mx-5  mb-5">
-        <h6 className="ms-5 mt-4 mb-5">系統後台&gt;合作夥伴管理</h6>
+        <div className="ms-5">
+          <h3 className="mt-5 mb-5">合作夥伴管理</h3>
+        </div>
         <div>
-          <div className="row ms-5 mb-5">
+          <div className="row ms-5 mb-5 g-0">
             <div className="col-sm-4">
               <div className="d-flex justify-content-start">
                 <button
                   onClick={handleAddShow}
-                  className="btn  ms-2"
-                  style={{backgroundColor:'#7BA23F',color:'white'}}
+                  className="btn"
+                  style={{ backgroundColor: "#7BA23F", color: "white",fontSize: "20px" }}
                 >
                   新增夥伴
                 </button>
@@ -261,8 +263,12 @@ function Partnership() {
                   centered
                   show={addShow}
                   onHide={handleAddClose}
+                  style={{ marginLeft:'180px'}}
                 >
-                  <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
+                  <Modal.Header
+                    closeButton
+                    style={{ border: "none" }}
+                  ></Modal.Header>
                   <PartnershipAdd
                     data={data}
                     addShow={addShow}
@@ -270,7 +276,6 @@ function Partnership() {
                   />
                 </Modal>
               </div>
-
             </div>
             <div className="col-sm-7 ms-5">
               <div className="row g-0 justify-content-end">
@@ -282,6 +287,7 @@ function Partnership() {
                     placeholder="Search"
                     aria-label="Search"
                     onChange={sreachChangeHandle}
+                    style={{fontSize: "20px"}}
                   />
                 </div>
                 <div className="col-3 me-2">
@@ -290,8 +296,11 @@ function Partnership() {
                     className=" form-select col-2"
                     aria-label="Default select example"
                     onChange={sreachChangeHandle}
+                    style={{fontSize: "20px"}}
                   >
-                    <option value="" selected>地區搜尋</option>
+                    <option value="" selected>
+                      地區搜尋
+                    </option>
                     <option value="1">北區</option>
                     <option value="2">中區</option>
                     <option value="3">南區</option>
@@ -299,29 +308,43 @@ function Partnership() {
                   </select>
                 </div>
                 <div className="col-2 ">
-                  <button className="btn" type="submit" onClick={sreachSubmitHandle} style={{backgroundColor:'#7BA23F',color:"white"}}>
+                  <button
+                    className="btn"
+                    type="submit"
+                    onClick={sreachSubmitHandle}
+                    style={{ backgroundColor: "#7BA23F", color: "white",fontSize: "20px" }}
+                  >
                     搜尋
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <div className="row ms-5">
+          <div className="row ms-5 g-0">
             <div className="col-sm-11">
-              {loading ? <>
-                <table className="table table-hover  text-center align-middle" style={{height:'1000px',fontSize:'18px'}}>
-                  <thead>
-                    <tr>
-                      <td>夥伴名稱</td>
-                      <td>區域</td>
-                      <td>地址</td>
-                      <td>聯絡電話</td>
-                      <td></td>
-                    </tr>
-                  </thead>
-                  <tbody>{displayUsers}</tbody>
-                </table>
-              </> : <div className="d-flex justify-content-center"><BackstageLoding /></div>}
+              {loading ? (
+                <>
+                  <table
+                    className="table  table-hover  text-center align-middle"
+                    style={{ height: "1000px", fontSize: "18px" }}
+                  >
+                    <thead>
+                      <tr>
+                        <td>夥伴名稱</td>
+                        <td>區域</td>
+                        <td>地址</td>
+                        <td>聯絡電話</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>{displayUsers}</tbody>
+                  </table>
+                </>
+              ) : (
+                <div className="d-flex justify-content-center">
+                  <BackstageLoding />
+                </div>
+              )}
               <div className="d-flex justify-content-center">
                 <nav aria-label="Page navigation example ">
                   <ul className="pagination">
@@ -354,6 +377,7 @@ function Partnership() {
         centered
         show={editShow}
         onHide={handleEditClose}
+        style={{ marginLeft:'180px'}}
       >
         <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
         <PartnershipEdit

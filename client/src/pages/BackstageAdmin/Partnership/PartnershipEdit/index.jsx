@@ -14,7 +14,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
     partnershipTel: "",
     employeeId: "1",
     partnershipDesc: "",
-  })
+  });
   // const [editFormData, setEditFormData] = useState({
   //   partnershipId: "",
   //   cityId: "",
@@ -29,15 +29,20 @@ function PartnershipEdit({ setEditShow, editData, data }) {
    可否修改狀態初始化*/
   const [isDisabled, setIsDisabled] = useState(true);
 
-  /*20220624 YN
-   可否修改狀態改變*/
-  const disabledClickHandle = () => {
-    setIsDisabled(!isDisabled)
-  };
-
   /*20220622 YN
    城市資料初始化*/
   const [cityData, setCityData] = useState([]);
+
+  /*20220710 YN
+  修改按鈕初始化 */
+  const [editButton, setEditButton] = useState(false);
+
+  /*20220624 YN
+   可否修改狀態改變*/
+  const disabledClickHandle = () => {
+    setIsDisabled(!isDisabled);
+    setEditButton(true);
+  };
 
   /*20220624 YN
    取得後端檢視資料*/
@@ -54,11 +59,10 @@ function PartnershipEdit({ setEditShow, editData, data }) {
         body: JSON.stringify(editData),
       }
     )
-      .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
+      .then((response) => response.json())
       .then((data) => {
         setEditModalData(data.dataList[0]);
-        console.log(data.dataList[0]);
-
+        // console.log(data.dataList[0]);
       })
       .catch((e) => {
         console.error(e);
@@ -81,7 +85,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
    城市資料用map轉換成選單格式*/
   const cityArr = cityData.map((cityData, index) => {
     return (
-      <option key={index} value={cityData.cityId}>
+      <option key={index} value={cityData.cityId} selected={(editModalData.cityId === cityData.cityId)? true :""}>
         {cityData.cityName}
       </option>
     );
@@ -131,7 +135,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
         if (data.status) {
           window.location.reload(false);
           setEditShow(false);
-          alert("修改成功")
+          alert("修改成功");
         } else {
           console.log(data);
         }
@@ -139,75 +143,125 @@ function PartnershipEdit({ setEditShow, editData, data }) {
       .catch((e) => {
         console.error(e);
       });
-
   };
 
+  /*20220709 YN
+  排除當modal開啟時，scrollbar 消失 sidebar 往右移 */
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+    return () => (document.body.style.overflowY = "");
+  }, []);
+
+
+  console.log(cityArr)
   return (
-    <Form
-      className="container"
-      onSubmit={editFormSubmitHandle}
-    >
+    <Form className="container" onSubmit={editFormSubmitHandle} style={{fontSize:'18px'}}>
       <Form.Group>
         <Form.Label>商家名稱</Form.Label>
         <Form.Control
           type="text"
           name="partnershipName"
-          required="required"
+          // required="required"
           defaultValue={editModalData.partnershipName}
           onChange={editFormChangeHandle}
           disabled={isDisabled}
-        >
-        </Form.Control>
+          style={{fontSize:'18px'}}
+        ></Form.Control>
       </Form.Group>
-      <Form.Group>
-        <Form.Label>負責人</Form.Label>
+      <Form.Group className="mt-3">
+        <Form.Label >負責人</Form.Label>
         <Form.Control
           type="text"
           name="partnershipContactPerson"
-          required="required"
+          // required="required"
           defaultValue={editModalData.partnershipContactPerson}
           onChange={editFormChangeHandle}
           disabled={isDisabled}
+          style={{fontSize:'18px'}}
         />
       </Form.Group>
-      <Form.Group>
+      <Form.Group className="mt-3">
         <Form.Label>區域</Form.Label>
-        <Form.Select name="cityId" onChange={editFormChangeHandle} disabled={isDisabled}>
-          <option defaultValue={editModalData.cityId}>{editData.cityName}</option>
+        <Form.Select
+          name="cityId"
+          onChange={editFormChangeHandle}
+          disabled={isDisabled}
+          style={{fontSize:'18px'}}
+        >
+          <option disabled>
+            請選擇區域
+          </option>
           {cityArr}
         </Form.Select>
       </Form.Group>
-      <Form.Group>
+      <Form.Group className="mt-3">
         <Form.Label>地址</Form.Label>
         <Form.Control
           type="text"
           name="partnershipAddr"
-          required="required"
+          // required="required"
           defaultValue={editModalData.partnershipAddr}
           onChange={editFormChangeHandle}
           disabled={isDisabled}
+          style={{fontSize:'18px'}}
         />
       </Form.Group>
-      <Form.Group>
+      <Form.Group className="mt-3">
         <Form.Label>聯絡電話</Form.Label>
         <Form.Control
           type="text"
           name="partnershipTel"
-          required="required"
+          // required="required"
           defaultValue={editModalData.partnershipTel}
           onChange={editFormChangeHandle}
           disabled={isDisabled}
+          style={{fontSize:'18px'}}
         />
       </Form.Group>
-      <Form.Group>
+      <Form.Group className="mt-3">
         <Form.Label>備註</Form.Label>
-        <Form.Control as="textarea" rows={3} disabled={isDisabled} defaultValue={editModalData.partnershipDesc} onChange={editFormChangeHandle} name="partnershipDesc" />
+        <Form.Control
+          as="textarea"
+          rows={3}
+          disabled={isDisabled}
+          defaultValue={editModalData.partnershipDesc}
+          onChange={editFormChangeHandle}
+          name="partnershipDesc"
+          style={{fontSize:'18px'}}
+        />
       </Form.Group>
-      <div className="mt-1 mb-1 d-flex justify-content-end">
-        <Button className="me-1" onClick={disabledClickHandle}>修改</Button>
-        <Button className="me-1" type="submit">
-          儲存
-        </Button>
+      <div className="mt-3 mb-3 d-flex justify-content-end">
+        {editButton ? (
+          <></>
+        ) : (
+          <button
+            className="btn me-1"
+            onClick={disabledClickHandle}
+            style={{
+              backgroundColor: "#06CAD7",
+              color: "white",
+              fontSize: "20px",
+            }}
+          >
+            修改
+          </button>
+        )}
+
+        {editButton ? (
+          <button
+            className="btn me-1"
+            type="submit"
+            style={{
+              backgroundColor: "#7BA23F",
+              color: "white",
+              fontSize: "20px",
+            }}
+          >
+            儲存
+          </button>
+        ) : (
+          <></>
+        )}
       </div>
     </Form>
   );

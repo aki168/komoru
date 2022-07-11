@@ -13,3 +13,9 @@ height: 950px;
 	margin-right: auto;
     width: 1200px;
 }
+
+.RoomList{
+    display: flex;
+    justify-content: space-around;
+    width: 1200px;
+}

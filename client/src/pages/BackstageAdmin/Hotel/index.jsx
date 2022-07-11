@@ -38,7 +38,6 @@ function Hotel() {
 資料載入過程初始化*/
   const [loading, setLoading] = useState(false);
 
-
   /*20220704 YN
   登入狀態為false自動轉跳Login頁面 */
   let navigate = useNavigate();
@@ -72,9 +71,9 @@ function Hotel() {
         "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName"
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setData(res.data.dataList);
-        setLoading(true)
+        setLoading(true);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -110,14 +109,16 @@ function Hotel() {
         </td>
         <td className="col-sm-1">
           <button
-            className="me-1 btn btn-success"
+            className="me-1 btn"
             onClick={() => handleEditShow(index)}
+            style={{ backgroundColor: "#06CAD7", color: "white"}}
           >
             檢視/修改
           </button>
           <button
             onClick={() => deletFormHandle(index)}
-            className="btn btn-success"
+            className="btn"
+            style={{ backgroundColor: "#E83015", color: "white" }}
           >
             移除
           </button>
@@ -205,16 +206,13 @@ function Hotel() {
       cityId: sreachData.cityId,
     };
     console.log(newContact);
-    fetch(
-      "http://localhost:5000/hotel/getHotelDataListByKeywordAndCityId",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify(newContact),
-      }
-    )
+    fetch("http://localhost:5000/hotel/getHotelDataListByKeywordAndCityId", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(newContact),
+    })
       .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
       .then((data) => {
         let result = data.dataList;
@@ -234,12 +232,42 @@ function Hotel() {
   return (
     <>
       <div className="mx-5  mb-5">
-        <h2 className="mt-3 mb-5">飯店管理</h2>
+        <div className="ms-5">
+          <h3 className="mt-5 mb-5">飯店房型管理&gt;飯店</h3>
+        </div>
         <div>
-          <div className="row ms-5 mb-3">
-            <div className="col-sm-5">
-              <div className="row g-0 justify-content-start">
-                <div className="col-4">
+          <div className="row ms-5 mb-5 g-0">
+            <div className="col-sm-4">
+              <div className="d-flex justify-content-start">
+                <button
+                  onClick={handleAddShow}
+                  className="btn"
+                  style={{
+                    backgroundColor: "#7BA23F",
+                    color: "white",
+                    fontSize: "20px",
+                  }}
+                >
+                  新增飯店
+                </button>
+                <Modal
+                  size="xl"
+                  // aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                  show={addShow}
+                  onHide={handleAddClose}
+                >
+                  <Modal.Header
+                    closeButton
+                    style={{ border: "none" }}
+                  ></Modal.Header>
+                  <HotelAdd setAddShow={setAddShow} />
+                </Modal>
+              </div>
+            </div>
+            <div className="col-sm-8">
+              <div className="row g-0 justify-content-end">
+                <div className="col-3 me-2">
                   <input
                     name="keyword"
                     className="form-control col-1 "
@@ -247,14 +275,16 @@ function Hotel() {
                     placeholder="Search"
                     aria-label="Search"
                     onChange={sreachChangeHandle}
+                    style={{ fontSize: "20px" }}
                   />
                 </div>
-                <div className="col-3">
+                <div className="col-3 me-2">
                   <select
                     name="cityId"
                     className=" form-select col-2"
                     aria-label="Default select example"
                     onChange={sreachChangeHandle}
+                    style={{ fontSize: "20px" }}
                   >
                     <option value="" selected>
                       地區搜尋
@@ -267,63 +297,34 @@ function Hotel() {
                 </div>
                 <div className="col-2">
                   <button
-                    className="btn btn-success"
+                    className="btn"
                     type="submit"
                     onClick={sreachSubmitHandle}
+                    style={{
+                      backgroundColor: "#7BA23F",
+                      color: "white",
+                      fontSize: "20px",
+                    }}
                   >
                     搜尋
                   </button>
                 </div>
               </div>
             </div>
-            <div className="col-sm-3">
-              <div className="d-flex justify-content-end">
-                <button
-                  onClick={handleAddShow}
-                  className="btn btn-success ms-2"
-                >
-                  新增飯店
-                </button>
-                <Modal
-                  size="xl"
-                  // aria-labelledby="contained-modal-title-vcenter"
-                  centered
-                  show={addShow}
-                  onHide={handleAddClose}
-                >
-                  <Modal.Header closeButton></Modal.Header>
-                  <HotelAdd setAddShow={setAddShow} />
-                </Modal>
-              </div>
-            </div>
-            <div className="col-sm-2 d-flex justify-content-end">
-              <nav aria-label="Page navigation example">
-                <ul className="pagination">
-                  <ReactPaginate
-                    nextLabel=">"
-                    previousLabel="<"
-                    pageCount={pageCount}
-                    onPageChange={changePage}
-                    breakClassName={"page-item"}
-                    breakLinkClassName={"page-link"}
-                    containerClassName={"pagination"}
-                    pageClassName={"page-item"}
-                    pageLinkClassName={"page-link"}
-                    previousClassName={"page-item"}
-                    previousLinkClassName={"page-link"}
-                    nextClassName={"page-item"}
-                    nextLinkClassName={"page-link"}
-                    activeClassName={"active"}
-                  />
-                </ul>
-              </nav>
-            </div>
           </div>
-          <div className="row ms-5">
-            <div className=" col-sm-10">
-              {loading ?
+          <div className="row ms-5 g-0">
+            <div
+              className=" col-sm-11"
+              style={{
+                position: "relative",
+              }}
+            >
+              {loading ? (
                 <>
-                  <table className=" table table-hover  text-center align-middle ">
+                  <table
+                    className="table table-sm table-hover text-center align-middle"
+                    style={{ fontSize: "18px" }}
+                  >
                     <thead>
                       <tr>
                         <td className="col-sm-1">飯店名稱</td>
@@ -336,16 +337,48 @@ function Hotel() {
                     </thead>
                     <tbody
                       style={{
-                        height: " 600px",
-                        width: " 1217px",
-                        overflowY: "auto",
+                        height: "600px",
+                        width: "1340px",
+                        overflowY: "scroll",
                         position: "absolute",
                       }}
                     >
                       {displayUsers}
                     </tbody>
                   </table>
-                </> : <div className="d-flex justify-content-center" ><BackstageLoding /></div>}
+                </>
+              ) : (
+                <div className="d-flex justify-content-center">
+                  <BackstageLoding />
+                </div>
+              )}
+              <div
+                className=" d-flex justify-content-center"
+                style={{
+                  marginTop: "620px",
+                }}
+              >
+                <nav aria-label="Page navigation example">
+                  <ul className="pagination">
+                    <ReactPaginate
+                      nextLabel=">"
+                      previousLabel="<"
+                      pageCount={pageCount}
+                      onPageChange={changePage}
+                      breakClassName={"page-item"}
+                      breakLinkClassName={"page-link"}
+                      containerClassName={"pagination"}
+                      pageClassName={"page-item"}
+                      pageLinkClassName={"page-link"}
+                      previousClassName={"page-item"}
+                      previousLinkClassName={"page-link"}
+                      nextClassName={"page-item"}
+                      nextLinkClassName={"page-link"}
+                      activeClassName={"active"}
+                    />
+                  </ul>
+                </nav>
+              </div>
             </div>
           </div>
         </div>

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 // import OrderData from "./db_OrderList.json";
-import OrderView from './OrderView'
+import OrderView from "./OrderView";
 import BackstageLoding from "../../../components/BackstageLoading";
+import "./Order.css";
 
 function Order() {
   /* 20220616 YG
@@ -32,26 +33,32 @@ function Order() {
  資料載入過程初始化*/
   const [loading, setLoading] = useState(false);
 
+  /*20220706 YN
+  篩選功能輸入狀態初始化*/
+  const [sreachData, setSreachData] = useState({
+    keyword: "",
+    orderStatus: "",
+  });
+
   /*20220704 YN
   登入狀態為false自動轉跳Login頁面 */
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   useEffect(() => {
     axios({
       method: "POST",
       url: "http://localhost:5000/employee/checkIsLogin",
-      withCredentials: true
+      withCredentials: true,
     })
       .then((res) => {
         if (res.data.status === false) {
-          navigate('/BackstageLogin', { replace: true })
+          navigate("/BackstageLogin", { replace: true });
           // console.log(res.data);
         }
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       });
-  }, [])
-
+  }, []);
 
   /*20220617 YN
   接後端api取後端資料*/
@@ -63,7 +70,7 @@ function Order() {
       .then((res) => {
         // console.log(res.data.dataList);
         setData(res.data.dataList);
-        setLoading(true)
+        setLoading(true);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -71,7 +78,8 @@ function Order() {
   /*20220628 YN
   取得目前選取列表orderData資料，並設定orderData狀態*/
   const orderStatusChange = (index) => {
-    setOrderData(data[index]);
+    setOrderData(data[index].orderStatus);
+    // console.log(data[index])
   };
   /*20220628 YN
   判斷目前取得的orderStatus狀態資料是否為"未入住"，並轉換狀態*/
@@ -95,12 +103,12 @@ function Order() {
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
+            window.location.reload(false);
+            alert("修改成功");
           })
           .catch((e) => {
             console.error(e);
           });
-        window.location.reload(false);
-        alert("修改成功");
       }
     } else {
       alert("目前以'未入住'狀態");
@@ -129,12 +137,12 @@ function Order() {
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
+            window.location.reload(false);
+            alert("修改成功");
           })
           .catch((e) => {
             console.error(e);
           });
-        window.location.reload(false);
-        alert("修改成功");
       }
     } else {
       alert("目前為'已入住'狀態");
@@ -163,17 +171,16 @@ function Order() {
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
+            window.location.reload(false);
+            alert("修改成功");
           })
           .catch((e) => {
             console.error(e);
           });
-        window.location.reload(false);
-        alert("修改成功");
       }
     } else {
       alert("目前以'已退房'狀態");
     }
-    window.location.reload(false);
   };
 
   /*20220617 YN
@@ -182,7 +189,7 @@ function Order() {
     return (
       // console.log(values.hotelTitle)
       <tr key={index} className="form-check-label">
-        <td>
+        <td className="col-sm-1">
           <input
             className="form-check-input"
             type="radio"
@@ -191,16 +198,17 @@ function Order() {
             onChange={() => orderStatusChange(index)}
           />
         </td>
-        <td>{data.orderId}</td>
-        <td>{data.orderNumber}</td>
-        <td>{data.roomType}</td>
-        <td>{data.orderStartDate}</td>
-        <td>{data.stayNight}</td>
-        <td>{data.orderStatus}</td>
-        <td>
+        <td className="col-sm-1">{data.orderId}</td>
+        <td className="col-sm-1">{data.orderNumber}</td>
+        <td className="col-sm-2">{data.roomType}</td>
+        <td className="col-sm-1">{data.orderStartDate}</td>
+        <td className="col-sm-1">{data.stayNight}</td>
+        <td className="col-sm-1">{data.orderStatus}</td>
+        <td className="col-sm-1">
           <button
             onClick={() => handleViewShow(index)}
-            className="btn btn-success"
+            className="btn "
+            style={{ backgroundColor: "#06CAD7", color: "white" }}
           >
             檢視
           </button>
@@ -218,7 +226,7 @@ function Order() {
   };
 
   // const handleEditShow = () => setEditShow(true);
-  const handleEditClose = () => setEditShow(false)
+  const handleEditClose = () => setEditShow(false);
 
   /*20220616 YG
   設定畫面上資料個數*/
@@ -241,73 +249,192 @@ function Order() {
     setPageNumber(selected);
   };
   // console.log(loading)
+
+  /*20220706 YN
+    取得搜尋關鍵字及選擇值*/
+  const sreachChangeHandle = (event) => {
+    event.preventDefault();
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...sreachData };
+    newFormData[fieldName] = fieldValue;
+    console.log(newFormData);
+    setSreachData(newFormData);
+  };
+  /*20220706 YN
+    送出搜尋關鍵字及選擇值進行篩選*/
+  const sreachSubmitHandle = (event) => {
+    event.preventDefault();
+    const newContact = {
+      keyword: sreachData.keyword,
+      orderStatus: sreachData.orderStatus,
+    };
+    console.log(newContact);
+
+    // setAddFormData(newContacts);
+    fetch(
+      "http://localhost:5000/order/getOrderDataListByKeywordAndOrderStatus",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(newContact),
+      }
+    )
+      .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
+      .then((data) => {
+        let result = data.dataList;
+        console.log(data);
+        if (result.length === 0) {
+          alert("查無此資料");
+          setData(data.dataList);
+          // console.log(data.dataList);
+        } else {
+          setData(data.dataList);
+          // console.log(data.dataList);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
   return (
     <>
       <div className="mx-5  mb-5">
-        <h2 className="mt-3 mb-5">訂單管理</h2>
+        <div className="ms-5">
+          <h3 className="mt-5 mb-5">訂單管理</h3>
+        </div>
         <div>
-          <div className="row ms-5 mb-3">
-            <div className="col-sm-3">
+          <div className="row ms-5 mb-5 g-0">
+            <div className="col-sm-4">
               <div className="d-flex justify-content-start">
-                <input
-                  className="form-control me-2 "
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button className="btn btn-success" type="submit">
-                  Search
-                </button>
-              </div>
-            </div>
-            <div className="col-sm-7">
-              <div className="d-flex justify-content-end">
-                <button onClick={unCheckInHandle} className=" btn btn-success">
-                  未入住
-                </button>
-                <button
-                  onClick={checkInHandle}
-                  className="btn btn-success ms-2"
-                >
-                  已入住
-                </button>
-                <button
-                  onClick={checkOutHandle}
-                  className="btn btn-success ms-2"
-                >
-                  已退房
-                </button>
-              </div>
-            </div>
-            <div className="col-sm-2 d-flex justify-content-end">
-              <nav aria-label="Page navigation example">
-                <ul className="pagination">
+                {orderData === "未入住" ? (
+                  <></>
+                ) : (
+                  <button
+                    onClick={unCheckInHandle}
+                    className=" btn "
+                    style={{
+                      backgroundColor: "#7BA23F",
+                      color: "white",
+                      fontSize: "20px",
+                    }}
+                  >
+                    未入住
+                  </button>
+                )}
 
-                </ul>
-              </nav>
+                {orderData === "已入住" ? (
+                  <></>
+                ) : (
+                  <button
+                    onClick={checkInHandle}
+                    className="btn ms-2"
+                    style={{
+                      backgroundColor: "#7BA23F",
+                      color: "white",
+                      fontSize: "20px",
+                    }}
+                  >
+                    已入住
+                  </button>
+                )}
+
+                {orderData === "已退房" ? (
+                  <></>
+                ) : (
+                  <button
+                    onClick={checkOutHandle}
+                    className="btn ms-2"
+                    style={{
+                      backgroundColor: "#7BA23F",
+                      color: "white",
+                      fontSize: "20px",
+                    }}
+                  >
+                    已退房
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="col-sm-7 ms-5">
+              <div className="row g-0 justify-content-end">
+                <div className="col-3 me-2">
+                  <input
+                    name="keyword"
+                    className="form-control col-1 "
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                    onChange={sreachChangeHandle}
+                    style={{ fontSize: "20px" }}
+                  />
+                </div>
+                <div className="col-3 me-2">
+                  <select
+                    name="orderStatus"
+                    className=" form-select col-2"
+                    aria-label="Default select example"
+                    onChange={sreachChangeHandle}
+                    style={{ fontSize: "20px" }}
+                  >
+                    <option value="" selected>
+                      入住狀態搜尋
+                    </option>
+                    <option value="0">未入住</option>
+                    <option value="1">已入住</option>
+                    <option value="2">已退房</option>
+                  </select>
+                </div>
+                <div className="col-2 ">
+                  <button
+                    className="btn"
+                    type="submit"
+                    onClick={sreachSubmitHandle}
+                    style={{
+                      backgroundColor: "#7BA23F",
+                      color: "white",
+                      fontSize: "20px",
+                    }}
+                  >
+                    搜尋
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="row ms-5">
-            <div className="col-sm-10">
-              {loading ? <>
-                <table className="table table-hover text-center align-middle data-click-to-select='true' ">
-                  <thead>
-                    <tr>
-                      <td></td>
-                      <td>訂單編號</td>
-                      <td>訂購姓名</td>
-                      <td>區域/房型</td>
-                      <td>入住日期</td>
-                      <td>入住天數</td>
-                      <td>入住狀態</td>
-                      <td></td>
-                    </tr>
-                  </thead>
-                  <tbody>{displayUsers}</tbody>
-                </table>
-              </> : <div className="d-flex justify-content-center"><BackstageLoding /></div>}
+          <div className="row ms-5 g-0">
+            <div className="col-sm-11">
+              {loading ? (
+                <>
+                  <table
+                    className="table table-hover text-center align-middle data-click-to-select='true' "
+                    style={{ fontSize: "18px" }}
+                  >
+                    <thead>
+                      <tr>
+                        <td></td>
+                        <td>訂單編號</td>
+                        <td>訂購姓名</td>
+                        <td>區域/房型</td>
+                        <td>入住日期</td>
+                        <td>入住天數</td>
+                        <td>入住狀態</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>{displayUsers}</tbody>
+                  </table>
+                </>
+              ) : (
+                <div className="d-flex justify-content-center">
+                  <BackstageLoding />
+                </div>
+              )}
               <div className="d-flex justify-content-center">
-                <ReactPaginate 
+                <ReactPaginate
                   nextLabel=">"
                   previousLabel="<"
                   pageCount={pageCount}
@@ -327,7 +454,6 @@ function Order() {
                 />
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -337,13 +463,16 @@ function Order() {
         centered
         show={editShow}
         onHide={handleEditClose}
+        style={{ marginLeft: "200px" }}
       >
         <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
-        {editData && <OrderView
-          // editShow={editShow}
-          setEditShow={setEditShow}
-          editData={editData}
-        />}
+        {editData && (
+          <OrderView
+            // editShow={editShow}
+            setEditShow={setEditShow}
+            editData={editData}
+          />
+        )}
       </Modal>
     </>
   );

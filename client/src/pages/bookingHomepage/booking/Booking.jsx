@@ -94,7 +94,7 @@ function Booking() {
   const [room7ContentVisile, setRoom7ContentVisile] = useState(false);
   const [room8ContentVisile, setRoom8ContentVisile] = useState(false);
   useEffect(() => {
-    roomState === ""
+    roomState === "default"
       ? setDEFAULTContentVisile(true)
       : setDEFAULTContentVisile(false);
     roomState === "5"
@@ -153,7 +153,7 @@ function Booking() {
     if (
       date === "" ||
       dayState === "" ||
-      roomState === "" ||
+      roomState === "default" ||
       activityState === ""
     ) {
       alert("輸入的格式有誤!");
@@ -199,7 +199,7 @@ function Booking() {
   const cityChangeHandle = (event) => {
     event.preventDefault();
     setCityIdValue(event.target.value);
-    setRoomState("");
+    setRoomState("default");
   };
 
   //獲取cityData
@@ -280,7 +280,7 @@ function Booking() {
                 className="roomSelect"
                 onChange={(e) => setRoomState(e.target.value)}
               >
-                <option value="">請選擇青旅/房型</option>
+                <option value="default">請選擇青旅/房型</option>
                 {cityIdValue === "1" && (
                   <>
                     <option value="5">夾腳拖的家-私人套房</option>
@@ -309,7 +309,7 @@ function Booking() {
             </div>
             {nextStep === "click" && (
               <>
-                {(roomState === "" || cityIdValue === "") && (
+                {(roomState === "default" || cityIdValue === "") && (
                   <IoMdAlert className="IoMdAlert" />
                 )}
               </>
@@ -322,7 +322,7 @@ function Booking() {
               onChange={(e) => setCouponState(e.target.value)}
               value={couponState}
             >
-              <option value="DEFAULT">請選擇優惠代碼</option>
+              <option value="0">請選擇優惠代碼</option>
               {couponArr}
             </select>
           </div>

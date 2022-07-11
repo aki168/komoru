@@ -1,30 +1,45 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import './OrderList.css'
 import { Accordion } from 'react-bootstrap'
 import OrderListDaily from "./OrderListDaily/OrderListDaily";
-// import BookingOrderPage from "../../pages/orderPage/BookingOrderPage"
 
 
 
 
 export default function OrderList(props) {
-
-  // 計算旅程天數
+  
+  // 0710 aki - 計算旅程天數
   let end = Date.parse(props.orderEndDate);
   let start = Date.parse(props.orderStartDate);
   let stayNight = (end - start) / 86400000 ;
 
-  // roomPic 暫時寫死
-  const getRoomPic = (roomId) => {
-      if (props.roomId === 1) return 1;
-      if (props.roomId === 2) return 5;
-      if (props.roomId === 3) return 14;
-      if (props.roomId === 4) return 11;
-      if (props.roomId === 5) return 9;
-      if (props.roomId === 6) return 13;
-      if (props.roomId === 7) return 12;
-      if (props.roomId === 8) return 10;
-    }
+
+  // 0710 aki - 獲取單張訂單的活動包資料
+  const [activeData, setActiveData] = useState([]);
+  useEffect(()=>{
+    setActiveData(props.OrderItem.reverse()); // 調整活動包日期順序：過去->未來
+  },[props])
+
+    const orderItems = activeData.map(item => {
+      return (
+        <OrderListDaily 
+          key={item.activePackId}
+          {...item}
+        />
+      )
+    })
+
+  // // roomPic 如遇到系統故障時，啟用這隻設定
+  // const getRoomPic = (roomId) => {
+  //     if (props.roomId === 1) return 1;
+  //     if (props.roomId === 2) return 5;
+  //     if (props.roomId === 3) return 14;
+  //     if (props.roomId === 4) return 11;
+  //     if (props.roomId === 5) return 9;
+  //     if (props.roomId === 6) return 13;
+  //     if (props.roomId === 7) return 12;
+  //     if (props.roomId === 8) return 10;
+  //   }
 
 
   return (
@@ -43,7 +58,7 @@ export default function OrderList(props) {
           <Accordion.Body className="p-5 text-start lh-lg orderDetails fw-normal">
             <h3>訂單資料確認</h3>
             <p className="text-secondary mb-5">一條龍記錄您的訂單及活動行程，並即時更新在會員中心讓您隨時查看。</p>
-            <div className="orderDetails--card row">
+            <div className="orderDetails--card row mb-2">
               <div className="card--pic col-5">
                 <img className="img-fluid rounded" 
                       // src={`http://localhost:5000/images/room/room-${ getRoomPic(props.roomId) }.jpeg`} 
@@ -93,47 +108,20 @@ export default function OrderList(props) {
                   </li> */}
                 </ul>
               </div>
-              <OrderListDaily
-                date={props.orderStartDate}/>
+              {/* <OrderListDaily
+                date={props.orderStartDate}
+              /> */}
+              {props.OrderItem[0].isActive === '0' &&
+              <h4 className="text-center pt-5 text-secondary">加購活動日 行程</h4> 
+              }
 
+              {/* 單張訂單的活動包內容 */}
+              {orderItems} 
             </div>
-
-            {/* cityName: "台中市"
-couponItemId: 2
-createDatetime: "2022-07-06 13:46:47"
-hotelAddr: "台中市西區公益路68號15樓"
-hotelDesc: null
-hotelTel: "+886 4 2321-9696"
-hotelTitle: "Star Hostel"
-memberGender: "男"
-memberId: 1
-memberImgPath: "/images/member/wanggmailcom.PNG"
-memberMail: "wang@gmail.com"
-memberName: "王小明"
-memberNickName: "小明"
-memberPhone: "0966777899"
-orderEndDate: "2022-07-11"
-orderId: 130
-orderNumber: "2LQUI5ka"
-orderStartDate: "2022-07-08"
-orderStatus: "未入住"
-orderTotal: 3500
-roomDesc: null
-roomId: 2
-roomType: "背包客" */}
-
-
-
-
-
-
-
-
-
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
-      {/* } */}
+
     </>
   )
 
