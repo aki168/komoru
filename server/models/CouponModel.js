@@ -5,7 +5,7 @@ exports.getUsableCouponByMemberId = (memberId) => {
   return new Promise((resolve, reject) => {
     let sql =
       "SELECT" +
-      "`Coupon`.`coupon_title`,`CouponItem`.`coupon_id`,`Coupon`.`discount`" +
+      "`Coupon`.`coupon_title`,`CouponItem`.`coupon_id`,`Coupon`.`discount`, `CouponItem`.`coupon_item_id` " +
       "FROM `CouponItem`" +
       "JOIN `Coupon` ON `CouponItem`.`coupon_id` = `Coupon`.`coupon_id`" +
       "WHERE `CouponItem`.`coupon_item_status` = '0'" +
@@ -26,7 +26,7 @@ exports.getUnusableCouponByMemberId = (memberId) => {
   return new Promise((resolve, reject) => {
     let sql =
       "SELECT" +
-      "`Coupon`.`coupon_title`,`CouponItem`.`coupon_id`,`Coupon`.`discount`" +
+      "`Coupon`.`coupon_title`,`CouponItem`.`coupon_id`,`Coupon`.`discount`, `CouponItem`.`coupon_item_id`" +
       "FROM `CouponItem`" +
       "JOIN `Coupon` ON `CouponItem`.`coupon_id` = `Coupon`.`coupon_id`" +
       "WHERE `CouponItem`.`coupon_item_status` = '1'" +
