@@ -6,7 +6,7 @@ import { Modal } from "react-bootstrap";
 // import OrderData from "./db_OrderList.json";
 import OrderView from "./OrderView";
 import BackstageLoding from "../../../components/BackstageLoading";
-import "./Order.css";
+import "../BackstageAdmin.css";
 
 function Order() {
   /* 20220616 YG
@@ -304,7 +304,7 @@ function Order() {
     <>
       <div className="mx-5  mb-5">
         <div className="ms-5">
-          <h3 className="mt-5 mb-5">訂單管理</h3>
+          <h3 className="mt-5 mb-5 km-page-title">訂單管理</h3>
         </div>
         <div>
           <div className="row ms-5 mb-5 g-0">

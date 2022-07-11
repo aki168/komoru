@@ -55,18 +55,18 @@ function Sidebar() {
               style={{ textDecoration: "none",height:'60px' }}
             >
               <span
-                className="kmr-font-color-primary"
-                style={{ fontSize: "20px"}}
+                className="kmr-font-color-primary km-sidebar"
+                
               >
                 <RiHome2Line className="mx-2 ms-4" />
                 飯店房型管理
               </span>
             </a>
             <ul
-              className="collapse nav hidden flex-column h-50"
+              className="collapse nav hidden flex-column h-50 km-sidebar"
               id="submenu1"
               data-bs-parent="#menu"
-              style={{ fontSize: "20px" }}
+              styl
             >
               <li >
                 <MyNavLink className="nav-link text-center pt-3" style={{height:'60px'}} to="hotel">

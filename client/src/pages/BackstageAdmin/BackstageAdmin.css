@@ -1,0 +1,8 @@
+.km-page-title{
+    font-size: 18px;
+}
+
+.table>:not(:first-child) {
+    border-top: 1.5px solid #808080;
+
+}

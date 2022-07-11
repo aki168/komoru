@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import PartnershipAdd from "./PartnershipAdd";
 import PartnershipEdit from "./PartnershipEdit/index";
 import BackstageLoding from "../../../components/BackstageLoading";
+import "../BackstageAdmin.css";
+
 
 function Partnership() {
   /* 20220616 YN
@@ -243,7 +245,7 @@ function Partnership() {
     <>
       <div className="mx-5  mb-5">
         <div className="ms-5">
-          <h3 className="mt-5 mb-5">合作夥伴管理</h3>
+          <h3 className="mt-5 mb-5 km-page-title">合作夥伴管理</h3>
         </div>
         <div>
           <div className="row ms-5 mb-5 g-0">
