@@ -12,6 +12,7 @@ import BookingLoading from "../../components/BookingLoading/BookingLoading";
 function BookingOrderPage() {
   const [memberloading, setMemberLoading] = useState(false);
   const [activityPackloading, setActivityPackloading] = useState(false);
+  // const [checkoutLoading, setCheckoutLoading] = useState(false);
   //獲取活動包activityPack
   const location = useLocation();
   const [activityPack, setActivityPack] = useState(location.state.activityPack);
@@ -107,6 +108,7 @@ function BookingOrderPage() {
   }, []);
   console.log(activePackD1);
   const PackId = [];
+
   if (activity1Data === "1") {
     PackId.push(activePackD1.activePackId);
   }
@@ -116,13 +118,13 @@ function BookingOrderPage() {
   if (activity2Data === "3") {
     PackId.push(activePackD2.activePackId);
   }
-  if (activity1Data === "4") {
+  if (activity2Data === "4") {
     PackId.push(null);
   }
   if (activity3Data === "5") {
     PackId.push(activePackD3.activePackId);
   }
-  if (activity1Data === "6") {
+  if (activity3Data === "6") {
     PackId.push(null);
   }
 
@@ -326,7 +328,7 @@ function BookingOrderPage() {
   //傳訂單明細給後端
   const CheckoutOrderHandler = (e) => {
     setNextStep(e.type);
-    e.preventDefault();
+    // e.preventDefault();
 
     if (payMethod === "") {
       alert("未輸入付款方式!");
@@ -340,9 +342,28 @@ function BookingOrderPage() {
         roomId: roomState,
         couponItemId: couponState,
         orderTotal: sumActivity,
-        activePackId: PackId,
+        // activePackId: PackId,
+        //         activePackId: {
+        //           D1:{
+        // roomprice:700
+        // activeprice:700
+        // isActive:0
+        // PackId:1-5
+        //           },
+        //           D2:{
+        //             roomprice:700
+        //             activeprice:(isActive==0)?"":700
+        //             isActive:isActive
+        //             PackId:(isActive==0)?"":213
+        //           },
+        //           D3:{
+
+        //           }
+
+        //         },
         isActive: activityState,
         joinTotal: countActivity,
+        orderItemPrice: 8763,
       };
       console.log({
         memberId: memberId,
@@ -363,11 +384,29 @@ function BookingOrderPage() {
         },
         body: JSON.stringify(orderDetails),
       })
-        .then((response) => response.json())
-        // .then(console.log("ok"))
+        .then((response) => console.log(response.json()))
+        // .then(() => {
+        //   setCheckoutLoading(true);
+        // })
         .catch(console.error);
 
+      // {
+      //   checkoutLoading ? (
       navigate("/checkoutSucceeded");
+      //   ) : (
+      //     <div
+      //       style={{
+      //         marginLeft: 600,
+      //         marginBottpm: 0,
+      //         width: "100%",
+      //         height: "100%",
+      //       }}
+      //     >
+      //       123
+      //       <BookingLoading />
+      //     </div>
+      //   );
+      // }
     }
   };
 
