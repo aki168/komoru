@@ -1,10 +1,14 @@
-.User a {
+.User a, .user--menu a{
   display: block;
   text-decoration: none;
 }
 
-.User a:hover {
+.User a:hover, .user--menu a {
   text-decoration: none;
+}
+
+.user--menu a:hover{
+  color:#CF5100;
 }
 
 .User--wrap {
@@ -47,11 +51,30 @@
 .menu--item:hover,
 .menu--item--on:hover {
   color: #ED8C4E;
+
 }
 
 
 .menu--item:visited,
 .menu--item--on:visited {
+  text-decoration: none;
+  color:none;
+}
+
+.menu--item:focus,
+.menu--item--on:focus {
+  text-decoration: none;
+  color:none;
+}
+
+.menu--item:active,
+.menu--item--on:active {
+  text-decoration: none;
+  color:none;
+}
+
+.menu--item:link,
+.menu--item--on:link {
   text-decoration: none;
   color:none;
 }
@@ -67,8 +90,8 @@
 
 .user--card {
   padding: 50px 40px;
-  /* width: 80%;
-  display: flex;
+  width: 80%;
+    /*display: flex;
   flex-wrap: wrap;
   justify-content: space-between; */
   background: #fff;

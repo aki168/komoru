@@ -9,7 +9,7 @@ export default function Navbar() {
     <nav className="navbar--bgWhite">
       <h1>
         <a className="navbar--title" href="/">
-          <img className="navbar--logo" src="KOMORU_LOGO_OG.png" alt="LOGO"></img>
+          <img className="navbar--logo" src="../KOMORU_LOGO_OG.png" alt="LOGO"></img>
         </a>
       </h1>
       <ul className="navbar--menu">

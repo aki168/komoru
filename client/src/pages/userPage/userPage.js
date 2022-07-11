@@ -68,17 +68,15 @@ export default function UserPage() {
 
 
   return (
-    <div className='User--wrap'>
-      <RainbowCard 
-      // key={rainbowCard.rainbowCardId}
-      // rainbowCardContent={rainbowCard.rainbowCardContent}
-      />
-      <Navbar />
-      <div className='User--titleBar'>
-        <h2>簡單、多功能的會員中心系統</h2>
-        <p className='pt-3 fs-5'>KOMORU 協助你輕鬆創管理你的會員資料、瀏覽你的下訂紀錄，探索更多元的自己！</p>
-      </div>
-      <div className='User--container'>
+    <>
+  {/* <div className='User--wrap'>
+    <Navbar /> */}
+    {/* <div className='User--titleBar'>
+    <h2>簡單、多功能的會員中心系統</h2>
+    <p className='pt-3 fs-5'>KOMORU 協助你輕鬆創管理你的會員資料、瀏覽你的下訂紀錄，探索更多元的自己！</p>
+  </div> */}
+        <RainbowCard />
+  {/* <div className='User--container'> */}
         <User
           mail={userData.memberMail}
           name={userData.memberName}
@@ -88,7 +86,8 @@ export default function UserPage() {
           iconPath={userData.memberImgPath}
           registerType={userData.registerType}
         />
-      </div>
-    </div>
+      {/* </div> */}
+    {/* </div> */}
+      </>
   )
 }
