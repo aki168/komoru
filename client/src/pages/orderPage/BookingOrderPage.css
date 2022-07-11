@@ -150,11 +150,11 @@
 .list > p {
   font-size: 20px;
   padding-left: 20px;
+  width: 180px;
 }
 
 .list > span {
   font-size: 20px;
-  padding-left: 70px;
 }
 
 .line {
