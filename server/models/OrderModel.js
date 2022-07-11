@@ -381,8 +381,9 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
         reject(err);
       } else {
         let orderId = db.rowDataToCamelData(rows)[0]["orderId"];
-        let length = data["active_pack_id"].length;
-        let isActive = data["is_active"];
+        let isActive = data['is_active'];
+        var pack = data['active_pack_id']
+        var length = pack.length
         // 寫入OrderId到ExamItem
         let examItemsql =
           "UPDATE `ExamItem` " +
@@ -390,11 +391,10 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
           "WHERE `member_id` = ? " +
           "ORDER BY `exam_item_id` DESC " +
           "LIMIT 1";
-
         let examValue = [orderId, data["member_id"]];
-        db.con.query(examItemsql, examValue, (err, rows, fields) => {
-          if (err) {
-            reject(err);
+        db.con.query(examItemsql, examValue, (error, rows, fields) => {
+          if (error) {
+            reject(error);
           } else {
             if (isActive === "0") {
               // 依照總體驗天數寫入OrderId到對應的OrderItem

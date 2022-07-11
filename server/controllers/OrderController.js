@@ -3,6 +3,7 @@ const orderModel = require("../models/OrderModel");
 const orderItemModel = require("../models/OrderItemModel");
 const jwt = require("jsonwebtoken"); //token
 const { promisify } = require("util"); // nodejs原生
+const couponModel = require("../models/CouponModel");
 // --------------------------------------------------------------
 
 // 2022-06-18 PG
@@ -129,15 +130,19 @@ exports.updateOrderStatusByOrderId = async (req, res, next) => {
 exports.getAndSaveOrderData = async (req, res) => {
   var data = req.body;
   console.log(data);
+  if (data.couponItemId === "") {
+    data.couponItemId = null
+  }
   try {
-    console.log("start");
-    await orderModel
-      .saveOrderData(data)
-      .then(async (result) => {
-        await orderModel.saveOrderIdToOrderItemAndExamItem(result);
-      })
+    console.log('start');
+    await orderModel.saveOrderData(data).then(async (result) => {
+      if (result.coupon_item_id) {
+        await couponModel.useCoupon('1', result.member_id, result.coupon_item_id)
+      }
+      await orderModel.saveOrderIdToOrderItemAndExamItem(result)
+    })
       .then(() => {
-        configController.sendJsonMsg(res, true, "", "儲存成功");
+        configController.sendJsonMsg(res, true, "", '儲存成功');
       });
   } catch (error) {
     configController.sendJsonMsg(

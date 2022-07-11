@@ -28,7 +28,7 @@ export default function Navbar() {
           </Link>
         </li>
         <li>
-          <Link className="navbar--item" to="/user">
+          <Link className="navbar--item" to="/user-home">
             會員中心
           </Link>
         </li>

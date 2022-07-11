@@ -143,14 +143,16 @@ export default function User(props) {
 
 
   return (
-    <div className="User">
+    <>
+
+    {/* <div className="User"> */}
       {/* <Menu /> */}
-      <ul className="user--menu">
+      {/* <ul className="user--menu">
         <li><Link to="/user" className="menu--item--on">基本資料</Link></li>
         <li><Link to="/member-order" className="menu--item">訂單記錄</Link></li>
         <li><Link to="/member-feedback" className="menu--item">活動回饋</Link></li>
         <li><Link to="/member-coupon" className="menu--item">優惠表單</Link></li>
-      </ul>
+      </ul> */}
 
 
       <div className="user--card">
@@ -158,7 +160,7 @@ export default function User(props) {
           <h3>會員基本資料</h3>
           <p>完善的會員中心系統，一鍵增修會員資料、隨心所欲更換喜愛頭像，放上最耀眼的自己！</p>
         </div>
-        <img className="img-fluid mb-4 w-100" src="komoru_member.png" alt="profile-banner" />
+        <img className="img-fluid mb-4 w-100" src="../komoru_member.png" alt="profile-banner" />
 
         {/* 會員頭像區 --------------------------------- */}
         <div className="user--card--inner">
@@ -289,7 +291,8 @@ export default function User(props) {
 
 
 
-    </div>
+    {/* </div> */}
+    </>
   )
 
 }
