@@ -24,7 +24,7 @@ function BookingAgreeModal() {
         // onClose={handleClose}
       >
         <Modal.Header>
-          <Modal.Title>Before Booking must Read</Modal.Title>
+          <Modal.Title>KOMORU 下訂須知</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
