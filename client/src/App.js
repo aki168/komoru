@@ -118,7 +118,7 @@ function App() {
         <Route path="/member-order" element={<OrderPageUserZone />} />
         <Route path="/member-feedback" element={<FeedbackPage />} />
         <Route path="/member-coupon" element={<CouponPage />} />
-        <Route path="/user-home" element={<UserHomePage />} />
+        <Route path="/user-home/*" element={<UserHomePage />} />
 
         {/* ZH */}
         <Route
