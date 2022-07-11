@@ -7,7 +7,7 @@ import DemoPieActivityType from "./DemoPieActivityType";
 import DemoLiquidCoupon from "./DemoLiquidCoupon";
 import DemoLiquidFeedback from "./DemoLiquidFeedback";
 import BackstageLoding from "../../../../components/BackstageLoading";
-function DashboardChartsNorth({ dateData }) {
+function DashboardChartsNorth({ dateData, setTitleArea }) {
   /*20220707 YN
   北區報表資料初始化*/
   const [northData, setNorthData] = useState();
@@ -16,6 +16,12 @@ function DashboardChartsNorth({ dateData }) {
   報表資料載入過程初始化*/
   const [loading, setLoading] = useState(false);
 
+  /*20220709 YN
+   區域標題狀態設定*/
+  useEffect(() => {
+    setTitleArea("北區");
+  }, []);
+
   /*20220707 YN
    取後端北區報表資料*/
   useEffect(() => {
@@ -23,7 +29,7 @@ function DashboardChartsNorth({ dateData }) {
       cityId: "1",
       dateRange: `${dateData.dateRange}`,
     };
-    setLoading(false)
+    setLoading(false);
     fetch("http://localhost:5000/dashboard/getDashboardDataListByCondition", {
       method: "POST",
       headers: {
@@ -35,7 +41,7 @@ function DashboardChartsNorth({ dateData }) {
       .then((data) => {
         // console.log(data.dataList.IsOrderAfterExamItem);
         setNorthData(data.dataList);
-        setLoading(true)
+        setLoading(true);
       })
       .catch((e) => {
         console.error(e);
@@ -44,44 +50,131 @@ function DashboardChartsNorth({ dateData }) {
   return (
     <>
       <div className="mx-5 me-5">
-        {loading ?
-          <>
-            <div>
-              <div className="row mb-5">
+        <div className="mx-5 me-5">
+          {loading ? (
+            <>
+              <div>
                 <h3>入住率</h3>
-                {northData && <DemoColumnOccupancyRate northData={northData} />}
-              </div>
-              <div className="row mb-5">
+                <div
+                  className="row mb-5"
+                  style={{
+                    backgroundColor: "white",
+                    boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                  }}
+                >
+                  {northData && (
+                    <DemoColumnOccupancyRate northData={northData} />
+                  )}
+                </div>
                 <h3>房型營業額</h3>
-                {northData && <DemoLineRoomTurnover northData={northData} />}
+                <div
+                  className="row mb-5"
+                  style={{
+                    backgroundColor: "white",
+                    boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                  }}
+                >
+                  {northData && <DemoLineRoomTurnover northData={northData} />}
+                </div>
+                <div className="row mb-5">
+                  <div
+                    className="col-4"
+                    style={{
+                      padding: "20px 20px 20px 0",
+                    }}
+                  >
+                    <h3>參與活動率</h3>
+                    <div
+                      style={{
+                        backgroundColor: "white",
+                        boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                      }}
+                    >
+                      {northData && (
+                        <DemoPieParticipate northData={northData} />
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    className="col-4"
+                    style={{
+                      padding: "20px",
+                    }}
+                  >
+                    <h3>測驗後參與率</h3>
+                    <div
+                      style={{
+                        backgroundColor: "white",
+                        boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                      }}
+                    >
+                      {northData && <DemoPieExam northData={northData} />}
+                    </div>
+                  </div>
+
+                  <div
+                    className="col-4"
+                    style={{
+                      padding: "20px 0 20px 20px",
+                    }}
+                  >
+                    <h3>活動類型</h3>
+                    <div
+                      style={{
+                        backgroundColor: "white",
+                        boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                      }}
+                    >
+                      {northData && (
+                        <DemoPieActivityType northData={northData} />
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="row mb-5">
+                  <div
+                    className="col-6"
+                    style={{
+                      padding: "0 20px 0 0",
+                    }}
+                  >
+                    <h3>優惠卷使用率</h3>
+                    <div
+                      style={{
+                        backgroundColor: "white",
+                        boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                      }}
+                    >
+                      {northData && <DemoLiquidCoupon northData={northData} />}
+                    </div>
+                  </div>
+                  <div
+                    className="col-6"
+                    style={{
+                      padding: "0 0 0 20px",
+                    }}
+                  >
+                    <h3>回饋率</h3>
+                    <div
+                      style={{
+                        backgroundColor: "white",
+                        boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                      }}
+                    >
+                      {northData && (
+                        <DemoLiquidFeedback northData={northData} />
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="row mb-5">
-                <div className="col-4">
-                  <h3>參與活動率</h3>
-                  {northData && <DemoPieParticipate northData={northData} />}
-                </div>
-                <div className="col-4">
-                  <h3>測驗後參與率</h3>
-                  {northData && <DemoPieExam northData={northData} />}
-                </div>
-                <div className="col-4">
-                  <h3>活動類型</h3>
-                  {northData && <DemoPieActivityType northData={northData} />}
-                </div>
-              </div>
-              <div className="row mb-5">
-                <div className="col-6">
-                  <h3>優惠卷使用率</h3>
-                  {northData && <DemoLiquidCoupon northData={northData} />}
-                </div>
-                <div className="col-6">
-                  <h3>回饋率</h3>
-                  {northData && <DemoLiquidFeedback northData={northData} />}
-                </div>
-              </div>
-            </div >
-          </> :
-          <div className="d-flex justify-content-center"><BackstageLoding /></div>}
+            </>
+          ) : (
+            <div className="d-flex justify-content-center">
+              <BackstageLoding />
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

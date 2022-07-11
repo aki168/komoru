@@ -1,12 +1,13 @@
 import React from "react";
+import {Link} from 'react-router-dom'
 import MyNavLink from "../BackstageAdminMyNarLink";
 import { RiBarChart2Line } from "react-icons/ri";
 import { RiHome2Line } from "react-icons/ri";
 import { RiFileList3Line } from "react-icons/ri";
 import { RiSpyLine } from "react-icons/ri";
 import { BiUser } from "react-icons/bi";
-import { RiBuildingLine } from "react-icons/ri";
-import { IoBedOutline } from "react-icons/io5";
+// import { RiBuildingLine } from "react-icons/ri";
+// import { IoBedOutline } from "react-icons/io5";
 import LOGO from "../../assets/my-logo.png";
 import "./BackstageAdminSidebar.css";
 
@@ -17,17 +18,22 @@ function Sidebar() {
         className=" container sticky-top"
         id="sticky-sidebar"
         // style={{ background: "#EFA16A" }}
-        style={{ background: "white"}}
+        style={{ background: "white" }}
       >
-
         <ul
           className=" container nav flex-column text-start fs-4 d-block nav-pills"
-          style={{ height: "100vh", }}
+          style={{ height: "100vh" }}
         >
           <div className="pt-4 pb-5  ">
-            <img style={{  width: "210px",height:"70px",marginLeft:"20px" }} src={LOGO} alt="" />
+            <Link to="order">
+              <img
+                style={{ width: "210px", height: "70px", marginLeft: "20px" }}
+                src={LOGO}
+                alt=""
+              />
+            </Link>
           </div>
-          <li className="mb-3 nav-item " >
+          <li className="mb-3 nav-item ">
             <MyNavLink to="order">
               <RiFileList3Line className="mx-2 ms-4" />
               訂單管理
@@ -45,9 +51,12 @@ function Sidebar() {
               data-bs-toggle="collapse"
               className="nav-link dropdown-toggle "
               // aria-expanded="false"
-              style={{textDecoration: "none" }}
+              style={{ textDecoration: "none" }}
             >
-              <span className="kmr-font-color-primary">
+              <span
+                className="kmr-font-color-primary"
+                style={{ fontSize: "20px" }}
+              >
                 <RiHome2Line className="mx-2 ms-4" />
                 飯店房型管理
               </span>
@@ -56,15 +65,16 @@ function Sidebar() {
               className="collapse nav hidden flex-column h-50 mt-1 "
               id="submenu1"
               data-bs-parent="#menu"
+              style={{ fontSize: "20px" }}
             >
               <li>
                 <MyNavLink className="nav-link mb-2  text-center" to="hotel">
-                  <p style={{paddingRight:"80px"}}>飯店</p>
+                  <p style={{ paddingRight: "80px" }}>飯店</p>
                 </MyNavLink>
               </li>
               <li>
-                <MyNavLink className=" nav-link text-center"to="room">
-                <p style={{paddingRight:"80px"}}>房型</p>
+                <MyNavLink className=" nav-link text-center" to="room">
+                  <p style={{ paddingRight: "80px" }}>房型</p>
                 </MyNavLink>
               </li>
             </ul>

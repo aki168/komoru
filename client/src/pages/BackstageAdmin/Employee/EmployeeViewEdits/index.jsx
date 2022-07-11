@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
+import { IoAlertCircleSharp } from "react-icons/io5";
 
 function EmployeeViewEdits({ setEditShow, editData }) {
   /*20220624 YN
@@ -22,11 +23,21 @@ function EmployeeViewEdits({ setEditShow, editData }) {
    可否顯示密碼狀態初始化*/
   const [shown, setShown] = useState(false);
 
+  /*20220710 YN
+  修改按鈕初始化 */
+  const [editButton, setEditButton] = useState(false);
+
+  /*20220710 YN
+  當輸入框為""，出現警示狀態初始化 */
+  const [alertImg, setAlertImg] = useState(false);
+
   /*20220624 YN
    可否修改狀態改變*/
   const disabledClickHandle = () => {
     setIsDisabled(!isDisabled);
     setShown(true);
+    setEditButton(true);
+    editModalData.employeePasswd = "";
   };
 
   /*20220624 YN
@@ -41,10 +52,10 @@ function EmployeeViewEdits({ setEditShow, editData }) {
       },
       body: JSON.stringify(editData),
     })
-      .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
+      .then((response) => response.json())
       .then((data) => {
         setEditModalData(data.dataList[0]);
-        console.log(data.dataList[0]);
+        // console.log(data.dataList[0]);
       })
       .catch((e) => {
         console.error(e);
@@ -77,33 +88,44 @@ function EmployeeViewEdits({ setEditShow, editData }) {
       employeePhone: editModalData.employeePhone,
       operatorEmployeeId: "1",
     };
-    console.log(newContact);
-    // setEditFormData(newContacts);
-    fetch(
-      "http://localhost:5000/employee/updateEmployeeByEmployeeId",
-      {
+    console.log(editModalData.employeeAccount);
+    setEditModalData(newContact);
+
+    if (
+      editModalData.employeeAccount === "" ||
+      editModalData.employeePasswd === ""
+    ) {
+      setAlertImg(true);
+    } else {
+      setAlertImg(false);
+      fetch("http://localhost:5000/employee/updateEmployeeByEmployeeId", {
         method: "POST",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
         body: JSON.stringify(newContact),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status) {
-          setEditShow(false);
-          window.location.reload(false);
-        }
-        console.log(data);
       })
-      .catch((e) => {
-        console.error(e);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status) {
+            setEditShow(false);
+            window.location.reload(false);
+            alert('修改成功')
+          }
+          console.log(data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    }
   };
 
   return (
-    <Form className="container" onSubmit={editFormSubmitHandle}>
+    <Form
+      className="container"
+      onSubmit={editFormSubmitHandle}
+      style={{ fontSize: "18px" }}
+    >
       <Form.Group>
         <Form.Label>員工帳號</Form.Label>
         <Form.Control
@@ -114,22 +136,44 @@ function EmployeeViewEdits({ setEditShow, editData }) {
           defaultValue={editModalData.employeeAccount}
           onChange={editFormChangeHandle}
           disabled={isDisabled}
+          style={{ fontSize: "18px" }}
         />
       </Form.Group>
-      <Form.Group>
+      {editModalData.employeeAccount === "" && (
+        <>
+          {alertImg && (
+            <h6 style={{ color: "red" }}>
+              <IoAlertCircleSharp size="20px" color="red" />
+              員工帳號不可空白
+            </h6>
+          )}
+        </>
+      )}
+      <Form.Group className="mt-3">
         <Form.Label>員工密碼</Form.Label>
         <Form.Control
           type="text"
           name="employeePasswd"
           // required="required"
-          placeholder="password"
+          placeholder="請輸入員工密碼"
           Value={shown ? "" : "******"}
           onChange={editFormChangeHandle}
           disabled={isDisabled}
+          style={{ fontSize: "18px" }}
         />
         {/* <button className="btn" onClick={()=>setShown(!shown)}>顯示密碼</button> */}
       </Form.Group>
-      <Form.Group>
+      {editModalData.employeePasswd === "" && (
+        <>
+          {alertImg && (
+            <h6 style={{ color: "red" }}>
+              <IoAlertCircleSharp size="20px" color="red" />
+              員工密碼不可空白
+            </h6>
+          )}
+        </>
+      )}
+      <Form.Group className="mt-3">
         <Form.Label>員工姓名</Form.Label>
         <Form.Control
           type="text"
@@ -139,9 +183,10 @@ function EmployeeViewEdits({ setEditShow, editData }) {
           placeholder="王小明"
           onChange={editFormChangeHandle}
           disabled={isDisabled}
+          style={{ fontSize: "18px" }}
         />
       </Form.Group>
-      <Form.Group>
+      <Form.Group className="mt-3">
         <Form.Label>員工電話</Form.Label>
         <Form.Control
           type="text"
@@ -151,15 +196,41 @@ function EmployeeViewEdits({ setEditShow, editData }) {
           defaultValue={editModalData.employeePhone}
           onChange={editFormChangeHandle}
           disabled={isDisabled}
+          style={{ fontSize: "18px" }}
         />
       </Form.Group>
-      <div className="mt-1 mb-1 d-flex justify-content-end">
-        <Button className="me-1" onClick={disabledClickHandle}>
-          修改
-        </Button>
-        <Button className="me-1" type="submit">
-          儲存
-        </Button>
+      <div className="mt-3 mb-3 d-flex justify-content-end">
+        {editButton ? (
+          <></>
+        ) : (
+          <button
+            className="btn me-1"
+            onClick={disabledClickHandle}
+            style={{
+              backgroundColor: "#06CAD7",
+              color: "white",
+              fontSize: "20px",
+            }}
+          >
+            修改
+          </button>
+        )}
+
+        {editButton ? (
+          <button
+            className="btn me-1"
+            type="submit"
+            style={{
+              backgroundColor: "#7BA23F",
+              color: "white",
+              fontSize: "20px",
+            }}
+          >
+            儲存
+          </button>
+        ) : (
+          <></>
+        )}
       </div>
     </Form>
   );

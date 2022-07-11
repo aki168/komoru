@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
-import { BsFillArrowUpSquareFill } from "react-icons/bs";
-
+import { MdOutlineFileUpload } from "react-icons/md";
+import { HiOutlineRefresh } from "react-icons/hi";
 function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
   /*20220622 YN
    飯店資料初始化*/
@@ -45,6 +45,10 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
    可否修改狀態初始化*/
   const [isDisabled, setIsDisabled] = useState(true);
 
+  /*20220710 YN
+  修改按鈕初始化 */
+  const [editButton, setEditButton] = useState(false);
+
   // console.log(editImage);
   /*20220701 YN
      取得後端預設房型資料*/
@@ -59,7 +63,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
       .then((response) => response.json())
       .then((data) => {
         setEditModalData(data.dataList[0]);
-        console.log(data.dataList[0]);
+        // console.log(data.dataList[0]);
       })
       .catch((e) => {
         console.error(e);
@@ -122,13 +126,13 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
           if (data.status) {
             setEditShow(false);
             window.location.reload(false);
+            alert("修改成功");
           }
           console.log(data);
         })
         .catch((e) => {
           console.error(e);
         });
-        
     } else {
       const formData = new FormData();
       formData.append("roomDataList", JSON.stringify(newContact));
@@ -143,6 +147,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
           if (data.status) {
             setEditShow(false);
             window.location.reload(false);
+            alert("修改成功");
           }
           console.log(data);
         })
@@ -174,9 +179,12 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
   /*20220701 YN
   修改狀態改變*/
   const disabledClickHandle = () => {
-    setEditImage(true);
+    // setEditImage(true);
     setIsDisabled(!isDisabled);
+    setEditButton(true);
+    // setImgPreview(true);
   };
+
   // /*20220701 YN
   //   取得後端飯店資料*/
   // useEffect(() => {
@@ -195,14 +203,25 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
    飯店資料使用map作下拉選項*/
   const hotelArr = hotelData.map((hotelData, index) => {
     return (
-      <option key={index} value={hotelData.hotelId}>
+      <option
+        key={index}
+        value={hotelData.hotelId}
+        selected={editData.hotelId === hotelData.hotelId ? true : ""}
+      >
         {hotelData.hotelTitle}
       </option>
     );
   });
 
+  /*20220709 YN
+  排除當modal開啟時，scrollbar 消失 sidebar 往右移 */
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+    return () => (document.body.style.overflowY = "");
+  }, []);
+
   return (
-    <Form className="container row mt-3" onSubmit={editFormSubmitHandle}>
+    <Form className="me-5 ms-5 mt-3 mb-3 row" onSubmit={editFormSubmitHandle}>
       {!editImage && (
         <Form.Group
           className="col-6 d-flex justify-content-center align-items-center "
@@ -211,21 +230,39 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
           }}
         ></Form.Group>
       )}
+
       {editImage && (
-        <Form.Group
-          className="col-6 d-flex justify-content-center align-items-center "
+        <div
+          className="col-6"
           style={{
             background: imgPreview
               ? `url("${imgPreview}") no-repeat center/cover`
-              : "#d3d3d3",
+              : "#f4f5f7",
           }}
         >
-          <div className="d-flex  flex-column ">
-            <div className="d-flex flex-column">
+          {imgPreview && (
+            <button
+              style={{ border: "none", background: "none" }}
+              onClick={() => setImgPreview(null)}
+            >
+              <HiOutlineRefresh
+                size="30px"
+                color="#ed8c4e"
+                style={{ marginTop: "10px" }}
+              />
+            </button>
+          )}
+          <Form.Group
+            className="d-flex justify-content-center "
+            style={{
+              paddingTop: "130px",
+            }}
+          >
+            <div className="d-flex flex-column ">
               {!imgPreview && (
                 <>
-                  <label className="btn text-white" htmlFor="fileUpload">
-                    <BsFillArrowUpSquareFill size="5em" />
+                  <label className="btn" htmlFor="fileUpload">
+                    <MdOutlineFileUpload size="5em" color="#efa16a" />
                   </label>
                   <input
                     id="fileUpload"
@@ -233,80 +270,130 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
                     style={{ display: "none" }}
                     onChange={handleImageChange}
                   />
-                  <p className="text-white">(png,jpeg or jpg)</p>
+                  <h6
+                    className="d-flex align-items-center justify-content-center"
+                    style={{ color: "#efa16a" }}
+                  >
+                    請上傳檔案
+                  </h6>
                 </>
               )}
-            </div>
-            <div>
               {error && <p className="text-center text-danger">不支援此檔案</p>}
             </div>
-          </div>
-          <div>
-            {imgPreview && (
-              <button onClick={() => setImgPreview(null)}>更換照片</button>
-            )}
-          </div>
-        </Form.Group>
+          </Form.Group>
+        </div>
       )}
-      <Form.Group className="col-6">
+
+      <Form.Group className="col-6" style={{ fontSize: "18px" }}>
         <Form.Group>
           <Form.Label>飯店名稱</Form.Label>
           <Form.Select
             name="hotelId"
             onChange={editFormChangeHandle}
             disabled={isDisabled}
+            style={{ fontSize: "18px" }}
           >
-            <option defaultValue={editData.hotelId}>
-              {editData.hotelTitle}
-            </option>
+            <option disabled>請選擇飯店</option>
             {hotelArr}
           </Form.Select>
         </Form.Group>
-        <Form.Group>
+        <Form.Group className="mt-3">
           <Form.Label>房型選擇</Form.Label>
           <Form.Select
             name="roomType"
             onChange={editFormChangeHandle}
             disabled={isDisabled}
+            style={{ fontSize: "18px" }}
           >
-            <option defaultValue={editModalData.roomType}>
-              {editData.roomType}
+            <option disabled>請選擇房型</option>
+            <option
+              value="1"
+              selected={editModalData.roomType === "1" ? true : ""}
+            >
+              單人房
             </option>
-            <option value="1">單人房</option>
-            <option value="0">背包客</option>
+            <option
+              value="0"
+              selected={editModalData.roomType === "0" ? true : ""}
+            >
+              背包客
+            </option>
           </Form.Select>
         </Form.Group>
-        <Form.Group>
+        <Form.Group className="mt-3">
           <Form.Label>容納人數</Form.Label>
           <Form.Control
             type="text"
             name="liveNum"
-            required="required"
+            // required="required"
             defaultValue={editModalData.liveNum}
             onChange={editFormChangeHandle}
             disabled={isDisabled}
+            style={{ fontSize: "18px" }}
           />
         </Form.Group>
-        <Form.Group>
+        <Form.Group className="mt-3">
           <Form.Label>備註</Form.Label>
           <Form.Control
             as="textarea"
             rows={3}
-            placeholder="xxx"
+            placeholder="備註"
             defaultValue={editModalData.roomDesc}
             onChange={editFormChangeHandle}
             name="roomDesc"
             disabled={isDisabled}
+            style={{ fontSize: "18px" }}
           />
         </Form.Group>
       </Form.Group>
-      <div className="mt-1 mb-1 d-flex justify-content-end">
-        <Button className="mt-3 mb-3 me-1" onClick={disabledClickHandle}>
-          修改
-        </Button>
-        <Button className="mt-3 mb-3" type="submit">
-          儲存
-        </Button>
+      <div className="mt-3 mb-3 d-flex justify-content-end">
+        {editButton ? (
+          <></>
+        ) : (
+          <button
+            className="btn me-1"
+            onClick={disabledClickHandle}
+            style={{
+              backgroundColor: "#06CAD7",
+              color: "white",
+              fontSize: "20px",
+            }}
+          >
+            修改
+          </button>
+        )}
+
+        {editButton ? (
+          <a
+            className="btn me-2"
+            style={{
+              backgroundColor: "#06CAD7",
+              color: "white",
+              fontSize: "20px",
+              textDecoration:'none'
+            }}
+            onClick={() => setEditImage(true)}
+          >
+            更換照片
+          </a>
+        ) : (
+          <></>
+        )}
+        {editButton ? (
+          <button
+            className="btn me-1"
+            type="submit"
+            style={{
+              backgroundColor: "#7BA23F",
+              color: "white",
+              fontSize: "20px",
+            }}
+          >
+            儲存
+          </button>
+        ) : (
+          <></>
+        )}
       </div>
     </Form>
   );
