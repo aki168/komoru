@@ -2,20 +2,16 @@ import axios from 'axios';
 import React, { useEffect, useState} from 'react';
 import Modal from 'react-bootstrap/Modal';
 import './RainbowCard.css'
+import BookingLoading from '../BookingLoading/BookingLoading';
 
 export default function RainbowCard(props) {
 
   // 0708 aki-彩虹卡顯示開關
   const [show, setShow] = useState(true);
-  // // 0708 aki-金句內容資料獲取
+  // 0708 aki-金句內容資料獲取
   const [rainbowCard, setRainbowCard] = useState('')
-
-
-  // // 0708 彩虹卡背景色產生
-  // const getRainbowColor = () => {
-  //   const colors = ['#ff0000','#ffa500','#ffff00','#008000','#0000ff','#4b0082','#ee82ee'];
-  //   setRandom
-  // }
+  // 初始化loading狀態
+  const [loading, setLoading] = useState(false)
 
   // 0708 獲取金句
   useEffect(() => {
@@ -26,7 +22,7 @@ export default function RainbowCard(props) {
         token: localStorage.token
       }
     }).then((res) => {
-      console.log(res)
+      setLoading(true)
       setRainbowCard(res.data.dataList.getRainbowCard[0].rainbowCardContent)
       setShow(true)
     })
@@ -48,15 +44,19 @@ export default function RainbowCard(props) {
         className="w-100"
         aria-labelledby="example-custom-modal-styling-title"
       >
-        {/* <Modal.Header closeButton>
-        </Modal.Header> */}
         <Modal.Body>
           <div className="rainbowCard">
-            <p className="rainbowCard--EN">KOMORU想送給你一句話...</p>
-            <p className="rainbowCard--CN">{rainbowCard}</p>
-            {/* <a className="rainbowCard--download" href="/user">
-              <img src="icon-download.png" alt="download" />
-            </a> */}
+            <p className="rainbowCard--EN">[勉勵金句] KOMORU想送給你一句話...</p>
+
+            { //資料尚未取得之前，顯示Loading
+              !loading && 
+              <div className='d-flex justify-content-center'>
+                <BookingLoading/>
+                <BookingLoading/>  
+              </div>
+            }
+
+            { loading && <p className="rainbowCard--CN">{rainbowCard}</p> } 
           </div>
         </Modal.Body>
       </Modal>

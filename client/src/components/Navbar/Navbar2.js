@@ -39,7 +39,7 @@ export default function Navbar() {
         </li>
         <li>
           <Button variant="secondary" size="sm" onClick={logout}>
-            測試用登出
+            登出
           </Button>
         </li>
       </ul>

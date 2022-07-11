@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-// import Menu from "./Menu"
 import { Button, Alert } from "react-bootstrap"
 import './User.css'
 import axios from 'axios'
@@ -118,7 +117,6 @@ export default function User(props) {
     ).then((res) => {
       console.log('上傳成功')
       console.log(res)
-      // window.location.reload("false")
       setUploadSuccess(true)
 
     }).catch((err) => {
@@ -128,10 +126,9 @@ export default function User(props) {
   } else {
     alert('尚未選取圖檔')
   }
+}
 
-  }
-
-  // 0711 aki 頭像判斷設定
+  // 0711 aki 頭像路徑判斷設定 (第三方註冊後更變path)
   let imgURL;
   if (formData.registerType === '2'){ //LINE註冊
     let ans = formData.iconPath.indexOf("profile.line"); //確認LINE註冊者的頭像是否有修改過
@@ -140,21 +137,16 @@ export default function User(props) {
     imgURL = `http://localhost:5000${formData.iconPath}`;
   }
 
+  // style={{
+  //   background: imgPreview
+  //     ? `url("${imgPreview}") no-repeat center/cover`
+  //     : `url("${formData.iconPath ? ((formData.registerType === '2')? formData.iconPath : `http://localhost:5000${formData.iconPath}`) :
+  //                                     `avatar-pl.png`}") no-repeat center/cover`
+  // }}
 
 
   return (
     <>
-
-    {/* <div className="User"> */}
-      {/* <Menu /> */}
-      {/* <ul className="user--menu">
-        <li><Link to="/user" className="menu--item--on">基本資料</Link></li>
-        <li><Link to="/member-order" className="menu--item">訂單記錄</Link></li>
-        <li><Link to="/member-feedback" className="menu--item">活動回饋</Link></li>
-        <li><Link to="/member-coupon" className="menu--item">優惠表單</Link></li>
-      </ul> */}
-
-
       <div className="user--card">
         <div className="card--title">
           <h3>會員基本資料</h3>
@@ -170,9 +162,9 @@ export default function User(props) {
               style={{
                 background: imgPreview
                   ? `url("${imgPreview}") no-repeat center/cover`
-                  : `url("${formData.iconPath ? ((formData.registerType === '2')? formData.iconPath : `http://localhost:5000${formData.iconPath}`) :
-                                                  `avatar-pl.png`}") no-repeat center/cover`
+                  : `url("${formData.iconPath ? imgURL :`avatar-pl.png`}") no-repeat center/cover`
               }}
+
             >
 
             </div>
@@ -206,13 +198,6 @@ export default function User(props) {
           <ul className="user--form pt-3 pb-3">
             <li className="user--item">
               <span className="fs-4"> 帳號　{formData.mail}</span>
-              {/* <input
-              type="text"
-              name="mail"
-              id="mail"
-              value={formData.mail}
-              onChange={inputHandler}
-            />  */}
             </li>
             <li className="user--item">
               {!alertData && <span className="fs-4">姓名　{formData.name}</span>}
@@ -286,12 +271,6 @@ export default function User(props) {
         </div>
       </div>
 
-
-
-
-
-
-    {/* </div> */}
     </>
   )
 

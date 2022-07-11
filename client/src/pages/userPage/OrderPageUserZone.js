@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Navbar from '../../components/Navbar/Navbar'
 import '../../components/User/OrderList/OrderList.css'
 import OrderList from '../../components/User/OrderList/OrderList'
-
-import UserHeader from '../../components/User/UserHeader'
-import UserSubHeader from './UserSubHeader'
 import axios from 'axios'
 import { Button } from 'react-bootstrap'
+import BookingLoading from '../../components/BookingLoading/BookingLoading'
 
 
 export default function OrderPage() {
 
+  // 獲取訂單資料
   const [orderData, setOrderData] = useState([])
+  // 確認是否從未訂過
   const [isOrder, setIsOrder] = useState(false)
+  // 初始化loading狀態
+  const [loading, setLoading] = useState(false)
 
 
   //0623 aki - 若沒有token則跳轉登入頁
@@ -34,7 +35,7 @@ export default function OrderPage() {
         token: localStorage.token
       }
     }).then((res) => {
-
+      setLoading(true)
       if (res.data.dataList.length) { //訂單資料 by 會員
         let postOrderData = res.data.dataList; // 單張訂單資料
         setOrderData(postOrderData)
@@ -71,17 +72,6 @@ export default function OrderPage() {
 
 
   return (
-    // <div className='User--wrap'>
-    //   <Navbar />
-    //   <UserHeader />
-    // <div className='User--container'>
-    // <div className="OrderList">
-    // <ul className="OrderList--menu">
-    //   <li><a href="/user" className="menu--item">基本資料</a></li>
-    //   <li><a href="/member-order" className="menu--item--on">訂單記錄</a></li>
-    //   <li><a href="/member-feedback" className="menu--item">活動回饋</a></li>
-    //   <li><a href="/member-coupon" className="menu--item">優惠表單</a></li>
-    // </ul> 
     <>
       {!isOrder &&  // 若無任何訂單的畫面
         <div className="OrderList--card--none">
@@ -90,6 +80,17 @@ export default function OrderPage() {
             <p>完整的訂單記錄，讓你方便查看所有訂單內容，每一次都將有不同的體驗！</p>
           </div>
           <img className="img-fluid mb-4 w-100" src="../komoru_member.png" alt="profile-banner" />
+          
+          { //資料尚未取得之前，顯示Loading
+            !loading && 
+            <div className='d-flex justify-content-center'>
+              <BookingLoading/>
+              <BookingLoading/> 
+              <BookingLoading/>  
+            </div>
+          } 
+
+          { loading &&
           <section>
             <h2>目前沒有訂單紀錄，現在就開始旅程！</h2>
             <Button className="user--btn--M mt-3 fs-3" onClick={toBooking}>
@@ -99,7 +100,7 @@ export default function OrderPage() {
               </svg>
             </Button>
           </section>
-
+          }
         </div>
       }
 
@@ -113,10 +114,7 @@ export default function OrderPage() {
           {orders}
         </div>
       }
+      
     </>
-
-    // </div>
-    // </div>
-    // </div>
   )
 }

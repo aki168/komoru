@@ -17,12 +17,12 @@ export default function OrderListDaily(props) {
           <h2 className="pt-3 pb-2">{props.orderItemDate}</h2>
           <ul className="text-secondary col-4">
             <li className="pt-2 pb-2 ">
-              <h4>・10:00 - 11:00    Check in</h4>
-              <p>　　前往預定飯店並參觀飯店空間</p>
+              <h4>・10:00 - 11:00    美好的早晨</h4>
+              <p>　　找個屬於你的小角落享用美味早餐</p>
             </li>
             <li className="pt-2 pb-2 ">
               <h4>・11:00 - 12:00    改變的開始</h4>
-              <p>　　前往飯店櫃檯領取上一位旅客的回饋</p>
+              <p>　　前往飯店櫃檯領取過往旅客的回饋</p>
             </li>
             <li className="pt-2 pb-2 ">
               <h4>・12:00 - 14:00    不一樣的用餐體驗</h4>
