@@ -62,7 +62,7 @@ function App() {
   const [date, setDate] = useState("");
   const [dayState, setDayState] = useState("");
   const [cityState, setCityState] = useState([]);
-  const [roomState, setRoomState] = useState("DEFAULT");
+  const [roomState, setRoomState] = useState("default");
   const [couponState, setCouponState] = useState("");
   const [couponData, setCouponData] = useState([]);
   const [activityState, setActivityState] = useState("");
