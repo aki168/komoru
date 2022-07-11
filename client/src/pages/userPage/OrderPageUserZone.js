@@ -32,12 +32,11 @@ export default function OrderPage() {
         token: localStorage.token
       }
     }).then((res) => {
-      // if (res.data.dataList.length) { //訂單資料 by 會員
+      if (res.data.dataList.length) { //訂單資料 by 會員
         let postOrderData = res.data.dataList;
         setOrderData(postOrderData)
         setIsOrder(true)
-      // }
-      console.log(res.data.dataList.getOrderDataByMemberId)
+      }
       console.log(res)
 
 
@@ -124,16 +123,3 @@ export default function OrderPage() {
     </div>
   )
 }
-
-// HotelId: 1
-// hotelAddr: "台中市西區公益路68號15樓"
-// hotelTel: "+886 4 2321-9696"
-// hotelTitle: "Star Hostel"
-// memberId: 1
-// memberName: "陳小明"
-// orderId: 1
-// orderNumber: "1111"
-// orderStartDate: "2022-06-17"
-// orderStatus: "0"
-// roomDesc: "台中市 Star Hostel/私人套房"
-// stayNight: 1

@@ -2,7 +2,6 @@ import React from "react"
 import './OrderList.css'
 import { Accordion } from 'react-bootstrap'
 import OrderListDaily from "./OrderListDaily/OrderListDaily";
-// import BookingOrderPage from "../../pages/orderPage/BookingOrderPage"
 
 
 
@@ -14,17 +13,17 @@ export default function OrderList(props) {
   let start = Date.parse(props.orderStartDate);
   let stayNight = (end - start) / 86400000 ;
 
-  // roomPic 暫時寫死
-  const getRoomPic = (roomId) => {
-      if (props.roomId === 1) return 1;
-      if (props.roomId === 2) return 5;
-      if (props.roomId === 3) return 14;
-      if (props.roomId === 4) return 11;
-      if (props.roomId === 5) return 9;
-      if (props.roomId === 6) return 13;
-      if (props.roomId === 7) return 12;
-      if (props.roomId === 8) return 10;
-    }
+  // // roomPic 如遇到系統故障時，啟用這隻設定
+  // const getRoomPic = (roomId) => {
+  //     if (props.roomId === 1) return 1;
+  //     if (props.roomId === 2) return 5;
+  //     if (props.roomId === 3) return 14;
+  //     if (props.roomId === 4) return 11;
+  //     if (props.roomId === 5) return 9;
+  //     if (props.roomId === 6) return 13;
+  //     if (props.roomId === 7) return 12;
+  //     if (props.roomId === 8) return 10;
+  //   }
 
 
   return (
@@ -95,45 +94,11 @@ export default function OrderList(props) {
               </div>
               <OrderListDaily
                 date={props.orderStartDate}/>
-
             </div>
-
-            {/* cityName: "台中市"
-couponItemId: 2
-createDatetime: "2022-07-06 13:46:47"
-hotelAddr: "台中市西區公益路68號15樓"
-hotelDesc: null
-hotelTel: "+886 4 2321-9696"
-hotelTitle: "Star Hostel"
-memberGender: "男"
-memberId: 1
-memberImgPath: "/images/member/wanggmailcom.PNG"
-memberMail: "wang@gmail.com"
-memberName: "王小明"
-memberNickName: "小明"
-memberPhone: "0966777899"
-orderEndDate: "2022-07-11"
-orderId: 130
-orderNumber: "2LQUI5ka"
-orderStartDate: "2022-07-08"
-orderStatus: "未入住"
-orderTotal: 3500
-roomDesc: null
-roomId: 2
-roomType: "背包客" */}
-
-
-
-
-
-
-
-
-
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
-      {/* } */}
+
     </>
   )
 
