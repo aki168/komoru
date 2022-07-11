@@ -1,6 +1,14 @@
 import React from "react"
 import './OrderListDaily.css'
 
+// 0711 aki 點擊活動後，觸發該函式顯現google地圖
+const checkMapHandler = (e) => {
+  e.preventDefault()
+  console.log('顯示地圖！')
+  //開始與googleMap連線
+
+}
+
 export default function OrderListDaily(props) {
   return (
     <>
@@ -18,7 +26,7 @@ export default function OrderListDaily(props) {
             </li>
             <li className="pt-2 pb-2 ">
               <h4>・12:00 - 14:00    不一樣的用餐體驗</h4>
-              <button src="#" className="bg-white text-primary fw-bold ms-3">
+              <button onClick={checkMapHandler} className="bg-white text-primary fw-bold ms-3">
                 {/* 前往 創作麵坊・鮭の大助 餐廳用餐 */}
                 {props.activePackItemContent}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-geo-alt-fill" viewBox="0 0 16 16">
@@ -31,7 +39,7 @@ export default function OrderListDaily(props) {
           <ul className="text-secondary col-4">
             <li className="pt-2 pb-2 ">
               <h4>・14:00 - 16:00    探索時刻</h4>
-              <button src="#" className="bg-white text-primary fw-bold ms-3">
+              <button onClick={checkMapHandler} className="bg-white text-primary fw-bold ms-3">
               {props.activePackItemContent2}
                 {/* 勤美誠品書店挑選暢銷排行一本閱讀 */}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-geo-alt-fill" viewBox="0 0 16 16">
@@ -41,7 +49,7 @@ export default function OrderListDaily(props) {
             </li>
             <li className="pt-2 pb-2 ">
               <h4>・16:00 - 17:00    Tea Time</h4>
-              <button src="#" className="bg-white text-primary fw-bold ms-3">
+              <button onClick={checkMapHandler} className="bg-white text-primary fw-bold ms-3">
               {props.activePackItemContent3}
                 {/* coffee stopover 點選一杯淺培風味咖啡 */}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-geo-alt-fill" viewBox="0 0 16 16">
