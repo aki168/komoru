@@ -9,11 +9,11 @@ import Home from "./pages/Home";
 import LoginPage from "./pages/aboutMember/LoginPage";
 import ForgotPW from "./pages/aboutMember/ForgotPWPage";
 import Register from "./pages/aboutMember/Register";
-import UserPage from "./pages/userPage/userPage";
-import OrderPageUserZone from "./pages/userPage/OrderPageUserZone";
-import FeedbackPage from "./pages/userPage/FeedbackPage";
-import CouponPage from "./pages/userPage/CouponPage";
 import UserHomePage from "./pages/userPage/UserHomePage";
+// import UserPage from "./pages/userPage/userPage";
+// import OrderPageUserZone from "./pages/userPage/OrderPageUserZone";
+// import FeedbackPage from "./pages/userPage/FeedbackPage";
+// import CouponPage from "./pages/userPage/CouponPage";
 
 //ZH
 import PsychologicalExam from "./pages/psychologicalExam/PsychologicalExam";
@@ -110,11 +110,11 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgotPW" element={<ForgotPW />} />
-        <Route path="/user" element={<UserPage />} />
+        <Route path="/user-home/*" element={<UserHomePage />} />
+        {/* <Route path="/user" element={<UserPage />} />
         <Route path="/member-order" element={<OrderPageUserZone />} />
         <Route path="/member-feedback" element={<FeedbackPage />} />
-        <Route path="/member-coupon" element={<CouponPage />} />
-        <Route path="/user-home/*" element={<UserHomePage />} />
+        <Route path="/member-coupon" element={<CouponPage />} /> */}
 
         {/* ZH */}
         <Route

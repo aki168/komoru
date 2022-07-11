@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import '../../components/User/User.css'
 import axios from 'axios'
 import User from '../../components/User/User'
+import RainbowCard from '../../components/RainbowCard/RainbowCard'
 
 
 
@@ -38,6 +39,7 @@ export default function UserPage() {
 
   return (
     <>
+      <RainbowCard />
       <User
         mail={userData.memberMail}
         name={userData.memberName}
