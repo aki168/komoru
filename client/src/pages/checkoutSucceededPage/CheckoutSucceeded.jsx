@@ -28,7 +28,7 @@ const CheckoutSucceeded = () => {
         <p>結帳成功</p>
       </div>
       <div className="checkoutSucceededContainer">
-        <span>下定成功!</span>
+        <span>下訂成功!</span>
         <p>
           快到會員中心查看→
           <Link to="/member-order" className="checkoutSucceededLink">

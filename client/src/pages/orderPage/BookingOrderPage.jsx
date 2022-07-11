@@ -345,7 +345,7 @@ function BookingOrderPage() {
         activePackId: PackId,
         isActive: activityState,
         joinTotal: countActivity,
-        orderItemPrice: 8763
+        orderItemPrice: 1700,
       };
       console.log(orderDetails);
       fetch("http://localhost:5000/order/getAndSaveOrderData", {

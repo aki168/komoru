@@ -322,7 +322,7 @@ function Booking() {
               onChange={(e) => setCouponState(e.target.value)}
               value={couponState}
             >
-              <option value="0">請選擇優惠代碼</option>
+              <option value="">請選擇優惠代碼</option>
               {couponArr}
             </select>
           </div>
