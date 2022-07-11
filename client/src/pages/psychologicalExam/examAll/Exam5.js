@@ -35,7 +35,7 @@ const Exam5 = () => {
           defaultChecked={exam5Data === "P"}
           onChange={(e) => setExam5Data(e.currentTarget.value)}
         ></input>
-        先看其他人的評價,再決定是否試試看
+        先看其他人評價,再決定是否試試看
       </label>
     </div>
   );

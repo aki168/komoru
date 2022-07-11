@@ -16,7 +16,7 @@ const BookingImgTaitungBackpackerRoom = () => {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <div className="">
+    <div className="bookingPageImgContainer">
       <img
         className="bookingPageImg"
         src="http://localhost:5000/images/room/room-12.jpeg"

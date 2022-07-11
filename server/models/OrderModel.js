@@ -254,7 +254,8 @@ exports.getCouponItemDataList = async (memberId) => {
 // 取得orderId BY memberId
 exports.getOrdeIdByMemberId = async (memberId) => {
   return new Promise((resolve, reject) => {
-    let sql = "SELECT `Order`.`order_id` FROM `Order` WHERE `member_id` = ? "
+    let sql = "SELECT `Order`.`order_id` FROM `Order` WHERE `member_id` = ? " +
+      "ORDER BY `Order`.`order_start_date` DESC ";
     db.con.query(sql, memberId, (err, rows, fields) => {
       if (err) {
         reject(err);
@@ -407,10 +408,19 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
               "INSERT INTO `OrderItem`" +
               "(`order_id`, `active_pack_id`, `order_item_date`, `is_active`, `create_datetime`, `order_item_price`)" +
               " VALUES (?, ?, ?, ?, ?, ?) ";
+
+            // 日期加天數Function
+            Date.prototype.addDays = function (days) {
+              this.setDate(this.getDate() + days);
+              return this;
+            };
+
+            // 取得入住日期並加上體驗天數
+            let order_start_date = new Date(data["order_start_date"]);
             value = [
               orderId,
               data["active_pack_id"][i],
-              data["order_start_date"],
+              order_start_date.addDays(i).toLocaleDateString(),
               data["is_active"],
               data["create_datetime"],
               data["order_item_price"],

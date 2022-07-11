@@ -1,23 +1,35 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import "./BookingOrderPage.css";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Steps } from "rsuite";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { BookContext } from "../../Helper/Context";
 import ActivityBag from "./ActivityBag";
 import axios from "axios";
 import Navbar from "../../components/Navbar/Navbar-simple";
+import { AiOutlineRight } from "react-icons/ai";
+import { IoMdAlert } from "react-icons/io";
+import BookingLoading from "../../components/BookingLoading/BookingLoading";
 
 function BookingOrderPage() {
+  const [memberloading, setMemberLoading] = useState(false);
+  const [activityPackloading, setActivityPackloading] = useState(false);
+  //獲取活動包activityPack
   const location = useLocation();
-  // console.log(location);
   const [activityPack, setActivityPack] = useState(location.state.activityPack);
-  // const [activePackItemContent, setActivePackItemContent] = useState("");
-  // const [activePackItemEndTime, setActivePackItemEndTime] = useState("");
-  // const [activePackItemStartTime, setActivePackItemStartTime] = useState("");
-  // const [activePackItemTitle, setActivePackItemTitle] = useState("");
+
+  //活動包內容初始化
   const [activePackD1, setActivePackD1] = useState({});
   const [activePackD2, setActivePackD2] = useState({});
   const [activePackD3, setActivePackD3] = useState({});
+
+  //下一步點擊時狀態紀錄
+  const [nextStep, setNextStep] = useState("");
+
+  //付款方式初始化
+  const [payMethod, setPayMethod] = useState("");
+
+  //滾動到指定元素
+  const testRef = useRef(null);
+  const scrollToElement = () => testRef.current.scrollIntoView();
 
   const {
     date,
@@ -43,7 +55,6 @@ function BookingOrderPage() {
   //cityIdValue(城市的ID)
   //activityPack(活動包總類，在心理測驗完後獲取)
   //獲取活動包
-  console.log(0);
   useEffect(() => {
     console.log(
       activityState,
@@ -56,7 +67,7 @@ function BookingOrderPage() {
       url: "http://localhost:5000/activePack/getActivePackData",
       data: {
         isActive: activityState,
-        joinTotal: JSON.stringify(countActivity),
+        joinTotal: countActivity,
         cityId: cityIdValue,
         activePackType: activityPack,
       },
@@ -64,6 +75,8 @@ function BookingOrderPage() {
       .then((res) => {
         console.log(res.data.dataList);
         setGetAllActivePackData(res.data.dataList);
+
+        // console.log(res.data.dataList);
         if (activity1Data === "1") {
           setActivePackD1(res.data.dataList.D1[0]);
         }
@@ -83,25 +96,34 @@ function BookingOrderPage() {
         ) {
           setActivePackD3(res.data.dataList.D1[0]);
         }
-
-        console.log(getAllActivePackData);
-
-        console.log(activePackD1, activePackD2, activePackD3);
+      })
+      .then(() => {
+        setActivityPackloading(true);
       })
       .catch((err) => {
         console.log(err);
       });
     // }
   }, []);
+  console.log(activePackD1);
   const PackId = [];
   if (activity1Data === "1") {
-    PackId.push(activePackD1.activePackType);
+    PackId.push(activePackD1.activePackId);
+  }
+  if (activity1Data === "2") {
+    PackId.push(null);
   }
   if (activity2Data === "3") {
-    PackId.push(activePackD2.activePackType);
+    PackId.push(activePackD2.activePackId);
+  }
+  if (activity1Data === "4") {
+    PackId.push(null);
   }
   if (activity3Data === "5") {
-    PackId.push(activePackD3.activePackType);
+    PackId.push(activePackD3.activePackId);
+  }
+  if (activity1Data === "6") {
+    PackId.push(null);
   }
 
   console.log(PackId);
@@ -111,10 +133,15 @@ function BookingOrderPage() {
     if (activity1Data === "1") {
       return (
         <>
-          <p>{activePackD1.activePackItemTitle}</p>
-          <p>開始時間:{activePackD1.activePackItemStartTime}</p>
-          <p>結束時間:{activePackD1.activePackItemEndTime}</p>
-          <p>{activePackD1.activePackItemContent}</p>
+          <ActivityBag
+            date={date}
+            first={<span>Ckeck In</span>}
+            second={<p>前往預定飯店並參觀飯店空間</p>}
+            activePackItemTitle={activePackD1.activePackItemTitle}
+            activePackItemContent={activePackD1.activePackItemContent}
+            activePackItemContent2={activePackD1.activePackItemContent2}
+            activePackItemContent3={activePackD1.activePackItemContent3}
+          />
         </>
       );
     }
@@ -125,10 +152,15 @@ function BookingOrderPage() {
     if (activity2Data === "3") {
       return (
         <>
-          <p>{activePackD2.activePackItemTitle}</p>
-          <p>開始時間:{activePackD2.activePackItemStartTime}</p>
-          <p>結束時間:{activePackD2.activePackItemEndTime}</p>
-          <p>{activePackD2.activePackItemContent}</p>
+          <ActivityBag
+            date={date}
+            first={<span>Breakfast</span>}
+            second={<p>享用飯店提供的美味早餐</p>}
+            activePackItemTitle={activePackD2.activePackItemTitle}
+            activePackItemContent={activePackD2.activePackItemContent}
+            activePackItemContent2={activePackD2.activePackItemContent2}
+            activePackItemContent3={activePackD2.activePackItemContent3}
+          />
         </>
       );
     }
@@ -139,10 +171,15 @@ function BookingOrderPage() {
     if (activity3Data === "5") {
       return (
         <>
-          <p>{activePackD3.activePackItemTitle}</p>
-          <p>開始時間:{activePackD3.activePackItemStartTime}</p>
-          <p>結束時間:{activePackD3.activePackItemEndTime}</p>
-          <p>{activePackD3.activePackItemContent}</p>
+          <ActivityBag
+            date={date}
+            first={<span>Breakfast</span>}
+            second={<p>享用飯店提供的美味早餐</p>}
+            activePackItemTitle={activePackD3.activePackItemTitle}
+            activePackItemContent={activePackD3.activePackItemContent}
+            activePackItemContent2={activePackD3.activePackItemContent2}
+            activePackItemContent3={activePackD3.activePackItemContent3}
+          />
         </>
       );
     }
@@ -175,6 +212,9 @@ function BookingOrderPage() {
         setMemberMail(userData.memberMail);
         setMemberPhone(userData.memberPhone);
         setMemberGender(userData.memberGender);
+      })
+      .then(() => {
+        setMemberLoading(true);
       })
       .catch((err) => {
         console.log(err);
@@ -251,30 +291,6 @@ function BookingOrderPage() {
       : setactivityBag3Visible(false);
   }, [activity1Data, activity2Data, activity3Data]);
 
-  // const array = activityData.map();
-  //顯示哪幾天參與
-  const handleActivity1Data = () => {
-    if (activity1Data === "1") {
-      return <p>第一天→要</p>;
-    } else if (activity1Data === "2") {
-      return <p>第一天→否</p>;
-    }
-  };
-  const handleActivity2Data = () => {
-    if (activity2Data === "3") {
-      return <p>第二天→要</p>;
-    } else if (activity2Data === "4") {
-      return <p>第二天→否</p>;
-    }
-  };
-  const handleActivity3Data = () => {
-    if (activity3Data === "5") {
-      return <p>第三天→要</p>;
-    } else if (activity3Data === "6") {
-      return <p>第三天→否</p>;
-    }
-  };
-
   //計算房間金額
   const [roomSum, setRoomSum] = useState(Number(0));
   useEffect(() => {
@@ -308,190 +324,245 @@ function BookingOrderPage() {
 
   const navigate = useNavigate();
   //傳訂單明細給後端
-  const CheckoutOrderHandler = (event) => {
-    event.preventDefault();
+  const CheckoutOrderHandler = (e) => {
+    setNextStep(e.type);
+    e.preventDefault();
 
-    const orderDetails = {
-      memberId: memberId,
-      orderStartDate: date,
-      expDays: dayState,
-      orderStatus: "0",
-      roomId: roomState,
-      couponItemId: couponState,
-      orderTotal: sumActivity,
-      activePackId: PackId,
-      isActive: activityState,
-      joinTotal: countActivity,
-    };
-    console.log({
-      memberId: memberId,
-      orderStartDate: date,
-      expDays: dayState,
-      orderStatus: "0",
-      roomId: roomState,
-      couponItemId: couponState,
-      orderTotal: sumActivity,
-      activePackId: PackId,
-      isActive: activityState,
-      joinTotal: countActivity,
-    });
-    fetch("http://localhost:5000/order/getAndSaveOrderData", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(orderDetails),
-    })
-      .then((response) => response.json())
-      // .then(console.log("ok"))
-      .catch(console.error);
+    if (payMethod === "") {
+      alert("未輸入付款方式!");
+      scrollToElement();
+    } else {
+      const orderDetails = {
+        memberId: memberId,
+        orderStartDate: date,
+        expDays: dayState,
+        orderStatus: "0",
+        roomId: roomState,
+        couponItemId: couponState,
+        orderTotal: sumActivity,
+        activePackId: PackId,
+        isActive: activityState,
+        joinTotal: countActivity,
+      };
+      console.log({
+        memberId: memberId,
+        orderStartDate: date,
+        expDays: dayState,
+        orderStatus: "0",
+        roomId: roomState,
+        couponItemId: couponState,
+        orderTotal: sumActivity,
+        activePackId: PackId,
+        isActive: activityState,
+        joinTotal: countActivity,
+      });
+      fetch("http://localhost:5000/order/getAndSaveOrderData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(orderDetails),
+      })
+        .then((response) => response.json())
+        // .then(console.log("ok"))
+        .catch(console.error);
 
-    navigate("/checkoutSucceeded");
+      navigate("/checkoutSucceeded");
+    }
   };
 
   return (
     <>
       <Navbar />
+      <div className="bookingBreadcrumbs">
+        <Link to="/">首頁</Link>
+        <span>
+          <AiOutlineRight />
+        </span>
+        <Link to="/bookingHomePage">即刻預定</Link>
+        <span>
+          <AiOutlineRight />
+        </span>
+        <Link to="/psychologicalExam">心理測驗</Link>
+        <span>
+          <AiOutlineRight />
+        </span>
+        <p>訂單確認</p>
+      </div>
       <div className="orderContainer">
         <div className="memberCheckout">
-          <div className="memberCheckoutHeader">
-            <h1>訂購者資料確認</h1>
-            <p>
-              確認資料無誤後選擇付款方式，簡單快速的下訂流程讓你立即體驗旅程！
-            </p>
-          </div>
+          {memberloading ? (
+            <>
+              <div className="memberCheckoutHeader" ref={testRef}>
+                <h1>訂購者資料確認</h1>
+                <p>
+                  確認資料無誤後選擇付款方式，簡單快速的下訂流程讓你立即體驗旅程！
+                </p>
+              </div>
+              <table className="memberCheckoutTable">
+                <tbody>
+                  <tr>
+                    <td>
+                      <b>帳號:</b>
+                      <span>{memberMail}</span>
+                    </td>
+                    <td>
+                      <b>手機:</b>
+                      <span className="specialSpan">{memberPhone}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <b>姓名:</b>
+                      <span>{memberName}</span>
+                    </td>
+                    <td>
+                      <b>性別:</b>
+                      <span className="specialSpan">{gender()}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <b>暱稱:</b>
+                      <span>{memberNickName}</span>
+                    </td>
+                    <td>
+                      <div className="payMethodContent">
+                        <b>付款方式</b>
 
-          <table className="memberCheckoutTable">
-            <tbody>
-              <tr>
-                <td>
-                  <b>帳號:</b>
-                  <span>{memberMail}</span>
-                </td>
-                <td>
-                  <b>手機:</b>
-                  <span className="specialSpan">{memberPhone}</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <b>姓名:</b>
-                  <span>{memberName}</span>
-                </td>
-                <td>
-                  <b>性別:</b>
-                  <span className="specialSpan">{gender()}</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <b>暱稱:</b>
-                  <span>{memberNickName}</span>
-                </td>
-                <td>
-                  <div className="payMethodContent">
-                    <b>付款方式</b>
-
-                    <span>
-                      <select id="expDays" defaultValue={"default"}>
-                        <option value="default" disabled hidden>
-                          請選擇要付款的方式
-                        </option>
-                        <option value="1">信用卡</option>
-                      </select>
-                    </span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                        <span>
+                          <select
+                            id="expDays"
+                            defaultValue={""}
+                            onChange={(e) => {
+                              setPayMethod(e.target.value);
+                            }}
+                          >
+                            <option value="" disabled hidden>
+                              請選擇要付款的方式
+                            </option>
+                            <option value="1">現金</option>
+                          </select>
+                          {nextStep === "click" && (
+                            <>
+                              {payMethod === "" && (
+                                <IoMdAlert className="orderIoMdAlert" />
+                              )}
+                            </>
+                          )}
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </>
+          ) : (
+            <div style={{ marginLeft: 600 }}>
+              <BookingLoading />
+            </div>
+          )}
         </div>
         <div className="orderList">
-          <div className="orderListHeader">
-            <h1>訂購者資料確認</h1>
-            <p>
-              一條龍記錄您的訂單及活動行程，並即時更新在會員中心讓您隨時查看。
-            </p>
-          </div>
-          <div className="orderListBody">
-            <div className="orderListImg">
-              <img src="https://picsum.photos/500/300" alt="" />
+          {activityPackloading ? (
+            <>
+              <div className="orderListHeader">
+                <h1>訂購者資料確認</h1>
+                <p>
+                  一條龍記錄您的訂單及活動行程，並即時更新在會員中心讓您隨時查看。
+                </p>
+              </div>
+              <div className="orderListBody">
+                <div className="orderListImg">
+                  <img src="https://picsum.photos/500/300" alt="" />
+                </div>
+                <div className="orderListAll">
+                  <div className="list">
+                    <p>入住日期</p>
+                    <span>{date}</span>
+                  </div>
+                  <div className="list">
+                    <p>住宿幾晚</p>
+                    <span>{dayState}</span>
+                  </div>
+                  <div className="list">
+                    <p>青旅/房型</p>
+                    <span>{handleroomStateData()}</span>
+                  </div>
+                  <div className="list">
+                    <p>優惠票券</p>
+                    <span>{handleCouponStateData()}</span>
+                  </div>
+                  <div className="list">
+                    <p>活動參與</p>
+                    <span>{handleActivityStateData()}</span>
+                  </div>
+                  <div className="list">
+                    <p>活動天數</p>
+                    <span>{countActivity}</span>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div style={{ marginLeft: 600 }}>
+              <BookingLoading />
             </div>
-            <div className="orderListAll">
-              <div className="list">
-                <p>入住日期</p>
-                <span>{date}</span>
-              </div>
-              <div className="list">
-                <p>住宿幾晚</p>
-                <span>{dayState}</span>
-              </div>
-              <div className="list">
-                <p>青旅/房型</p>
-                <span>{handleroomStateData()}</span>
-              </div>
-              <div className="list">
-                <p>優惠票券</p>
-                <span>{handleCouponStateData()}</span>
-              </div>
-              <div className="list">
-                <p>活動參與</p>
-                <span>{handleActivityStateData()}</span>
-              </div>
-              <div className="list">
-                <p>活動天數</p>
-                <span>{countActivity}</span>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
+
         <div className="marginContainer">
-          {getAllActivePackData && (
+          {activityPackloading ? (
             <>
-              {activityBag1Visible && (
-                <div className="activityList">
-                  {handleActivity1Data()}
-                  {showAvtivity1Bag()}
-                </div>
+              {getAllActivePackData && (
+                <>
+                  {activityBag1Visible && (
+                    <div className="activityList">{showAvtivity1Bag()}</div>
+                  )}
+                </>
+              )}
+              {getAllActivePackData && (
+                <>
+                  {activityBag2Visible && (
+                    <div className="activityList">{showAvtivity2Bag()}</div>
+                  )}
+                </>
+              )}
+              {getAllActivePackData && (
+                <>
+                  {activityBag3Visible && (
+                    <div className="activityList">{showAvtivity3Bag()}</div>
+                  )}
+                </>
               )}
             </>
-          )}
-          {getAllActivePackData && (
-            <>
-              {activityBag2Visible && (
-                <div className="activityList">
-                  {handleActivity2Data()}
-                  {showAvtivity2Bag()}
-                </div>
-              )}
-            </>
-          )}
-          {getAllActivePackData && (
-            <>
-              {activityBag3Visible && (
-                <div className="activityList">
-                  {handleActivity3Data()}
-                  {showAvtivity3Bag()}
-                </div>
-              )}
-            </>
+          ) : (
+            <div style={{ marginLeft: 600 }}>
+              <BookingLoading />
+            </div>
           )}
         </div>
         <div className="line"></div>
         <div className="marginContainer plusBuy">
           <h5>KOMORU Star Hostel 背包客房型 加購活動確認</h5>
           <p>
-            活動參與天數{countActivity}天
-            <span>總共NT${countActivity * 700}</span>
+            活動參與天數{countActivity}天:
+            <span>NT${countActivity * 700}元</span>
           </p>
         </div>
-        <div className="marginContainer">
-          <p>房間總共 NT${roomSum}</p>
-          {showCoupon && <p>優惠折扣:{Number(couponData[0].discount)}元</p>}
-          <p>應付金額 NT$ {sumActivity}</p>
-          <button className="checkoutBtn" onClick={CheckoutOrderHandler}>
-            下一步去結帳
-          </button>
+        <div className="marginContainer Total">
+          <p>
+            房間總共:<span> NT${roomSum}元</span>
+          </p>
+          {showCoupon && (
+            <p>
+              優惠折扣:<span>-NT${Number(couponData[0].discount)}元</span>
+            </p>
+          )}
+          <p style={{ color: "black" }}>
+            應付金額: <span>NT$ {sumActivity}元</span>
+          </p>
+          <button onClick={CheckoutOrderHandler}>結帳確認</button>
         </div>
       </div>
     </>

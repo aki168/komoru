@@ -148,7 +148,7 @@ exports.getAndSaveOrderData = async (req, res) => {
 // 取得coupon By memberId
 exports.getCouponData = async (req, res) => {
   var data = req.body;
-  var memberId = data["memberId"];
+  var memberId = data['memberId'];
   if (memberId) {
     try {
       let done = await orderModel.getCouponItemDataList(memberId);

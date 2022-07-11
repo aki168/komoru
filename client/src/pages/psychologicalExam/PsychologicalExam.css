@@ -14,3 +14,8 @@
   border: 1px solid black;
   background-image: url(./心理測驗背景.png);
 }
+
+.ExamBreadcrumbs {
+  margin: 20px 0px 0px 100px;
+  position: absolute;
+}

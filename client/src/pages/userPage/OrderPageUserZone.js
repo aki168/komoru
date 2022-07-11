@@ -32,19 +32,13 @@ export default function OrderPage() {
         token: localStorage.token
       }
     }).then((res) => {
-      if (res.data.dataList.getOrderDataByMemberId.length) { //訂單資料 by 會員
-        let postOrderData = res.data.dataList.getOrderDataByMemberId;
+       if (res.data.dataList.length) { //訂單資料 by 會員
+        let postOrderData = res.data.dataList;
         setOrderData(postOrderData)
         setIsOrder(true)
-      }
+       }
       console.log(res.data.dataList.getOrderDataByMemberId)
-      console.log(res.data)
-
-      // if (res.data.dataList.orderItemDataList.length) { // 訂單明細（活動） by 會員
-      //   let postOrderItemData = res.data.dataList.orderItemDataList;
-      //   setOrderItemData(postOrderItemData)
-      // }
-      // console.log(res.data.dataList.orderItemDataList)
+      console.log(res)
 
 
     }).catch((err) => {
@@ -96,7 +90,7 @@ export default function OrderPage() {
 
           {!isOrder &&  // 若無任何訂單的畫面
             <div className="OrderList--card--none">
-              <div class="card--title">
+              <div className="card--title">
                 <h3>訂單歷史紀錄</h3>
                 <p>完整的訂單記錄，讓你方便查看所有訂單內容，每一次都將有不同的體驗！</p>
               </div>
