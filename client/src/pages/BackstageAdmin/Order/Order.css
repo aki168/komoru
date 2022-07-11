@@ -1,6 +1,12 @@
 .table>:not(:first-child) {
-    border-top: 1.5px solid currentColor;
+    border-top: 1.5px solid #808080;
+
 }
-tr:checked{
+
+/* .table>thead tbody:not(:first-child) {
+border: none;
+} */
+
+/* tr:checked{
     background-color: aqua !important;
-}
+} */

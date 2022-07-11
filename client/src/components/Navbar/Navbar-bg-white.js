@@ -1,49 +1,53 @@
 import { logout } from "../../App";
 import "./Navbar-bg-white.css";
 import { Button } from "react-bootstrap";
-
+import { Link } from "react-router-dom";
 const token = localStorage.token;
 
 export default function Navbar() {
   return (
     <nav className="navbar--bgWhite">
       <h1>
-        <a className="navbar--title" href="/">
-          <img className="navbar--logo" src="../KOMORU_LOGO_OG.png" alt="LOGO"></img>
-        </a>
+        <Link className="navbar--title" to="/">
+          <img
+            className="navbar--logo"
+            src="KOMORU_LOGO_OG.png"
+            alt="LOGO"
+          ></img>
+        </Link>
       </h1>
       <ul className="navbar--menu">
         <li>
-          <a className="navbar--item--bgWhite" href="/hotelIntro">
+          <Link className="navbar--item--bgWhite" to="/hotelIntro">
             房型介紹
-          </a>
+          </Link>
         </li>
         <li>
-          <a className="navbar--item--bgWhite" href="/">
+          <Link className="navbar--item--bgWhite" to="/contactUs">
             聯絡我們
-          </a>
+          </Link>
         </li>
         <li>
-          <a className="navbar--item--bgWhite" href="/user">
+          <Link className="navbar--item--bgWhite" to="/user-home">
             會員中心
-          </a>
+          </Link>
         </li>
         <li>
-          <a className="navbar--item--bgWhite" href="/bookingHomepage">
+          <Link className="navbar--item--bgWhite" to="/bookingHomepage">
             即刻預定
-          </a>
+          </Link>
         </li>
         <li>
-          <a className="navbar--item--bgWhite" href="/">
+          <Link className="navbar--item--bgWhite" to="/">
             EN | TW
-          </a>
+          </Link>
         </li>
         <li>
-          {token&& 
+          {token && (
             <Button variant="secondary" size="sm" onClick={logout}>
               登出
             </Button>
-          }
+          )}
         </li>
       </ul>
     </nav>

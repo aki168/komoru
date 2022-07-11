@@ -117,7 +117,6 @@ exports.updateOrderStatusByOrderId = async (dataList) => {
     "orderStatus": "0",
     "roomId": "5",
     "orderTotal": 8787,
-
     "activePackId": [9,8,7],
     "orderItemPrice": 8763,
     "isActive":"0",
@@ -169,7 +168,6 @@ exports.saveOrderData = async (data) => {
   data = this.getOrderData(data);
   // 生成隨機亂碼做order_number
   data["order_number"] = db.creatRandomPassword(8);
-
   //  檢查order_number是否重複
   let check = await exports.isOnumExist(data["order_number"]);
   while (check) {
@@ -254,37 +252,40 @@ exports.getCouponItemDataList = async (memberId) => {
 // 取得orderId BY memberId
 exports.getOrdeIdByMemberId = async (memberId) => {
   return new Promise((resolve, reject) => {
-    let sql = "SELECT `Order`.`order_id` FROM `Order` WHERE `member_id` = ? " +
+    let sql =
+      "SELECT `Order`.`order_id` FROM `Order` WHERE `member_id` = ? " +
       "ORDER BY `Order`.`order_start_date` DESC ";
     db.con.query(sql, memberId, (err, rows, fields) => {
       if (err) {
         reject(err);
       }
       resolve(db.rowDataToCamelData(rows));
-    })
-  })
-}
+    });
+  });
+};
 
-// 2022-07-08 MJ 
+// 2022-07-08 MJ
 // 處理OrderArray
 exports.splitOrderIdArray = async (orderIdArray) => {
   return new Promise(async (resolve, reject) => {
     try {
-      var orderData = []
+      var orderData = [];
       for (let i = 0; i < orderIdArray.length; i++) {
-        await exports.getOrderDatalistByOrderId(orderIdArray[i]['orderId'])
+        await exports
+          .getOrderDatalistByOrderId(orderIdArray[i]["orderId"])
           .then((result) => {
             orderData.push(result[0]);
-          })
-        await exports.getOrderItemDataListByOrderId(orderIdArray[i]['orderId'])
+          });
+        await exports
+          .getOrderItemDataListByOrderId(orderIdArray[i]["orderId"])
           .then((result) => {
             // console.log(result);
-            orderData[i]['OrderItem'] = result
-          })
-      };
+            orderData[i]["OrderItem"] = result;
+          });
+      }
       resolve(orderData);
     } catch (error) {
-      reject(error)
+      reject(error);
     }
   });
 };
@@ -310,12 +311,10 @@ exports.getOrderDatalistByOrderId = async (orderId) => {
       if (err) {
         reject(err);
       }
-      resolve(
-        db.rowDataToCamelData(rows)
-      )
-    })
-  })
-}
+      resolve(db.rowDataToCamelData(rows));
+    });
+  });
+};
 
 // 2022-06-30 MJ AKI
 // 取得orderItemDataList byMemberId
@@ -382,8 +381,9 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
         reject(err);
       } else {
         let orderId = db.rowDataToCamelData(rows)[0]["orderId"];
-        let length = data["active_pack_id"].length
         let isActive = data['is_active'];
+        var pack = data['active_pack_id']
+        var length = pack.length
         // 寫入OrderId到ExamItem
         let examItemsql =
           "UPDATE `ExamItem` " +
@@ -391,69 +391,67 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
           "WHERE `member_id` = ? " +
           "ORDER BY `exam_item_id` DESC " +
           "LIMIT 1";
-
         let examValue = [orderId, data["member_id"]];
-        db.con.query(examItemsql, examValue, (err, rows, fields) => {
-          if (err) {
-            reject(err);
+        db.con.query(examItemsql, examValue, (error, rows, fields) => {
+          if (error) {
+            reject(error);
           } else {
-            resolve(db.rowDataToCamelData(rows));
+            if (isActive === "0") {
+              // 依照總體驗天數寫入OrderId到對應的OrderItem
+              for (i = 0; i < length; i++) {
+                // 找到訂單號碼後存入OrderItem
+                let orderItemsql =
+                  "INSERT INTO `OrderItem`" +
+                  "(`order_id`, `active_pack_id`, `order_item_date`, `is_active`, `create_datetime`, `order_item_price`)" +
+                  " VALUES (?, ?, ?, ?, ?, ?) ";
+
+                // 日期加天數Function
+                Date.prototype.addDays = function (days) {
+                  this.setDate(this.getDate() + days);
+                  return this;
+                };
+
+                // 取得入住日期並加上體驗天數
+                let order_start_date = new Date(data["order_start_date"]);
+                value = [
+                  orderId,
+                  data["active_pack_id"][i],
+                  order_start_date.addDays(i).toLocaleDateString(),
+                  data["is_active"],
+                  data["create_datetime"],
+                  data["order_item_price"],
+                ];
+                db.con.query(orderItemsql, value, (err, rows, fields) => {
+                  if (err) {
+                    reject(err);
+                  } else {
+                    resolve(db.rowDataToCamelData(rows));
+                  }
+                });
+              }
+            } else {
+              let orderItemsql =
+                "INSERT INTO `OrderItem`" +
+                "(`order_id`, `active_pack_id`, `order_item_date`, `is_active`, `create_datetime`, `order_item_price`)" +
+                " VALUES (?, ?, ?, ?, ?, ?) ";
+              value = [
+                orderId,
+                data["active_pack_id"][i],
+                data["order_start_date"],
+                data["is_active"],
+                data["create_datetime"],
+                data["order_item_price"],
+              ];
+              db.con.query(orderItemsql, value, (err, rows, fields) => {
+                if (err) {
+                  reject(err);
+                } else {
+                  resolve(db.rowDataToCamelData(rows));
+                }
+              });
+            }
           }
         });
-        if (isActive === '0') {
-          // 依照總體驗天數寫入OrderId到對應的OrderItem
-          for (i = 0; i < length; i++) {
-            // 找到訂單號碼後存入OrderItem
-            let orderItemsql =
-              "INSERT INTO `OrderItem`" +
-              "(`order_id`, `active_pack_id`, `order_item_date`, `is_active`, `create_datetime`, `order_item_price`)" +
-              " VALUES (?, ?, ?, ?, ?, ?) ";
-
-            // 日期加天數Function
-            Date.prototype.addDays = function (days) {
-              this.setDate(this.getDate() + days);
-              return this;
-            };
-
-            // 取得入住日期並加上體驗天數
-            let order_start_date = new Date(data["order_start_date"]);
-            value = [
-              orderId,
-              data["active_pack_id"][i],
-              order_start_date.addDays(i).toLocaleDateString(),
-              data["is_active"],
-              data["create_datetime"],
-              data["order_item_price"],
-            ];
-            db.con.query(orderItemsql, value, (err, rows, fields) => {
-              if (err) {
-                reject(err);
-              } else {
-                resolve(db.rowDataToCamelData(rows));
-              }
-            });
-          }
-        } else {
-          let orderItemsql =
-            "INSERT INTO `OrderItem`" +
-            "(`order_id`, `active_pack_id`, `order_item_date`, `is_active`, `create_datetime`, `order_item_price`)" +
-            " VALUES (?, ?, ?, ?, ?, ?) ";
-          value = [
-            orderId,
-            data["active_pack_id"][i],
-            data["order_start_date"],
-            data["is_active"],
-            data["create_datetime"],
-            data["order_item_price"],
-          ];
-          db.con.query(orderItemsql, value, (err, rows, fields) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(db.rowDataToCamelData(rows));
-            }
-          });
-        }
       }
     });
   });

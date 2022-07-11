@@ -3,6 +3,7 @@ const orderModel = require("../models/OrderModel");
 const orderItemModel = require("../models/OrderItemModel");
 const jwt = require("jsonwebtoken"); //token
 const { promisify } = require("util"); // nodejs原生
+const couponModel = require("../models/CouponModel");
 // --------------------------------------------------------------
 
 // 2022-06-18 PG
@@ -128,12 +129,21 @@ exports.updateOrderStatusByOrderId = async (req, res, next) => {
 // req：前端傳來的訂單資料(JSON格式)
 exports.getAndSaveOrderData = async (req, res) => {
   var data = req.body;
-
+  console.log(data);
+  if (data.couponItemId === "") {
+    data.couponItemId = null
+  }
   try {
-    await orderModel.saveOrderData(data).then((result) => {
-      orderModel.saveOrderIdToOrderItemAndExamItem(result);
-    });
-    configController.sendJsonMsg(res, true, "", "儲存成功");
+    console.log('start');
+    await orderModel.saveOrderData(data).then(async (result) => {
+      if (result.coupon_item_id) {
+        await couponModel.useCoupon('1', result.member_id, result.coupon_item_id)
+      }
+      await orderModel.saveOrderIdToOrderItemAndExamItem(result)
+    })
+      .then(() => {
+        configController.sendJsonMsg(res, true, "", '儲存成功');
+      });
   } catch (error) {
     configController.sendJsonMsg(
       res,
@@ -148,7 +158,7 @@ exports.getAndSaveOrderData = async (req, res) => {
 // 取得coupon By memberId
 exports.getCouponData = async (req, res) => {
   var data = req.body;
-  var memberId = data['memberId'];
+  var memberId = data["memberId"];
   if (memberId) {
     try {
       let done = await orderModel.getCouponItemDataList(memberId);
@@ -170,14 +180,16 @@ exports.getOrderDataByMemberId = async (req, res) => {
     //   解碼
     const decoded = await promisify(jwt.verify)(token, "jwtSecret");
     const { memberId } = decoded;
-    // let memberId = 8763
+    // let memberId = 19
     // 解碼完後對照資料庫，有的話回傳該訂單資料
 
     try {
       // 1.用memberId查orderId
       let getOrdeIdByMemberId = await orderModel.getOrdeIdByMemberId(memberId);
       // 2.用orderId查訂單詳細內容
-      let getOrderDatalistByOrderId = await orderModel.splitOrderIdArray(getOrdeIdByMemberId)
+      let getOrderDatalistByOrderId = await orderModel.splitOrderIdArray(
+        getOrdeIdByMemberId
+      );
       // 將 enum 數值轉換為文字
       for (let i = 0; i < getOrderDatalistByOrderId.length; i++) {
         let valueToString = configController.enumValueToString(
@@ -201,19 +213,18 @@ exports.getOrderDataByMemberId = async (req, res) => {
           ? valueToString.transferString
           : valueToString.errMsg;
 
-        getOrderDatalistByOrderId[i].orderStatus = orderStatusValueToString.errCheck
-          ? orderStatusValueToString.transferString
-          : orderStatusValueToString.errMsg;
+        getOrderDatalistByOrderId[i].orderStatus =
+          orderStatusValueToString.errCheck
+            ? orderStatusValueToString.transferString
+            : orderStatusValueToString.errMsg;
 
-        getOrderDatalistByOrderId[i].memberGender = memberGenderValueToString.errCheck
-          ? memberGenderValueToString.transferString
-          : memberGenderValueToString.errMsg;
+        getOrderDatalistByOrderId[i].memberGender =
+          memberGenderValueToString.errCheck
+            ? memberGenderValueToString.transferString
+            : memberGenderValueToString.errMsg;
       }
-      configController.sendJsonMsg(res, true, "", getOrderDatalistByOrderId)
-
-
-    }
-    catch (error) {
+      configController.sendJsonMsg(res, true, "", getOrderDatalistByOrderId);
+    } catch (error) {
       // 目前不確定這邊要怎改
       console.log(error);
       res.status(500).json({ message: "Server error" });

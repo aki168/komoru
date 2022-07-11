@@ -136,7 +136,7 @@ function BookingOrderPage() {
       return (
         <>
           <ActivityBag
-            date={date}
+            date={fst}
             first={<span>Ckeck In</span>}
             second={<p>前往預定飯店並參觀飯店空間</p>}
             activePackItemTitle={activePackD1.activePackItemTitle}
@@ -155,9 +155,9 @@ function BookingOrderPage() {
       return (
         <>
           <ActivityBag
-            date={date}
-            first={<span>Breakfast</span>}
-            second={<p>享用飯店提供的美味早餐</p>}
+            date={sec}
+            first={<span>美好的早晨</span>}
+            second={<p>找個屬於你的小角落享用美味早餐</p>}
             activePackItemTitle={activePackD2.activePackItemTitle}
             activePackItemContent={activePackD2.activePackItemContent}
             activePackItemContent2={activePackD2.activePackItemContent2}
@@ -174,9 +174,9 @@ function BookingOrderPage() {
       return (
         <>
           <ActivityBag
-            date={date}
-            first={<span>Breakfast</span>}
-            second={<p>享用飯店提供的美味早餐</p>}
+            date={trd}
+            first={<span>美好的早晨</span>}
+            second={<p>找個屬於你的小角落享用美味早餐</p>}
             activePackItemTitle={activePackD3.activePackItemTitle}
             activePackItemContent={activePackD3.activePackItemContent}
             activePackItemContent2={activePackD3.activePackItemContent2}
@@ -230,6 +230,21 @@ function BookingOrderPage() {
       return <>男</>;
     }
   };
+
+  //日期計算
+  let nd = new Date(date);
+  let y = nd.getFullYear();
+  let m = nd.getMonth() + 1;
+  let d = nd.getDate();
+  let fst = `${y.toString()}/${m.toString().padStart(2, "0")}/${d
+    .toString()
+    .padStart(2, "0")}`;
+  let sec = `${y.toString()}/${m.toString().padStart(2, "0")}/${(d + 1)
+    .toString()
+    .padStart(2, "0")}`;
+  let trd = `${y.toString()}/${m.toString().padStart(2, "0")}/${(d + 2)
+    .toString()
+    .padStart(2, "0")}`;
 
   //2022-06-23 ZH
   //根據不同roomState顯示不同房間名稱
@@ -342,41 +357,12 @@ function BookingOrderPage() {
         roomId: roomState,
         couponItemId: couponState,
         orderTotal: sumActivity,
-        // activePackId: PackId,
-        //         activePackId: {
-        //           D1:{
-        // roomprice:700
-        // activeprice:700
-        // isActive:0
-        // PackId:1-5
-        //           },
-        //           D2:{
-        //             roomprice:700
-        //             activeprice:(isActive==0)?"":700
-        //             isActive:isActive
-        //             PackId:(isActive==0)?"":213
-        //           },
-        //           D3:{
-
-        //           }
-
-        //         },
-        isActive: activityState,
-        joinTotal: countActivity,
-        orderItemPrice: 8763,
-      };
-      console.log({
-        memberId: memberId,
-        orderStartDate: date,
-        expDays: dayState,
-        orderStatus: "0",
-        roomId: roomState,
-        couponItemId: couponState,
-        orderTotal: sumActivity,
         activePackId: PackId,
         isActive: activityState,
         joinTotal: countActivity,
-      });
+        orderItemPrice: 1700,
+      };
+      console.log(orderDetails);
       fetch("http://localhost:5000/order/getAndSaveOrderData", {
         method: "POST",
         headers: {

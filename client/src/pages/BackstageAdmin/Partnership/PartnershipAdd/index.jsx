@@ -25,7 +25,7 @@ function PartnershipAdd({ data, setAddShow }) {
   當輸入框為""，出現警示狀態初始化 */
   const [alertImg, setAlertImg] = useState(false);
 
-  
+
   /*20220622 YN
    取得後端城市資料*/
   useEffect(() => {
@@ -103,7 +103,7 @@ function PartnershipAdd({ data, setAddShow }) {
           alert("新增成功");
           setAddShow(false);
           window.location.reload(false);
-        })  
+        })
         .catch((e) => {
           console.error(e);
         });
@@ -115,7 +115,7 @@ function PartnershipAdd({ data, setAddShow }) {
   排除當modal開啟時，scrollbar 消失 sidebar 往右移 */
   useEffect(() => {
     document.body.style.overflowY = "hidden";
-    return () => (document.body.style.overflowY = "");
+    return () => (document.body.style.overflowY = '');
   }, []);
 
   return (
@@ -133,10 +133,10 @@ function PartnershipAdd({ data, setAddShow }) {
       {addFormData.partnershipName === "" && (
         <>
           {alertImg && (
-            <h6 style={{ color: "red" }}>
-              <IoAlertCircleSharp size="20px" color="red" />
-              商家名稱不可空白
-            </h6>
+            <div className="d-flex" style={{ color: "red", marginTop: '5px' }}>
+              <IoAlertCircleSharp size="20px" color="red" style={{ marginRight: '5px' }} />
+              <p>商家名稱不可空白</p>
+            </div>
           )}
         </>
       )}
@@ -153,10 +153,10 @@ function PartnershipAdd({ data, setAddShow }) {
       {addFormData.partnershipContactPerson === "" && (
         <>
           {alertImg && (
-            <h6 style={{ color: "red" }}>
-              <IoAlertCircleSharp size="20px" color="red" />
-              負責人不可空白
-            </h6>
+            <div className="d-flex" style={{ color: "red", marginTop: '5px' }}>
+              <IoAlertCircleSharp size="20px" color="red" style={{ marginRight: '5px' }} />
+              <p>負責人不可空白</p>
+            </div>
           )}
         </>
       )}
@@ -173,10 +173,10 @@ function PartnershipAdd({ data, setAddShow }) {
       {addFormData.cityId === "" && (
         <>
           {alertImg && (
-            <h6 style={{ color: "red" }}>
-              <IoAlertCircleSharp size="20px" color="red" />
-              區域不可空白
-            </h6>
+            <div className="d-flex" style={{ color: "red", marginTop: '5px' }}>
+              <IoAlertCircleSharp size="20px" color="red" style={{ marginRight: '5px' }} />
+              <p>區域不可空白</p>
+            </div>
           )}
         </>
       )}
@@ -193,10 +193,10 @@ function PartnershipAdd({ data, setAddShow }) {
       {addFormData.partnershipAddr === "" && (
         <>
           {alertImg && (
-            <h6 style={{ color: "red" }}>
-              <IoAlertCircleSharp size="20px" color="red" />
-              地址不可空白
-            </h6>
+            <div className="d-flex" style={{ color: "red", marginTop: '5px' }}>
+              <IoAlertCircleSharp size="20px" color="red" style={{ marginRight: '5px' }} />
+              <p>地址不可空白</p>
+            </div>
           )}
         </>
       )}
@@ -208,16 +208,16 @@ function PartnershipAdd({ data, setAddShow }) {
           placeholder="請輸入聯絡電話"
           onChange={addFormChangeHandle}
           style={{ fontSize: "18px" }}
-          // oninput="value=value.replace(/[^0-9]/g,'')"
+        // oninput="value=value.replace(/[^0-9]/g,'')"
         />
       </Form.Group>
       {addFormData.partnershipTel === "" && (
         <>
           {alertImg && (
-            <h6 style={{ color: "red" }}>
-              <IoAlertCircleSharp size="20px" color="red" />
-              聯絡電話不可空白
-            </h6>
+            <div className="d-flex" style={{ color: "red", marginTop: '5px' }}>
+              <IoAlertCircleSharp size="20px" color="red" style={{ marginRight: '5px' }} />
+              <p>聯絡電話不可空白</p>
+            </div>
           )}
         </>
       )}

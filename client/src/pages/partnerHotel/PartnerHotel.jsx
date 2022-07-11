@@ -7,7 +7,7 @@ import axios from "axios";
 import "./PartnerHotel.css";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar-bg-white";
 import RoomItem from "./roomItem/RoomItem";
 import PrivateRoomModal from "./roomModal/PrivateRoomModal";
 import BackPackerRoomModal from "./roomModal/BackPackerRoomModal";
@@ -214,8 +214,12 @@ const PartnerHotel = () => {
       <Navbar />
       <button className="goBooking">立即預定</button>
       <div className="hotelIntroTitle">
-        <h1>合作飯店</h1>
-        <h2>ROOMS</h2>
+        <div className="textGroup">
+          <h1>遍地全台的合作飯店一覽 </h1>
+          <p>
+            KOMORU與北、中、南、東各個在地青旅合作，活絡社會並讓旅者與業者達到雙贏！
+          </p>
+        </div>
       </div>
 
       <section className="sliderleft" data-aos="fade-right">

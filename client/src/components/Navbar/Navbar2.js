@@ -1,40 +1,41 @@
 import { logout } from "../../App";
 import "./Navbar.css";
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
     <nav className="navbar">
       <h1>
-        <a className="navbar--title" href="/">
+        <Link className="navbar--title" to="/">
           KOMORU;
-        </a>
+        </Link>
       </h1>
       <ul className="navbar--menu">
         <li>
-          <a className="navbar--item" href="/hotelIntro">
+          <Link className="navbar--item" to="/hotelIntro">
             房型介紹
-          </a>
+          </Link>
         </li>
         <li>
-          <a className="navbar--item" href="/">
+          <Link className="navbar--item" to="/contactUs">
             聯絡我們
-          </a>
+          </Link>
         </li>
         <li>
-          <a className="navbar--item" href="/user">
+          <Link className="navbar--item" to="/user-home">
             會員中心
-          </a>
+          </Link>
         </li>
         <li>
-          <a className="navbar--item" href="/bookingHomepage">
+          <Link className="navbar--item" to="/bookingHomepage">
             即刻預定
-          </a>
+          </Link>
         </li>
         <li>
-          <a className="navbar--item" href="/">
+          <Link className="navbar--item" to="/">
             EN | TW
-          </a>
+          </Link>
         </li>
         <li>
           <Button variant="secondary" size="sm" onClick={logout}>
