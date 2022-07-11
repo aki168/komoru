@@ -50,136 +50,143 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
   return (
     <>
       <div className="mx-5 me-5">
-        <div className="mx-5 me-5">
+        <div className="row ms-5 me-5">
           {loading ? (
             <>
-              <div>
-                <h3>入住率</h3>
+              <div
+                className="mt-3 ps-3 pe-3 pb-4"
+                style={{
+                  backgroundColor: "white",
+                  boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                }}
+              >
+                <div className="pt-3 ps-1">
+                  <p style={{ fontSize: "22px", color: "#808080" }}>入住率</p>
+                </div>
+                {northData && (
+                  <DemoColumnOccupancyRate northData={northData} />
+                )}
+              </div>
+
+              <div
+                className="mt-5 ps-3 pe-3 pb-4"
+                style={{
+                  backgroundColor: "white",
+                  boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                }}
+              >
+                <div className="pt-3 ps-1">
+                  <p style={{ fontSize: "22px", color: "#808080" }}>房型營業額</p>
+                </div>
+                {northData && <DemoLineRoomTurnover northData={northData} />}
+              </div>
+              <div className="row mb-5 mt-2 g-0">
                 <div
-                  className="row mb-5 mt-3 p-5"
+                  className="col-4"
                   style={{
-                    backgroundColor: "white",
-                    boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                    padding: "20px 20px 0 0",
                   }}
                 >
-                  {northData && (
-                    <DemoColumnOccupancyRate northData={northData} />
-                  )}
+                  {/* <h3>參與活動率</h3> */}
+                  <div
+                    className="mt-3"
+                    style={{
+                      backgroundColor: "white",
+                      boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                    }}
+                  >
+                    <div className="pt-3 ps-1">
+                      <p style={{ fontSize: "22px", color: "#808080" }}>參與活動率</p>
+                    </div>
+
+                    {northData && (
+                      <DemoPieParticipate northData={northData} />
+                    )}
+                  </div>
                 </div>
-                <h3>房型營業額</h3>
                 <div
-                  className="row mb-5 mt-3 p-5"
+                  className="col-4"
                   style={{
-                    backgroundColor: "white",
-                    boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                    padding: "20px 20px 0 20px",
                   }}
                 >
-                  {northData && <DemoLineRoomTurnover northData={northData} />}
-                </div>
-                <div className="row mb-5">
-                  <div
-                    className="col-4"
-                    style={{
-                      padding: "20px 20px 20px 0",
-                    }}
-                  >
-                    {/* <h3>參與活動率</h3> */}
-                    <div
-                      className="mt-3"
-                      style={{
-                        backgroundColor: "white",
-                        boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
-                      }}
-                    >
-                      <div className="pt-3 ps-4">
-                      <h3 style={{fontSize:"22px",color:"#808080"}}>參與活動率</h3>
-                      </div>
-                      
-                      {northData && (
-                        <DemoPieParticipate northData={northData} />
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    className="col-4"
-                    style={{
-                      padding: "20px",
-                    }}
-                  >
-                   
-                    <div
-                      className="mt-3"
-                      style={{
-                        backgroundColor: "white",
-                        boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
-                      }}
-                    >
-                      <div className="pt-3 ps-4">
-                      <h3>測驗後參與率</h3>
-                      </div>
-                      {northData && <DemoPieExam northData={northData} />}
-                    </div>
-                  </div>
 
                   <div
-                    className="col-4"
+                    className="mt-3"
                     style={{
-                      padding: "20px 0 20px 20px",
+                      backgroundColor: "white",
+                      boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
                     }}
                   >
-                    
-                    <div
-                      className="mt-3"
-                      style={{
-                        backgroundColor: "white",
-                        boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
-                      }}
-                    >
-                      <div className="pt-3 ps-4">
-                      <h3>活動類型</h3>
-                      </div>
-                      {northData && (
-                        <DemoPieActivityType northData={northData} />
-                      )}
+                    <div className="pt-3 ps-1">
+                      <p style={{ fontSize: "22px", color: "#808080" }}>測驗後參與率</p>
                     </div>
+                    {northData && <DemoPieExam northData={northData} />}
                   </div>
                 </div>
-                <div className="row mb-5">
+
+                <div
+                  className="col-4"
+                  style={{
+                    padding: "20px 0 0 20px",
+                  }}
+                >
+
                   <div
-                    className="col-6"
+                    className="mt-3"
                     style={{
-                      padding: "0 20px 0 0",
+                      backgroundColor: "white",
+                      boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
                     }}
                   >
-                    <h3>優惠卷使用率</h3>
-                    <div
-                      className="mt-3 py-5"
-                      style={{
-                        backgroundColor: "white",
-                        boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
-                      }}
-                    >
-                      {northData && <DemoLiquidCoupon northData={northData} />}
+                    <div className="pt-3 ps-1">
+                      <p style={{ fontSize: "22px", color: "#808080" }}>活動類型</p>
                     </div>
+                    {northData && (
+                      <DemoPieActivityType northData={northData} />
+                    )}
                   </div>
+                </div>
+              </div>
+              <div className="row mb-5 g-0">
+                <div
+                  className="col-6"
+                  style={{
+                    padding: "0 20px 0 0",
+                  }}
+                >
                   <div
-                    className="col-6"
+                    className="pb-5"
                     style={{
-                      padding: "0 0 0 20px",
+                      backgroundColor: "white",
+                      boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
                     }}
                   >
-                    <h3>回饋率</h3>
-                    <div
-                      className="mt-3 py-5"
-                      style={{
-                        backgroundColor: "white",
-                        boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
-                      }}
-                    >
-                      {northData && (
-                        <DemoLiquidFeedback northData={northData} />
-                      )}
+                    <div className="pt-3 ps-4">
+                      <p style={{ fontSize: "22px", color: "#808080" }}>優惠卷使用率</p>
                     </div>
+                    {northData && <DemoLiquidCoupon northData={northData} />}
+                  </div>
+                </div>
+                <div
+                  className="col-6"
+                  style={{
+                    padding: "0 0 0 20px",
+                  }}
+                >
+                  <div
+                    className="pb-5 "
+                    style={{
+                      backgroundColor: "white",
+                      boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                    }}
+                  >
+                    <div className="pt-3 ps-4">
+                      <p style={{ fontSize: "22px", color: "#808080" }}>回饋率</p>
+                    </div>
+                    {northData && (
+                      <DemoLiquidFeedback northData={northData} />
+                    )}
                   </div>
                 </div>
               </div>

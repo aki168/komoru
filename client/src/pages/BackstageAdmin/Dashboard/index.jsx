@@ -66,8 +66,8 @@ function Dashboard() {
   return (
     <>
       <div className="mx-5" style={{ marginBottom: "50px" }}>
-        <div className="ms-5 d-flex justify-content-between align-items-center">
-          <h3 className="mt-5 mb-5">分區報表&gt;{titleArea}</h3>
+        <div className="ms-5 me-5 d-flex justify-content-between align-items-center">
+          <h3 className="mt-5 mb-5">分區報表 &gt; {titleArea}</h3>
           <select
             class="form-select mt-5 mb-5"
             style={{ width: "200px" }}

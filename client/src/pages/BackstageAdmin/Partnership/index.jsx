@@ -114,14 +114,14 @@ function Partnership() {
           <button
             onClick={() => handleEditShow(index)}
             className="me-1 btn "
-            style={{ backgroundColor: "#06CAD7", color: "white" }}
+            style={{backgroundColor: '#ED8C4E', color:'white'}}
           >
             檢視/修改
           </button>
           <button
             onClick={() => deletFormHandle(index)}
             className="btn"
-            style={{ backgroundColor: "#E83015", color: "white" }}
+            style={{border:'1.5px solid #ED8C4E',color:'#ED8C4E'}}
           >
             移除
           </button>
@@ -252,7 +252,7 @@ function Partnership() {
                 <button
                   onClick={handleAddShow}
                   className="btn"
-                  style={{ backgroundColor: "#7BA23F", color: "white",fontSize: "20px" }}
+                  style={{ backgroundColor: "#7BA23F", color: "white", fontSize: "20px" }}
                 >
                   新增夥伴
                 </button>
@@ -260,10 +260,12 @@ function Partnership() {
                 <Modal
                   size="lg"
                   // aria-labelledby="contained-modal-title-vcenter"
-                  centered
+                  // centered
                   show={addShow}
                   onHide={handleAddClose}
-                  style={{ marginLeft:'180px'}}
+                  style={{
+                    margin: '0 0 0 170px',
+                  }}
                 >
                   <Modal.Header
                     closeButton
@@ -287,7 +289,7 @@ function Partnership() {
                     placeholder="Search"
                     aria-label="Search"
                     onChange={sreachChangeHandle}
-                    style={{fontSize: "20px"}}
+                    style={{ fontSize: "20px" }}
                   />
                 </div>
                 <div className="col-3 me-2">
@@ -296,7 +298,7 @@ function Partnership() {
                     className=" form-select col-2"
                     aria-label="Default select example"
                     onChange={sreachChangeHandle}
-                    style={{fontSize: "20px"}}
+                    style={{ fontSize: "20px" }}
                   >
                     <option value="" selected>
                       地區搜尋
@@ -312,7 +314,7 @@ function Partnership() {
                     className="btn"
                     type="submit"
                     onClick={sreachSubmitHandle}
-                    style={{ backgroundColor: "#7BA23F", color: "white",fontSize: "20px" }}
+                    style={{ backgroundColor: "#7BA23F", color: "white", fontSize: "20px" }}
                   >
                     搜尋
                   </button>
@@ -326,7 +328,7 @@ function Partnership() {
                 <>
                   <table
                     className="table  table-hover  text-center align-middle"
-                    style={{ height: "1000px", fontSize: "18px" }}
+                    style={{ height: "1000px", fontSize: "20px" }}
                   >
                     <thead>
                       <tr>
@@ -372,12 +374,13 @@ function Partnership() {
         </div>
       </div>
       <Modal
-        size="lg"
+        size="xl"
         // aria-labelledby="contained-modal-title-vcenter"
-        centered
+        // centered
         show={editShow}
+        focus
         onHide={handleEditClose}
-        style={{ marginLeft:'180px'}}
+        style={{ margin:'-50px 0 0 170px' }}
       >
         <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
         <PartnershipEdit
