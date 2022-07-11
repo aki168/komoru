@@ -128,12 +128,15 @@ exports.updateOrderStatusByOrderId = async (req, res, next) => {
 // req：前端傳來的訂單資料(JSON格式)
 exports.getAndSaveOrderData = async (req, res) => {
   var data = req.body;
-
+  console.log(data);
   try {
-    await orderModel.saveOrderData(data).then((result) => {
-      orderModel.saveOrderIdToOrderItemAndExamItem(result);
-    });
-    configController.sendJsonMsg(res, true, "", "儲存成功");
+    console.log('start');
+    await orderModel.saveOrderData(data).then(async (result) => {
+      await orderModel.saveOrderIdToOrderItemAndExamItem(result)
+    })
+      .then(() => {
+        configController.sendJsonMsg(res, true, "", "儲存成功");
+      })
   } catch (error) {
     configController.sendJsonMsg(
       res,
@@ -170,7 +173,7 @@ exports.getOrderDataByMemberId = async (req, res) => {
     //   解碼
     const decoded = await promisify(jwt.verify)(token, "jwtSecret");
     const { memberId } = decoded;
-    // let memberId = 8763
+    // let memberId = 19
     // 解碼完後對照資料庫，有的話回傳該訂單資料
 
     try {

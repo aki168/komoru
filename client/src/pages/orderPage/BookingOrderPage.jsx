@@ -116,13 +116,13 @@ function BookingOrderPage() {
   if (activity2Data === "3") {
     PackId.push(activePackD2.activePackId);
   }
-  if (activity1Data === "4") {
+  if (activity2Data === "4") {
     PackId.push(null);
   }
   if (activity3Data === "5") {
     PackId.push(activePackD3.activePackId);
   }
-  if (activity1Data === "6") {
+  if (activity3Data === "6") {
     PackId.push(null);
   }
 
@@ -343,19 +343,9 @@ function BookingOrderPage() {
         activePackId: PackId,
         isActive: activityState,
         joinTotal: countActivity,
+        orderItemPrice: 8763
       };
-      console.log({
-        memberId: memberId,
-        orderStartDate: date,
-        expDays: dayState,
-        orderStatus: "0",
-        roomId: roomState,
-        couponItemId: couponState,
-        orderTotal: sumActivity,
-        activePackId: PackId,
-        isActive: activityState,
-        joinTotal: countActivity,
-      });
+      console.log(orderDetails);
       fetch("http://localhost:5000/order/getAndSaveOrderData", {
         method: "POST",
         headers: {

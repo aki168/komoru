@@ -169,7 +169,6 @@ exports.saveOrderData = async (data) => {
   data = this.getOrderData(data);
   // 生成隨機亂碼做order_number
   data["order_number"] = db.creatRandomPassword(8);
-
   //  檢查order_number是否重複
   let check = await exports.isOnumExist(data["order_number"]);
   while (check) {
@@ -397,63 +396,62 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
           if (err) {
             reject(err);
           } else {
-            resolve(db.rowDataToCamelData(rows));
+            if (isActive === '0') {
+              // 依照總體驗天數寫入OrderId到對應的OrderItem
+              for (i = 0; i < length; i++) {
+                // 找到訂單號碼後存入OrderItem
+                let orderItemsql =
+                  "INSERT INTO `OrderItem`" +
+                  "(`order_id`, `active_pack_id`, `order_item_date`, `is_active`, `create_datetime`, `order_item_price`)" +
+                  " VALUES (?, ?, ?, ?, ?, ?) ";
+
+                // 日期加天數Function
+                Date.prototype.addDays = function (days) {
+                  this.setDate(this.getDate() + days);
+                  return this;
+                };
+
+                // 取得入住日期並加上體驗天數
+                let order_start_date = new Date(data["order_start_date"]);
+                value = [
+                  orderId,
+                  data["active_pack_id"][i],
+                  order_start_date.addDays(i).toLocaleDateString(),
+                  data["is_active"],
+                  data["create_datetime"],
+                  data["order_item_price"],
+                ];
+                db.con.query(orderItemsql, value, (err, rows, fields) => {
+                  if (err) {
+                    reject(err);
+                  } else {
+                    resolve(db.rowDataToCamelData(rows));
+                  }
+                });
+              }
+            } else {
+              let orderItemsql =
+                "INSERT INTO `OrderItem`" +
+                "(`order_id`, `active_pack_id`, `order_item_date`, `is_active`, `create_datetime`, `order_item_price`)" +
+                " VALUES (?, ?, ?, ?, ?, ?) ";
+              value = [
+                orderId,
+                data["active_pack_id"][i],
+                data["order_start_date"],
+                data["is_active"],
+                data["create_datetime"],
+                data["order_item_price"],
+              ];
+              db.con.query(orderItemsql, value, (err, rows, fields) => {
+                if (err) {
+                  reject(err);
+                } else {
+                  resolve(db.rowDataToCamelData(rows));
+                }
+              });
+            }
           }
         });
-        if (isActive === '0') {
-          // 依照總體驗天數寫入OrderId到對應的OrderItem
-          for (i = 0; i < length; i++) {
-            // 找到訂單號碼後存入OrderItem
-            let orderItemsql =
-              "INSERT INTO `OrderItem`" +
-              "(`order_id`, `active_pack_id`, `order_item_date`, `is_active`, `create_datetime`, `order_item_price`)" +
-              " VALUES (?, ?, ?, ?, ?, ?) ";
-
-            // 日期加天數Function
-            Date.prototype.addDays = function (days) {
-              this.setDate(this.getDate() + days);
-              return this;
-            };
-
-            // 取得入住日期並加上體驗天數
-            let order_start_date = new Date(data["order_start_date"]);
-            value = [
-              orderId,
-              data["active_pack_id"][i],
-              order_start_date.addDays(i).toLocaleDateString(),
-              data["is_active"],
-              data["create_datetime"],
-              data["order_item_price"],
-            ];
-            db.con.query(orderItemsql, value, (err, rows, fields) => {
-              if (err) {
-                reject(err);
-              } else {
-                resolve(db.rowDataToCamelData(rows));
-              }
-            });
-          }
-        } else {
-          let orderItemsql =
-            "INSERT INTO `OrderItem`" +
-            "(`order_id`, `active_pack_id`, `order_item_date`, `is_active`, `create_datetime`, `order_item_price`)" +
-            " VALUES (?, ?, ?, ?, ?, ?) ";
-          value = [
-            orderId,
-            data["active_pack_id"][i],
-            data["order_start_date"],
-            data["is_active"],
-            data["create_datetime"],
-            data["order_item_price"],
-          ];
-          db.con.query(orderItemsql, value, (err, rows, fields) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(db.rowDataToCamelData(rows));
-            }
-          });
-        }
       }
     });
   });
