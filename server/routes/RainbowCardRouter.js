@@ -9,6 +9,8 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 
 // ----------------------------------------------------------------------------------------------------------------------
+// 0704 勉勵金句抽卡 - MJ
+router.post('/getRainbowCard', rainbowCardController.getRainbowCard)
 
 
 

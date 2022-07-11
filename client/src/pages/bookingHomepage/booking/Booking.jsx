@@ -29,7 +29,7 @@ function Booking() {
       },
     })
       .then((res) => {
-        console.log(res.data[0].memberId);
+        // console.log(res.data[0].memberId);
         setMemberId(res.data[0].memberId);
       })
       .catch((err) => {
@@ -94,7 +94,7 @@ function Booking() {
   const [room7ContentVisile, setRoom7ContentVisile] = useState(false);
   const [room8ContentVisile, setRoom8ContentVisile] = useState(false);
   useEffect(() => {
-    roomState === "DEFAULT"
+    roomState === "default"
       ? setDEFAULTContentVisile(true)
       : setDEFAULTContentVisile(false);
     roomState === "5"
@@ -153,7 +153,7 @@ function Booking() {
     if (
       date === "" ||
       dayState === "" ||
-      roomState === "DEFAULT" ||
+      roomState === "default" ||
       activityState === ""
     ) {
       alert("輸入的格式有誤!");
@@ -177,7 +177,7 @@ function Booking() {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setCouponData(res.data.dataList);
       })
       .catch((err) => {
@@ -199,7 +199,7 @@ function Booking() {
   const cityChangeHandle = (event) => {
     event.preventDefault();
     setCityIdValue(event.target.value);
-    // console.log(event.target.value);
+    setRoomState("default");
   };
 
   //獲取cityData
@@ -225,7 +225,6 @@ function Booking() {
 
   return (
     <>
-      {/* <ProgressBarAll /> */}
       <div className="frame">
         <div className="leftContainer">
           <div className="bookingTitle">即刻預定</div>
@@ -250,13 +249,11 @@ function Booking() {
           <div className="bookingSearchItem">
             <select
               id="expDays"
-              defaultValue={"DEFAULT"}
               className="headerDaySelect"
               onChange={clearActivityDataByChangingDayState}
+              value={dayState}
             >
-              <option value="DEFAULT" disabled hidden>
-                請選擇要探索的天數
-              </option>
+              <option value="">請選擇要探索的天數</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -272,8 +269,9 @@ function Booking() {
                 name="cityId"
                 onChange={cityChangeHandle}
                 className="citySelect"
+                value={cityIdValue}
               >
-                <option value="DEFAULT">請選擇縣市</option>
+                <option value="">請選擇縣市</option>
                 {cityArr}
               </select>
               <select
@@ -282,7 +280,7 @@ function Booking() {
                 className="roomSelect"
                 onChange={(e) => setRoomState(e.target.value)}
               >
-                <option value="DEFAULT">請選擇青旅/房型</option>
+                <option value="default">請選擇青旅/房型</option>
                 {cityIdValue === "1" && (
                   <>
                     <option value="5">夾腳拖的家-私人套房</option>
@@ -311,20 +309,20 @@ function Booking() {
             </div>
             {nextStep === "click" && (
               <>
-                {roomState === "DEFAULT" && <IoMdAlert className="IoMdAlert" />}
+                {(roomState === "default" || cityIdValue === "") && (
+                  <IoMdAlert className="IoMdAlert" />
+                )}
               </>
             )}
           </div>
           <div className="bookingSearchItem couponItem">
             <select
               name="couponId"
-              defaultValue={"DEFAULT"}
               className="headerCouponSelect"
               onChange={(e) => setCouponState(e.target.value)}
+              value={couponState}
             >
-              <option value="DEFAULT" disabled hidden>
-                請選擇優惠代碼
-              </option>
+              <option value="DEFAULT">請選擇優惠代碼</option>
               {couponArr}
             </select>
           </div>
@@ -339,7 +337,10 @@ function Booking() {
                   id="isActive"
                   value="0"
                   disabled={activityOpen === true}
-                  onChange={(e) => setActivityState(e.target.value)}
+                  onChange={(e) => {
+                    setActivityState(e.target.value);
+                    console.log(e.target.value);
+                  }}
                   onClick={() => {
                     setActivityOpen(true);
                   }}
@@ -356,6 +357,7 @@ function Booking() {
                   // disabled={activityOpen === true}
                   onChange={(e) => {
                     setActivityState(e.target.value);
+                    console.log(e.target.value);
                   }}
                   onClick={() => {
                     setActivityOpen(false);

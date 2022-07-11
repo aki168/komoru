@@ -15,6 +15,7 @@ export default class AutoPlay extends Component {
       speed: 4000,
       autoplaySpeed: 5000,
       //   cssEase: "linear",
+      arrows: false,
     };
     return (
       <div style={{ width: "700px" }}>

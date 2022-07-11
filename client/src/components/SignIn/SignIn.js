@@ -75,7 +75,8 @@ export default function SignIn(props) {
         name:formData.name, 
         nickName:formData.nickName, 
         sex:formData.sex, 
-        phone:formData.phone
+        phone:formData.phone,
+        registerType:"0"
       }
     })
       .then((res) => {

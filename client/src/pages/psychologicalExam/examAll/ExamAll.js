@@ -20,8 +20,11 @@ import {
   HiOutlineArrowRight,
   HiOutlineArrowCircleRight,
 } from "react-icons/hi";
+import BookingLoading from "../../../components/BookingLoading/BookingLoading";
 
 const ExamAll = () => {
+  const [loading, setLoading] = useState(false);
+  //問題狀態初始化
   const [exam1Data, setExam1Data] = useState("");
   const [exam2Data, setExam2Data] = useState("");
   const [exam3Data, setExam3Data] = useState("");
@@ -106,82 +109,100 @@ const ExamAll = () => {
     if (page === 5) {
       return (
         <>
-          <div className="examFormCantainer">
-            <h1>測驗結果</h1>
-            <h2>{personality}</h2>
-            <p className="personalityDescribe">{personalityDescribe}</p>
-            {/* <p>活動包:{activityPack}</p> */}
-            <img src="https://picsum.photos/550/450" alt="" />
-            <button onClick={ToOrderPage} className="nextStepResult">
-              查看訂單&nbsp;
-              <HiOutlineArrowCircleRight className="HiOutlineArrowCircleRight" />
-            </button>
-          </div>
+          {loading ? (
+            <>
+              <div className="examFormCantainer">
+                <h1>{personality}</h1>
+                <p className="personalityDescribe">{personalityDescribe}</p>
+                {/* <p>活動包:{activityPack}</p> */}
+                <img src="https://picsum.photos/550/450" alt="" />
+                <button onClick={ToOrderPage} className="nextStepResult">
+                  查看訂單&nbsp;
+                  <HiOutlineArrowCircleRight className="HiOutlineArrowCircleRight" />
+                </button>
+              </div>
+            </>
+          ) : (
+            <div style={{ marginLeft: 600, marginTop: 200 }}>
+              <BookingLoading />
+            </div>
+          )}
         </>
       );
     }
   };
 
-  const navigate = useNavigate();
-  const {
-    activityState,
-    setActivityState,
-    // personality,
-    // setPersonality,
-    // personalityDescribe,
-    // setPersonalityDescribe,
-  } = useContext(BookContext);
+  const { activityState, setActivityState } = useContext(BookContext);
   const nextPage = () => {
     if (page < 5) {
       setPage((currentPage) => currentPage + 1);
     }
-    // else {
-    //   navigate("/examResult", {
-    //     state: {
-    //       personality: personality,
-    //       personalityDescribe: personalityDescribe,
-    //     },
-    //   });
-    // }
 
     if (page === 4) {
-      console.log(activityState);
-      const ExamDetails = {
-        isActive: activityState,
-        memberId: memberId,
-        qOneAnsValue: exam1Data,
-        q2AnsValue: exam2Data,
-        q3AnsValue: exam3Data,
-        q4AnsValue: exam4Data,
-        q5AnsValue: exam5Data,
-      };
-      console.log({
-        isActive: activityState,
-        memberId: memberId,
-        qOneAnsValue: exam1Data,
-        q2AnsValue: exam2Data,
-        q3AnsValue: exam3Data,
-        q4AnsValue: exam4Data,
-        q5AnsValue: exam5Data,
-      });
-      fetch("http://localhost:5000/examItem/getAndSaveExamData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify(ExamDetails),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data.dataList.personality);
-          // let personality = res.dataList.personality;
-          // let personalityDescribe = res.dataList.personalityDescribe;
-          setPersonality(data.dataList.personality);
-          setPersonalityDescribe(data.dataList.personalityDescribe);
-          setActivityPack(data.dataList.activePackType);
+      if (exam1Data === "") {
+        alert("問題一不得為空!");
+        setPage((page) => 0);
+      } else if (exam2Data === "") {
+        {
+          alert("問題二不得為空!");
+          setPage((page) => 1);
+        }
+      } else if (exam3Data === "") {
+        {
+          alert("問題三不得為空!");
+          setPage((page) => 2);
+        }
+      } else if (exam4Data === "") {
+        {
+          alert("問題四不得為空!");
+          setPage((page) => 3);
+        }
+      } else if (exam5Data === "") {
+        {
+          alert("問題五不得為空!");
+          setPage((page) => 4);
+        }
+      } else {
+        console.log(activityState);
+        const ExamDetails = {
+          isActive: activityState,
+          memberId: memberId,
+          qOneAnsValue: exam1Data,
+          q2AnsValue: exam2Data,
+          q3AnsValue: exam3Data,
+          q4AnsValue: exam4Data,
+          q5AnsValue: exam5Data,
+        };
+        console.log({
+          isActive: activityState,
+          memberId: memberId,
+          qOneAnsValue: exam1Data,
+          q2AnsValue: exam2Data,
+          q3AnsValue: exam3Data,
+          q4AnsValue: exam4Data,
+          q5AnsValue: exam5Data,
+        });
+        fetch("http://localhost:5000/examItem/getAndSaveExamData", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          body: JSON.stringify(ExamDetails),
         })
-        .then(console.log("okkkkk"))
-        .catch(console.error);
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data.dataList.personality);
+            // let personality = res.dataList.personality;
+            // let personalityDescribe = res.dataList.personalityDescribe;
+            setPersonality(data.dataList.personality);
+            setPersonalityDescribe(data.dataList.personalityDescribe);
+            setActivityPack(data.dataList.activePackType);
+          })
+          .then(() => {
+            setLoading(true);
+          })
+          .catch(console.error);
+      }
     }
   };
 

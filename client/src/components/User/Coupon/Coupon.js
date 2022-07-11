@@ -17,7 +17,7 @@ useEffect(()=>{
 
   axios({
     method:"post",
-    url:"http://localhost:5000/member/getCouponByMemberId",
+    url:"http://localhost:5000/coupon/getCouponByMemberId",
     data:{
       token:localStorage.token
     }
@@ -62,13 +62,13 @@ const usedCoupons = usedCoupon.map((item)=>{
         id="coupon-tab"
         className="mb-3 fs-5"
       >
-        <Tab className="p-3 " eventKey="coupon" title="未使用">
+        <Tab eventKey="coupon" title="未使用">
           <section className="coupon--item">
             {coupons}
             {/* <h3>註冊優惠200$</h3> */}
           </section>
         </Tab>
-        <Tab className="p-3" eventKey="coupon-used" title="已使用">
+        <Tab eventKey="coupon-used" title="已使用">
           <section className="coupon--item">
             {usedCoupons}
             {/* <h3>無</h3> */}
