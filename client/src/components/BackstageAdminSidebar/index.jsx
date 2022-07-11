@@ -33,53 +33,54 @@ function Sidebar() {
               />
             </Link>
           </div>
-          <li className="mb-3 nav-item ">
-            <MyNavLink to="order">
+          <li className="nav-item" style={{alignItem:'center'}}>
+              <MyNavLink to="order">
               <RiFileList3Line className="mx-2 ms-4" />
-              訂單管理
+              <span>訂單管理</span>
             </MyNavLink>
+            
           </li>
-          <li className="mb-3 nav-item">
+          <li className="nav-item">
             <MyNavLink to="partnership">
               <RiSpyLine className="mx-2 ms-4" />
               合作夥伴管理
             </MyNavLink>
           </li>
-          <li className="mb-3 nav-item dropdown">
+          <li className="nav-item dropdown">
             <a
               href="#submenu1"
               data-bs-toggle="collapse"
-              className="nav-link dropdown-toggle "
+              className="nav-link dropdown-toggle pt-2 "
               // aria-expanded="false"
-              style={{ textDecoration: "none" }}
+              style={{ textDecoration: "none",height:'60px' }}
             >
               <span
                 className="kmr-font-color-primary"
-                style={{ fontSize: "20px" }}
+                style={{ fontSize: "20px"}}
               >
                 <RiHome2Line className="mx-2 ms-4" />
                 飯店房型管理
               </span>
             </a>
             <ul
-              className="collapse nav hidden flex-column h-50 mt-1 "
+              className="collapse nav hidden flex-column h-50"
               id="submenu1"
               data-bs-parent="#menu"
               style={{ fontSize: "20px" }}
             >
-              <li>
-                <MyNavLink className="nav-link mb-2  text-center" to="hotel">
+              <li >
+                <MyNavLink className="nav-link text-center pt-3" style={{height:'60px'}} to="hotel">
                   <p style={{ paddingRight: "80px" }}>飯店</p>
                 </MyNavLink>
               </li>
               <li>
-                <MyNavLink className=" nav-link text-center" to="room">
+                <MyNavLink className=" nav-link text-center pt-3" style={{height:'60px'}} to="room">
                   <p style={{ paddingRight: "80px" }}>房型</p>
                 </MyNavLink>
               </li>
             </ul>
           </li>
-          <li className="mb-3 nav-item">
+          <li className="nav-item">
             <MyNavLink to="dashboard">
               <RiBarChart2Line className="mx-2 ms-4" />
               分區報表

@@ -85,7 +85,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
    城市資料用map轉換成選單格式*/
   const cityArr = cityData.map((cityData, index) => {
     return (
-      <option key={index} value={cityData.cityId} selected={(editModalData.cityId === cityData.cityId)? true :""}>
+      <option key={index} value={cityData.cityId} selected={(editModalData.cityId === cityData.cityId) ? true : ""}>
         {cityData.cityName}
       </option>
     );
@@ -155,7 +155,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
 
   console.log(cityArr)
   return (
-    <Form className="container" onSubmit={editFormSubmitHandle} style={{fontSize:'18px'}}>
+    <Form className="container" onSubmit={editFormSubmitHandle} style={{ fontSize: '18px' }}>
       <Form.Group>
         <Form.Label>商家名稱</Form.Label>
         <Form.Control
@@ -165,7 +165,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
           defaultValue={editModalData.partnershipName}
           onChange={editFormChangeHandle}
           disabled={isDisabled}
-          style={{fontSize:'18px'}}
+          style={{ fontSize: '18px' }}
         ></Form.Control>
       </Form.Group>
       <Form.Group className="mt-3">
@@ -177,7 +177,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
           defaultValue={editModalData.partnershipContactPerson}
           onChange={editFormChangeHandle}
           disabled={isDisabled}
-          style={{fontSize:'18px'}}
+          style={{ fontSize: '18px' }}
         />
       </Form.Group>
       <Form.Group className="mt-3">
@@ -186,7 +186,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
           name="cityId"
           onChange={editFormChangeHandle}
           disabled={isDisabled}
-          style={{fontSize:'18px'}}
+          style={{ fontSize: '18px' }}
         >
           <option disabled>
             請選擇區域
@@ -203,7 +203,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
           defaultValue={editModalData.partnershipAddr}
           onChange={editFormChangeHandle}
           disabled={isDisabled}
-          style={{fontSize:'18px'}}
+          style={{ fontSize: '18px' }}
         />
       </Form.Group>
       <Form.Group className="mt-3">
@@ -215,7 +215,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
           defaultValue={editModalData.partnershipTel}
           onChange={editFormChangeHandle}
           disabled={isDisabled}
-          style={{fontSize:'18px'}}
+          style={{ fontSize: '18px' }}
         />
       </Form.Group>
       <Form.Group className="mt-3">
@@ -227,7 +227,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
           defaultValue={editModalData.partnershipDesc}
           onChange={editFormChangeHandle}
           name="partnershipDesc"
-          style={{fontSize:'18px'}}
+          style={{ fontSize: '18px' }}
         />
       </Form.Group>
       <div className="mt-3 mb-3 d-flex justify-content-end">
@@ -238,8 +238,8 @@ function PartnershipEdit({ setEditShow, editData, data }) {
             className="btn me-1"
             onClick={disabledClickHandle}
             style={{
-              backgroundColor: "#06CAD7",
-              color: "white",
+              backgroundColor: '#ED8C4E',
+              color: 'white',
               fontSize: "20px",
             }}
           >
