@@ -90,7 +90,7 @@ export default function FeedbackPage() {
 
           {isOrder && // 訂單記錄畫面
             <div className="Feedback--card">
-              <div class="card--title">
+              <div className="card--title">
                 <h3>訂單活動回饋</h3>
                 <p>寫下對於此趟旅程的心得分享給 KOMORU官方平台，讓大家一同改變、成長。</p>
               </div>

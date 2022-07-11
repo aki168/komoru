@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import './OrderList.css'
 import { Accordion } from 'react-bootstrap'
 import OrderListDaily from "./OrderListDaily/OrderListDaily";
@@ -7,11 +7,27 @@ import OrderListDaily from "./OrderListDaily/OrderListDaily";
 
 
 export default function OrderList(props) {
-
-  // 計算旅程天數
+  
+  // 0710 aki - 計算旅程天數
   let end = Date.parse(props.orderEndDate);
   let start = Date.parse(props.orderStartDate);
   let stayNight = (end - start) / 86400000 ;
+
+
+  // 0710 aki - 獲取單張訂單的活動包資料
+  const [activeData, setActiveData] = useState([]);
+  useEffect(()=>{
+    setActiveData(props.OrderItem.reverse()); // 調整活動包日期順序：過去->未來
+  },[props])
+
+    const orderItems = activeData.map(item => {
+      return (
+        <OrderListDaily 
+          key={item.activePackId}
+          {...item}
+        />
+      )
+    })
 
   // // roomPic 如遇到系統故障時，啟用這隻設定
   // const getRoomPic = (roomId) => {
@@ -42,7 +58,7 @@ export default function OrderList(props) {
           <Accordion.Body className="p-5 text-start lh-lg orderDetails fw-normal">
             <h3>訂單資料確認</h3>
             <p className="text-secondary mb-5">一條龍記錄您的訂單及活動行程，並即時更新在會員中心讓您隨時查看。</p>
-            <div className="orderDetails--card row">
+            <div className="orderDetails--card row mb-2">
               <div className="card--pic col-5">
                 <img className="img-fluid rounded" 
                       // src={`http://localhost:5000/images/room/room-${ getRoomPic(props.roomId) }.jpeg`} 
@@ -92,8 +108,15 @@ export default function OrderList(props) {
                   </li> */}
                 </ul>
               </div>
-              <OrderListDaily
-                date={props.orderStartDate}/>
+              {/* <OrderListDaily
+                date={props.orderStartDate}
+              /> */}
+              {props.OrderItem[0].isActive === '0' &&
+              <h4 className="text-center pt-5 text-secondary">加購活動日 行程</h4> 
+              }
+
+              {/* 單張訂單的活動包內容 */}
+              {orderItems} 
             </div>
           </Accordion.Body>
         </Accordion.Item>

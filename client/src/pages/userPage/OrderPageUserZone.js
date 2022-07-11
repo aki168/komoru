@@ -10,7 +10,6 @@ import { Button } from 'react-bootstrap'
 export default function OrderPage() {
 
   const [orderData, setOrderData] = useState([])
-  // const [orderItemData, setOrderItemData] = useState([])
   const [isOrder, setIsOrder] = useState(false)
 
 
@@ -34,7 +33,7 @@ export default function OrderPage() {
     }).then((res) => {
 
        if (res.data.dataList.length) { //訂單資料 by 會員
-        let postOrderData = res.data.dataList;
+        let postOrderData = res.data.dataList; // 單張訂單資料
         setOrderData(postOrderData)
         setIsOrder(true)
       }
@@ -51,7 +50,7 @@ export default function OrderPage() {
   console.log(orderData)
 
 
-  // 0629 aki 接收到的資料設定入元件
+  // 0629 aki 接收到的訂單資料設定入元件
   const orders = orderData.map(item => {
     return (
       <OrderList
@@ -61,6 +60,8 @@ export default function OrderPage() {
       />
     )
   })
+
+  
 
     // // 0707 aki 接收到的資料設定入元件
     // const orderItems = orderItemData.map(item => {
@@ -111,7 +112,7 @@ export default function OrderPage() {
 
           {isOrder &&  // 訂單記錄畫面
             <div className="OrderList--card">
-              <div class="card--title">
+              <div className="card--title">
                 <h3>訂單歷史紀錄</h3>
                 <p>完整的訂單記錄，讓你方便查看所有訂單內容，每一次都將有不同的體驗！</p>
               </div>

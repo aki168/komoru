@@ -131,26 +131,14 @@ export default function User(props) {
 
   }
 
-  // // 0710 會員性別判斷
-  // const memberGender = {
-  //   0: '女性',
-  //   1: '男性',
-  //   2: 'NULL'
-  // };
-  
-  // const getCollectIssueSeverity = (s) => {
-  //   switch (severityCode) {
-  //     case COLLECT_ISSUE_SEVERITY.low:
-  //       return 'Low';
-  //     case COLLECT_ISSUE_SEVERITY.medium:
-  //       return 'Medium';
-  //     case COLLECT_ISSUE_SEVERITY.high:
-  //       return 'High';
-  //     default:
-  //       return 'Indeterminate';
-  //   }
-  // };
-
+  // 0711 aki 頭像判斷設定
+  let imgURL;
+  if (formData.registerType === '2'){ //LINE註冊
+    let ans = formData.iconPath.indexOf("profile.line"); //確認LINE註冊者的頭像是否有修改過
+    imgURL = (ans === -1)? `http://localhost:5000${formData.iconPath}` : formData.iconPath;
+  }else if(formData.registerType ==='0'){
+    imgURL = `http://localhost:5000${formData.iconPath}`;
+  }
 
 
 
