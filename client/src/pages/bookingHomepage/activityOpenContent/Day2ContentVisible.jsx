@@ -52,7 +52,7 @@ const Day2ContentVisible = () => {
   return (
     <>
       <div className="activityChoice">
-        <p>{fst}</p>
+        <p className="dateFST">{fst}</p>
         <label>
           <input
             className="rdobutton_radio"
@@ -87,7 +87,7 @@ const Day2ContentVisible = () => {
         {/* )} */}
       </div>
       <div className="activityChoice">
-        <p>{sec}</p>
+        <p className="dateFST">{sec}</p>
         <label>
           <input
             className="rdobutton_radio"

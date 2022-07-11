@@ -39,7 +39,7 @@ const Day1ContentVisible = () => {
   // };
   return (
     <div className="activityChoice">
-      <p>{fst}</p>
+      <p className="dateFST">{fst}</p>
       <label>
         <input
           className="rdobutton_radio"

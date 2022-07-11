@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar/Navbar';
 import { loginOrNot } from '../App'
 import ActionAreaCard from '../components/Card/Card';
 import Example from '../components/Carousel/Carousel';
+import QuiltedImageList from '../components/ImageList/ImageList'
 
 import "../pages/Home.css"
 
@@ -49,7 +50,11 @@ export default function Home() {
         <br />
         <div className='Stepseven'>
         <Example />
-        
+        </div>
+        <br />
+        <br />
+        <div className='RoomList'>
+<QuiltedImageList />
         </div>
 <br/>
 <br/>

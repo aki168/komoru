@@ -7,7 +7,7 @@ import DemoPieActivityType from "./DemoPieActivityType";
 import DemoLiquidCoupon from "./DemoLiquidCoupon";
 import DemoLiquidFeedback from "./DemoLiquidFeedback";
 import BackstageLoding from "../../../../components/BackstageLoading";
-function DashboardChartsEast({ dateData }) {
+function DashboardChartsEast({ dateData,setTitleArea }) {
   /*20220707 YN
   東區報表資料初始化*/
   const [eastData, setEastData] = useState()
@@ -15,6 +15,13 @@ function DashboardChartsEast({ dateData }) {
   /*20220707 YN
   報表資料載入過程初始化*/
   const [loading, setLoading] = useState(false);
+
+  /*20220709 YN
+   區域標題狀態設定*/
+   useEffect(() => {
+    setTitleArea("東區");
+  }, []);
+
 
   /*20220707 YN
   取後端東區報表資料*/

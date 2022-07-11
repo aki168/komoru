@@ -1,0 +1,6 @@
+.table>:not(:first-child) {
+    border-top: 1.5px solid currentColor;
+}
+tr:checked{
+    background-color: aqua !important;
+}

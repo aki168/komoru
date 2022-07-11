@@ -4,8 +4,10 @@
   font-size: 20px;
 }
 
-.activityChoice > p {
-  margin-right: -35px;
+.activityChoice .dateFST {
+  margin-top: 5px;
+  margin-left: -37px;
+  margin-right: 2px;
   letter-spacing: 2px;
 }
 
@@ -13,7 +15,7 @@
   -webkit-appearance: none;
   width: 20px;
   height: 20px;
-  margin-left: 60px;
+  margin-left: 56px;
   bottom: 10px;
   border: 1px solid black;
   position: relative;
@@ -26,12 +28,13 @@
 }
 
 .rdobutton_radio {
-  margin: 5px;
+  margin: 10px;
 }
 
 .adjustActive {
   cursor: pointer;
   font-size: 20px;
-  margin-top: 0px;
+  margin-top: 6px;
   position: absolute;
+  margin-left: -5px;
 }

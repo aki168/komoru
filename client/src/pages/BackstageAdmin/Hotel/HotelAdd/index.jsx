@@ -209,6 +209,13 @@ function HotelAdd({ setAddShow, data }) {
     }
   };
 
+  /*20220709 YN
+  排除當modal開啟時，scrollbar 消失 sidebar 往右移 */
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+    return () => (document.body.style.overflowY = "");
+  }, []);
+
   return (
     <Form className="container row mt-3" onSubmit={addFormSubmitHandle}>
       <Form.Group className="col-6 d-flex ">

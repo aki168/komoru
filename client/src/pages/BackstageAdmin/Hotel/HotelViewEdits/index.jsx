@@ -163,10 +163,13 @@ function HotelViewEdits({ setEditShow, editData, data }) {
       hotelContent: editModalData.hotelContent,
       employeeId: "1",
       hotelImgPath: {
-        mainHotelImgFile:mainImageData,
-        firstHotelImgFile:typeof(firstImageData) === "undefined" ? "":firstImageData,
-        secondHotelImgFile:typeof(secondImageData) === "undefined" ? "":secondImageData,
-        thirdHotelImgFile:typeof(thirdImageData) === "undefined" ? "":thirdImageData,
+        mainHotelImgFile: mainImageData,
+        firstHotelImgFile:
+          typeof firstImageData === "undefined" ? "" : firstImageData,
+        secondHotelImgFile:
+          typeof secondImageData === "undefined" ? "" : secondImageData,
+        thirdHotelImgFile:
+          typeof thirdImageData === "undefined" ? "" : thirdImageData,
       },
     };
     // 20220703 YN 有更換照片傳的變數
@@ -304,6 +307,13 @@ function HotelViewEdits({ setEditShow, editData, data }) {
     setEditImage(true);
     setIsDisabled(!isDisabled);
   };
+
+  /*20220709 YN
+  排除當modal開啟時，scrollbar 消失 sidebar 往右移 */
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+    return () => (document.body.style.overflowY = "");
+  }, []);
 
   return (
     <Form className="container row mt-3" onSubmit={editFormSubmitHandle}>

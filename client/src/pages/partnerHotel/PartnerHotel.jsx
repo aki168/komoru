@@ -259,10 +259,13 @@ const PartnerHotel = () => {
         backPackerUrl="http://localhost:5000/images/room/room-10.jpeg"
       />
 
-      <section className="sliderleft" data-aos="fade-left">
-        <BsChevronLeft className="sliderleft-left-arrow" onClick={prevSlide1} />
+      <section className="sliderRight" data-aos="fade-left">
+        <BsChevronLeft
+          className="sliderRight-left-arrow"
+          onClick={prevSlide1}
+        />
         <BsChevronRight
-          className="sliderleft-right-arrow"
+          className="sliderRight-right-arrow"
           onClick={nextSlide1}
         />
         <div className="sizeLeft">
@@ -291,13 +294,10 @@ const PartnerHotel = () => {
         backPackerUrl="http://localhost:5000/images/room/room-5.jpeg"
       />
 
-      <section className="sliderRight " data-aos="fade-right">
-        <BsChevronLeft
-          className="sliderRight-left-arrow"
-          onClick={prevSlide2}
-        />
+      <section className="sliderleft " data-aos="fade-right">
+        <BsChevronLeft className="sliderleft-left-arrow" onClick={prevSlide2} />
         <BsChevronRight
-          className="sliderRight-right-arrow"
+          className="sliderleft-right-arrow"
           onClick={nextSlide2}
         />
         {Hotel2Img.map((Taichungimg, index) => {

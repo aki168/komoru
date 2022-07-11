@@ -30,6 +30,12 @@ function Employee() {
 資料載入過程初始化*/
   const [loading, setLoading] = useState(false);
 
+  /*20220706 YN
+  篩選功能輸入狀態初始化*/
+  const [sreachData, setSreachData] = useState({
+    keyword: "",
+    // cityId: "",
+  });
 
   /*20220624 YN
  初始化*/
@@ -109,16 +115,18 @@ function Employee() {
         <td className="col-sm-1">{data.employeeAccount}</td>
         <td className="col-sm-1">{data.employeeName}</td>
         <td className="col-sm-1">{data.employeePhone}</td>
-        <td className="col-sm-1">
+        <td className="col-sm-1 ">
           <button
             onClick={() => handleEditShow(index)}
-            className="me-1 btn btn-success"
+            className="me-1 btn"
+            style={{ backgroundColor: "#06CAD7", color: "white" }}
           >
             檢視/修改
           </button>
           <button
             onClick={() => deletFormHandle(index)}
-            className="btn btn-success"
+            className="btn"
+            style={{ backgroundColor: "#E83015", color: "white" }}
           >
             移除
           </button>
@@ -155,13 +163,14 @@ function Employee() {
       })
         // .then((response) => response.json())
         .then((res) => {
-          console.log(res);
+          // console.log(res);
+          alert('移除成功')
+          window.location.reload(false);
         })
         .catch((e) => {
           console.error(e);
         });
 
-      window.location.reload(false);
     }
   };
 
@@ -180,40 +189,72 @@ function Employee() {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+
+  /*20220706 YN
+    取得搜尋關鍵字及選擇值*/
+  const sreachChangeHandle = (event) => {
+    event.preventDefault();
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...sreachData };
+    newFormData[fieldName] = fieldValue;
+    console.log(newFormData);
+    setSreachData(newFormData);
+  };
+
+  /*20220706 YN
+  送出搜尋關鍵字及選擇值進行篩選*/
+  const sreachSubmitHandle = (event) => {
+    event.preventDefault();
+    const newContact = {
+      keyword: sreachData.keyword,
+      // cityId: sreachData.cityId,
+    };
+    console.log(newContact);
+
+    // setAddFormData(newContacts);
+    fetch("http://localhost:5000/employee/getEmployeeDataListByKeyword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(newContact),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let result = data.dataList;
+        console.log(data);
+        if (result.length === 0) {
+          alert("查無此資料");
+          setData(data.dataList);
+        } else {
+          setData(data.dataList);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
   return (
     <>
       <div className="mx-5  mb-5">
-      <div className="row ms-5"><h3 className="mt-5 mb-5">員工管理</h3></div>
+        <div className="ms-5">
+          <h3 className="mt-5 mb-5">員工管理</h3>
+        </div>
         <div>
-          <div className="row ms-5 mb-3">
+          <div className="row ms-5 mb-5 g-0">
             <div className="col-sm-4">
-              {/* <div className="d-flex justify-content-start">
-                <input
-                  className="form-control me-2 "
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button className="btn btn-success" type="submit">
-                  Search
-                </button>
-                <select
-                  className=" form-select ms-1"
-                  aria-label="Default select example"
-                >
-                  <option defaultValue="地區搜尋">地區搜尋</option>
-                  <option value="1">北區</option>
-                  <option value="2">中區</option>
-                  <option value="3">南區</option>
-                  <option value="4">東區</option>
-                </select>
-              </div> */}
-            </div>
-            <div className="col-sm-4">
-              <div className="d-flex justify-content-end">
+              <div className="d-flex justify-content-start">
                 <button
                   onClick={handleAddShow}
-                  className="btn btn-success ms-2"
+                  className="btn"
+                  style={{
+                    backgroundColor: "#7BA23F",
+                    color: "white",
+                    fontSize: "20px",
+                  }}
                 >
                   新增員工
                 </button>
@@ -224,8 +265,9 @@ function Employee() {
                   centered
                   show={addShow}
                   onHide={handleAddClose}
+                  style={{ marginLeft: "180px" }}
                 >
-                  <Modal.Header closeButton></Modal.Header>
+                  <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
                   <EmployeeAdd
                     data={data}
                     addShow={addShow}
@@ -234,34 +276,61 @@ function Employee() {
                 </Modal>
               </div>
             </div>
-            <div className="col-sm-2 d-flex justify-content-end">
-              <nav aria-label="Page navigation example">
-                <ul className="pagination">
-                  <ReactPaginate
-                    nextLabel=">"
-                    previousLabel="<"
-                    pageCount={pageCount}
-                    onPageChange={changePage}
-                    breakClassName={"page-item"}
-                    breakLinkClassName={"page-link"}
-                    containerClassName={"pagination"}
-                    pageClassName={"page-item"}
-                    pageLinkClassName={"page-link"}
-                    previousClassName={"page-item"}
-                    previousLinkClassName={"page-link"}
-                    nextClassName={"page-item"}
-                    nextLinkClassName={"page-link"}
-                    activeClassName={"active"}
+            <div className="col-sm-7 ms-5">
+              <div className="row g-0 justify-content-end">
+                <div className="col-3 me-2">
+                  <input
+                    name="keyword"
+                    className="form-control col-1 "
+                    type="search"
+                    placeholder="搜尋"
+                    aria-label="Search"
+                    onChange={sreachChangeHandle}
+                    style={{ fontSize: "20px" }}
                   />
-                </ul>
-              </nav>
+                </div>
+                {/* <div className="col-3 me-2">
+                  <select
+                    name="cityId"
+                    className=" form-select col-2"
+                    aria-label="Default select example"
+                    onChange={sreachChangeHandle}
+                    style={{fontSize: "20px"}}
+                  >
+                    <option value="" selected>
+                      地區搜尋
+                    </option>
+                    <option value="1">北區</option>
+                    <option value="2">中區</option>
+                    <option value="3">南區</option>
+                    <option value="4">東區</option>
+                  </select>
+                </div> */}
+                <div className="col-2 ">
+                  <button
+                    className="btn"
+                    type="submit"
+                    onClick={sreachSubmitHandle}
+                    style={{
+                      backgroundColor: "#7BA23F",
+                      color: "white",
+                      fontSize: "20px",
+                    }}
+                  >
+                    搜尋
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="row ms-5">
-            <div className="col-sm-10">
-              {loading ?
+          <div className="row ms-5 g-0">
+            <div className="col-sm-11">
+              {loading ? (
                 <>
-                  <table className="table table-hover  text-center align-middle ">
+                  <table
+                    className="table table-hover  text-center align-middle"
+                    style={{ fontSize: "18px" }}
+                  >
                     <thead>
                       <tr>
                         <td>員工編號</td>
@@ -273,7 +342,34 @@ function Employee() {
                     </thead>
                     <tbody>{displayUsers}</tbody>
                   </table>
-                </> : <div className="d-flex justify-content-center"><BackstageLoding /></div>}
+                </>
+              ) : (
+                <div className="d-flex justify-content-center">
+                  <BackstageLoding />
+                </div>
+              )}
+              <div className="d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                  <ul className="pagination">
+                    <ReactPaginate
+                      nextLabel=">"
+                      previousLabel="<"
+                      pageCount={pageCount}
+                      onPageChange={changePage}
+                      breakClassName={"page-item"}
+                      breakLinkClassName={"page-link"}
+                      containerClassName={"pagination"}
+                      pageClassName={"page-item"}
+                      pageLinkClassName={"page-link"}
+                      previousClassName={"page-item"}
+                      previousLinkClassName={"page-link"}
+                      nextClassName={"page-item"}
+                      nextLinkClassName={"page-link"}
+                      activeClassName={"active"}
+                    />
+                  </ul>
+                </nav>
+              </div>
             </div>
           </div>
         </div>
@@ -284,8 +380,9 @@ function Employee() {
         centered
         show={editShow}
         onHide={handleEditClose}
+        style={{ marginLeft: "180px" }}
       >
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
         <EmployeeViewEdits setEditShow={setEditShow} editData={editData} />
       </Modal>
     </>

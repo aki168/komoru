@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Routes, Route, Link, Outlet, Navigate, useNavigate, NavLink } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Link,
+  Outlet,
+  Navigate,
+  useNavigate,
+  NavLink,
+} from "react-router-dom";
 import DashboardChartsNorth from "./DashboardChartsNorth";
 import DashboardChartsSouth from "./DashboardChartsSouth";
 import DashboardChartsMiddle from "./DashboardChartsMiddle";
 import DashboardChartsEast from "./DashboardChartsEast";
-import './Dashboard.css'
-import northImage from '../../../assets/area/north.jpg'
-import eastImage from '../../../assets/area/east.jpg'
-import sorthImage from '../../../assets/area/sorth.jpg'
-import middleImage from '../../../assets/area/middle.jpg'
+import "./Dashboard.css";
+import northImage from "../../../assets/area/north.jpg";
+import eastImage from "../../../assets/area/east.jpg";
+import sorthImage from "../../../assets/area/sorth.jpg";
+import middleImage from "../../../assets/area/middle.jpg";
 
 function Dashboard() {
-
+  /*20220709 YN
+  資料選取月份狀態初始化 */
   const [dateData, setDateData] = useState({
     dateRange: "2022-06",
   });
+
+  /*20220709 YN
+  區域標題狀態初始化 */
+  const [titleArea, setTitleArea] = useState("北區");
+
+  // setTitleArea('北區');
 
   /*20220704 YN
   登入狀態為false自動轉跳Login頁面 */
@@ -47,14 +62,22 @@ function Dashboard() {
 
     setDateData(newEditFormData);
     console.log(newEditFormData);
-  }
+  };
   return (
     <>
-      <div className="mx-5  mb-5">
-        <div className="d-flex mt-3 mb-5 justify-content-between">
-          <h2 >分區報表</h2>
-          <select name="dateRange" onChange={dateRangeChangeHandle}>
-            <option value="2022-06" selected>2022-06</option>
+      <div className="mx-5" style={{ marginBottom: "50px" }}>
+        <div className="ms-5 d-flex justify-content-between align-items-center">
+          <h3 className="mt-5 mb-5">分區報表&gt;{titleArea}</h3>
+          <select
+            class="form-select mt-5 mb-5"
+            style={{ width: "200px" }}
+            aria-label="Default select example"
+            name="dateRange"
+            onChange={dateRangeChangeHandle}
+          >
+            <option value="2022-06" selected>
+              2022-06
+            </option>
             <option value="2022-07">2022-07</option>
             <option value="2022-08">2022-08</option>
             <option value="2022-09">2022-09</option>
@@ -63,37 +86,70 @@ function Dashboard() {
             <option value="2022-12">2022-12</option>
           </select>
         </div>
-
-        <div className="row " style={{ height: "300px" }}>
-          <NavLink className="col me-5 main-nav" to="north" >
-            <div class="tabs-img">
-              <img class="cover-fit" src={northImage} alt="" />
-            </div>
-          </NavLink>
-          <NavLink className="col me-5 main-nav" to="middle">
-            <div class="tabs-img">
-              <img class="cover-fit" src={middleImage} alt="" />
-            </div>
-          </NavLink>
-          <NavLink className="col me-5 main-nav" to="south">
-            <div class="tabs-img">
-              <img class="cover-fit" src={sorthImage} alt="" />
-            </div>
-          </NavLink>
-          <NavLink className="col main-nav"to="east">
-            <div class="tabs-img">
-              <img class="cover-fit" src={eastImage} alt="" />
-            </div>
-          </NavLink>
+        <div className="ms-5 me-5">
+          <div className="row g-0" style={{ height: "300px" }}>
+            <NavLink className="col me-5 " to="north">
+              <div class="tabs-img main-nav">
+                <img class="cover-fit" src={northImage} alt="" />
+              </div>
+            </NavLink>
+            <NavLink className="col me-5 " to="middle">
+              <div class="tabs-img main-nav">
+                <img class="cover-fit" src={middleImage} alt="" />
+              </div>
+            </NavLink>
+            <NavLink className="col me-5" to="south">
+              <div class="tabs-img main-nav">
+                <img class="cover-fit" src={sorthImage} alt="" />
+              </div>
+            </NavLink>
+            <NavLink className="col" to="east">
+              <div class="tabs-img main-nav">
+                <img class="cover-fit" src={eastImage} alt="" />
+              </div>
+            </NavLink>
+          </div>
         </div>
       </div>
       <Outlet />
 
       <Routes>
-        <Route path="north" element={<DashboardChartsNorth dateData={dateData} />} />
-        <Route path="middle" element={<DashboardChartsMiddle dateData={dateData} />} />
-        <Route path="south" element={<DashboardChartsSouth dateData={dateData} />} />
-        <Route path="east" element={<DashboardChartsEast dateData={dateData} />} />
+        <Route
+          path="north"
+          element={
+            <DashboardChartsNorth
+              dateData={dateData}
+              setTitleArea={setTitleArea}
+            />
+          }
+        />
+        <Route
+          path="middle"
+          element={
+            <DashboardChartsMiddle
+              dateData={dateData}
+              setTitleArea={setTitleArea}
+            />
+          }
+        />
+        <Route
+          path="south"
+          element={
+            <DashboardChartsSouth
+              dateData={dateData}
+              setTitleArea={setTitleArea}
+            />
+          }
+        />
+        <Route
+          path="east"
+          element={
+            <DashboardChartsEast
+              dateData={dateData}
+              setTitleArea={setTitleArea}
+            />
+          }
+        />
         <Route path="/" element={<Navigate to="north" />}></Route>
       </Routes>
     </>

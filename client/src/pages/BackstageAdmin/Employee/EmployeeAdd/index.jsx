@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
+import { IoAlertCircleSharp } from "react-icons/io5";
 
-function EmployeeAdd({setAddShow }) {
+function EmployeeAdd({ setAddShow }) {
   /*20220622 YN
    新增表單資料初始化*/
   const [addFormData, setAddFormData] = useState({
@@ -13,6 +14,10 @@ function EmployeeAdd({setAddShow }) {
     employeePhone: "",
     operatorEmployeeId: "1",
   });
+
+  /*20220710 YN
+  當輸入框為""，出現警示狀態初始化 */
+  const [alertImg, setAlertImg] = useState(false);
 
   /*20220622 YN
    取得輸入新增表單資料*/
@@ -37,75 +42,138 @@ function EmployeeAdd({setAddShow }) {
       employeePasswd: addFormData.employeePasswd,
       employeeName: addFormData.employeeName,
       employeePhone: addFormData.employeePhone,
-      operatorEmployeeId:"1",
+      operatorEmployeeId: "1",
     };
 
     // console.log(newContact)
     // setAddFormData(newContacts);
-    fetch("http://localhost:5000/employee/addEmployee", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(newContact),
-    })
-      .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
-      .then((data) => {
-        console.log(data);
+
+    if (
+      addFormData.employeeAccount === "" ||
+      addFormData.employeePasswd === "" ||
+      addFormData.employeeName === "" ||
+      addFormData.employeePhone === ""
+    ) {
+      setAlertImg(true);
+    } else {
+      setAlertImg(false);
+      fetch("http://localhost:5000/employee/addEmployee", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(newContact),
       })
-      .catch((e) => {
-        console.error(e);
-      });
-    setAddShow(false);
-    window.location.reload(false);
+        .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
+        .then((data) => {
+          console.log(data);
+          alert("新增成功");
+          setAddShow(false);
+          window.location.reload(false);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    }
   };
 
+  /*20220709 YN
+  排除當modal開啟時，scrollbar 消失 sidebar 往右移 */
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+    return () => (document.body.style.overflowY = "");
+  }, []);
   return (
-    <Form className="container" onSubmit={addFormSubmitHandle}>
+    <Form className="me-5 ms-5 mt-3 mb-3" onSubmit={addFormSubmitHandle}>
       <Form.Group>
-        <Form.Label>員工帳號</Form.Label>
         <Form.Control
           type="text"
           name="employeeAccount"
-          required="required"
-          placeholder="account"
+          // required="required"
+          placeholder="請輸入員工帳號"
           onChange={addFormChangeHandle}
+          style={{ fontSize: "18px" }}
         />
       </Form.Group>
-      <Form.Group>
-        <Form.Label>員工密碼</Form.Label>
+      {addFormData.employeeAccount === "" && (
+        <>
+          {alertImg && (
+            <h6 style={{ color: "red" }}>
+              <IoAlertCircleSharp size="20px" color="red" />
+              員工帳號不可空白
+            </h6>
+          )}
+        </>
+      )}
+      <Form.Group className="mt-3">
         <Form.Control
           type="text"
           name="employeePasswd"
-          required="required"
-          placeholder="password"
+          // required="required"
+          placeholder="請輸入員工密碼"
           onChange={addFormChangeHandle}
         />
       </Form.Group>
-      <Form.Group>
-        <Form.Label>員工姓名</Form.Label>
+      {addFormData.employeePasswd === "" && (
+        <>
+          {alertImg && (
+            <h6 style={{ color: "red" }}>
+              <IoAlertCircleSharp size="20px" color="red" />
+              員工密碼不可空白
+            </h6>
+          )}
+        </>
+      )}
+      <Form.Group className="mt-3">
         <Form.Control
           type="text"
           name="employeeName"
-          required="required"
-          placeholder="王小明"
+          // required="required"
+          placeholder="請輸入員工姓名"
           onChange={addFormChangeHandle}
         />
       </Form.Group>
-      <Form.Group>
-        <Form.Label>員工電話</Form.Label>
+      {addFormData.employeeName === "" && (
+        <>
+          {alertImg && (
+            <h6 style={{ color: "red" }}>
+              <IoAlertCircleSharp size="20px" color="red" />
+              員工姓名不可空白
+            </h6>
+          )}
+        </>
+      )}
+      <Form.Group className="mt-3">
         <Form.Control
           type="text"
           name="employeePhone"
-          required="required"
-          placeholder="0912-456-789"
+          // required="required"
+          placeholder="請輸入員工電話"
           onChange={addFormChangeHandle}
         />
       </Form.Group>
-      <div className="mt-1 mb-1 d-flex justify-content-end">
-        <Button className="me-1" type="submit">
+      {addFormData.employeePhone === "" && (
+        <>
+          {alertImg && (
+            <h6 style={{ color: "red" }}>
+              <IoAlertCircleSharp size="20px" color="red" />
+              員工電話不可空白
+            </h6>
+          )}
+        </>
+      )}
+      <div className="mt-3 mb-1 d-flex justify-content-end">
+        <button
+          className="btn"
+          type="submit"
+          style={{
+            backgroundColor: "#7BA23F",
+            color: "white",
+            fontSize: "20px",
+          }}
+        >
           新增
-        </Button>
+        </button>
       </div>
     </Form>
   );
