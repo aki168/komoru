@@ -361,9 +361,9 @@ function BookingOrderPage() {
     }
   }, [roomState]);
 
-  //計算總金額，如果有優惠券，折200元
+  //計算總金額
   useEffect(() => {
-    if (couponState === "1") {
+    if (couponState !== "") {
       setSumActivity(
         countActivity * 700 + roomSum - Number(couponData[0].discount)
       );
@@ -371,6 +371,9 @@ function BookingOrderPage() {
       setSumActivity(countActivity * 700 + roomSum);
     }
   });
+  {
+    console.log(couponData[0].discount);
+  }
 
   const navigate = useNavigate();
   //傳訂單明細給後端

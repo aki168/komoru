@@ -87,11 +87,38 @@
   margin-left: 10px;
   width: 720px;
   height: 720px;
-  font-size: 30px;
-  line-height: 60px;
+  font-size: 20px;
+  line-height: 40px;
   padding: 10px;
   box-shadow: 0px 12px 18px -6px rgba(0, 0, 0, 0.1);
   z-index: 0;
+}
+
+.sizeRight h1 {
+  font-size: 30px;
+  color: #ed8c4e;
+  line-height: 35px;
+}
+
+.sizeRight div {
+  margin-bottom: 70px;
+}
+
+.sizeRight a {
+  margin: 10 auto;
+  border: 1px solid #808080;
+  width: 600px;
+  height: 40px;
+  font-size: 16px;
+  text-align: center;
+  color: #808080;
+  text-decoration: none;
+  position: absolute;
+  bottom: 20px;
+}
+.sizeRight a:hover {
+  background-color: #ed8c4e;
+  color: white;
 }
 
 .sliderleft-left-arrow {
@@ -130,17 +157,26 @@
   margin-right: 10px;
   width: 720px;
   height: 720px;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 60px;
   padding: 10px;
   box-shadow: 0px 12px 18px -6px rgba(0, 0, 0, 0.1);
   z-index: 0;
 }
 
+.sizeLeft h1 {
+  font-size: 30px;
+  color: #ed8c4e;
+}
+
+.sizeLeft div {
+  margin-bottom: 70px;
+}
+
 .sliderRight-left-arrow {
   position: absolute;
   top: 35%;
-  left: 50%;
+  left: 47%;
   font-size: 3rem;
   color: rgb(255, 255, 255);
   z-index: 10;

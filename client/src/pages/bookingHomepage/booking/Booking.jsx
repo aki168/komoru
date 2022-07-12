@@ -187,6 +187,8 @@ function Booking() {
       });
   }, [memberId]);
 
+  console.log(couponData);
+
   /*將coupon資料map成coupon選項*/
   const couponArr = Object.values(couponData).map((values, index) => {
     return (
@@ -323,6 +325,7 @@ function Booking() {
               className="headerCouponSelect"
               onChange={(e) => {
                 setCouponState(e.target.value);
+                console.log(e.target.value);
               }}
               value={couponState}
             >
