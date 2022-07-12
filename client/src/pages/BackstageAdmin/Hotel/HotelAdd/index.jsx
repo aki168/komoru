@@ -146,21 +146,21 @@ function HotelAdd({ setAddShow, data }) {
       setAlertImg(true);
     } else {
       setAlertImg(false);
-      // fetch("http://localhost:5000/hotel/addHotel", {
-      //   method: "POST",
-      //   body: formData,
-      // })
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     if (data.status) {
-      //       setAddShow(false);
-      //       window.location.reload(false);
-      //     }
-      //     console.log(data);
-      //   })
-      //   .catch((e) => {
-      //     console.error(e);
-      //   });
+      fetch("http://localhost:5000/hotel/addHotel", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status) {
+            setAddShow(false);
+            window.location.reload(false);
+          }
+          console.log(data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     }
   };
 
