@@ -13,6 +13,7 @@ import RoomItemRight from "./roomItem/RoomItemRight";
 import PrivateRoomModal from "./roomModal/PrivateRoomModal";
 import BackPackerRoomModal from "./roomModal/BackPackerRoomModal";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import UserHeader from "../../components/User/UserHeader";
 
 const PartnerHotel = () => {
   useEffect(() => {
@@ -216,17 +217,25 @@ const PartnerHotel = () => {
 
       <Navbar />
       <button className="goBooking">立即預定</button>
-      <div className="hotelIntroTitle">
+      {/* 0712 aki-更改為滾動視差  */}
+      <div className="partnerHotel--titleBar partnerHotel--bg--fix mb-5">
+      <UserHeader
+        title="遍地全台的合作飯店一覽"
+        text="KOMORU與北、中、南、東各個在地青旅合作，活絡社會並讓旅者與業者達到雙贏！"
+      />
+      </div>
+
+      {/* <div className="hotelIntroTitle">
         <div className="textGroup">
           <h1>遍地全台的合作飯店一覽 </h1>
           <p>
             KOMORU與北、中、南、東各個在地青旅合作，活絡社會並讓旅者與業者達到雙贏！
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* 台北 */}
-      <section className="sliderleft">
+      <section className="sliderleft mt-3">
         <BsChevronLeft className="sliderleft-left-arrow" onClick={prevSlide3} />
         <BsChevronRight
           className="sliderleft-right-arrow"

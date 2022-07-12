@@ -85,8 +85,6 @@ export default function OrderPage() {
             !loading && 
             <div className='d-flex justify-content-center'>
               <BookingLoading/>
-              <BookingLoading/> 
-              <BookingLoading/>  
             </div>
           } 
 

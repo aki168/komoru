@@ -58,7 +58,6 @@ export default function Login(props) {
           );
         });
     } else if (mail === "") {
-      // alert("請輸入電子信箱");
       setEmailErr("請輸入電子信箱");
     }
   };
@@ -83,7 +82,6 @@ export default function Login(props) {
             res.data.result[0].memberPasswd === passwd
           ) {
             localStorage.setItem("token", res.data.token);
-            // setUserIsLogin({isLoginMail:mail, isLoginToken:res.data.token})
             setLoginStatus(true); // 插入驗證事情
           } else {
             console.log(mail, passwd); //動態追蹤輸入的mail值
@@ -209,10 +207,14 @@ export default function Login(props) {
 
       <h3 className="login--subTitle">或使用以下選項登入</h3>
       <ul className="login--other">
-        <li className="login--block">Google</li>
-        <li className="login--block">Facebook</li>
-        <li className="login--block" onClick={getLineUserCode}>
-          LINE
+        <li>
+          <button className="login--block GOOGLE"/>
+        </li>
+        <li>
+          <button className="login--block FB"/>
+        </li>
+        <li>
+          <button className="login--block LINE" onClick={getLineUserCode}/>
         </li>
       </ul>
     </div>
