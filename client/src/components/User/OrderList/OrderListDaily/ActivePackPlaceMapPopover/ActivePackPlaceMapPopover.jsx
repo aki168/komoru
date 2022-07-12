@@ -23,7 +23,7 @@ const ActivePackPlaceMapPopover = (...props) => {
       title="店家位置"
       placement="rightTop"
     >
-      <Button type="primary" className="bg-white text-primary fw-bold ms-3">
+      <Button type="text" className="bg-white text-primary fw-bold ms-3">
         {props[0].title}
         <svg
           xmlns="http://www.w3.org/2000/svg"
