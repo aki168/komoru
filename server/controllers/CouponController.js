@@ -10,12 +10,12 @@ const { Console } = require("console");
 
 // 0704 取得會員coupon明細 - MJ 
 exports.getCouponByMemberId = async (req, res) => {
-    // const { token } = req.body;
-    // if (token) {
-    //     //   解碼
-    //     const decoded = await promisify(jwt.verify)(token, "jwtSecret")
-    //     const { memberId } = decoded
-        let memberId = 2
+    const { token } = req.body;
+    if (token) {
+        //   解碼
+        const decoded = await promisify(jwt.verify)(token, "jwtSecret")
+        const { memberId } = decoded
+        // let memberId = 2
 
         if (memberId) {
             try {
@@ -29,9 +29,9 @@ exports.getCouponByMemberId = async (req, res) => {
         } else {
             configController.sendJsonMsg(res, false, "memberId有誤", "")
         }
-    // } else {
-    //     res.json({ message: "該用戶尚未登入" })
-    // }
+    } else {
+        res.json({ message: "該用戶尚未登入" })
+    }
 }
 
 // 0705 coupon生成 - MJ
