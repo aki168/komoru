@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-// 2022-07-06 PG
+// 2022-07-12 PG
 // 載入 Google Map
 const GoogleMap = ({ dataList }) => {
   // 初始化資訊
