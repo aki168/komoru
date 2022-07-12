@@ -21,10 +21,10 @@ export default function OrderListDaily(props) {
             <li className="pt-2 pb-2 ">
               <h4>・12:00 - 14:00 不一樣的用餐體驗</h4>
               <ActivePackPlaceMapPopover
-                title={props.activePackItemContent}
-                id={props.partnershipId}
-                name={props.partnershipName}
-                addr={props.partnershipAddr}
+                activePackContent={props.activePackItemContent}
+                partnershipId={props.partnershipId}
+                partnershipName={props.partnershipName}
+                partnershipAddr={props.partnershipAddr}
               />
             </li>
           </ul>
@@ -33,19 +33,19 @@ export default function OrderListDaily(props) {
             <li className="pt-2 pb-2 ">
               <h4>・14:00 - 16:00 探索時刻</h4>
               <ActivePackPlaceMapPopover
-                title={props.activePackItemContent2}
-                id={props.partnershipId2}
-                name={props.partnershipName2}
-                addr={props.partnershipAddr2}
+                activePackContent={props.activePackItemContent2}
+                partnershipId={props.partnershipId2}
+                partnershipName={props.partnershipName2}
+                partnershipAddr={props.partnershipAddr2}
               />
             </li>
             <li className="pt-2 pb-2 ">
               <h4>・16:00 - 17:00 Tea Time</h4>
               <ActivePackPlaceMapPopover
-                title={props.activePackItemContent3}
-                id={props.partnershipId3}
-                name={props.partnershipName3}
-                addr={props.partnershipAddr3}
+                activePackContent={props.activePackItemContent3}
+                partnershipId={props.partnershipId3}
+                partnershipName={props.partnershipName3}
+                partnershipAddr={props.partnershipAddr3}
               />
             </li>
             <li className="pt-2 pb-2 ">

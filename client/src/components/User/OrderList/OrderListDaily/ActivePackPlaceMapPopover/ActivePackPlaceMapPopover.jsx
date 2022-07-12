@@ -4,17 +4,20 @@ import "antd/dist/antd.css";
 
 // 2022-07-12 PG
 // 活動包地點的地圖 popover
-const ActivePackPlaceMapPopover = (...props) => {
+const ActivePackPlaceMapPopover = (props) => {
+  const { activePackContent, partnershipId, partnershipName, partnershipAddr } =
+    props;
+
   return (
     <Popover
       content={
         <GoogleMap
           dataList={{
-            mapId: "map"+props[0].id,
+            mapId: "map" + partnershipId,
             location: {
               from: {
-                addr: props[0].addr,
-                name: props[0].name,
+                addr: partnershipAddr,
+                name: partnershipName,
               },
             },
           }}
@@ -24,7 +27,7 @@ const ActivePackPlaceMapPopover = (...props) => {
       placement="rightTop"
     >
       <Button type="text" className="bg-white text-primary fw-bold ms-3">
-        {props[0].title}
+        {activePackContent}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
