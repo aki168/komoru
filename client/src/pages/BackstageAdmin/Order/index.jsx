@@ -82,7 +82,7 @@ function Order() {
   /*20220628 YN
   取得目前選取列表orderData資料，並設定orderData狀態*/
   const orderStatusChange = (index) => {
-    setOrderData(data[index].orderStatus);
+    setOrderData(data[index]);
     setInputHandle(true);
     // console.log(data[index])
   };
@@ -326,7 +326,7 @@ function Order() {
           <div className="row ms-5 mb-5 g-0">
             <div className="col-sm-4">
               <div className="d-flex justify-content-start">
-                {orderData === "未入住" ? (
+                {orderData.orderStatus === "未入住" ? (
                   <></>
                 ) : (
                   <button
@@ -337,7 +337,7 @@ function Order() {
                   </button>
                 )}
 
-                {orderData === "已入住" ? (
+                {orderData.orderStatus === "已入住" ? (
                   <></>
                 ) : (
                   <button
@@ -348,7 +348,7 @@ function Order() {
                   </button>
                 )}
 
-                {orderData === "已退房" ? (
+                {orderData.orderStatus === "已退房" ? (
                   <></>
                 ) : (
                   <button

@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { BsFillArrowUpSquareFill } from "react-icons/bs";
+import { IoAlertCircleSharp } from "react-icons/io5";
+import { HiOutlineRefresh } from "react-icons/hi";
+import { MdOutlineFileUpload } from "react-icons/md";
+import BackstageLoding from "../../../../components/BackstageLoading";
 
 function HotelViewEdits({ setEditShow, editData, data }) {
   /*20220624 YN
@@ -51,7 +55,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
   /*20220630 YN
      選擇照片狀態初始化*/
   const [selectedPrimaryFile, setSelectedPrimaryFile] = useState(null);
-  const [selectedFirstaryFile, setSelectedFirstaryFile] = useState(null);
+  const [selectedFirstFile, setSelectedFirstFile] = useState(null);
   const [selectedSecondFile, setSelectedSecondFile] = useState(null);
   const [selectedThirdFile, setSelectedThirdFile] = useState(null);
 
@@ -70,6 +74,14 @@ function HotelViewEdits({ setEditShow, editData, data }) {
   /*20220710 YN
   修改按鈕初始化 */
   const [editButton, setEditButton] = useState(false);
+
+  /*20220710 YN
+  當輸入框為""，出現警示狀態初始化 */
+  const [alertImg, setAlertImg] = useState(false);
+
+  /*20220707 YN
+ 資料載入過程初始化*/
+  const [loading, setLoading] = useState(false);
 
   /*20220701 YN
      取得後端預設飯店資料*/
@@ -194,33 +206,39 @@ function HotelViewEdits({ setEditShow, editData, data }) {
       const formData = new FormData();
       formData.append("hotelDataList", JSON.stringify(newContact));
       formData.append("mainHotelImgFile", selectedPrimaryFile);
-      formData.append("firstHotelImgFile", selectedFirstaryFile);
+      formData.append("firstHotelImgFile", selectedFirstFile);
       formData.append("secondHotelImgFile", selectedSecondFile);
       formData.append("thirdHotelImgFile", selectedThirdFile);
       if (selectedPrimaryFile === null) {
-        alert("請選擇主要照片");
-      }
-      console.log(...formData);
-      fetch("http://localhost:5000/hotel/updateHotelByHotelId", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status) {
-            setEditShow(false);
-            window.location.reload(false);
-          }
-          console.log(data);
+        setAlertImg(true);
+        // alert("請選擇主要照片");
+      } else {
+        console.log(...formData);
+        setAlertImg(false);
+        setLoading(true);
+        fetch("http://localhost:5000/hotel/updateHotelByHotelId", {
+          method: "POST",
+          body: formData,
         })
-        .catch((e) => {
-          console.error(e);
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status) {
+              setEditShow(false);
+              window.location.reload(false);
+              alert("修改成功");
+            }
+            console.log(data);
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+      }
     } else {
       const formData = new FormData();
       formData.append("hotelDataList", JSON.stringify(newContact));
       formData.append("hotelImgFile", []);
       console.log(...formData);
+      setLoading(true);
       fetch("http://localhost:5000/hotel/updateHotelByHotelId", {
         method: "POST",
         body: formData,
@@ -230,6 +248,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
           if (data.status) {
             setEditShow(false);
             window.location.reload(false);
+            alert("修改成功");
           }
           console.log(data);
         })
@@ -264,7 +283,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
       let reader = new FileReader();
       reader.onloadend = () => {
         setFirstImgPreview(reader.result);
-        setSelectedFirstaryFile(selected);
+        setSelectedFirstFile(selected);
         console.log(selected);
       };
       reader.readAsDataURL(selected);
@@ -308,7 +327,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
   /*20220701 YN
   修改狀態改變*/
   const disabledClickHandle = () => {
-    setEditImage(true);
+    // setEditImage(true);
     setIsDisabled(!isDisabled);
     setEditButton(true);
   };
@@ -323,42 +342,114 @@ function HotelViewEdits({ setEditShow, editData, data }) {
   return (
     <Form className="row me-5 ms-5 mb-3 mt-3" onSubmit={editFormSubmitHandle}>
       {!editImage && (
-        <Form.Group className="col-6 d-flex ">
-          <div className="container-fluid d-flex flex-column">
+        <Form.Group className="col-6 d-flex g-0 ">
+          <div className="container d-flex flex-column">
             <div
-              className="col-12 h-75 justify-content-center d-flex flex-column align-items-center"
+              className="col-12"
               style={{
+                height: "70%",
                 background: `url("http://localhost:5000${mainImageData}") no-repeat center/cover`,
               }}
             ></div>
-            <div className="mt-2 col-md-12 d-flex h-25 container-fuield">
+            <div className="mt-2 col-md-12 d-flex">
+              <div className="col-md-4" style={{ paddingRight: "5px" }}>
+                <div
+                  style={{
+                    height: "150px",
+                    background: `url("http://localhost:5000${firstImageData}") no-repeat center/cover`,
+                  }}
+                ></div>
+              </div>
               <div
-                className="me-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
-                style={{
-                  background: `url("http://localhost:5000${firstImageData}") no-repeat center/cover`,
-                }}
-              ></div>
-              <div
-                className="col-md-4 d-flex flex-column justify-content-center align-items-center"
-                style={{
-                  background: `url("http://localhost:5000${secondImageData}") no-repeat center/cover`,
-                }}
-              ></div>
-              <div
-                className="ms-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
-                style={{
-                  background: `url("http://localhost:5000${thirdImageData}") no-repeat center/cover`,
-                }}
-              ></div>
+                className="col-md-4"
+                style={{ paddingRight: "2.5px", paddingLeft: "2.5px" }}
+              >
+                <div
+                  style={{
+                    height: "150px",
+                    background: `url("http://localhost:5000${secondImageData}") no-repeat center/cover`,
+                  }}
+                ></div>
+              </div>
+              <div className="col-md-4" style={{ paddingLeft: "5px" }}>
+                <div
+                  style={{
+                    height: "150px",
+                    background: `url("http://localhost:5000${thirdImageData}") no-repeat center/cover`,
+                  }}
+                ></div>
+              </div>
             </div>
           </div>
         </Form.Group>
       )}
 
       {editImage && (
-        <Form.Group className="col-6 d-flex ">
-          <div className="container-fluid d-flex flex-column">
+        <Form.Group className="col-6 d-flex g-0 ">
+          <div className="container d-flex flex-column">
             <div
+              className="col-12"
+              style={{
+                height: "70%",
+                background: primaryImgPreview
+                  ? `url("${primaryImgPreview}") no-repeat center/cover`
+                  : "#f4f5f7",
+              }}
+            >
+              {primaryImgPreview && (
+                <button
+                  style={{ border: "none", background: "none" }}
+                  onClick={() => setPrimaryImgPreview(null)}
+                >
+                  <HiOutlineRefresh
+                    size="30px"
+                    color="#ed8c4e"
+                    style={{ marginTop: "10px" }}
+                  />
+                </button>
+              )}
+              <Form.Group
+                className="d-flex justify-content-center "
+                style={{ paddingTop: "100px" }}
+              >
+                <div className="d-flex flex-column">
+                  {!primaryImgPreview && (
+                    <>
+                      <label
+                        className="btn text-white "
+                        htmlFor="primaryfileUpload"
+                      >
+                        <MdOutlineFileUpload size="5em" color="#efa16a" />
+                      </label>
+                      <input
+                        id="primaryfileUpload"
+                        type="file"
+                        style={{ display: "none" }}
+                        onChange={primaryImageChangeHandle}
+                      />
+                      {selectedPrimaryFile === null && (
+                        <>
+                          {alertImg && (
+                            <p
+                              className="d-flex align-items-center"
+                              style={{ color: "red" }}
+                            >
+                              <IoAlertCircleSharp size="20px" color="red" />
+                              請上傳主要圖片
+                            </p>
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
+                  {primaryError && (
+                    <p className="text-center text-danger">不支援此檔案</p>
+                  )}
+                </div>
+              </Form.Group>
+            </div>
+
+            {/* <div
               className="col-12 h-75 justify-content-center d-flex flex-column align-items-center"
               style={{
                 background: primaryImgPreview
@@ -393,8 +484,204 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                   </button>
                 )}
               </div>
+            </div> */}
+
+            <div className="mt-2 col-md-12 d-flex">
+              <div className="col-md-4" style={{ paddingRight: "5px" }}>
+                <div
+                  style={{
+                    height: "130px",
+                    background: firstImgPreview
+                      ? `url("${firstImgPreview}") no-repeat center/cover`
+                      : "#f4f5f7",
+                  }}
+                >
+                  {firstImgPreview && (
+                    <button
+                      style={{ border: "none", background: "none" }}
+                      onClick={() => setFirstImgPreview(null)}
+                    >
+                      <HiOutlineRefresh
+                        size="20px"
+                        color="#ed8c4e"
+                        style={{ marginTop: "10px" }}
+                      />
+                    </button>
+                  )}
+                  <Form.Group
+                    className="d-flex justify-content-center "
+                    style={{ paddingTop: "35px" }}
+                  >
+                    <div className="d-flex flex-column">
+                      {!firstImgPreview && (
+                        <>
+                          <label
+                            className="btn text-white "
+                            htmlFor="firstFileUpload"
+                          >
+                            <MdOutlineFileUpload size="2em" color="#efa16a" />
+                          </label>
+                          <input
+                            id="firstFileUpload"
+                            type="file"
+                            style={{ display: "none" }}
+                            onChange={firstImageChangeHandle}
+                          />
+                          {/* {selectedFirstFile === null && (
+                            <>
+                              {alertImg && (
+                                <p
+                                  className="d-flex align-items-center"
+                                  style={{ color: "red" }}
+                                >
+                                  <IoAlertCircleSharp size="20px" color="red" />
+                                  請上傳檔案
+                                </p>
+                              )}
+                            </>
+                          )} */}
+                        </>
+                      )}
+                      {firstError && (
+                        <p className="text-center text-danger">不支援此檔案</p>
+                      )}
+                    </div>
+                  </Form.Group>
+                </div>
+              </div>
+
+              <div
+                className="col-md-4"
+                style={{ paddingRight: "2.5px", paddingLeft: "2.5px" }}
+              >
+                <div
+                  style={{
+                    height: "130px",
+                    background: secondImgPreview
+                      ? `url("${secondImgPreview}") no-repeat center/cover`
+                      : "#f4f5f7",
+                  }}
+                >
+                  {secondImgPreview && (
+                    <button
+                      style={{ border: "none", background: "none" }}
+                      onClick={() => setSecondImgPreview(null)}
+                    >
+                      <HiOutlineRefresh
+                        size="20px"
+                        color="#ed8c4e"
+                        style={{ marginTop: "10px" }}
+                      />
+                    </button>
+                  )}
+                  <Form.Group
+                    className="d-flex justify-content-center "
+                    style={{ paddingTop: "35px" }}
+                  >
+                    <div className="d-flex flex-column">
+                      {!secondImgPreview && (
+                        <>
+                          <label
+                            className="btn text-white "
+                            htmlFor="secondfileUpload"
+                          >
+                            <MdOutlineFileUpload size="2em" color="#efa16a" />
+                          </label>
+                          <input
+                            id="secondfileUpload"
+                            type="file"
+                            style={{ display: "none" }}
+                            onChange={secondImageChangeHandle}
+                          />
+                          {selectedSecondFile === null && (
+                            <>
+                              {/* {alertImg && (
+                                <p
+                                  className="d-flex align-items-center"
+                                  style={{ color: "red" }}
+                                >
+                                  <IoAlertCircleSharp size="20px" color="red" />
+                                  請上傳檔案
+                                </p>
+                              )} */}
+                            </>
+                          )}
+                        </>
+                      )}
+                      {secondError && (
+                        <p className="text-center text-danger">不支援此檔案</p>
+                      )}
+                    </div>
+                  </Form.Group>
+                </div>
+              </div>
+
+              <div className="col-md-4" style={{ paddingLeft: "5px" }}>
+                <div
+                  style={{
+                    height: "130px",
+                    background: thirdImgPreview
+                      ? `url("${thirdImgPreview}") no-repeat center/cover`
+                      : "#f4f5f7",
+                  }}
+                >
+                  {thirdImgPreview && (
+                    <button
+                      style={{ border: "none", background: "none" }}
+                      onClick={() => setThirdImgPreview(null)}
+                    >
+                      <HiOutlineRefresh
+                        size="20px"
+                        color="#ed8c4e"
+                        style={{ marginTop: "10px" }}
+                      />
+                    </button>
+                  )}
+
+                  <Form.Group
+                    className="d-flex justify-content-center "
+                    style={{ paddingTop: "35px" }}
+                  >
+                    <div className="d-flex flex-column">
+                      {!thirdImgPreview && (
+                        <>
+                          <label
+                            className="btn text-white "
+                            htmlFor="fileUpload"
+                          >
+                            <MdOutlineFileUpload size="2em" color="#efa16a" />
+                          </label>
+                          <input
+                            id="fileUpload"
+                            type="file"
+                            style={{ display: "none" }}
+                            onChange={thirdImageChangeHandle}
+                          />
+                          {/* {selectedThirdFile === null && (
+                            <>
+                              {alertImg && (
+                                <p
+                                  className="d-flex align-items-center"
+                                  style={{ color: "red" }}
+                                >
+                                  <IoAlertCircleSharp size="20px" color="red" />
+                                  請上傳檔案
+                                </p>
+                              )}
+                            </>
+                          )} */}
+                        </>
+                      )}
+                      {thirdError && (
+                        <p className="text-center text-danger">不支援此檔案</p>
+                      )}
+                    </div>
+                  </Form.Group>
+                </div>
+              </div>
             </div>
-            <div className="mt-2 col-md-12 d-flex h-25 container-fuield">
+
+            {/* <div className="mt-2 col-md-12 d-flex h-25 container-fuield">
               <div
                 className="me-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
                 style={{
@@ -498,13 +785,14 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                   )}
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </Form.Group>
       )}
 
-      <Form.Group className="col-6">
+      <Form.Group className="col-6 km-modal-content">
         <Form.Group>
+          <Form.Label>飯店名稱</Form.Label>
           <Form.Control
             className="km-modal-content"
             type="text"
@@ -515,12 +803,13 @@ function HotelViewEdits({ setEditShow, editData, data }) {
             disabled={isDisabled}
           />
         </Form.Group>
-        <Form.Group>
+        <Form.Group className="mt-2">
+          <Form.Label>區域</Form.Label>
           <Form.Select
             name="cityId"
             disabled={isDisabled}
             onChange={editFormChangeHandle}
-            className="km-modal-content mt-3"
+            className="km-modal-content"
           >
             <option defaultValue={editModalData.cityId}>
               {editData.cityName}
@@ -531,9 +820,10 @@ function HotelViewEdits({ setEditShow, editData, data }) {
             <option Value="4">台東市</option>
           </Form.Select>
         </Form.Group>
-        <Form.Group>
+        <Form.Group className="mt-2">
+          <Form.Label>地址</Form.Label>
           <Form.Control
-           className="km-modal-content mt-3"
+            className="km-modal-content"
             type="text"
             name="hotelAddr"
             // required="required"
@@ -542,20 +832,22 @@ function HotelViewEdits({ setEditShow, editData, data }) {
             disabled={isDisabled}
           />
         </Form.Group>
-        <Form.Group>
+        <Form.Group className="mt-2">
+          <Form.Label>聯絡電話</Form.Label>
           <Form.Control
             type="text"
             name="hotelTel"
             // required="required"
-            className="km-modal-content mt-3"
+            className="km-modal-content"
             defaultValue={editModalData.hotelTel}
             onChange={editFormChangeHandle}
             disabled={isDisabled}
           />
         </Form.Group>
-        <Form.Group>
+        <Form.Group className="mt-2">
+          <Form.Label>備註</Form.Label>
           <Form.Control
-           className="km-modal-content mt-3"
+            className="km-modal-content"
             type="text"
             name="hotelDesc"
             // required="required"
@@ -565,9 +857,10 @@ function HotelViewEdits({ setEditShow, editData, data }) {
             disabled={isDisabled}
           />
         </Form.Group>
-        <Form.Group>
+        <Form.Group className="mt-2">
+          <Form.Label>飯店簡介</Form.Label>
           <Form.Control
-           className="km-modal-content mt-3"
+            className="km-modal-content"
             as="textarea"
             rows={3}
             defaultValue={editModalData.hotelContent}
@@ -578,7 +871,6 @@ function HotelViewEdits({ setEditShow, editData, data }) {
         </Form.Group>
       </Form.Group>
       <div className="mt-3 mb-3 d-flex justify-content-end">
-
         {editButton ? (
           <></>
         ) : (
@@ -610,7 +902,13 @@ function HotelViewEdits({ setEditShow, editData, data }) {
         ) : (
           <></>
         )}
+        
       </div>
+      <div className="d-flex justify-content-center align-items-top ">{loading === true && <BackstageLoding size="10px" />}</div>
+          
+           
+         
+       
     </Form>
   );
 }

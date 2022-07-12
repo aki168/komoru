@@ -13,6 +13,7 @@ import RoomItemRight from "./roomItem/RoomItemRight";
 import PrivateRoomModal from "./roomModal/PrivateRoomModal";
 import BackPackerRoomModal from "./roomModal/BackPackerRoomModal";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import UserHeader from "../../components/User/UserHeader";
 
 const PartnerHotel = () => {
   useEffect(() => {
@@ -23,16 +24,18 @@ const PartnerHotel = () => {
   const [current3, setCurrent3] = useState(0);
   const [current4, setCurrent4] = useState(0);
 
+  const [data, setData] = useState();
   useEffect(() => {
     axios({
       method: "post",
-      url: "http://localhost:5000/hotelImg/getHotelImgDataListByHotelId",
-      data: {
-        hotelId: 1,
-      },
+      url: "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName",
+      // data: {
+      //   hotelId: 2,
+      // },
     })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.dataList);
+        setData(res.data.dataList);
       })
       .catch((err) => {
         console.log(err);
@@ -214,17 +217,25 @@ const PartnerHotel = () => {
 
       <Navbar />
       <button className="goBooking">立即預定</button>
-      <div className="hotelIntroTitle">
+      {/* 0712 aki-更改為滾動視差  */}
+      <div className="partnerHotel--titleBar partnerHotel--bg--fix mb-5">
+      <UserHeader
+        title="遍地全台的合作飯店一覽"
+        text="KOMORU與北、中、南、東各個在地青旅合作，活絡社會並讓旅者與業者達到雙贏！"
+      />
+      </div>
+
+      {/* <div className="hotelIntroTitle">
         <div className="textGroup">
           <h1>遍地全台的合作飯店一覽 </h1>
           <p>
             KOMORU與北、中、南、東各個在地青旅合作，活絡社會並讓旅者與業者達到雙贏！
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* 台北 */}
-      <section className="sliderleft">
+      <section className="sliderleft mt-3">
         <BsChevronLeft className="sliderleft-left-arrow" onClick={prevSlide3} />
         <BsChevronRight
           className="sliderleft-right-arrow"
@@ -243,7 +254,17 @@ const PartnerHotel = () => {
           );
         })}
         <div className="sizeRight" data-aos="fade-up">
-          <p>台北:夾腳拖的家</p>
+          <div>
+            <h1>夾腳拖的家</h1>
+            <h1>Flip Flop Hostel</h1>
+          </div>
+          <p>{data[0].hotelContent}</p>
+          <br />
+          <p>{data[0].hotelTel}</p>
+          <p>{data[0].hotelAddr}</p>
+          <a href="https://www.facebook.com/OwlStay.FlipFlopHostel/">
+            認識 夾角拖的家 Flip Flop Hostel
+          </a>
         </div>
         {/* {TainanSliderDes.map((TainanDes, index) => {
           return (
@@ -276,7 +297,10 @@ const PartnerHotel = () => {
           onClick={nextSlide1}
         />
         <div className="sizeLeft" data-aos="fade-up">
-          <p>台中-Star Hostel</p>
+          <div>
+            <h1>誠星青年旅館</h1>
+            <h1>Star Hostel</h1>
+          </div>
           <p>台中市西區公益路68號15樓</p>
           <p> 15F, No.68, Gongyi Rd., West Dist., Taichung, Taiwan</p>
           <p>TEL:+886 4 2321-9696</p>
@@ -321,13 +345,11 @@ const PartnerHotel = () => {
           );
         })}
         <div className="sizeRight" data-aos="fade-up">
-          <p>台南-快活慢行</p>
-          <p>連絡電話:06-2229255</p>
-          <p>信箱:hii@hiihubs.com</p>
-          <p>702 台南市南區樹林街二段420號</p>
-          <p>
-            No.420, Sec. 2, Shulin St., South Dist., Tainan City 702, Taiwan
-          </p>
+          <h1>{data[1].hotelTitle}</h1>
+          <p>{data[1].hotelContent}</p>
+          <br />
+          <p>{data[1].hotelTel}</p>
+          <p>{data[1].hotelAddr}</p>
         </div>
       </section>
       <RoomItemLeft
@@ -360,9 +382,13 @@ const PartnerHotel = () => {
           );
         })} */}
         <div className="sizeLeft" data-aos="fade-up">
-          <p>花蓮-山林山鄰</p>
-          <p>address: 981花蓮縣玉里鎮大同路228號</p>
-          <p>TEL:03-888-7228</p>
+          <div>
+            <h1>{data[2].hotelTitle}</h1>
+          </div>
+          <p>{data[2].hotelContent}</p>
+          <br />
+          <p>{data[2].hotelTel}</p>
+          <p>{data[2].hotelAddr}</p>
         </div>
         {Hotel4Img.map((Hualienimg, index) => {
           return (
