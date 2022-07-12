@@ -22,6 +22,7 @@ export default function OrderListDaily(props) {
               <h4>・12:00 - 14:00 不一樣的用餐體驗</h4>
               <ActivePackPlaceMapPopover
                 title={props.activePackItemContent}
+                id={props.partnershipId}
                 name={props.partnershipName}
                 addr={props.partnershipAddr}
               />
@@ -33,6 +34,7 @@ export default function OrderListDaily(props) {
               <h4>・14:00 - 16:00 探索時刻</h4>
               <ActivePackPlaceMapPopover
                 title={props.activePackItemContent2}
+                id={props.partnershipId2}
                 name={props.partnershipName2}
                 addr={props.partnershipAddr2}
               />
@@ -41,6 +43,7 @@ export default function OrderListDaily(props) {
               <h4>・16:00 - 17:00 Tea Time</h4>
               <ActivePackPlaceMapPopover
                 title={props.activePackItemContent3}
+                id={props.partnershipId3}
                 name={props.partnershipName3}
                 addr={props.partnershipAddr3}
               />

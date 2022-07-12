@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 // 2022-07-12 PG
 // 載入 Google Map
 const GoogleMap = ({ dataList }) => {
+  const { location, mapId } = dataList;
+
   // 初始化資訊
   const zoom = {
     zoom: 18,
@@ -17,7 +19,7 @@ const GoogleMap = ({ dataList }) => {
 
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode(
-      { address: dataList.location.from.addr },
+      { address: location.from.addr },
       function (results, status) {
         if (status == "OK") {
           center.lat = results[0].geometry.location.lat();
@@ -31,9 +33,9 @@ const GoogleMap = ({ dataList }) => {
             minZoom: zoom.minZoom,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
           };
-          console.log(dataList.mapId);
+
           const map = new google.maps.Map(
-            document.getElementById(dataList.mapId),
+            document.getElementById(mapId),
             mapOptions
           );
 
@@ -46,7 +48,7 @@ const GoogleMap = ({ dataList }) => {
 
           // 設定文字框
           const infowindow = new google.maps.InfoWindow({
-            content: "<h5>" + dataList.location.from.name + "</h5>",
+            content: "<h5>" + location.from.name + "</h5>",
             maxWidth: 200,
           });
 
@@ -54,7 +56,8 @@ const GoogleMap = ({ dataList }) => {
           infowindow.open(map, marker);
         } else {
           // 若轉換失敗...
-          console.log(status);
+          console.log("ERROR：" + status);
+          console.log(dataList);
         }
       }
     );
@@ -67,10 +70,7 @@ const GoogleMap = ({ dataList }) => {
   return (
     <>
       <div className="mx-5  mb-5">
-        <div
-          id={dataList.mapId}
-          style={{ width: "400px", height: "400px" }}
-        ></div>
+        <div id={mapId} style={{ width: "400px", height: "400px" }}></div>
       </div>
     </>
   );

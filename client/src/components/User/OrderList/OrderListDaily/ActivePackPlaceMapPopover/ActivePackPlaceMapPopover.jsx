@@ -10,7 +10,7 @@ const ActivePackPlaceMapPopover = (...props) => {
       content={
         <GoogleMap
           dataList={{
-            mapId: "map",
+            mapId: "map"+props[0].id,
             location: {
               from: {
                 addr: props[0].addr,
