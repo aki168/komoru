@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { IoAlertCircleSharp } from "react-icons/io5";
-
+import BackstageLoding from "../../../../components/BackstageLoading";
 function EmployeeViewEdits({ setEditShow, editData }) {
   /*20220624 YN
   修改資料初始化*/
@@ -31,6 +31,10 @@ function EmployeeViewEdits({ setEditShow, editData }) {
   當輸入框為""，出現警示狀態初始化 */
   const [alertImg, setAlertImg] = useState(false);
 
+  /*20220707 YN
+資料載入過程初始化*/
+  const [loading, setLoading] = useState(false);
+
   /*20220624 YN
    可否修改狀態改變*/
   const disabledClickHandle = () => {
@@ -56,6 +60,7 @@ function EmployeeViewEdits({ setEditShow, editData }) {
       .then((data) => {
         setEditModalData(data.dataList[0]);
         // console.log(data.dataList[0]);
+        setLoading(true);
       })
       .catch((e) => {
         console.error(e);
@@ -110,7 +115,7 @@ function EmployeeViewEdits({ setEditShow, editData }) {
           if (data.status) {
             setEditShow(false);
             window.location.reload(false);
-            alert('修改成功')
+            alert("修改成功");
           }
           console.log(data);
         })
@@ -121,108 +126,115 @@ function EmployeeViewEdits({ setEditShow, editData }) {
   };
 
   return (
-    <Form
-      className="container"
-      onSubmit={editFormSubmitHandle}
-      style={{ fontSize: "18px" }}
-    >
-      <Form.Group>
-        <Form.Label>員工帳號</Form.Label>
-        <Form.Control
-          type="text"
-          name="employeeAccount"
-          // required="required"
-          placeholder="account"
-          defaultValue={editModalData.employeeAccount}
-          onChange={editFormChangeHandle}
-          disabled={isDisabled}
-          style={{ fontSize: "18px" }}
-        />
-      </Form.Group>
-      {editModalData.employeeAccount === "" && (
-        <>
-          {alertImg && (
-            <h6 style={{ color: "red" }}>
-              <IoAlertCircleSharp size="20px" color="red" />
-              員工帳號不可空白
-            </h6>
+    <>
+      {loading ? (
+        <Form
+          className="container "
+          onSubmit={editFormSubmitHandle}
+        >
+          <Form.Group className="km-modal-content">
+            <Form.Label>員工帳號</Form.Label>
+            <Form.Control
+              type="text"
+              name="employeeAccount"
+              // required="required"
+              placeholder="請輸入員工帳號"
+              defaultValue={editModalData.employeeAccount}
+              onChange={editFormChangeHandle}
+              disabled={isDisabled}
+              className="km-modal-content"
+            />  
+          </Form.Group>
+          {editModalData.employeeAccount === "" && (
+            <>
+              {alertImg && (
+                <h6 style={{ color: "red" }}>
+                  <IoAlertCircleSharp size="20px" color="red" />
+                  員工帳號不可空白
+                </h6>
+              )}
+            </>
           )}
-        </>
-      )}
-      <Form.Group className="mt-3">
-        <Form.Label>員工密碼</Form.Label>
-        <Form.Control
-          type="text"
-          name="employeePasswd"
-          // required="required"
-          placeholder="請輸入員工密碼"
-          Value={shown ? "" : "******"}
-          onChange={editFormChangeHandle}
-          disabled={isDisabled}
-          style={{ fontSize: "18px" }}
-        />
-        {/* <button className="btn" onClick={()=>setShown(!shown)}>顯示密碼</button> */}
-      </Form.Group>
-      {editModalData.employeePasswd === "" && (
-        <>
-          {alertImg && (
-            <h6 style={{ color: "red" }}>
-              <IoAlertCircleSharp size="20px" color="red" />
-              員工密碼不可空白
-            </h6>
+          <Form.Group className="mt-3">
+            <Form.Label className="km-modal-content">員工密碼</Form.Label>
+            <Form.Control
+              type="text"
+              name="employeePasswd"
+              // required="required"
+              placeholder="請輸入員工密碼"
+              Value={shown ? "" : "******"}
+              onChange={editFormChangeHandle}
+              disabled={isDisabled}
+              className="km-modal-content"
+            />
+            {/* <button className="btn" onClick={()=>setShown(!shown)}>顯示密碼</button> */}
+          </Form.Group>
+          {editModalData.employeePasswd === "" && (
+            <>
+              {alertImg && (
+                <h6 style={{ color: "red" }}>
+                  <IoAlertCircleSharp size="20px" color="red" />
+                  員工密碼不可空白
+                </h6>
+              )}
+            </>
           )}
-        </>
-      )}
-      <Form.Group className="mt-3">
-        <Form.Label>員工姓名</Form.Label>
-        <Form.Control
-          type="text"
-          name="employeeName"
-          // required="required"
-          defaultValue={editModalData.employeeName}
-          placeholder="王小明"
-          onChange={editFormChangeHandle}
-          disabled={isDisabled}
-          style={{ fontSize: "18px" }}
-        />
-      </Form.Group>
-      <Form.Group className="mt-3">
-        <Form.Label>員工電話</Form.Label>
-        <Form.Control
-          type="text"
-          name="employeePhone"
-          // required="required"
-          placeholder="0912-456-789"
-          defaultValue={editModalData.employeePhone}
-          onChange={editFormChangeHandle}
-          disabled={isDisabled}
-          style={{ fontSize: "18px" }}
-        />
-      </Form.Group>
-      <div className="mt-3 mb-3 d-flex justify-content-end">
-        {editButton ? (
-          <></>
-        ) : (
-          <button
-            className="btn me-1 km-edit-button-modal km-modal-footer"
-            onClick={disabledClickHandle}
-          >
-            修改
-          </button>
-        )}
+          <Form.Group className="mt-3">
+            <Form.Label className="km-modal-content">員工姓名</Form.Label>
+            <Form.Control
+              type="text"
+              name="employeeName"
+              // required="required"
+              defaultValue={editModalData.employeeName}
+              placeholder="請輸入員工姓名"
+              onChange={editFormChangeHandle}
+              disabled={isDisabled}
+              className="km-modal-content"
+            />
+          </Form.Group>
+          <Form.Group className="mt-3">
+            <Form.Label className="km-modal-content">員工電話</Form.Label>
+            <Form.Control
+              type="text"
+              name="employeePhone"
+              // required="required"
+              placeholder="請輸入員工電話"
+              defaultValue={editModalData.employeePhone}
+              onChange={editFormChangeHandle}
+              disabled={isDisabled}
+              className="km-modal-content"
+            />
+          </Form.Group>
+          <div className="mt-3 mb-3 d-flex justify-content-end">
+            {editButton ? (
+              <></>
+            ) : (
+              <button
+                className="btn me-1 km-edit-button-modal km-modal-footer"
+                onClick={disabledClickHandle}
+              >
+                修改
+              </button>
+            )}
 
-        {editButton ? (
-          <button
-            className="btn me-1 km-save-button-modal km-modal-footer"
-            type="submit"
-          >
-            儲存
-          </button>
-        ) : (
-          <></>
-        )}
-      </div>
-    </Form>
+            {editButton ? (
+              <button
+                className="btn me-1 km-save-button-modal km-modal-footer"
+                type="submit"
+              >
+                儲存
+              </button>
+            ) : (
+              <></>
+            )}
+          </div>
+        </Form>
+      ) : (
+        <div className="d-flex justify-content-center">
+          <BackstageLoding />
+        </div>
+      )}
+    </>
   );
 }
 
