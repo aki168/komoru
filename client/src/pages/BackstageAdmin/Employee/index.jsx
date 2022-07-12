@@ -111,22 +111,20 @@ function Employee() {
   const arr = data.map((data, index) => {
     return (
       <tr key={index} className="form-check-label">
-        <td className="col-sm-1">{data.employeeId}</td>
+        {/* <td className="col-sm-1">{data.employeeId}</td> */}
         <td className="col-sm-1">{data.employeeAccount}</td>
         <td className="col-sm-1">{data.employeeName}</td>
         <td className="col-sm-1">{data.employeePhone}</td>
         <td className="col-sm-1 ">
           <button
             onClick={() => handleEditShow(index)}
-            className="me-1 btn"
-            style={{ backgroundColor: "#06CAD7", color: "white" }}
+            className="me-1 btn km-page-content km-edit-button-content"
           >
             檢視/修改
           </button>
           <button
             onClick={() => deletFormHandle(index)}
-            className="btn"
-            style={{ backgroundColor: "#E83015", color: "white" }}
+            className="btn km-page-content km-delet-button-content"
           >
             移除
           </button>
@@ -241,7 +239,7 @@ function Employee() {
     <>
       <div className="mx-5  mb-5">
         <div className="ms-5">
-          <h3 className="mt-5 mb-5">員工管理</h3>
+          <h3 className="mt-5 mb-5 km-page-title">員工管理</h3>
         </div>
         <div>
           <div className="row ms-5 mb-5 g-0">
@@ -249,12 +247,7 @@ function Employee() {
               <div className="d-flex justify-content-start">
                 <button
                   onClick={handleAddShow}
-                  className="btn"
-                  style={{
-                    backgroundColor: "#7BA23F",
-                    color: "white",
-                    fontSize: "20px",
-                  }}
+                  className="btn km-page-header km-button-header"
                 >
                   新增員工
                 </button>
@@ -262,10 +255,12 @@ function Employee() {
                 <Modal
                   size="lg"
                   // aria-labelledby="contained-modal-title-vcenter"
-                  centered
+                  // centered
                   show={addShow}
                   onHide={handleAddClose}
-                  style={{ marginLeft: "180px" }}
+                  style={{
+                    margin: '0 0 0 170px',
+                  }}
                 >
                   <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
                   <EmployeeAdd
@@ -281,12 +276,11 @@ function Employee() {
                 <div className="col-3 me-2">
                   <input
                     name="keyword"
-                    className="form-control col-1 "
+                    className="form-control col-1 km-page-header"
                     type="search"
                     placeholder="搜尋"
                     aria-label="Search"
                     onChange={sreachChangeHandle}
-                    style={{ fontSize: "20px" }}
                   />
                 </div>
                 {/* <div className="col-3 me-2">
@@ -306,16 +300,11 @@ function Employee() {
                     <option value="4">東區</option>
                   </select>
                 </div> */}
-                <div className="col-2 ">
+                <div className="col-2 km-page-header">
                   <button
-                    className="btn"
+                    className="btn km-button-header"
                     type="submit"
                     onClick={sreachSubmitHandle}
-                    style={{
-                      backgroundColor: "#7BA23F",
-                      color: "white",
-                      fontSize: "20px",
-                    }}
                   >
                     搜尋
                   </button>
@@ -324,16 +313,15 @@ function Employee() {
             </div>
           </div>
           <div className="row ms-5 g-0">
-            <div className="col-sm-11">
+            <div className="col-sm-11 ">
               {loading ? (
                 <>
                   <table
-                    className="table table-hover  text-center align-middle"
-                    style={{ fontSize: "18px" }}
+                    className="table table-hover  text-center align-middle km-page-content"
                   >
                     <thead>
                       <tr>
-                        <td>員工編號</td>
+                        {/* <td>員工編號</td> */}
                         <td>員工帳號</td>
                         <td>員工姓名</td>
                         <td>員工電話</td>
@@ -377,10 +365,10 @@ function Employee() {
       <Modal
         size="lg"
         // aria-labelledby="contained-modal-title-vcenter"
-        centered
+        // centered
         show={editShow}
         onHide={handleEditClose}
-        style={{ marginLeft: "180px" }}
+        style={{ margin:'-50px 0 0 170px' }}
       >
         <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
         <EmployeeViewEdits setEditShow={setEditShow} editData={editData} />

@@ -54,13 +54,13 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
           {loading ? (
             <>
               <div
-                className="mt-3 ps-3 pe-3 pb-4"
+                className="p-5 "
                 style={{
                   backgroundColor: "white",
                   boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
                 }}
               >
-                <div className="pt-3 ps-1">
+                <div className="pb-3">
                   <p style={{ fontSize: "22px", color: "#808080" }}>入住率</p>
                 </div>
                 {northData && (
@@ -69,17 +69,18 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
               </div>
 
               <div
-                className="mt-5 ps-3 pe-3 pb-4"
+                className="mt-5 p-5"
                 style={{
                   backgroundColor: "white",
                   boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
                 }}
               >
-                <div className="pt-3 ps-1">
+                <div className="pb-3">
                   <p style={{ fontSize: "22px", color: "#808080" }}>房型營業額</p>
                 </div>
                 {northData && <DemoLineRoomTurnover northData={northData} />}
               </div>
+
               <div className="row mb-5 mt-2 g-0">
                 <div
                   className="col-4"
@@ -87,7 +88,6 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                     padding: "20px 20px 0 0",
                   }}
                 >
-                  {/* <h3>參與活動率</h3> */}
                   <div
                     className="mt-3"
                     style={{
@@ -95,7 +95,7 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                       boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
                     }}
                   >
-                    <div className="pt-3 ps-1">
+                    <div className="pt-3 ps-3">
                       <p style={{ fontSize: "22px", color: "#808080" }}>參與活動率</p>
                     </div>
 
@@ -107,7 +107,7 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                 <div
                   className="col-4"
                   style={{
-                    padding: "20px 20px 0 20px",
+                    padding: "20px 0 0 0",
                   }}
                 >
 
@@ -118,7 +118,7 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                       boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
                     }}
                   >
-                    <div className="pt-3 ps-1">
+                    <div className="pt-3 ps-3">
                       <p style={{ fontSize: "22px", color: "#808080" }}>測驗後參與率</p>
                     </div>
                     {northData && <DemoPieExam northData={northData} />}
@@ -139,7 +139,7 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                       boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
                     }}
                   >
-                    <div className="pt-3 ps-1">
+                    <div className="pt-3 ps-3">
                       <p style={{ fontSize: "22px", color: "#808080" }}>活動類型</p>
                     </div>
                     {northData && (

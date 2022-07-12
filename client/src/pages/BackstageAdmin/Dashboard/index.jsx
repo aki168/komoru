@@ -14,10 +14,11 @@ import DashboardChartsSouth from "./DashboardChartsSouth";
 import DashboardChartsMiddle from "./DashboardChartsMiddle";
 import DashboardChartsEast from "./DashboardChartsEast";
 import "./Dashboard.css";
-import northImage from "../../../assets/area/north.jpg";
-import eastImage from "../../../assets/area/east.jpg";
-import sorthImage from "../../../assets/area/sorth.jpg";
-import middleImage from "../../../assets/area/middle.jpg";
+import northImage from "../../../assets/area/north-gray.jpg";
+import eastImage from "../../../assets/area/east-gray.jpg";
+import sorthImage from "../../../assets/area/sorth-gray.jpg";
+import middleImage from "../../../assets/area/middle-gray.jpg";
+// import northImageOr from "../../../assets/area/north-or.jpg";
 
 function Dashboard() {
   /*20220709 YN
@@ -30,6 +31,7 @@ function Dashboard() {
   區域標題狀態初始化 */
   const [titleArea, setTitleArea] = useState("北區");
 
+  const [imgChange, setImgChange] = useState("");
   // setTitleArea('北區');
 
   /*20220704 YN
@@ -63,11 +65,12 @@ function Dashboard() {
     setDateData(newEditFormData);
     console.log(newEditFormData);
   };
+
   return (
     <>
       <div className="mx-5" style={{ marginBottom: "50px" }}>
         <div className="ms-5 me-5 d-flex justify-content-between align-items-center">
-          <h3 className="mt-5 mb-5">分區報表 &gt; {titleArea}</h3>
+          <h3 className="mt-5 mb-5 km-page-title">分區報表 &gt; {titleArea}</h3>
           <select
             class="form-select mt-5 mb-5"
             style={{ width: "200px" }}
@@ -87,25 +90,53 @@ function Dashboard() {
           </select>
         </div>
         <div className="ms-5 me-5">
-          <div className="row g-0" style={{ height: "300px" }}>
-            <NavLink className="col me-5 " to="north">
-              <div class="tabs-img main-nav">
-                <img class="cover-fit" src={northImage} alt="" />
+          <div className="row g-0" style={{ height: "300px"}}>
+            <NavLink
+              className="col me-5 km-img-north km-dashboard-img-north km-dashboard-text km-dashboard-hover"
+              to="north"
+            >
+              <div
+                class="d-flex justify-content-center align-items-center"
+                style={{ height: "100%" }}
+              >
+                {/* <h2>北區</h2> */}
+                {/* <img class="cover-fit " src={northImage} alt="" /> */}
               </div>
             </NavLink>
-            <NavLink className="col me-5 " to="middle">
-              <div class="tabs-img main-nav">
-                <img class="cover-fit" src={middleImage} alt="" />
+            <NavLink
+              className="col me-5 km-img-middle km-dashboard-img-middle km-dashboard-text km-dashboard-hover"
+              to="middle"
+            >
+              <div
+                class="d-flex justify-content-center align-items-center"
+                style={{ height: "100%" }}
+              >
+                {/* <h2>中區</h2> */}
+                {/* <img class="cover-fit" src={middleImage} alt="" /> */}
               </div>
             </NavLink>
-            <NavLink className="col me-5" to="south">
-              <div class="tabs-img main-nav">
-                <img class="cover-fit" src={sorthImage} alt="" />
+            <NavLink
+              className="col me-5 km-img-sorth km-dashboard-img-sorth km-dashboard-text km-dashboard-hover"
+              to="south"
+            >
+              <div
+                class="d-flex justify-content-center align-items-center"
+                style={{ height: "100%" }}
+              >
+                {/* <h2>南區</h2> */}
+                {/* <img class="cover-fit" src={sorthImage} alt="" /> */}
               </div>
             </NavLink>
-            <NavLink className="col" to="east">
-              <div class="tabs-img main-nav">
-                <img class="cover-fit" src={eastImage} alt="" />
+            <NavLink
+              className="col km-img-east km-dashboard-img-east km-dashboard-text km-dashboard-hover"
+              to="east"
+            >
+              <div
+                class="d-flex justify-content-center align-items-center"
+                style={{ height: "100%" }}
+              >
+                {/* <h2>東區</h2> */}
+                {/* <img class="cover-fit" src={eastImage} alt="" /> */}
               </div>
             </NavLink>
           </div>

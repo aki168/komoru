@@ -22,5 +22,9 @@ a:hover {
     / color: #ED8C4E; */
   color: #7C7B7B;
   text-decoration: none;
+  border-radius: 0 !important;
+}
 
+.dropdown-toggle::after {
+  display: none;
 }

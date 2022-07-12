@@ -1,10 +1,5 @@
-// import { Routes, Route, Navigate } from "react-router-dom";
 import '../../components/User/User.css'
-// import UserPage from '../../pages/userPage/userPage'
-// import OrderPage from '../../pages/userPage//OrderPageUserZone'
-// import FeedbackPage from '../../pages/userPage//FeedbackPage'
-// import CouponPage from '../../pages/userPage//CouponPage'
-// import Menu from '../../components/User/Menu'
+
 
 
 export default function UserHeader() {

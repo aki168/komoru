@@ -144,6 +144,7 @@ const DemoLineRoomTurnover = ({northData}) => {
     xField: 'month',
     yField: 'value',
     seriesField: 'category',
+    color: ['#51a49a', '#ed8c4e'],
     xAxis: {
       type: 'time',
     },

@@ -68,9 +68,9 @@ exports.register = async (
   nickName,
   sex,
   phone,
-  memberImgPath = NULL,
   registerType,
-  thirdPartyRegisterId = NULL
+  memberImgPath = '',
+  thirdPartyRegisterId = ''
 ) => {
   return new Promise((resolve, reject) => {
     let sql =

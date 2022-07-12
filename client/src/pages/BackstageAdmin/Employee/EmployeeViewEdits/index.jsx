@@ -204,13 +204,8 @@ function EmployeeViewEdits({ setEditShow, editData }) {
           <></>
         ) : (
           <button
-            className="btn me-1"
+            className="btn me-1 km-edit-button-modal km-modal-footer"
             onClick={disabledClickHandle}
-            style={{
-              backgroundColor: "#06CAD7",
-              color: "white",
-              fontSize: "20px",
-            }}
           >
             修改
           </button>
@@ -218,13 +213,8 @@ function EmployeeViewEdits({ setEditShow, editData }) {
 
         {editButton ? (
           <button
-            className="btn me-1"
+            className="btn me-1 km-save-button-modal km-modal-footer"
             type="submit"
-            style={{
-              backgroundColor: "#7BA23F",
-              color: "white",
-              fontSize: "20px",
-            }}
           >
             儲存
           </button>

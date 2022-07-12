@@ -2,9 +2,11 @@ import { logout } from "../../App";
 import "./Navbar.css";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-const token = localStorage.token;
 
 export default function Navbar() {
+  
+  const token = localStorage.token;
+  
   return (
     <nav className="navbar">
       <h1>

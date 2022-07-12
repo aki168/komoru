@@ -113,11 +113,12 @@ const DemoColumnOccupancyRate = ({northData}) => {
     seriesField: "name",
 
     /** 设置颜色 */
-    color: ['#1ca9e6', '#f88c24'],
+    color: ['#51a49a', '#ed8c4e'],
 
     /** 设置间距 */
     // marginRatio: 0.1,
     label: {
+      
       // 可手动配置 label 数据标签位置
       position: "middle",
       // 'top', 'middle', 'bottom'

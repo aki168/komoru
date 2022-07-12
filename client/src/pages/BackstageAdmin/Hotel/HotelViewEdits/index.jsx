@@ -67,6 +67,10 @@ function HotelViewEdits({ setEditShow, editData, data }) {
     修改圖片狀態初始化*/
   const [editImage, setEditImage] = useState(false);
 
+  /*20220710 YN
+  修改按鈕初始化 */
+  const [editButton, setEditButton] = useState(false);
+
   /*20220701 YN
      取得後端預設飯店資料*/
   useEffect(() => {
@@ -306,6 +310,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
   const disabledClickHandle = () => {
     setEditImage(true);
     setIsDisabled(!isDisabled);
+    setEditButton(true);
   };
 
   /*20220709 YN
@@ -316,7 +321,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
   }, []);
 
   return (
-    <Form className="container row mt-3" onSubmit={editFormSubmitHandle}>
+    <Form className="row me-5 ms-5 mb-3 mt-3" onSubmit={editFormSubmitHandle}>
       {!editImage && (
         <Form.Group className="col-6 d-flex ">
           <div className="container-fluid d-flex flex-column">
@@ -501,9 +506,10 @@ function HotelViewEdits({ setEditShow, editData, data }) {
       <Form.Group className="col-6">
         <Form.Group>
           <Form.Control
+            className="km-modal-content"
             type="text"
             name="hotelTitle"
-            required="required"
+            // required="required"
             defaultValue={editModalData.hotelTitle}
             onChange={editFormChangeHandle}
             disabled={isDisabled}
@@ -514,6 +520,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
             name="cityId"
             disabled={isDisabled}
             onChange={editFormChangeHandle}
+            className="km-modal-content mt-3"
           >
             <option defaultValue={editModalData.cityId}>
               {editData.cityName}
@@ -526,9 +533,10 @@ function HotelViewEdits({ setEditShow, editData, data }) {
         </Form.Group>
         <Form.Group>
           <Form.Control
+           className="km-modal-content mt-3"
             type="text"
             name="hotelAddr"
-            required="required"
+            // required="required"
             defaultValue={editModalData.hotelAddr}
             onChange={editFormChangeHandle}
             disabled={isDisabled}
@@ -538,7 +546,8 @@ function HotelViewEdits({ setEditShow, editData, data }) {
           <Form.Control
             type="text"
             name="hotelTel"
-            required="required"
+            // required="required"
+            className="km-modal-content mt-3"
             defaultValue={editModalData.hotelTel}
             onChange={editFormChangeHandle}
             disabled={isDisabled}
@@ -546,6 +555,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
         </Form.Group>
         <Form.Group>
           <Form.Control
+           className="km-modal-content mt-3"
             type="text"
             name="hotelDesc"
             // required="required"
@@ -556,8 +566,8 @@ function HotelViewEdits({ setEditShow, editData, data }) {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label></Form.Label>
           <Form.Control
+           className="km-modal-content mt-3"
             as="textarea"
             rows={3}
             defaultValue={editModalData.hotelContent}
@@ -567,13 +577,39 @@ function HotelViewEdits({ setEditShow, editData, data }) {
           />
         </Form.Group>
       </Form.Group>
-      <div className="mt-1 mb-1 d-flex justify-content-end">
-        <Button className="mt-3 mb-3 me-1" onClick={disabledClickHandle}>
-          修改
-        </Button>
-        <Button className="mt-3 mb-3" type="submit">
-          儲存
-        </Button>
+      <div className="mt-3 mb-3 d-flex justify-content-end">
+
+        {editButton ? (
+          <></>
+        ) : (
+          <button
+            className="btn me-1 km-edit-button-modal km-modal-footer"
+            onClick={disabledClickHandle}
+          >
+            修改
+          </button>
+        )}
+        {editButton ? (
+          <a
+            className="btn me-2 km-img-button-modal km-modal-footer"
+            onClick={() => setEditImage(true)}
+          >
+            更換照片
+          </a>
+        ) : (
+          <></>
+        )}
+
+        {editButton ? (
+          <button
+            className="btn me-1 km-img-button-modal km-modal-footer"
+            type="submit"
+          >
+            儲存
+          </button>
+        ) : (
+          <></>
+        )}
       </div>
     </Form>
   );

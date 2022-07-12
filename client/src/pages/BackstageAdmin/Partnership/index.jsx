@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import PartnershipAdd from "./PartnershipAdd";
 import PartnershipEdit from "./PartnershipEdit/index";
 import BackstageLoding from "../../../components/BackstageLoading";
+import "../BackstageAdmin.css";
+
 
 function Partnership() {
   /* 20220616 YN
@@ -113,15 +115,13 @@ function Partnership() {
         <td className="col-sm-1">
           <button
             onClick={() => handleEditShow(index)}
-            className="me-1 btn "
-            style={{backgroundColor: '#ED8C4E', color:'white'}}
+            className="me-2 btn km-page-content km-edit-button-content"
           >
             檢視/修改
           </button>
           <button
             onClick={() => deletFormHandle(index)}
-            className="btn"
-            style={{border:'1.5px solid #ED8C4E',color:'#ED8C4E'}}
+            className="btn km-page-content km-delet-button-content"
           >
             移除
           </button>
@@ -243,7 +243,7 @@ function Partnership() {
     <>
       <div className="mx-5  mb-5">
         <div className="ms-5">
-          <h3 className="mt-5 mb-5">合作夥伴管理</h3>
+          <h3 className="mt-5 mb-5 km-page-title">合作夥伴管理</h3>
         </div>
         <div>
           <div className="row ms-5 mb-5 g-0">
@@ -251,8 +251,7 @@ function Partnership() {
               <div className="d-flex justify-content-start">
                 <button
                   onClick={handleAddShow}
-                  className="btn"
-                  style={{ backgroundColor: "#7BA23F", color: "white", fontSize: "20px" }}
+                  className="btn km-page-header km-button-header"
                 >
                   新增夥伴
                 </button>
@@ -284,21 +283,21 @@ function Partnership() {
                 <div className="col-3 me-2">
                   <input
                     name="keyword"
-                    className="form-control col-1 "
+                    className="form-control col-1 km-page-header"
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
                     onChange={sreachChangeHandle}
-                    style={{ fontSize: "20px" }}
+                    
                   />
                 </div>
                 <div className="col-3 me-2">
                   <select
                     name="cityId"
-                    className=" form-select col-2"
+                    className=" form-select col-2 km-page-header"
                     aria-label="Default select example"
                     onChange={sreachChangeHandle}
-                    style={{ fontSize: "20px" }}
+                    
                   >
                     <option value="" selected>
                       地區搜尋
@@ -311,10 +310,9 @@ function Partnership() {
                 </div>
                 <div className="col-2 ">
                   <button
-                    className="btn"
+                    className="btn km-page-header km-button-header"
                     type="submit"
                     onClick={sreachSubmitHandle}
-                    style={{ backgroundColor: "#7BA23F", color: "white", fontSize: "20px" }}
                   >
                     搜尋
                   </button>
@@ -327,8 +325,8 @@ function Partnership() {
               {loading ? (
                 <>
                   <table
-                    className="table  table-hover  text-center align-middle"
-                    style={{ height: "1000px", fontSize: "20px" }}
+                    className="table  table-hover  text-center align-middle km-page-content"
+                    style={{ height: "1000px"}}
                   >
                     <thead>
                       <tr>

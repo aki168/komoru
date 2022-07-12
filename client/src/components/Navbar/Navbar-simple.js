@@ -1,7 +1,8 @@
-// import { logout } from "../../App";
+
 import "./Navbar.css";
-// import { Button } from "react-bootstrap";
+
 import { Link } from "react-router-dom";
+
 export default function Navbar() {
   return (
     <nav className="navbar">
