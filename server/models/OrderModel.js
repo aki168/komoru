@@ -417,7 +417,8 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
                   orderId,
                   data["active_pack_id"][i],
                   order_start_date.addDays(i).toLocaleDateString(),
-                  data["is_active"],
+                  // if null ? '0' : '1'
+                  data["active_pack_id"][i] ? data["is_active"] : '1',
                   data["create_datetime"],
                   data["order_item_price"],
                 ];
