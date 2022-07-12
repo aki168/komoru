@@ -24,7 +24,9 @@ const PartnerHotel = () => {
   const [current3, setCurrent3] = useState(0);
   const [current4, setCurrent4] = useState(0);
 
-  const [data, setData] = useState([]);
+
+  const [data, setData] = useState([{},{},{},{}]);
+
   useEffect(() => {
     axios({
       method: "post",
@@ -154,7 +156,7 @@ const PartnerHotel = () => {
   //     document.body.style.overflow = "unset";
   //   }
   // }, [openPrivate1Modal]);
-
+console.log(data);
   return (
     <>
       {/* Modal必須放最外層，否則overlay無法作用 */}
