@@ -65,9 +65,6 @@ export default function Feedback(props) {
                 </Form.Group>
               </Form>
               <span>對於此趟旅程有什麼想法或是改變歡迎分享給 KOMORU</span>
-              {/* <Button className="Feedback--btn float-end me-1" size="sm" variant="secondary">
-                修改
-              </Button> */}
               <Button 
                 className="Feedback--btn float-end me-1" 
                 size="sm" 

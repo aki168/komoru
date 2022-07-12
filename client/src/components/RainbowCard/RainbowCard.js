@@ -52,7 +52,6 @@ export default function RainbowCard(props) {
               !loading && 
               <div className='d-flex justify-content-center'>
                 <BookingLoading/>
-                <BookingLoading/>  
               </div>
             }
 

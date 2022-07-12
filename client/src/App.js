@@ -111,10 +111,6 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgotPW" element={<ForgotPW />} />
         <Route path="/user-home/*" element={<UserHomePage />} />
-        {/* <Route path="/user" element={<UserPage />} />
-        <Route path="/member-order" element={<OrderPageUserZone />} />
-        <Route path="/member-feedback" element={<FeedbackPage />} />
-        <Route path="/member-coupon" element={<CouponPage />} /> */}
 
         {/* ZH */}
         <Route

@@ -142,6 +142,24 @@ h5 {
 .login--block {
   width: 180px;
   height: 180px;
-  background: #fff;
   display: block;
+}
+
+.login--block:hover{
+  background: rgba(255,117,0,0.5);
+}
+
+.LINE{
+  background:url('../../../public/lineicon.jpeg');
+  background-position: center;
+}
+
+.FB{
+  background:url('../../../public/fbicon.jpeg');
+  background-position: center;
+}
+
+.GOOGLE{
+  background:url('../../../public/googleicon.jpeg');
+  background-position: center;
 }

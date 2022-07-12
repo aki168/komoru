@@ -17,11 +17,14 @@
 
 .User--titleBar {
   text-align: center;
-  background: #ED8C4E;
+  background: url("../../../public/member_bg.jpeg");
   color: #fff;
   padding: 100px;
 }
 
+.User--bg--fix{
+  
+}
 
 .User--container {
   margin: 0 auto;
