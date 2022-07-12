@@ -3,6 +3,7 @@ import { Alert, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import "./PartnershipAdd.css";
 import { IoAlertCircleSharp } from "react-icons/io5";
+import BackstageLoding from "../../../../components/BackstageLoading";
 // import {GoAlert} from 'react-icons/go'
 
 function PartnershipAdd({ data, setAddShow }) {
@@ -25,6 +26,9 @@ function PartnershipAdd({ data, setAddShow }) {
   當輸入框為""，出現警示狀態初始化 */
   const [alertImg, setAlertImg] = useState(false);
 
+  /*20220707 YN
+ 資料載入過程初始化*/
+  const [loading, setLoading] = useState(false);
 
   /*20220622 YN
    取得後端城市資料*/
@@ -90,6 +94,7 @@ function PartnershipAdd({ data, setAddShow }) {
       setAlertImg(true);
     } else {
       setAlertImg(false);
+      setLoading(true);
       fetch("http://localhost:5000/partnership/addPartnership", {
         method: "POST",
         headers: {
@@ -115,26 +120,30 @@ function PartnershipAdd({ data, setAddShow }) {
   排除當modal開啟時，scrollbar 消失 sidebar 往右移 */
   useEffect(() => {
     document.body.style.overflowY = "hidden";
-    return () => (document.body.style.overflowY = '');
+    return () => (document.body.style.overflowY = "");
   }, []);
 
   return (
     <Form className="me-5 ms-5 mt-3 mb-3 " onSubmit={addFormSubmitHandle}>
-      <Form.Group >
+      <Form.Group>
         <Form.Control
           type="text"
           name="partnershipName"
           // required="required"
           placeholder="請輸入商家名稱"
           onChange={addFormChangeHandle}
-          style={{ fontSize: "18px" }}
+          className="km-modal-content"
         />
       </Form.Group>
       {addFormData.partnershipName === "" && (
         <>
           {alertImg && (
-            <div className="d-flex" style={{ color: "red", marginTop: '5px' }}>
-              <IoAlertCircleSharp size="20px" color="red" style={{ marginRight: '5px' }} />
+            <div className="d-flex" style={{ color: "red", marginTop: "5px" }}>
+              <IoAlertCircleSharp
+                size="20px"
+                color="red"
+                style={{ marginRight: "5px" }}
+              />
               <p>商家名稱不可空白</p>
             </div>
           )}
@@ -147,14 +156,18 @@ function PartnershipAdd({ data, setAddShow }) {
           // required="required"
           placeholder="請輸入負責人"
           onChange={addFormChangeHandle}
-          style={{ fontSize: "18px" }}
+          className="km-modal-content"
         />
       </Form.Group>
       {addFormData.partnershipContactPerson === "" && (
         <>
           {alertImg && (
-            <div className="d-flex" style={{ color: "red", marginTop: '5px' }}>
-              <IoAlertCircleSharp size="20px" color="red" style={{ marginRight: '5px' }} />
+            <div className="d-flex" style={{ color: "red", marginTop: "5px" }}>
+              <IoAlertCircleSharp
+                size="20px"
+                color="red"
+                style={{ marginRight: "5px" }}
+              />
               <p>負責人不可空白</p>
             </div>
           )}
@@ -164,7 +177,7 @@ function PartnershipAdd({ data, setAddShow }) {
         <Form.Select
           name="cityId"
           onChange={addFormChangeHandle}
-          style={{ fontSize: "18px" }}
+          className="km-modal-content"
         >
           <option selected>請選擇區域</option>
           {cityArr}
@@ -173,8 +186,12 @@ function PartnershipAdd({ data, setAddShow }) {
       {addFormData.cityId === "" && (
         <>
           {alertImg && (
-            <div className="d-flex" style={{ color: "red", marginTop: '5px' }}>
-              <IoAlertCircleSharp size="20px" color="red" style={{ marginRight: '5px' }} />
+            <div className="d-flex" style={{ color: "red", marginTop: "5px" }}>
+              <IoAlertCircleSharp
+                size="20px"
+                color="red"
+                style={{ marginRight: "5px" }}
+              />
               <p>區域不可空白</p>
             </div>
           )}
@@ -187,14 +204,18 @@ function PartnershipAdd({ data, setAddShow }) {
           // required="required"
           placeholder="請輸入地址"
           onChange={addFormChangeHandle}
-          style={{ fontSize: "18px" }}
+          className="km-modal-content"
         />
       </Form.Group>
       {addFormData.partnershipAddr === "" && (
         <>
           {alertImg && (
-            <div className="d-flex" style={{ color: "red", marginTop: '5px' }}>
-              <IoAlertCircleSharp size="20px" color="red" style={{ marginRight: '5px' }} />
+            <div className="d-flex" style={{ color: "red", marginTop: "5px" }}>
+              <IoAlertCircleSharp
+                size="20px"
+                color="red"
+                style={{ marginRight: "5px" }}
+              />
               <p>地址不可空白</p>
             </div>
           )}
@@ -207,15 +228,19 @@ function PartnershipAdd({ data, setAddShow }) {
           // required="required"
           placeholder="請輸入聯絡電話"
           onChange={addFormChangeHandle}
-          style={{ fontSize: "18px" }}
-        // oninput="value=value.replace(/[^0-9]/g,'')"
+          className="km-modal-content"
+          // oninput="value=value.replace(/[^0-9]/g,'')"
         />
       </Form.Group>
       {addFormData.partnershipTel === "" && (
         <>
           {alertImg && (
-            <div className="d-flex" style={{ color: "red", marginTop: '5px' }}>
-              <IoAlertCircleSharp size="20px" color="red" style={{ marginRight: '5px' }} />
+            <div className="d-flex" style={{ color: "red", marginTop: "5px" }}>
+              <IoAlertCircleSharp
+                size="20px"
+                color="red"
+                style={{ marginRight: "5px" }}
+              />
               <p>聯絡電話不可空白</p>
             </div>
           )}
@@ -228,7 +253,7 @@ function PartnershipAdd({ data, setAddShow }) {
           placeholder="請輸入備註"
           name="partnershipDesc"
           onChange={addFormChangeHandle}
-          style={{ fontSize: "18px" }}
+          className="km-modal-content"
         />
       </Form.Group>
       <div className="mt-3 mb-1 d-flex justify-content-end">
@@ -239,6 +264,11 @@ function PartnershipAdd({ data, setAddShow }) {
           新增
         </button>
       </div>
+      {loading === true && <>
+          <div className="d-flex justify-content-center">
+            <BackstageLoding />
+          </div>
+        </>}
     </Form>
   );
 }

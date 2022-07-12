@@ -24,7 +24,7 @@ const PartnerHotel = () => {
   const [current3, setCurrent3] = useState(0);
   const [current4, setCurrent4] = useState(0);
 
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   useEffect(() => {
     axios({
       method: "post",

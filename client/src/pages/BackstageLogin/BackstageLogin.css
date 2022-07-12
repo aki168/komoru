@@ -21,3 +21,7 @@
     box-shadow:none;
     /* border-color:#ED8C4E */
 }
+.btn:focus{
+    box-shadow:none;
+    /* border-color:#ED8C4E */
+}
