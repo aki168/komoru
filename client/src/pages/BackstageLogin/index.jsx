@@ -145,7 +145,7 @@ function BackstageLogin() {
                   placeholder="請輸入帳號"
                   name="account"
                   onChange={inputAccountHandler}
-                  style={{ height: "50px" }}
+                  style={{ height: "50px"}}
                 />
               </div>
               <div className="mb-4">

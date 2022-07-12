@@ -7,3 +7,17 @@
     background-size: cover;
     z-index: 999;
 }
+.form-control:focus{
+    box-shadow:none;
+    border-color:#ED8C4E
+}
+
+.form-select:focus{
+    box-shadow:none;
+    border-color:#ED8C4E
+}
+
+.form-check-input:focus{
+    box-shadow:none;
+    /* border-color:#ED8C4E */
+}

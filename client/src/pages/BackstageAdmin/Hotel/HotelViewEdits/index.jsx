@@ -5,7 +5,7 @@ import { BsFillArrowUpSquareFill } from "react-icons/bs";
 import { IoAlertCircleSharp } from "react-icons/io5";
 import { HiOutlineRefresh } from "react-icons/hi";
 import { MdOutlineFileUpload } from "react-icons/md";
-
+import BackstageLoding from "../../../../components/BackstageLoading";
 
 function HotelViewEdits({ setEditShow, editData, data }) {
   /*20220624 YN
@@ -78,6 +78,10 @@ function HotelViewEdits({ setEditShow, editData, data }) {
   /*20220710 YN
   當輸入框為""，出現警示狀態初始化 */
   const [alertImg, setAlertImg] = useState(false);
+
+  /*20220707 YN
+ 資料載入過程初始化*/
+  const [loading, setLoading] = useState(false);
 
   /*20220701 YN
      取得後端預設飯店資料*/
@@ -205,58 +209,52 @@ function HotelViewEdits({ setEditShow, editData, data }) {
       formData.append("firstHotelImgFile", selectedFirstFile);
       formData.append("secondHotelImgFile", selectedSecondFile);
       formData.append("thirdHotelImgFile", selectedThirdFile);
-      console.log(...formData);
-
-      if (editButton) {
-        if (editModalData.hotelTitle === "" ||
-          editModalData.cityId === "" ||
-          editModalData.hotelAddr === "" ||
-          editModalData.hotelTel === "" ||
-          editModalData.hotelDesc === "" ||
-          editModalData.hotelContent === "" ||
-          selectedPrimaryFile === null) {
-          setAlertImg(true);
-        } else {
-          setAlertImg(false);
-          console("123")
-          // fetch("http://localhost:5000/hotel/updateHotelByHotelId", {
-          //   method: "POST",
-          //   body: formData,
-          // })
-          //   .then((response) => response.json())
-          //   .then((data) => {
-          //     if (data.status) {
-          //       setEditShow(false);
-          //       window.location.reload(false);
-          //     }
-          //     console.log(data);
-          //   })
-          //   .catch((e) => {
-          //     console.error(e);
-          //   });
-        }
+      if (selectedPrimaryFile === null) {
+        setAlertImg(true);
+        // alert("請選擇主要照片");
       } else {
-        console("456")
-        // const formData = new FormData();
-        // formData.append("hotelDataList", JSON.stringify(newContact));
-        // formData.append("hotelImgFile", []);
-        // console.log(...formData);
-        // fetch("http://localhost:5000/hotel/updateHotelByHotelId", {
-        //   method: "POST",
-        //   body: formData,
-        // })
-        //   .then((response) => response.json())
-        //   .then((data) => {
-        //     if (data.status) {
-        //       setEditShow(false);
-        //       window.location.reload(false);
-        //     }
-        //     console.log(data);
-        //   })
-        //   .catch((e) => {
-        //     console.error(e);
-        //   });
+        console.log(...formData);
+        setAlertImg(false);
+        setLoading(true);
+        fetch("http://localhost:5000/hotel/updateHotelByHotelId", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status) {
+              setEditShow(false);
+              window.location.reload(false);
+              alert("修改成功");
+            }
+            console.log(data);
+          })
+          .catch((e) => {
+            console.error(e);
+          });
       }
+    } else {
+      const formData = new FormData();
+      formData.append("hotelDataList", JSON.stringify(newContact));
+      formData.append("hotelImgFile", []);
+      console.log(...formData);
+      setLoading(true);
+      fetch("http://localhost:5000/hotel/updateHotelByHotelId", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status) {
+            setEditShow(false);
+            window.location.reload(false);
+            alert("修改成功");
+          }
+          console.log(data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     }
   };
   /*20220625 YN
@@ -358,23 +356,28 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                 <div
                   style={{
                     height: "150px",
-                    background: `url("http://localhost:5000${firstImageData}") no-repeat center/cover`
+                    background: `url("http://localhost:5000${firstImageData}") no-repeat center/cover`,
                   }}
                 ></div>
               </div>
-              <div className="col-md-4" style={{ paddingRight: "2.5px", paddingLeft: '2.5px' }}>
-                <div style={{
-                  height: "150px",
-                  background: `url("http://localhost:5000${secondImageData}") no-repeat center/cover`
-                }}></div>
-              </div>
               <div
-                className="col-md-4" style={{ paddingLeft: '5px' }}>
+                className="col-md-4"
+                style={{ paddingRight: "2.5px", paddingLeft: "2.5px" }}
+              >
                 <div
                   style={{
-                    height: '150px',
+                    height: "150px",
+                    background: `url("http://localhost:5000${secondImageData}") no-repeat center/cover`,
+                  }}
+                ></div>
+              </div>
+              <div className="col-md-4" style={{ paddingLeft: "5px" }}>
+                <div
+                  style={{
+                    height: "150px",
                     background: `url("http://localhost:5000${thirdImageData}") no-repeat center/cover`,
-                  }}></div>
+                  }}
+                ></div>
               </div>
             </div>
           </div>
@@ -384,9 +387,6 @@ function HotelViewEdits({ setEditShow, editData, data }) {
       {editImage && (
         <Form.Group className="col-6 d-flex g-0 ">
           <div className="container d-flex flex-column">
-
-
-
             <div
               className="col-12"
               style={{
@@ -435,7 +435,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                               style={{ color: "red" }}
                             >
                               <IoAlertCircleSharp size="20px" color="red" />
-                              請上傳檔案
+                              請上傳主要圖片
                             </p>
                           )}
                         </>
@@ -448,15 +448,6 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                 </div>
               </Form.Group>
             </div>
-
-
-
-
-
-
-
-
-
 
             {/* <div
               className="col-12 h-75 justify-content-center d-flex flex-column align-items-center"
@@ -536,7 +527,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                             style={{ display: "none" }}
                             onChange={firstImageChangeHandle}
                           />
-                          {selectedFirstFile === null && (
+                          {/* {selectedFirstFile === null && (
                             <>
                               {alertImg && (
                                 <p
@@ -548,7 +539,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                                 </p>
                               )}
                             </>
-                          )}
+                          )} */}
                         </>
                       )}
                       {firstError && (
@@ -559,7 +550,10 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                 </div>
               </div>
 
-              <div className="col-md-4" style={{ paddingRight: "2.5px", paddingLeft: '2.5px' }}>
+              <div
+                className="col-md-4"
+                style={{ paddingRight: "2.5px", paddingLeft: "2.5px" }}
+              >
                 <div
                   style={{
                     height: "130px",
@@ -601,7 +595,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                           />
                           {selectedSecondFile === null && (
                             <>
-                              {alertImg && (
+                              {/* {alertImg && (
                                 <p
                                   className="d-flex align-items-center"
                                   style={{ color: "red" }}
@@ -609,7 +603,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                                   <IoAlertCircleSharp size="20px" color="red" />
                                   請上傳檔案
                                 </p>
-                              )}
+                              )} */}
                             </>
                           )}
                         </>
@@ -622,10 +616,10 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                 </div>
               </div>
 
-              <div className="col-md-4" style={{ paddingLeft: '5px' }}>
+              <div className="col-md-4" style={{ paddingLeft: "5px" }}>
                 <div
                   style={{
-                    height: '130px',
+                    height: "130px",
                     background: thirdImgPreview
                       ? `url("${thirdImgPreview}") no-repeat center/cover`
                       : "#f4f5f7",
@@ -651,7 +645,10 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                     <div className="d-flex flex-column">
                       {!thirdImgPreview && (
                         <>
-                          <label className="btn text-white " htmlFor="fileUpload">
+                          <label
+                            className="btn text-white "
+                            htmlFor="fileUpload"
+                          >
                             <MdOutlineFileUpload size="2em" color="#efa16a" />
                           </label>
                           <input
@@ -660,7 +657,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                             style={{ display: "none" }}
                             onChange={thirdImageChangeHandle}
                           />
-                          {selectedThirdFile === null && (
+                          {/* {selectedThirdFile === null && (
                             <>
                               {alertImg && (
                                 <p
@@ -672,7 +669,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                                 </p>
                               )}
                             </>
-                          )}
+                          )} */}
                         </>
                       )}
                       {thirdError && (
@@ -683,7 +680,6 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                 </div>
               </div>
             </div>
-
 
             {/* <div className="mt-2 col-md-12 d-flex h-25 container-fuield">
               <div
@@ -875,7 +871,6 @@ function HotelViewEdits({ setEditShow, editData, data }) {
         </Form.Group>
       </Form.Group>
       <div className="mt-3 mb-3 d-flex justify-content-end">
-
         {editButton ? (
           <></>
         ) : (
@@ -907,7 +902,13 @@ function HotelViewEdits({ setEditShow, editData, data }) {
         ) : (
           <></>
         )}
+        
       </div>
+      <div className="d-flex justify-content-center align-items-top ">{loading === true && <BackstageLoding size="10px" />}</div>
+          
+           
+         
+       
     </Form>
   );
 }

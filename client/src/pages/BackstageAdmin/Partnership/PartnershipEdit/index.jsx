@@ -37,6 +37,10 @@ function PartnershipEdit({ setEditShow, editData, data }) {
   修改按鈕初始化 */
   const [editButton, setEditButton] = useState(false);
 
+  /*20220710 YN
+  當輸入框為""，出現警示狀態初始化 */
+  const [alertImg, setAlertImg] = useState(false);
+
   /*20220624 YN
    可否修改狀態改變*/
   const disabledClickHandle = () => {
@@ -186,7 +190,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
           name="cityId"
           onChange={editFormChangeHandle}
           disabled={isDisabled}
-          style={{ fontSize: '18px' }}
+          style={{ fontSize: '18px'}}
         >
           <option disabled>
             請選擇區域
