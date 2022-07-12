@@ -14,11 +14,6 @@ import DashboardChartsSouth from "./DashboardChartsSouth";
 import DashboardChartsMiddle from "./DashboardChartsMiddle";
 import DashboardChartsEast from "./DashboardChartsEast";
 import "./Dashboard.css";
-import northImage from "../../../assets/area/north-gray.jpg";
-import eastImage from "../../../assets/area/east-gray.jpg";
-import sorthImage from "../../../assets/area/sorth-gray.jpg";
-import middleImage from "../../../assets/area/middle-gray.jpg";
-// import northImageOr from "../../../assets/area/north-or.jpg";
 
 function Dashboard() {
   /*20220709 YN
@@ -31,8 +26,22 @@ function Dashboard() {
   區域標題狀態初始化 */
   const [titleArea, setTitleArea] = useState("北區");
 
-  const [imgChange, setImgChange] = useState("");
-  // setTitleArea('北區');
+
+  const [isClicked, setIsClicked]=useState({
+    north:true,
+    middle:false,
+    south:false,
+    east:false,
+  })
+
+  // 0711 aki - 點擊後的CSS樣式掛載
+  const handleClick = (e) =>{
+    const {name, value} = e.target;
+console.log(e.target)
+    setIsClicked(prevIsClicked => ({
+      [name]:!value
+    }))
+  }
 
   /*20220704 YN
   登入狀態為false自動轉跳Login頁面 */
@@ -91,58 +100,75 @@ function Dashboard() {
         </div>
         <div className="ms-5 me-5">
           <div className="row g-0" style={{ height: "300px"}}>
-            <NavLink
-              className="col me-5 km-img-north km-dashboard-img-north km-dashboard-text km-dashboard-hover"
+            <Link
+              // className="col me-5 km-dashboard-text km-dashboard-hover-north"
+              value='1'
+              name='north'
+              onClick={handleClick}
+              className={isClicked.north? "km-img-north col me-5 km-dashboard-text km-dashboard-hover-north": "km-dashboard-img-north col me-5 km-dashboard-text km-dashboard-hover-north"}
               to="north"
             >
-              <div
+              {/* <div
                 class="d-flex justify-content-center align-items-center"
                 style={{ height: "100%" }}
-              >
+                >
+                </div> */}
                 {/* <h2>北區</h2> */}
                 {/* <img class="cover-fit " src={northImage} alt="" /> */}
-              </div>
-            </NavLink>
-            <NavLink
-              className="col me-5 km-img-middle km-dashboard-img-middle km-dashboard-text km-dashboard-hover"
+            </Link>
+            <Link
+              // className="col me-5 km-img-middle km-dashboard-img-middle km-dashboard-text km-dashboard-hover-middle"
+              value='0'
+              name='middle'
+              onClick={handleClick}
+              className={isClicked.middle?"km-img-middle col me-5 km-dashboard-text": "km-dashboard-img-middle col me-5 km-dashboard-text"}
               to="middle"
+
             >
-              <div
+              {/* <div
                 class="d-flex justify-content-center align-items-center"
                 style={{ height: "100%" }}
-              >
+                >
+                </div> */}
                 {/* <h2>中區</h2> */}
                 {/* <img class="cover-fit" src={middleImage} alt="" /> */}
-              </div>
-            </NavLink>
-            <NavLink
-              className="col me-5 km-img-sorth km-dashboard-img-sorth km-dashboard-text km-dashboard-hover"
+            </Link>
+            <Link
+              // className="col me-5 km-img-sorth km-dashboard-img-sorth km-dashboard-text km-dashboard-hover-south"
+              value='0'
+              name='south'
+              onClick={handleClick}
+              className={isClicked.south? "km-img-south col me-5 km-dashboard-text": "km-dashboard-img-south col me-5 km-dashboard-text"}
               to="south"
             >
-              <div
+              {/* <div
                 class="d-flex justify-content-center align-items-center"
                 style={{ height: "100%" }}
               >
+              </div> */}
                 {/* <h2>南區</h2> */}
                 {/* <img class="cover-fit" src={sorthImage} alt="" /> */}
-              </div>
-            </NavLink>
-            <NavLink
-              className="col km-img-east km-dashboard-img-east km-dashboard-text km-dashboard-hover"
+            </Link>
+            <Link
+              // className="col km-img-east km-dashboard-img-east km-dashboard-text km-dashboard-hover-east"
+              value='0'
+              name='east'
+              onClick={handleClick}
+              className={isClicked.east? "km-img-east col me-5 km-dashboard-text": "km-dashboard-img-east col me-5 km-dashboard-text"}
               to="east"
             >
-              <div
+              {/* <div
                 class="d-flex justify-content-center align-items-center"
                 style={{ height: "100%" }}
               >
+              </div> */}
                 {/* <h2>東區</h2> */}
                 {/* <img class="cover-fit" src={eastImage} alt="" /> */}
-              </div>
-            </NavLink>
+            </Link>
           </div>
         </div>
       </div>
-      <Outlet />
+      {/* <Outlet /> */}
 
       <Routes>
         <Route

@@ -7,6 +7,7 @@ import { Modal } from "react-bootstrap";
 import OrderView from "./OrderView";
 import BackstageLoding from "../../../components/BackstageLoading";
 import "../BackstageAdmin.css";
+import "./Order.css";
 
 function Order() {
   /* 20220616 YG
@@ -206,14 +207,14 @@ function Order() {
       // console.log(values.hotelTitle)
       <tr key={index} className="form-check-label">
         <td className="col-sm-1">
+          <label htmlFor="flexRadioDefault" >
           <input
             className="form-check-input"
-            id="flexRadioDefault"
             type="radio"
             value={data.orderId}
-            name="flexRadioDefault"
             onChange={() => orderStatusChange(index)}
           />
+          </label>
         </td>
         <td className="col-sm-1">{data.orderNumber}</td>
         <td className="col-sm-1">{data.memberName}</td>
@@ -403,7 +404,7 @@ function Order() {
             <div className="col-sm-11">
               {loading ? (
                 <>
-                  <table className="table table-hover text-center align-middle km-page-content">
+                  <table className="table table-hover text-center align-middle km-page-content table-condensed">
                     <thead>
                       <tr>
                         <td></td>

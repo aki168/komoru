@@ -92,7 +92,7 @@ function EmployeeAdd({ setAddShow }) {
           // required="required"
           placeholder="請輸入員工帳號"
           onChange={addFormChangeHandle}
-          style={{ fontSize: "18px" }}
+          className="km-modal-content"
         />
       </Form.Group>
       {addFormData.employeeAccount === "" && (
@@ -112,6 +112,7 @@ function EmployeeAdd({ setAddShow }) {
           // required="required"
           placeholder="請輸入員工密碼"
           onChange={addFormChangeHandle}
+          className="km-modal-content"
         />
       </Form.Group>
       {addFormData.employeePasswd === "" && (
@@ -131,6 +132,7 @@ function EmployeeAdd({ setAddShow }) {
           // required="required"
           placeholder="請輸入員工姓名"
           onChange={addFormChangeHandle}
+          className="km-modal-content"
         />
       </Form.Group>
       {addFormData.employeeName === "" && (
@@ -150,6 +152,7 @@ function EmployeeAdd({ setAddShow }) {
           // required="required"
           placeholder="請輸入員工電話"
           onChange={addFormChangeHandle}
+          className="km-modal-content"
         />
       </Form.Group>
       {addFormData.employeePhone === "" && (

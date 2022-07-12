@@ -226,12 +226,13 @@ function Partnership() {
       .then((response) => response.json()) // 取出 JSON 資料，並還原成 Object。response.json()　一樣回傳 Promise 物件
       .then((data) => {
         let result = data.dataList;
-        console.log(data);
+        // console.log(result);
         if (result.length === 0) {
           alert("查無此資料");
           setData(data.dataList);
         } else {
           setData(data.dataList);
+          // console.log(data.dataList);
         }
       })
       .catch((e) => {

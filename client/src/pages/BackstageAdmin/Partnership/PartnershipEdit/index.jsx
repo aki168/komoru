@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
+import BackstageLoding from "../../../../components/BackstageLoading";
 
 function PartnershipEdit({ setEditShow, editData, data }) {
   /*20220624 YN
@@ -41,6 +42,12 @@ function PartnershipEdit({ setEditShow, editData, data }) {
   當輸入框為""，出現警示狀態初始化 */
   const [alertImg, setAlertImg] = useState(false);
 
+  /*20220707 YN
+ 資料載入過程初始化*/
+  const [loading, setLoading] = useState(false);
+
+  const [saveloading,setSaveloading] = useState(false);
+
   /*20220624 YN
    可否修改狀態改變*/
   const disabledClickHandle = () => {
@@ -80,6 +87,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
       .post("http://localhost:5000/city/getCityDataList")
       .then((res) => {
         // console.log(res.data.dataList);
+        setLoading(true);
         setCityData(res.data.dataList);
       })
       .catch((err) => console.log(err));
@@ -89,7 +97,11 @@ function PartnershipEdit({ setEditShow, editData, data }) {
    城市資料用map轉換成選單格式*/
   const cityArr = cityData.map((cityData, index) => {
     return (
-      <option key={index} value={cityData.cityId} selected={(editModalData.cityId === cityData.cityId) ? true : ""}>
+      <option
+        key={index}
+        value={cityData.cityId}
+        selected={editModalData.cityId === cityData.cityId ? true : ""}
+      >
         {cityData.cityName}
       </option>
     );
@@ -124,6 +136,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
     const newContacts = newContact;
     // console.log(newContacts);
     // setEditFormData(newContacts);
+    setSaveloading(true);
     fetch(
       "http://localhost:5000/partnership/updatePartnershipByPartnershipId",
       {
@@ -156,118 +169,124 @@ function PartnershipEdit({ setEditShow, editData, data }) {
     return () => (document.body.style.overflowY = "");
   }, []);
 
-
-  console.log(cityArr)
+  console.log(cityArr);
   return (
-    <Form className="container" onSubmit={editFormSubmitHandle} style={{ fontSize: '18px' }}>
-      <Form.Group>
-        <Form.Label>商家名稱</Form.Label>
-        <Form.Control
-          type="text"
-          name="partnershipName"
-          // required="required"
-          defaultValue={editModalData.partnershipName}
-          onChange={editFormChangeHandle}
-          disabled={isDisabled}
-          style={{ fontSize: '18px' }}
-        ></Form.Control>
-      </Form.Group>
-      <Form.Group className="mt-3">
-        <Form.Label >負責人</Form.Label>
-        <Form.Control
-          type="text"
-          name="partnershipContactPerson"
-          // required="required"
-          defaultValue={editModalData.partnershipContactPerson}
-          onChange={editFormChangeHandle}
-          disabled={isDisabled}
-          style={{ fontSize: '18px' }}
-        />
-      </Form.Group>
-      <Form.Group className="mt-3">
-        <Form.Label>區域</Form.Label>
-        <Form.Select
-          name="cityId"
-          onChange={editFormChangeHandle}
-          disabled={isDisabled}
-          style={{ fontSize: '18px'}}
+    <>
+      {loading ? (
+        <Form
+          className="container km-modal-content"
+          onSubmit={editFormSubmitHandle}
+          
         >
-          <option disabled>
-            請選擇區域
-          </option>
-          {cityArr}
-        </Form.Select>
-      </Form.Group>
-      <Form.Group className="mt-3">
-        <Form.Label>地址</Form.Label>
-        <Form.Control
-          type="text"
-          name="partnershipAddr"
-          // required="required"
-          defaultValue={editModalData.partnershipAddr}
-          onChange={editFormChangeHandle}
-          disabled={isDisabled}
-          style={{ fontSize: '18px' }}
-        />
-      </Form.Group>
-      <Form.Group className="mt-3">
-        <Form.Label>聯絡電話</Form.Label>
-        <Form.Control
-          type="text"
-          name="partnershipTel"
-          // required="required"
-          defaultValue={editModalData.partnershipTel}
-          onChange={editFormChangeHandle}
-          disabled={isDisabled}
-          style={{ fontSize: '18px' }}
-        />
-      </Form.Group>
-      <Form.Group className="mt-3">
-        <Form.Label>備註</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={3}
-          disabled={isDisabled}
-          defaultValue={editModalData.partnershipDesc}
-          onChange={editFormChangeHandle}
-          name="partnershipDesc"
-          style={{ fontSize: '18px' }}
-        />
-      </Form.Group>
-      <div className="mt-3 mb-3 d-flex justify-content-end">
-        {editButton ? (
-          <></>
-        ) : (
-          <button
-            className="btn me-1"
-            onClick={disabledClickHandle}
-            style={{
-              backgroundColor: '#ED8C4E',
-              color: 'white',
-              fontSize: "20px",
-            }}
-          >
-            修改
-          </button>
-        )}
+           {!saveloading === true && <>
+          <div className="d-flex justify-content-center">
+            <BackstageLoding />
+          </div>
+        </>}
+          <Form.Group>
+            <Form.Label>商家名稱</Form.Label>
+            <Form.Control
+              type="text"
+              name="partnershipName"
+              // required="required"
+              defaultValue={editModalData.partnershipName}
+              onChange={editFormChangeHandle}
+              disabled={isDisabled}
+              className="km-modal-content"
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group className="mt-3">
+            <Form.Label>負責人</Form.Label>
+            <Form.Control
+              type="text"
+              name="partnershipContactPerson"
+              // required="required"
+              defaultValue={editModalData.partnershipContactPerson}
+              onChange={editFormChangeHandle}
+              disabled={isDisabled}
+              className="km-modal-content"
+            />
+          </Form.Group>
+          <Form.Group className="mt-3">
+            <Form.Label>區域</Form.Label>
+            <Form.Select
+              name="cityId"
+              onChange={editFormChangeHandle}
+              disabled={isDisabled}
+              className="km-modal-content"
+            >
+              <option disabled>請選擇區域</option>
+              {cityArr}
+            </Form.Select>
+          </Form.Group>
+          <Form.Group className="mt-3">
+            <Form.Label>地址</Form.Label>
+            <Form.Control
+              type="text"
+              name="partnershipAddr"
+              // required="required"
+              defaultValue={editModalData.partnershipAddr}
+              onChange={editFormChangeHandle}
+              disabled={isDisabled}
+              className="km-modal-content"
+            />
+          </Form.Group>
+          <Form.Group className="mt-3">
+            <Form.Label>聯絡電話</Form.Label>
+            <Form.Control
+              type="text"
+              name="partnershipTel"
+              // required="required"
+              defaultValue={editModalData.partnershipTel}
+              onChange={editFormChangeHandle}
+              disabled={isDisabled}
+              className="km-modal-content"
+            />
+          </Form.Group>
+          <Form.Group className="mt-3">
+            <Form.Label>備註</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              disabled={isDisabled}
+              defaultValue={editModalData.partnershipDesc}
+              onChange={editFormChangeHandle}
+              name="partnershipDesc"
+              className="km-modal-content"
+            />
+          </Form.Group>
+          <div className="mt-3 mb-3 d-flex justify-content-end">
+            {editButton ? (
+              <></>
+            ) : (
+              <button
+                className="btn me-1 km-edit-button-modal km-modal-footer"
+                onClick={disabledClickHandle}
+              >
+                修改
+              </button>
+            )}
 
-        {editButton ? (
-          <button
-            className="btn me-1"
-            type="submit"
-            style={{
-              backgroundColor: "#7BA23F",
-              color: "white",
-              fontSize: "20px",
-            }}
-          >
-            儲存
-          </button>
-        ) : (
-          <></>
-        )}
-      </div>
-    </Form>
+            {editButton ? (
+              <button
+                className="btn me-1 km-save-button-modal km-modal-footer"
+                type="submit"
+              >
+                儲存
+              </button>
+            ) : (
+              <></>
+            )}
+            
+          </div>
+         
+        </Form>
+      ) : (
+        <div className="d-flex justify-content-center">
+          <BackstageLoding />
+        </div>
+      )}
+    </>
   );
 }
 
