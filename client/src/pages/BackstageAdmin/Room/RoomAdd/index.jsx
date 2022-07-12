@@ -298,13 +298,8 @@ function RoomAdd({ setAddShow, data, hotelData }) {
       </Form.Group>
       <div className="mt-3 mb-1 d-flex justify-content-end">
         <button
-          className="btn"
+          className="btn km-add-button-modal km-modal-footer"
           type="submit"
-          style={{
-            backgroundColor: "#7BA23F",
-            color: "white",
-            fontSize: "20px",
-          }}
         >
           新增
         </button>

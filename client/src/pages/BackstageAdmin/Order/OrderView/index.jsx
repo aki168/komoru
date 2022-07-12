@@ -75,7 +75,7 @@ function OrderView({ setEditShow, editData }) {
   return (
     <>
       {loading ? (
-        <div className="container">
+        <div className="container mb-3">
           <div style={{ margin: "0 0 0 60px" }}>
             <h3 className="mb-3 mt-3">訂購者資料</h3>
             <div className="row">
@@ -146,14 +146,14 @@ function OrderView({ setEditShow, editData }) {
               </div>
             </div>
           </div>
-          <div className="d-flex justify-content-end">
+          {/* <div className="d-flex justify-content-end">
             <button
               className="btn btn-success mb-3 me-3"
               onClick={() => setEditShow(false)}
             >
               確定
             </button>
-          </div>
+          </div> */}
         </div>
       ) : (
         <div className="d-flex justify-content-center">

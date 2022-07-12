@@ -109,16 +109,14 @@ function Hotel() {
         </td>
         <td className="col-sm-1">
           <button
-            className="me-1 btn km-page-content"
+            className="me-1 btn km-page-content km-edit-button-content"
             onClick={() => handleEditShow(index)}
-            style={{ backgroundColor: "#06CAD7", color: "white"}}
           >
             檢視/修改
           </button>
           <button
             onClick={() => deletFormHandle(index)}
-            className="btn km-page-content"
-            style={{ backgroundColor: "#E83015", color: "white" }}
+            className="btn km-page-content km-delet-button-content"
           >
             移除
           </button>
@@ -233,19 +231,15 @@ function Hotel() {
     <>
       <div className="mx-5  mb-5">
         <div className="ms-5">
-          <h3 className="mt-5 mb-5 km-page-title">飯店房型管理&gt;飯店</h3>
+          <h3 className="mt-5 mb-5 km-page-title">飯店房型管理 &gt; 飯店</h3>
         </div>
         <div>
           <div className="row ms-5 mb-5 g-0">
             <div className="col-sm-4">
-              <div className="d-flex justify-content-start">
+              <div className="d-flex justify-content-start ">
                 <button
                   onClick={handleAddShow}
-                  className="btn km-page-header"
-                  style={{
-                    backgroundColor: "#7BA23F",
-                    color: "white",
-                  }}
+                  className="btn km-page-header km-button-header"
                 >
                   新增飯店
                 </button>
@@ -297,13 +291,9 @@ function Hotel() {
                 </div>
                 <div className="col-2">
                   <button
-                    className="btn km-page-header"
+                    className="btn km-page-header km-button-header"
                     type="submit"
                     onClick={sreachSubmitHandle}
-                    style={{
-                      backgroundColor: "#7BA23F",
-                      color: "white",
-                    }}
                   >
                     搜尋
                   </button>
@@ -389,7 +379,7 @@ function Hotel() {
         onHide={handleEditClose}
         style={{ margin:'-50px 0 0 170px' }}
       >
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header closeButton  style={{ border: "none" }}></Modal.Header>
         <HotelViewEdits
           editData={editData}
           setEditShow={setEditShow}

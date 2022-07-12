@@ -90,7 +90,7 @@ function Dashboard() {
           </select>
         </div>
         <div className="ms-5 me-5">
-          <div className="row g-0" style={{ height: "300px" }}>
+          <div className="row g-0" style={{ height: "300px"}}>
             <NavLink
               className="col me-5 km-img-north km-dashboard-img-north km-dashboard-text km-dashboard-hover"
               to="north"
@@ -99,7 +99,7 @@ function Dashboard() {
                 class="d-flex justify-content-center align-items-center"
                 style={{ height: "100%" }}
               >
-                <h2>北區</h2>
+                {/* <h2>北區</h2> */}
                 {/* <img class="cover-fit " src={northImage} alt="" /> */}
               </div>
             </NavLink>
@@ -111,7 +111,7 @@ function Dashboard() {
                 class="d-flex justify-content-center align-items-center"
                 style={{ height: "100%" }}
               >
-                <h2>中區</h2>
+                {/* <h2>中區</h2> */}
                 {/* <img class="cover-fit" src={middleImage} alt="" /> */}
               </div>
             </NavLink>
@@ -123,7 +123,7 @@ function Dashboard() {
                 class="d-flex justify-content-center align-items-center"
                 style={{ height: "100%" }}
               >
-                <h2>南區</h2>
+                {/* <h2>南區</h2> */}
                 {/* <img class="cover-fit" src={sorthImage} alt="" /> */}
               </div>
             </NavLink>
@@ -135,7 +135,7 @@ function Dashboard() {
                 class="d-flex justify-content-center align-items-center"
                 style={{ height: "100%" }}
               >
-                <h2>東區</h2>
+                {/* <h2>東區</h2> */}
                 {/* <img class="cover-fit" src={eastImage} alt="" /> */}
               </div>
             </NavLink>

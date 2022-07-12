@@ -38,25 +38,25 @@
 }
 
 .km-dashboard-img-north{
-    background-image: url('../../../assets/area/north-gray.jpg');
+    background-image: url('../../../assets/area/northtext-gray.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     
 }
 .km-dashboard-img-middle{
-    background-image: url('../../../assets/area/middle-gray.jpg');
+    background-image: url('../../../assets/area/middletext-gray.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     
 }
 .km-dashboard-img-sorth{
-    background-image: url('../../../assets/area/sorth-gray.jpg');
+    background-image: url('../../../assets/area/sorthtext-gray.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     
 }
 .km-dashboard-img-east{
-    background-image: url('../../../assets/area/east-gray.jpg');
+    background-image: url('../../../assets/area/easttext-gray.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     
@@ -65,28 +65,28 @@
 
 .km-img-north:focus,.km-img-north:active{
     /* background-color: #ed8c4e; */
-    background-image: url('../../../assets/area/north-or.jpg');
+    background-image: url('../../../assets/area/northtext-or.jpg');
     color:white;
     text-decoration: none;
     /* border: 2px solid #ed8c4e */
 }
 .km-img-middle:focus,.km-img-middle:active{
     /* background-color: #ed8c4e; */
-    background-image: url('../../../assets/area/middle-or.jpg');
+    background-image: url('../../../assets/area/middletext-or.jpg');
     color:white;
     text-decoration: none;
     /* border: 2px solid #ed8c4e */
 }
 .km-img-sorth:focus,.km-img-sorth:active{
     /* background-color: #ed8c4e; */
-    background-image: url('../../../assets/area/sorth-or.jpg');
+    background-image: url('../../../assets/area/sorthtext-or.jpg');
     color:white;
     text-decoration: none;
     /* border: 2px solid #ed8c4e */
 }
 .km-img-east:focus,.km-img-east:active{
     /* background-color: #ed8c4e; */
-    background-image: url('../../../assets/area/east-or.jpg');
+    background-image: url('../../../assets/area/easttext-or.jpg');
     color:white;
     text-decoration: none;
     /* border: 2px solid #ed8c4e */

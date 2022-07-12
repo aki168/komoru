@@ -115,15 +115,13 @@ function Partnership() {
         <td className="col-sm-1">
           <button
             onClick={() => handleEditShow(index)}
-            className="me-2 btn km-page-content"
-            style={{backgroundColor: '#ED8C4E', color:'white'}}
+            className="me-2 btn km-page-content km-edit-button-content"
           >
             檢視/修改
           </button>
           <button
             onClick={() => deletFormHandle(index)}
-            className="btn km-page-content"
-            style={{border:'1.5px solid #ED8C4E',color:'#ED8C4E'}}
+            className="btn km-page-content km-delet-button-content"
           >
             移除
           </button>
@@ -253,8 +251,7 @@ function Partnership() {
               <div className="d-flex justify-content-start">
                 <button
                   onClick={handleAddShow}
-                  className="btn km-page-header"
-                  style={{ backgroundColor: "#51a49a", color: "white"}}
+                  className="btn km-page-header km-button-header"
                 >
                   新增夥伴
                 </button>
@@ -313,10 +310,9 @@ function Partnership() {
                 </div>
                 <div className="col-2 ">
                   <button
-                    className="btn km-page-header"
+                    className="btn km-page-header km-button-header"
                     type="submit"
                     onClick={sreachSubmitHandle}
-                    style={{ backgroundColor: "#51a49a", color: "white"}}
                   >
                     搜尋
                   </button>

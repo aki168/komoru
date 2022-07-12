@@ -1,11 +1,12 @@
 import React from "react";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import MyNavLink from "../BackstageAdminMyNarLink";
 import { RiBarChart2Line } from "react-icons/ri";
 import { RiHome2Line } from "react-icons/ri";
 import { RiFileList3Line } from "react-icons/ri";
 import { RiSpyLine } from "react-icons/ri";
 import { BiUser } from "react-icons/bi";
+import { BsChevronCompactDown } from "react-icons/bs";
 // import { RiBuildingLine } from "react-icons/ri";
 // import { IoBedOutline } from "react-icons/io5";
 import LOGO from "../../assets/my-logo.png";
@@ -33,12 +34,12 @@ function Sidebar() {
               />
             </Link>
           </div>
-          <li className="nav-item" style={{alignItem:'center'}}>
-              <MyNavLink to="order">
+          <li className="nav-item" style={{ alignItem: 'center' }}>
+            <MyNavLink to="order">
               <RiFileList3Line className="mx-2 ms-4" />
               <span>訂單管理</span>
             </MyNavLink>
-            
+
           </li>
           <li className="nav-item">
             <MyNavLink to="partnership">
@@ -52,15 +53,16 @@ function Sidebar() {
               data-bs-toggle="collapse"
               className="nav-link dropdown-toggle pt-2 "
               // aria-expanded="false"
-              style={{ textDecoration: "none",height:'60px' }}
+              style={{ textDecoration: "none", height: '60px' }}
             >
               <span
                 className="kmr-font-color-primary km-sidebar"
-                
+
               >
                 <RiHome2Line className="mx-2 ms-4" />
                 飯店房型管理
               </span>
+              <BsChevronCompactDown className="ms-3" color="#7C7B7B" size="20px" />
             </a>
             <ul
               className="collapse nav hidden flex-column h-50 km-sidebar"
@@ -69,22 +71,16 @@ function Sidebar() {
               styl
             >
               <li >
-                <MyNavLink className="nav-link text-center pt-3" style={{height:'60px'}} to="hotel">
+                <MyNavLink className="nav-link text-center pt-3" style={{ height: '60px' }} to="hotel">
                   <p style={{ paddingRight: "80px" }}>飯店</p>
                 </MyNavLink>
               </li>
               <li>
-                <MyNavLink className=" nav-link text-center pt-3" style={{height:'60px'}} to="room">
+                <MyNavLink className=" nav-link text-center pt-3" style={{ height: '60px' }} to="room">
                   <p style={{ paddingRight: "80px" }}>房型</p>
                 </MyNavLink>
               </li>
             </ul>
-          </li>
-          <li className="nav-item">
-            <MyNavLink to="dashboard">
-              <RiBarChart2Line className="mx-2 ms-4" />
-              分區報表
-            </MyNavLink>
           </li>
           <li className="nav-item">
             <MyNavLink to="employee">
@@ -92,6 +88,13 @@ function Sidebar() {
               員工管理
             </MyNavLink>
           </li>
+          <li className="nav-item">
+            <MyNavLink to="dashboard">
+              <RiBarChart2Line className="mx-2 ms-4" />
+              分區報表
+            </MyNavLink>
+          </li>
+
         </ul>
         <div className="row">
           <div className="flex-column"></div>

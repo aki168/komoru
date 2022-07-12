@@ -284,7 +284,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
         </div>
       )}
 
-      <Form.Group className="col-6" style={{ fontSize: "18px" }}>
+      <Form.Group className="col-6 km-modal-content">
         <Form.Group>
           <Form.Label>飯店名稱</Form.Label>
           <Form.Select
@@ -346,18 +346,13 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
           />
         </Form.Group>
       </Form.Group>
-      <div className="mt-3 mb-3 d-flex justify-content-end">
+      <div className="mt-3 mb-1 d-flex justify-content-end">
         {editButton ? (
           <></>
         ) : (
           <button
-            className="btn me-1"
+            className="btn me-1 km-edit-button-modal km-modal-footer"
             onClick={disabledClickHandle}
-            style={{
-              backgroundColor: "#06CAD7",
-              color: "white",
-              fontSize: "20px",
-            }}
           >
             修改
           </button>
@@ -365,13 +360,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
 
         {editButton ? (
           <a
-            className="btn me-2"
-            style={{
-              backgroundColor: "#06CAD7",
-              color: "white",
-              fontSize: "20px",
-              textDecoration:'none'
-            }}
+            className="btn me-2 km-img-button-modal km-modal-footer"
             onClick={() => setEditImage(true)}
           >
             更換照片
@@ -381,13 +370,8 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
         )}
         {editButton ? (
           <button
-            className="btn me-1"
+            className="btn me-1 km-img-button-modal km-modal-footer"
             type="submit"
-            style={{
-              backgroundColor: "#7BA23F",
-              color: "white",
-              fontSize: "20px",
-            }}
           >
             儲存
           </button>

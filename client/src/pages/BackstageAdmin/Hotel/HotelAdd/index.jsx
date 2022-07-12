@@ -494,7 +494,7 @@ function HotelAdd({ setAddShow, data }) {
           </div>
         </div>
       </Form.Group>
-      <Form.Group className="col-6">
+      <Form.Group className="col-6 km-modal-content">
         <Form.Group>
           <Form.Control
             type="text"
@@ -661,10 +661,10 @@ function HotelAdd({ setAddShow, data }) {
           </>
         )}
       </Form.Group>
-      <div className="d-flex justify-content-end">
-        <Button className="mt-3 mb-3" type="submit">
+      <div className="d-flex justify-content-end ">
+        <button className="btn mt-3 km-add-button-modal km-modal-footer" type="submit">
           新增
-        </Button>
+        </button>
       </div>
     </Form>
   );

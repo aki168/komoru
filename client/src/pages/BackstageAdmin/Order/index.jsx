@@ -224,8 +224,7 @@ function Order() {
         <td className="col-sm-1">
           <button
             onClick={() => handleViewShow(index)}
-            className="btn km-page-content"
-            style={{ backgroundColor: "#06CAD7", color: "white" }}
+            className="btn km-page-content km-edit-button-content"
           >
             檢視
           </button>
@@ -332,11 +331,7 @@ function Order() {
                 ) : (
                   <button
                     onClick={unCheckInHandle}
-                    className=" btn km-page-header"
-                    style={{
-                      backgroundColor: "#7BA23F",
-                      color: "white",
-                    }}
+                    className=" btn km-page-header km-button-header"
                   >
                     未入住
                   </button>
@@ -347,11 +342,7 @@ function Order() {
                 ) : (
                   <button
                     onClick={checkInHandle}
-                    className="btn ms-2 km-page-header"
-                    style={{
-                      backgroundColor: "#7BA23F",
-                      color: "white",
-                    }}
+                    className="btn ms-2 km-page-header km-button-header"
                   >
                     已入住
                   </button>
@@ -362,11 +353,7 @@ function Order() {
                 ) : (
                   <button
                     onClick={checkOutHandle}
-                    className="btn ms-2 km-page-header"
-                    style={{
-                      backgroundColor: "#7BA23F",
-                      color: "white",
-                    }}
+                    className="btn ms-2 km-page-header km-button-header"
                   >
                     已退房
                   </button>
@@ -388,7 +375,7 @@ function Order() {
                 <div className="col-3 me-2">
                   <select
                     name="orderStatus"
-                    className=" form-select col-2 km-page-header"
+                    className=" form-select col-2 km-page-header "
                     aria-label="Default select example"
                     onChange={sreachChangeHandle}
                   >
@@ -402,13 +389,9 @@ function Order() {
                 </div>
                 <div className="col-2 ">
                   <button
-                    className="btn km-page-header"
+                    className="btn km-page-header km-button-header"
                     type="submit"
                     onClick={sreachSubmitHandle}
-                    style={{
-                      backgroundColor: "#7BA23F",
-                      color: "white",
-                    }}
                   >
                     搜尋
                   </button>
@@ -443,6 +426,7 @@ function Order() {
               )}
               <div className="d-flex justify-content-center">
                 <ReactPaginate
+                  // className="km-paginate-bg"
                   nextLabel=">"
                   previousLabel="<"
                   pageCount={pageCount}
@@ -468,10 +452,10 @@ function Order() {
       <Modal
         size="lg"
         // aria-labelledby="contained-modal-title-vcenter"
-        centered
+        // centered
         show={editShow}
         onHide={handleEditClose}
-        style={{ marginLeft: "200px" }}
+        style={{ margin:'-50px 0 0 170px' }}
       >
         <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
         {editData && (

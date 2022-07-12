@@ -25,4 +25,6 @@ a:hover {
   border-radius: 0 !important;
 }
 
-
+.dropdown-toggle::after {
+  display: none;
+}

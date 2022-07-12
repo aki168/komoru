@@ -118,15 +118,13 @@ function Employee() {
         <td className="col-sm-1 ">
           <button
             onClick={() => handleEditShow(index)}
-            className="me-1 btn km-page-content"
-            style={{ backgroundColor: "#06CAD7", color: "white" }}
+            className="me-1 btn km-page-content km-edit-button-content"
           >
             檢視/修改
           </button>
           <button
             onClick={() => deletFormHandle(index)}
-            className="btn km-page-content"
-            style={{ backgroundColor: "#E83015", color: "white" }}
+            className="btn km-page-content km-delet-button-content"
           >
             移除
           </button>
@@ -249,11 +247,7 @@ function Employee() {
               <div className="d-flex justify-content-start">
                 <button
                   onClick={handleAddShow}
-                  className="btn km-page-header"
-                  style={{
-                    backgroundColor: "#7BA23F",
-                    color: "white",
-                  }}
+                  className="btn km-page-header km-button-header"
                 >
                   新增員工
                 </button>
@@ -261,10 +255,12 @@ function Employee() {
                 <Modal
                   size="lg"
                   // aria-labelledby="contained-modal-title-vcenter"
-                  centered
+                  // centered
                   show={addShow}
                   onHide={handleAddClose}
-                  style={{ marginLeft: "180px" }}
+                  style={{
+                    margin: '0 0 0 170px',
+                  }}
                 >
                   <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
                   <EmployeeAdd
@@ -306,13 +302,9 @@ function Employee() {
                 </div> */}
                 <div className="col-2 km-page-header">
                   <button
-                    className="btn "
+                    className="btn km-button-header"
                     type="submit"
                     onClick={sreachSubmitHandle}
-                    style={{
-                      backgroundColor: "#7BA23F",
-                      color: "white",
-                    }}
                   >
                     搜尋
                   </button>
@@ -373,10 +365,10 @@ function Employee() {
       <Modal
         size="lg"
         // aria-labelledby="contained-modal-title-vcenter"
-        centered
+        // centered
         show={editShow}
         onHide={handleEditClose}
-        style={{ marginLeft: "180px" }}
+        style={{ margin:'-50px 0 0 170px' }}
       >
         <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
         <EmployeeViewEdits setEditShow={setEditShow} editData={editData} />
