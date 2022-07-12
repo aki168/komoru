@@ -12,10 +12,10 @@ export default function SignIn(props) {
   const { state: { userMail } = {} } = useLocation();//把前一頁mail值繼續帶下來
 
   // 驗證表單使用: 故意設『全形空白』的部分，是希望布林值不是false，若有設定字串會顯示於畫面上
-  const [emailErr, setEmailErr] = useState("");
-  const [passwdErr, setPasswdErr] = useState("");
-  const [phoneErr, setPhoneErr] = useState("");
-  const [allErr, setAllErr] = useState("");
+  const [emailErr, setEmailErr] = useState(true);
+  const [passwdErr, setPasswdErr] = useState(true);
+  const [phoneErr, setPhoneErr] = useState(true);
+  const [allErr, setAllErr] = useState(true);
   const [validateCheck, setValidateCheck] = useState("");
   const [finish, setFinish] = useState("");
 
@@ -168,8 +168,8 @@ export default function SignIn(props) {
       {validateCheck && <button onClick={!finish ? submitHandler : finishThenBackHome}
         className={!finish ? "signIn--submitFin" : "signIn--submit"} > {!finish ? "請再次確認後送出" : "註冊成功！點擊返回首頁"}
       </button>}
-      <div className="signIn--item">
-        {allErr && <Badge bg="danger" >{allErr}!</Badge>}
+      <div className="signIn--item mt-2">
+        {allErr && <Badge bg="danger" >{allErr}</Badge>}
       </div>
     </ul>
   )
