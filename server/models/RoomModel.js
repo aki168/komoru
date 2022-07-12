@@ -142,9 +142,9 @@ exports.addRoomWithImg = async (dataList) => {
                   "WHERE `RoomImg`.`room_img_id` = ?;";
                 let updateImgValue = [
                   dataList.roomImgPath +
-                    addImgResult.insertId +
-                    "." +
-                    dataList.mimetype,
+                  addImgResult.insertId +
+                  "." +
+                  dataList.mimetype,
                   dataList.employeeId,
                   db.getDateTimeNow(),
                   addImgResult.insertId,
@@ -221,9 +221,9 @@ exports.updateRoomWithImgByRoomId = async (dataList) => {
                   "WHERE `RoomImg`.`room_img_id` = ?;";
                 let updateImgValue = [
                   dataList.roomImgPath +
-                    addImgResult.insertId +
-                    "." +
-                    dataList.mimetype,
+                  addImgResult.insertId +
+                  "." +
+                  dataList.mimetype,
                   dataList.employeeId,
                   db.getDateTimeNow(),
                   addImgResult.insertId,
@@ -278,6 +278,25 @@ exports.delRoomByRoomId = async (dataList) => {
       resolve({
         status: result.serverStatus,
       });
+    });
+  });
+};
+
+// 2022-07-12 MJ
+// 取得房型內容
+exports.getRoomContentByRoomId = async (roomId) => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "SELECT `Room`.`room_content` " +
+      "FROM `Room` " +
+      "WHERE `Room`.`room_id` = ? ";
+    db.con.query(sql, roomId, (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(
+        db.rowDataToCamelData(rows)
+      );
     });
   });
 };
