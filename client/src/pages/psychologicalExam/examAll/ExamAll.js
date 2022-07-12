@@ -116,7 +116,7 @@ const ExamAll = () => {
                 <h1>{personality}</h1>
                 <p className="personalityDescribe">{personalityDescribe}</p>
                 {/* <p>活動包:{activityPack}</p> */}
-                <img src="https://picsum.photos/550/450" alt="" />
+                <img src={require("../madCat.png")} alt="" />
                 <button onClick={ToOrderPage} className="nextStepResult">
                   查看訂單&nbsp;
                   <HiOutlineArrowCircleRight className="HiOutlineArrowCircleRight" />

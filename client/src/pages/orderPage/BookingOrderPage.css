@@ -138,6 +138,13 @@
   margin-left: 50px;
 }
 
+.orderListImg img {
+  width: 550px;
+  height: 300px;
+  object-fit: cover;
+  overflow: hidden;
+}
+
 .orderListAll {
   margin-left: 50px;
   line-height: 50px;

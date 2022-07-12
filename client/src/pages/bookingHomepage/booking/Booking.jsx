@@ -46,7 +46,8 @@ function Booking() {
   const { roomState, setRoomState } = useContext(BookContext);
   const { cityIdValue, setCityIdValue } = useContext(BookContext);
   //優惠代碼
-  const { couponState, setCouponState } = useContext(BookContext);
+  const { couponState, setCouponState, couponItemId, setCouponItemId } =
+    useContext(BookContext);
   //根據會員ID有的優惠票券
   const { couponData, setCouponData } = useContext(BookContext);
   //是否參與活動
@@ -171,14 +172,15 @@ function Booking() {
   useEffect(() => {
     axios({
       method: "post",
-      url: "http://localhost:5000/order/getCouponData",
+      url: "http://localhost:5000/coupon/getCouponByMemberId",
       data: {
         memberId: memberId,
       },
     })
       .then((res) => {
-        // console.log(res.data);
-        setCouponData(res.data.dataList);
+        console.log(res.data.dataList.usableCouponlist[0].couponItemId);
+        setCouponData(res.data.dataList.usableCouponlist);
+        console.log(couponData);
       })
       .catch((err) => {
         console.log(err);
@@ -188,7 +190,7 @@ function Booking() {
   /*將coupon資料map成coupon選項*/
   const couponArr = Object.values(couponData).map((values, index) => {
     return (
-      <option key={index} value={values.couponId}>
+      <option key={index} value={values.couponItemId}>
         {values.couponTitle}
       </option>
     );
@@ -253,7 +255,7 @@ function Booking() {
               onChange={clearActivityDataByChangingDayState}
               value={dayState}
             >
-              <option value="">請選擇要探索的天數</option>
+              <option value="">請選擇入住天數</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -319,7 +321,9 @@ function Booking() {
             <select
               name="couponId"
               className="headerCouponSelect"
-              onChange={(e) => setCouponState(e.target.value)}
+              onChange={(e) => {
+                setCouponState(e.target.value);
+              }}
               value={couponState}
             >
               <option value="">請選擇優惠代碼</option>
@@ -328,7 +332,7 @@ function Booking() {
           </div>
           <div className="ActivityItem">
             <div className="activitySelectLine">
-              <p>是否參與活動?</p>
+              <p>是否參與活動</p>
               <label className="getActivity">
                 <input
                   className="rdoBtn_radio"

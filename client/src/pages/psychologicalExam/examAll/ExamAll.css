@@ -105,9 +105,13 @@
   color: #ed8c4e;
 }
 
+.examFormCantainer img {
+  box-shadow: 0px 12px 18px -6px rgba(0, 0, 0, 0.2);
+}
+
 .nextStepResult {
   position: absolute;
-  width: 400px;
+  width: 550px;
   height: 74px;
   bottom: 150px;
   left: 180px;

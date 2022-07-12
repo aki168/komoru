@@ -268,10 +268,43 @@ function BookingOrderPage() {
     }
   };
 
+  //根據不同roomState顯示不同房間照片
+  const handleImgData = () => {
+    if (roomState === "5") {
+      return <img src="http://localhost:5000/images/room/room-9.jpeg" alt="" />;
+    } else if (roomState === "8") {
+      return (
+        <img src="http://localhost:5000/images/room/room-10.jpeg" alt="" />
+      );
+    } else if (roomState === "1") {
+      return <img src="http://localhost:5000/images/room/room-1.jpeg" alt="" />;
+    } else if (roomState === "2") {
+      return <img src="http://localhost:5000/images/room/room-5.jpeg" alt="" />;
+    } else if (roomState === "3") {
+      return (
+        <img src="http://localhost:5000/images/room/room-11.jpeg" alt="" />
+      );
+    } else if (roomState === "6") {
+      return (
+        <img src="http://localhost:5000/images/room/room-13.jpeg" alt="" />
+      );
+    } else if (roomState === "4") {
+      return (
+        <img src="http://localhost:5000/images/room/room-11.jpeg" alt="" />
+      );
+    } else if (roomState === "7") {
+      return (
+        <img src="http://localhost:5000/images/room/room-12.jpeg" alt="" />
+      );
+    }
+  };
+
   //顯示優惠碼名稱
   const handleCouponStateData = () => {
     if (couponState != "") {
       return <p>{couponData[0].couponTitle}</p>;
+    } else {
+      return <p>無</p>;
     }
   };
 
@@ -498,16 +531,14 @@ function BookingOrderPage() {
                 </p>
               </div>
               <div className="orderListBody">
-                <div className="orderListImg">
-                  <img src="https://picsum.photos/500/300" alt="" />
-                </div>
+                <div className="orderListImg">{handleImgData()}</div>
                 <div className="orderListAll">
                   <div className="list">
                     <p>入住日期</p>
                     <span>{date}</span>
                   </div>
                   <div className="list">
-                    <p>住宿幾晚</p>
+                    <p>入住天數</p>
                     <span>{dayState}</span>
                   </div>
                   <div className="list">

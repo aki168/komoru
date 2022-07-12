@@ -8,7 +8,8 @@ import "./PartnerHotel.css";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import Navbar from "../../components/Navbar/Navbar-bg-white";
-import RoomItem from "./roomItem/RoomItem";
+import RoomItemLeft from "./roomItem/RoomItemLeft";
+import RoomItemRight from "./roomItem/RoomItemRight";
 import PrivateRoomModal from "./roomModal/PrivateRoomModal";
 import BackPackerRoomModal from "./roomModal/BackPackerRoomModal";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
@@ -222,7 +223,8 @@ const PartnerHotel = () => {
         </div>
       </div>
 
-      <section className="sliderleft" data-aos="fade-right">
+      {/* 台北 */}
+      <section className="sliderleft">
         <BsChevronLeft className="sliderleft-left-arrow" onClick={prevSlide3} />
         <BsChevronRight
           className="sliderleft-right-arrow"
@@ -240,7 +242,7 @@ const PartnerHotel = () => {
             </div>
           );
         })}
-        <div className="sizeRight">
+        <div className="sizeRight" data-aos="fade-up">
           <p>台北:夾腳拖的家</p>
         </div>
         {/* {TainanSliderDes.map((TainanDes, index) => {
@@ -256,14 +258,15 @@ const PartnerHotel = () => {
           );
         })} */}
       </section>
-      <RoomItem
+      <RoomItemLeft
         privateClick={openPrivateModal3Click}
         backPackerClick={openBackPackerModal3Click}
         privateUrl="http://localhost:5000/images/room/room-9.jpeg"
         backPackerUrl="http://localhost:5000/images/room/room-10.jpeg"
       />
 
-      <section className="sliderRight" data-aos="fade-left">
+      {/* 台中 */}
+      <section className="sliderRight">
         <BsChevronLeft
           className="sliderRight-left-arrow"
           onClick={prevSlide1}
@@ -272,7 +275,7 @@ const PartnerHotel = () => {
           className="sliderRight-right-arrow"
           onClick={nextSlide1}
         />
-        <div className="sizeLeft">
+        <div className="sizeLeft" data-aos="fade-up">
           <p>台中-Star Hostel</p>
           <p>台中市西區公益路68號15樓</p>
           <p> 15F, No.68, Gongyi Rd., West Dist., Taichung, Taiwan</p>
@@ -291,14 +294,15 @@ const PartnerHotel = () => {
           );
         })}
       </section>
-      <RoomItem
+      <RoomItemRight
         privateClick={openPrivateModal1Click}
         backPackerClick={openBackPackerModal1Click}
         privateUrl="http://localhost:5000/images/room/room-1.jpeg"
         backPackerUrl="http://localhost:5000/images/room/room-5.jpeg"
       />
 
-      <section className="sliderleft " data-aos="fade-right">
+      {/* 台南 */}
+      <section className="sliderleft ">
         <BsChevronLeft className="sliderleft-left-arrow" onClick={prevSlide2} />
         <BsChevronRight
           className="sliderleft-right-arrow"
@@ -316,7 +320,7 @@ const PartnerHotel = () => {
             </div>
           );
         })}
-        <div className="sizeRight">
+        <div className="sizeRight" data-aos="fade-up">
           <p>台南-快活慢行</p>
           <p>連絡電話:06-2229255</p>
           <p>信箱:hii@hiihubs.com</p>
@@ -326,14 +330,15 @@ const PartnerHotel = () => {
           </p>
         </div>
       </section>
-      <RoomItem
+      <RoomItemLeft
         privateClick={openPrivateModal2Click}
         backPackerClick={openBackPackerModal2Click}
         privateUrl="http://localhost:5000/images/room/room-14.jpeg"
         backPackerUrl="http://localhost:5000/images/room/room-13.jpeg"
       />
 
-      <section className="sliderRight" data-aos="fade-left">
+      {/* 花蓮 */}
+      <section className="sliderRight">
         <BsChevronLeft
           className="sliderRight-left-arrow"
           onClick={prevSlide4}
@@ -354,7 +359,7 @@ const PartnerHotel = () => {
             </div>
           );
         })} */}
-        <div className="sizeLeft">
+        <div className="sizeLeft" data-aos="fade-up">
           <p>花蓮-山林山鄰</p>
           <p>address: 981花蓮縣玉里鎮大同路228號</p>
           <p>TEL:03-888-7228</p>
@@ -372,7 +377,7 @@ const PartnerHotel = () => {
           );
         })}
       </section>
-      <RoomItem
+      <RoomItemRight
         privateClick={openPrivateModal4Click}
         backPackerClick={openBackPackerModal4Click}
         privateUrl="http://localhost:5000/images/room/room-11.jpeg"
