@@ -2,6 +2,7 @@ import { logout } from "../../App";
 import "./Navbar.css";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { fontWeight } from "@mui/system";
 
 
 export default function Navbar() {
@@ -21,7 +22,7 @@ export default function Navbar() {
       </h1>
       <ul className="navbar--menu">
         <li >
-          <Link className="navbar--item" to="/bookingHomepage" style={{ color: "#ED8C4E" }}>
+          <Link className="navbar--item" to="/bookingHomepage" style={{ color: "#ED8C4E" ,fontWeight:"bolder" }}>
             即刻預定
           </Link>
         </li>
@@ -43,8 +44,8 @@ export default function Navbar() {
         <li className="logout">
           {token && (
             // 改不掉按鈕樣式
-            <Button variant="white" size="sm" onClick={logout} style={{ color: "#ED8C4E" }}>
-              LOG
+            <Button variant="white" size="lg" onClick={logout} style={{ color: "#ED8C4E" }}>
+              LOG 
             </Button>
           )}
         </li>
