@@ -18,9 +18,12 @@ function BookingOrderPage() {
   const [activityPack, setActivityPack] = useState(location.state.activityPack);
 
   //活動包內容初始化
-  const [activePackD1, setActivePackD1] = useState({});
-  const [activePackD2, setActivePackD2] = useState({});
-  const [activePackD3, setActivePackD3] = useState({});
+  const [activePackD1, setActivePackD1] = useState([]);
+  const [activePackD2, setActivePackD2] = useState([]);
+  const [activePackD3, setActivePackD3] = useState([]);
+  const [activePackId1, setActivePackId1] = useState("");
+  const [activePackId2, setActivePackId2] = useState("");
+  const [activePackId3, setActivePackId3] = useState("");
 
   //下一步點擊時狀態紀錄
   const [nextStep, setNextStep] = useState("");
@@ -79,23 +82,31 @@ function BookingOrderPage() {
 
         // console.log(res.data.dataList);
         if (activity1Data === "1") {
-          setActivePackD1(res.data.dataList.D1[0]);
+          setActivePackD1(res.data.dataList.D1);
+          console.log(123);
+          console.log(res.data.dataList.D1);
+          setActivePackId1(res.data.dataList.D1[0].activePackId);
+          console.log(res.data.dataList.D1[0].activePackId);
         }
         if (activity2Data === "3") {
-          setActivePackD2(res.data.dataList.D2[0]);
+          setActivePackD2(res.data.dataList.D2);
+          setActivePackId2(res.data.dataList.D2[0].activePackId);
         }
         if (activity3Data === "5") {
-          setActivePackD3(res.data.dataList.D3[0]);
+          setActivePackD3(res.data.dataList.D3);
+          setActivePackId3(res.data.dataList.D3[0].activePackId);
         }
         if (activity1Data === "2" && activity2Data === "3") {
-          setActivePackD2(res.data.dataList.D1[0]);
+          setActivePackD2(res.data.dataList.D1);
+          setActivePackId1(res.data.dataList.D1[0].activePackId);
         }
         if (
           activity1Data === "2" &&
           activity2Data === "4" &&
           activity3Data === "5"
         ) {
-          setActivePackD3(res.data.dataList.D1[0]);
+          setActivePackD3(res.data.dataList.D1);
+          setActivePackId1(res.data.dataList.D1[0].activePackId);
         }
       })
       .then(() => {
@@ -106,23 +117,23 @@ function BookingOrderPage() {
       });
     // }
   }, []);
-  console.log(activePackD1);
+
   const PackId = [];
 
   if (activity1Data === "1") {
-    PackId.push(activePackD1.activePackId);
+    PackId.push(activePackId1);
   }
   if (activity1Data === "2") {
     PackId.push(null);
   }
   if (activity2Data === "3") {
-    PackId.push(activePackD2.activePackId);
+    PackId.push(activePackId2);
   }
   if (activity2Data === "4") {
     PackId.push(null);
   }
   if (activity3Data === "5") {
-    PackId.push(activePackD3.activePackId);
+    PackId.push(activePackId3);
   }
   if (activity3Data === "6") {
     PackId.push(null);
@@ -139,10 +150,10 @@ function BookingOrderPage() {
             date={fst}
             first={<span>Ckeck In</span>}
             second={<p>前往預定飯店並參觀飯店空間</p>}
-            activePackItemTitle={activePackD1.activePackItemTitle}
-            activePackItemContent={activePackD1.activePackItemContent}
-            activePackItemContent2={activePackD1.activePackItemContent2}
-            activePackItemContent3={activePackD1.activePackItemContent3}
+            activePackItemTitle={activePackD1[0].activePackItemTitle}
+            activePackItemContent={activePackD1[0].activePackItemContent}
+            activePackItemContent2={activePackD1[1].activePackItemContent}
+            activePackItemContent3={activePackD1[2].activePackItemContent}
           />
         </>
       );
@@ -158,10 +169,10 @@ function BookingOrderPage() {
             date={sec}
             first={<span>美好的早晨</span>}
             second={<p>找個屬於你的小角落享用美味早餐</p>}
-            activePackItemTitle={activePackD2.activePackItemTitle}
-            activePackItemContent={activePackD2.activePackItemContent}
-            activePackItemContent2={activePackD2.activePackItemContent2}
-            activePackItemContent3={activePackD2.activePackItemContent3}
+            activePackItemTitle={activePackD2[0].activePackItemTitle}
+            activePackItemContent={activePackD2[0].activePackItemContent}
+            activePackItemContent2={activePackD2[1].activePackItemContent}
+            activePackItemContent3={activePackD2[2].activePackItemContent}
           />
         </>
       );
@@ -177,10 +188,10 @@ function BookingOrderPage() {
             date={trd}
             first={<span>美好的早晨</span>}
             second={<p>找個屬於你的小角落享用美味早餐</p>}
-            activePackItemTitle={activePackD3.activePackItemTitle}
-            activePackItemContent={activePackD3.activePackItemContent}
-            activePackItemContent2={activePackD3.activePackItemContent2}
-            activePackItemContent3={activePackD3.activePackItemContent3}
+            activePackItemTitle={activePackD3[0].activePackItemTitle}
+            activePackItemContent={activePackD3[0].activePackItemContent}
+            activePackItemContent2={activePackD3[1].activePackItemContent}
+            activePackItemContent3={activePackD3[2].activePackItemContent}
           />
         </>
       );
@@ -371,9 +382,9 @@ function BookingOrderPage() {
       setSumActivity(countActivity * 700 + roomSum);
     }
   });
-  {
-    console.log(couponData[0].discount);
-  }
+  // {
+  //   console.log(couponData[0].discount);
+  // }
 
   const navigate = useNavigate();
   //傳訂單明細給後端
