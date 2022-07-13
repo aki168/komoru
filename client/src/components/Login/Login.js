@@ -163,6 +163,12 @@ export default function Login(props) {
     lineLogin(getLindCode.get("code"));
   }
 
+  // 2022-07-13 MJ
+  // google登入:取得使用者資訊
+  const getGoogleUserAcct = () => {
+    
+  }
+
   return (
     <div className="login">
       <h2 className="login--title">登入或建立帳戶</h2>
@@ -208,7 +214,7 @@ export default function Login(props) {
       <h3 className="login--subTitle">或使用以下選項登入</h3>
       <ul className="login--other">
         <li>
-          <button className="login--block GOOGLE"/>
+          <button className="login--block GOOGLE" onClick={getGoogleUserAcct}/>
         </li>
         <li>
           <button className="login--block FB"/>
