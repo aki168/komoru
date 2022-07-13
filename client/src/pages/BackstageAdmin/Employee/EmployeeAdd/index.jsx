@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { IoAlertCircleSharp } from "react-icons/io5";
-
+import BackstageLodingModal from "../../../../components/BackstageLoadingModal";
 function EmployeeAdd({ setAddShow }) {
   /*20220622 YN
    新增表單資料初始化*/
@@ -18,6 +18,11 @@ function EmployeeAdd({ setAddShow }) {
   /*20220710 YN
   當輸入框為""，出現警示狀態初始化 */
   const [alertImg, setAlertImg] = useState(false);
+
+   /*20220707 YN
+ 資料載入過程初始化*/
+ const [loading, setLoading] = useState(false);
+
 
   /*20220622 YN
    取得輸入新增表單資料*/
@@ -55,8 +60,9 @@ function EmployeeAdd({ setAddShow }) {
       addFormData.employeePhone === ""
     ) {
       setAlertImg(true);
-    } else {
+    } else {  
       setAlertImg(false);
+      setLoading(true)
       fetch("http://localhost:5000/employee/addEmployee", {
         method: "POST",
         headers: {
@@ -172,6 +178,7 @@ function EmployeeAdd({ setAddShow }) {
         >
           新增
         </button>
+        {loading === true && <BackstageLodingModal />}
       </div>
     </Form>
   );

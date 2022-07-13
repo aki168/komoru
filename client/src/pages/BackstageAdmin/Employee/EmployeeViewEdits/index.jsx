@@ -3,6 +3,8 @@ import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { IoAlertCircleSharp } from "react-icons/io5";
 import BackstageLoding from "../../../../components/BackstageLoading";
+import BackstageLodingModal from "../../../../components/BackstageLoadingModal";
+
 function EmployeeViewEdits({ setEditShow, editData }) {
   /*20220624 YN
   修改資料初始化*/
@@ -34,6 +36,10 @@ function EmployeeViewEdits({ setEditShow, editData }) {
   /*20220707 YN
 資料載入過程初始化*/
   const [loading, setLoading] = useState(false);
+
+  /*20220707 YN
+ 資料送出過程初始化*/
+  const [saveloading, setSaveloading] = useState(false);
 
   /*20220624 YN
    可否修改狀態改變*/
@@ -102,6 +108,7 @@ function EmployeeViewEdits({ setEditShow, editData }) {
     ) {
       setAlertImg(true);
     } else {
+      setSaveloading(true);
       setAlertImg(false);
       fetch("http://localhost:5000/employee/updateEmployeeByEmployeeId", {
         method: "POST",
@@ -128,10 +135,7 @@ function EmployeeViewEdits({ setEditShow, editData }) {
   return (
     <>
       {loading ? (
-        <Form
-          className="container "
-          onSubmit={editFormSubmitHandle}
-        >
+        <Form className="container " onSubmit={editFormSubmitHandle}>
           <Form.Group className="km-modal-content">
             <Form.Label>員工帳號</Form.Label>
             <Form.Control
@@ -143,7 +147,7 @@ function EmployeeViewEdits({ setEditShow, editData }) {
               onChange={editFormChangeHandle}
               disabled={isDisabled}
               className="km-modal-content"
-            />  
+            />
           </Form.Group>
           {editModalData.employeeAccount === "" && (
             <>
@@ -216,7 +220,6 @@ function EmployeeViewEdits({ setEditShow, editData }) {
                 修改
               </button>
             )}
-
             {editButton ? (
               <button
                 className="btn me-1 km-save-button-modal km-modal-footer"
@@ -227,6 +230,7 @@ function EmployeeViewEdits({ setEditShow, editData }) {
             ) : (
               <></>
             )}
+            {saveloading === true && <BackstageLodingModal />}
           </div>
         </Form>
       ) : (

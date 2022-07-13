@@ -49,14 +49,13 @@ function Order() {
   //   defaultfield:false,
   // })
 
-  
-//   const handleClick = (e) =>{
-//     const {name, value} = e.target;
-// console.log(e.target)
-//     setIsClicked(prevIsClicked => ({
-//       [name]:value
-//     }))
-//   }
+  //   const handleClick = (e) =>{
+  //     const {name, value} = e.target;
+  // console.log(e.target)
+  //     setIsClicked(prevIsClicked => ({
+  //       [name]:value
+  //     }))
+  //   }
 
   /*20220704 YN
   登入狀態為false自動轉跳Login頁面 */
@@ -100,8 +99,6 @@ function Order() {
     setInputHandle(true);
     // console.log(data[index])
   };
-
-
 
   /*20220628 YN
   判斷目前取得的orderStatus狀態資料是否為"未入住"，並轉換狀態*/
@@ -216,50 +213,39 @@ function Order() {
     }
   };
 
-  const handleChange = event => {
-    console.log(event.target.value);
-    setSelected(event.target.value);
-  };
-
-
-  const [selected,setSelected]=useState("")
-
   /*20220617 YN
   利用變數取畫面上顯示資料 */
   const arr = data.map((data, index) => {
     return (
-      // console.log(values.hotelTitle)
       <tr key={index} className="form-check-label" >
-        <td className="col-sm-1">
-          <label style={{width:'100%',height:'100%'}}>
-          <input
-            className="form-check-input"
-            type="radio"
-            name="defaultfield"
-            value={data.orderId}
-            onClick={() => orderStatusChange(index)}
-           
-            
+          <td className="col-sm-1" style={{padding:'0'}}>
+          <label style={{ width: "100%", height: "100%"}}>
+            <input
+              className="form-check-input"
+              type="radio"
+              name="defaultfield"
+              value={data.orderId}
+              onClick={() => orderStatusChange(index)}
+              
             />
-          </label>
-          
-            
-        </td>
-        <td className="col-sm-1">{data.orderNumber}</td>
-        <td className="col-sm-1">{data.memberName}</td>
-        <td className="col-sm-2">{data.roomType}</td>
-        <td className="col-sm-1">{data.orderStartDate}</td>
-        <td className="col-sm-1">{data.stayNight}</td>
-        <td className="col-sm-1">{data.orderStatus}</td>
-        <td className="col-sm-1">
-          <button
-            onClick={() => handleViewShow(index)}
-            className="btn km-page-content km-edit-button-content"
-          >
-            檢視
-          </button>
-        </td>
-      </tr>
+            </label>
+          </td>
+          <td className="col-sm-1">{data.orderNumber}</td>
+          <td className="col-sm-1">{data.memberName}</td>
+          <td className="col-sm-2">{data.roomType}</td>
+          <td className="col-sm-1">{data.orderStartDate}</td>
+          <td className="col-sm-1">{data.stayNight}</td>
+          <td className="col-sm-1">{data.orderStatus}</td>
+          <td className="col-sm-1">
+            <button
+              onClick={() => handleViewShow(index)}
+              className="btn km-page-content km-edit-button-content"
+            >
+              檢視
+            </button>
+          </td>
+        
+        </tr>
     );
   });
 
@@ -485,7 +471,7 @@ function Order() {
         // centered
         show={editShow}
         onHide={handleEditClose}
-        style={{ margin:'-50px 0 0 170px' }}
+        style={{ margin: "-50px 0 0 170px" }}
       >
         <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
         {editData && (

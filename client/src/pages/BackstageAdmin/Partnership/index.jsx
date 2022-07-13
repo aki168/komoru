@@ -327,7 +327,7 @@ function Partnership() {
                 <>
                   <table
                     className="table  table-hover  text-center align-middle km-page-content"
-                    style={{ height: "1000px"}}
+                    // style={{ height: "1000px"}}
                   >
                     <thead>
                       <tr>

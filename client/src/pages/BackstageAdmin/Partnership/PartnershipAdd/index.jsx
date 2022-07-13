@@ -4,6 +4,7 @@ import axios from "axios";
 import "./PartnershipAdd.css";
 import { IoAlertCircleSharp } from "react-icons/io5";
 import BackstageLoding from "../../../../components/BackstageLoading";
+import BackstageLodingModal from "../../../../components/BackstageLoadingModal";
 // import {GoAlert} from 'react-icons/go'
 
 function PartnershipAdd({ data, setAddShow }) {
@@ -256,19 +257,15 @@ function PartnershipAdd({ data, setAddShow }) {
           className="km-modal-content"
         />
       </Form.Group>
-      <div className="mt-3 mb-1 d-flex justify-content-end">
+      <div className="mt-3 mb-4 d-flex justify-content-end">
         <button
           className="btn km-add-button-modal km-modal-footer"
           type="submit"
         >
           新增
         </button>
+        {loading === true && <BackstageLodingModal />}
       </div>
-      {loading === true && <>
-          <div className="d-flex justify-content-center">
-            <BackstageLoding />
-          </div>
-        </>}
     </Form>
   );
 }

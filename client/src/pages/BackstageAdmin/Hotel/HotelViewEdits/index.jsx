@@ -6,6 +6,7 @@ import { IoAlertCircleSharp } from "react-icons/io5";
 import { HiOutlineRefresh } from "react-icons/hi";
 import { MdOutlineFileUpload } from "react-icons/md";
 import BackstageLoding from "../../../../components/BackstageLoading";
+import BackstageLodingModal from "../../../../components/BackstageLoadingModal";
 
 function HotelViewEdits({ setEditShow, editData, data }) {
   /*20220624 YN
@@ -82,6 +83,10 @@ function HotelViewEdits({ setEditShow, editData, data }) {
   /*20220707 YN
  資料載入過程初始化*/
   const [loading, setLoading] = useState(false);
+  
+  /*20220707 YN
+ 資料送出過程初始化*/
+  const [saveloading, setsaveloading] = useState(false);
 
   /*20220701 YN
      取得後端預設飯店資料*/
@@ -99,6 +104,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
       .then((data) => {
         setLoading(true);
         setEditModalData(data.dataList.hotelData[0]);
+        console.log(data)
         //20220703 判斷主圖
         let mainResult = data.dataList.hotelImgDataList;
         let mainArr = mainResult.filter((result) => {
@@ -202,7 +208,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
     // };
     console.log(newContact);
     // setAddFormData(newContacts);
-
+    setsaveloading(true);
     if (editImage === true) {
       const formData = new FormData();
       formData.append("hotelDataList", JSON.stringify(newContact));
@@ -873,7 +879,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
               />
             </Form.Group>
           </Form.Group>
-          <div className="mt-3 mb-3 d-flex justify-content-end">
+          <div className="mt-3 mb-4 d-flex justify-content-end">
             {editButton ? (
               <></>
             ) : (
@@ -905,9 +911,8 @@ function HotelViewEdits({ setEditShow, editData, data }) {
             ) : (
               <></>
             )}
-            
+            {saveloading === true && <BackstageLodingModal />}
           </div>
-          <div className="d-flex justify-content-center align-items-top ">{loading === true && <BackstageLoding size="10px" />}</div>
               
                
              

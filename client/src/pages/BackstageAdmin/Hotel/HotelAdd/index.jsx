@@ -5,7 +5,7 @@ import { BsFillArrowUpSquareFill } from "react-icons/bs";
 import { IoAlertCircleSharp } from "react-icons/io5";
 import { HiOutlineRefresh } from "react-icons/hi";
 import { MdOutlineFileUpload } from "react-icons/md";
-import BackstageLoding from "../../../../components/BackstageLoading";
+import BackstageLodingModal from "../../../../components/BackstageLoadingModal";
 
 function HotelAdd({ setAddShow, data }) {
   /*20220622 YN
@@ -151,7 +151,6 @@ function HotelAdd({ setAddShow, data }) {
       setAlertImg(true);
     } else {
       setAlertImg(false);
-      setLoading(true);
       fetch("http://localhost:5000/hotel/addHotel", {
         method: "POST",
         body: formData,
@@ -675,19 +674,15 @@ function HotelAdd({ setAddShow, data }) {
             </>
           )}
         </Form.Group>
-        <div className="d-flex justify-content-end ">
+        <div className="d-flex justify-content-end mb-4 mt-3">
           <button
-            className="btn mt-3 km-add-button-modal km-modal-footer"
+            className="btn   km-add-button-modal km-modal-footer"
             type="submit"
           >
             新增
           </button>
+          {loading === true && <BackstageLodingModal/>}
         </div>
-        {loading === true && (
-          <div className="d-flex justify-content-center">
-            <BackstageLoding />
-          </div>
-        )}
       </Form>
     </>
   );
