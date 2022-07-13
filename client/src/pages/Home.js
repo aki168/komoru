@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar/Navbar';
+import Footer from '../components/Footer/Footer';
 import { loginOrNot } from '../App'
 import ActionAreaCard from '../components/Card/Card';
 import Example from '../components/Carousel/Carousel';
@@ -13,7 +14,7 @@ export default function Home() {
     <div className='wrap'>
       <Navbar />
       <div>
-        <img className='backImg' src='1.png'>
+        <img className='backImg' src='探索照片.webp'>
         </img>
       </div>
 
@@ -60,9 +61,13 @@ export default function Home() {
 
         <br />
         <br />
+        <br />
+        <br />
         
       </div>
-
+      <div>
+          <Footer />
+        </div>
     </div>
   )
 }

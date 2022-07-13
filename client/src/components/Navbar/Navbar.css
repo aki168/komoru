@@ -30,9 +30,8 @@ Button{
   margin-left: 20px;
 }
 
-
 .navbar{
-  background-color: rgba(255,255,255,0.95);
+  background-color: rgba(255,255,255,0.97);
   display: flex;
   justify-content: space-between;
   padding: 0 2rem;
