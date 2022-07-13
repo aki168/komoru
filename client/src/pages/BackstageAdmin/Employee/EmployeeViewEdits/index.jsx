@@ -205,7 +205,7 @@ function EmployeeViewEdits({ setEditShow, editData }) {
               className="km-modal-content"
             />
           </Form.Group>
-          <div className="mt-3 mb-3 d-flex justify-content-end">
+          <div className="mt-3 mb-5 d-flex justify-content-end">
             {editButton ? (
               <></>
             ) : (

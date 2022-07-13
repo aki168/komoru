@@ -17,6 +17,7 @@ function BookingHomepage() {
 
   return (
     <>
+      <BookingAgreeModal />
       <Navbar />
       <div className="bookingBreadcrumbs">
         <Link to="/">首頁</Link>

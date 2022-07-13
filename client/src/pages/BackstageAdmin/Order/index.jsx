@@ -45,6 +45,19 @@ function Order() {
   判斷有無選取狀態初始化*/
   const [inputHandle, setInputHandle] = useState(false);
 
+  // const [isClicked, setIsClicked]=useState({
+  //   defaultfield:false,
+  // })
+
+  
+//   const handleClick = (e) =>{
+//     const {name, value} = e.target;
+// console.log(e.target)
+//     setIsClicked(prevIsClicked => ({
+//       [name]:value
+//     }))
+//   }
+
   /*20220704 YN
   登入狀態為false自動轉跳Login頁面 */
   let navigate = useNavigate();
@@ -87,6 +100,9 @@ function Order() {
     setInputHandle(true);
     // console.log(data[index])
   };
+
+
+
   /*20220628 YN
   判斷目前取得的orderStatus狀態資料是否為"未入住"，並轉換狀態*/
   const unCheckInHandle = () => {
@@ -200,21 +216,34 @@ function Order() {
     }
   };
 
+  const handleChange = event => {
+    console.log(event.target.value);
+    setSelected(event.target.value);
+  };
+
+
+  const [selected,setSelected]=useState("")
+
   /*20220617 YN
   利用變數取畫面上顯示資料 */
   const arr = data.map((data, index) => {
     return (
       // console.log(values.hotelTitle)
-      <tr key={index} className="form-check-label">
+      <tr key={index} className="form-check-label" >
         <td className="col-sm-1">
-          <label htmlFor="flexRadioDefault" >
+          <label style={{width:'100%',height:'100%'}}>
           <input
             className="form-check-input"
             type="radio"
+            name="defaultfield"
             value={data.orderId}
-            onChange={() => orderStatusChange(index)}
-          />
+            onClick={() => orderStatusChange(index)}
+           
+            
+            />
           </label>
+          
+            
         </td>
         <td className="col-sm-1">{data.orderNumber}</td>
         <td className="col-sm-1">{data.memberName}</td>

@@ -9,21 +9,18 @@ import { AiOutlineRight } from "react-icons/ai";
 import { IoMdAlert } from "react-icons/io";
 import BookingLoading from "../../components/BookingLoading/BookingLoading";
 
-function BookingOrderPage() {
+function OrderWithNoActivity() {
   const [memberloading, setMemberLoading] = useState(false);
   const [activityPackloading, setActivityPackloading] = useState(false);
-  // const [checkoutLoading, setCheckoutLoading] = useState(false);
-  //獲取活動包activityPack
-  const location = useLocation();
-  const [activityPack, setActivityPack] = useState(location.state.activityPack);
+  //   // const [checkoutLoading, setCheckoutLoading] = useState(false);
+  //   //獲取活動包activityPack
+  //   const location = useLocation();
+  //   const [activityPack, setActivityPack] = useState(location.state.activityPack);
 
-  //活動包內容初始化
-  const [activePackD1, setActivePackD1] = useState([]);
-  const [activePackD2, setActivePackD2] = useState([]);
-  const [activePackD3, setActivePackD3] = useState([]);
-  const [activePackId1, setActivePackId1] = useState("");
-  const [activePackId2, setActivePackId2] = useState("");
-  const [activePackId3, setActivePackId3] = useState("");
+  //   //活動包內容初始化
+  //   const [activePackD1, setActivePackD1] = useState({});
+  //   const [activePackD2, setActivePackD2] = useState({});
+  //   const [activePackD3, setActivePackD3] = useState({});
 
   //下一步點擊時狀態紀錄
   const [nextStep, setNextStep] = useState("");
@@ -52,151 +49,143 @@ function BookingOrderPage() {
     setSumActivity,
   } = useContext(BookContext);
 
-  const [getAllActivePackData, setGetAllActivePackData] = useState();
+  //   const [getAllActivePackData, setGetAllActivePackData] = useState();
+  //   //activityState(要或不要參加<值:0或1>)
+  //   //countActivity(活動天數<值:0或1或2或3>)
+  //   //cityIdValue(城市的ID)
+  //   //activityPack(活動包總類，在心理測驗完後獲取)
+  //   //獲取活動包
 
-  //activityState(要或不要參加<值:0或1>)
-  //countActivity(活動天數<值:0或1或2或3>)
-  //cityIdValue(城市的ID)
-  //activityPack(活動包總類，在心理測驗完後獲取)
-  //獲取活動包
-  useEffect(() => {
-    console.log(
-      activityState,
-      JSON.stringify(countActivity),
-      cityIdValue,
-      activityPack
-    );
-    axios({
-      method: "post",
-      url: "http://localhost:5000/activePack/getActivePackData",
-      data: {
-        isActive: activityState,
-        joinTotal: countActivity,
-        cityId: cityIdValue,
-        activePackType: activityPack,
-      },
-    })
-      .then((res) => {
-        console.log(res.data.dataList);
-        setGetAllActivePackData(res.data.dataList);
+  //   useEffect(() => {
+  //     console.log(
+  //       activityState,
+  //       JSON.stringify(countActivity),
+  //       cityIdValue,
+  //       activityPack
+  //     );
+  //     axios({
+  //       method: "post",
+  //       url: "http://localhost:5000/activePack/getActivePackData",
+  //       data: {
+  //         isActive: activityState,
+  //         joinTotal: countActivity,
+  //         cityId: cityIdValue,
+  //         activePackType: activityPack,
+  //       },
+  //     })
+  //       .then((res) => {
+  //         console.log(res.data.dataList);
+  //         setGetAllActivePackData(res.data.dataList);
 
-        // console.log(res.data.dataList);
-        if (activity1Data === "1") {
-          setActivePackD1(res.data.dataList.D1);
-          console.log(123);
-          console.log(res.data.dataList.D1);
-          setActivePackId1(res.data.dataList.D1[0].activePackId);
-          console.log(res.data.dataList.D1[0].activePackId);
-        }
-        if (activity2Data === "3") {
-          setActivePackD2(res.data.dataList.D2);
-          setActivePackId2(res.data.dataList.D2[0].activePackId);
-        }
-        if (activity3Data === "5") {
-          setActivePackD3(res.data.dataList.D3);
-          setActivePackId3(res.data.dataList.D3[0].activePackId);
-        }
-        if (activity1Data === "2" && activity2Data === "3") {
-          setActivePackD2(res.data.dataList.D1);
-          setActivePackId1(res.data.dataList.D1[0].activePackId);
-        }
-        if (
-          activity1Data === "2" &&
-          activity2Data === "4" &&
-          activity3Data === "5"
-        ) {
-          setActivePackD3(res.data.dataList.D1);
-          setActivePackId1(res.data.dataList.D1[0].activePackId);
-        }
-      })
-      .then(() => {
-        setActivityPackloading(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // }
-  }, []);
+  //         // console.log(res.data.dataList);
+  //         if (activity1Data === "1") {
+  //           setActivePackD1(res.data.dataList.D1[0]);
+  //         }
+  //         if (activity2Data === "3") {
+  //           setActivePackD2(res.data.dataList.D2[0]);
+  //         }
+  //         if (activity3Data === "5") {
+  //           setActivePackD3(res.data.dataList.D3[0]);
+  //         }
+  //         if (activity1Data === "2" && activity2Data === "3") {
+  //           setActivePackD2(res.data.dataList.D1[0]);
+  //         }
+  //         if (
+  //           activity1Data === "2" &&
+  //           activity2Data === "4" &&
+  //           activity3Data === "5"
+  //         ) {
+  //           setActivePackD3(res.data.dataList.D1[0]);
+  //         }
+  //       })
+  //       .then(() => {
+  //         setActivityPackloading(true);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //     // }
+  //   }, []);
+  //   console.log(activePackD1);
+  //   const PackId = [];
 
-  const PackId = [];
+  //   if (activity1Data === "1") {
+  //     PackId.push(activePackD1.activePackId);
+  //   }
+  //   if (activity1Data === "2") {
+  //     PackId.push(null);
+  //   }
+  //   if (activity2Data === "3") {
+  //     PackId.push(activePackD2.activePackId);
+  //   }
+  //   if (activity2Data === "4") {
+  //     PackId.push(null);
+  //   }
+  //   if (activity3Data === "5") {
+  //     PackId.push(activePackD3.activePackId);
+  //   }
+  //   if (activity3Data === "6") {
+  //     PackId.push(null);
+  //   }
 
-  if (activity1Data === "1") {
-    PackId.push(activePackId1);
-  }
-  if (activity1Data === "2") {
-    PackId.push(null);
-  }
-  if (activity2Data === "3") {
-    PackId.push(activePackId2);
-  }
-  if (activity2Data === "4") {
-    PackId.push(null);
-  }
-  if (activity3Data === "5") {
-    PackId.push(activePackId3);
-  }
-  if (activity3Data === "6") {
-    PackId.push(null);
-  }
+  //   console.log(PackId);
 
-  console.log(PackId);
+  //   //顯示第一天活動包
+  //   const showAvtivity1Bag = () => {
+  //     if (activity1Data === "1") {
+  //       return (
+  //         <>
+  //           <ActivityBag
+  //             date={fst}
+  //             first={<span>Ckeck In</span>}
+  //             second={<p>前往預定飯店並參觀飯店空間</p>}
+  //             activePackItemTitle={activePackD1.activePackItemTitle}
+  //             activePackItemContent={activePackD1.activePackItemContent}
+  //             activePackItemContent2={activePackD1.activePackItemContent2}
+  //             activePackItemContent3={activePackD1.activePackItemContent3}
+  //           />
+  //         </>
+  //       );
+  //     }
+  //   };
 
-  //顯示第一天活動包
-  const showAvtivity1Bag = () => {
-    if (activity1Data === "1") {
-      return (
-        <>
-          <ActivityBag
-            date={fst}
-            first={<span>Ckeck In</span>}
-            second={<p>前往預定飯店並參觀飯店空間</p>}
-            activePackItemTitle={activePackD1[0].activePackItemTitle}
-            activePackItemContent={activePackD1[0].activePackItemContent}
-            activePackItemContent2={activePackD1[1].activePackItemContent}
-            activePackItemContent3={activePackD1[2].activePackItemContent}
-          />
-        </>
-      );
-    }
-  };
+  //   //顯示第二天活動包
+  //   const showAvtivity2Bag = () => {
+  //     if (activity2Data === "3") {
+  //       return (
+  //         <>
+  //           <ActivityBag
+  //             date={sec}
+  //             first={<span>美好的早晨</span>}
+  //             second={<p>找個屬於你的小角落享用美味早餐</p>}
+  //             activePackItemTitle={activePackD2.activePackItemTitle}
+  //             activePackItemContent={activePackD2.activePackItemContent}
+  //             activePackItemContent2={activePackD2.activePackItemContent2}
+  //             activePackItemContent3={activePackD2.activePackItemContent3}
+  //           />
+  //         </>
+  //       );
+  //     }
+  //   };
 
-  //顯示第二天活動包
-  const showAvtivity2Bag = () => {
-    if (activity2Data === "3") {
-      return (
-        <>
-          <ActivityBag
-            date={sec}
-            first={<span>美好的早晨</span>}
-            second={<p>找個屬於你的小角落享用美味早餐</p>}
-            activePackItemTitle={activePackD2[0].activePackItemTitle}
-            activePackItemContent={activePackD2[0].activePackItemContent}
-            activePackItemContent2={activePackD2[1].activePackItemContent}
-            activePackItemContent3={activePackD2[2].activePackItemContent}
-          />
-        </>
-      );
-    }
-  };
-
-  //顯示第三天活動包
-  const showAvtivity3Bag = () => {
-    if (activity3Data === "5") {
-      return (
-        <>
-          <ActivityBag
-            date={trd}
-            first={<span>美好的早晨</span>}
-            second={<p>找個屬於你的小角落享用美味早餐</p>}
-            activePackItemTitle={activePackD3[0].activePackItemTitle}
-            activePackItemContent={activePackD3[0].activePackItemContent}
-            activePackItemContent2={activePackD3[1].activePackItemContent}
-            activePackItemContent3={activePackD3[2].activePackItemContent}
-          />
-        </>
-      );
-    }
-  };
+  //   //顯示第三天活動包
+  //   const showAvtivity3Bag = () => {
+  //     if (activity3Data === "5") {
+  //       return (
+  //         <>
+  //           <ActivityBag
+  //             date={trd}
+  //             first={<span>美好的早晨</span>}
+  //             second={<p>找個屬於你的小角落享用美味早餐</p>}
+  //             activePackItemTitle={activePackD3.activePackItemTitle}
+  //             activePackItemContent={activePackD3.activePackItemContent}
+  //             activePackItemContent2={activePackD3.activePackItemContent2}
+  //             activePackItemContent3={activePackD3.activePackItemContent3}
+  //           />
+  //         </>
+  //       );
+  //     }
+  //   };
 
   const [memberId, setMemberId] = useState("");
   const [memberNickName, setMemberNickName] = useState("");
@@ -242,20 +231,20 @@ function BookingOrderPage() {
     }
   };
 
-  //日期計算
-  let nd = new Date(date);
-  let y = nd.getFullYear();
-  let m = nd.getMonth() + 1;
-  let d = nd.getDate();
-  let fst = `${y.toString()}/${m.toString().padStart(2, "0")}/${d
-    .toString()
-    .padStart(2, "0")}`;
-  let sec = `${y.toString()}/${m.toString().padStart(2, "0")}/${(d + 1)
-    .toString()
-    .padStart(2, "0")}`;
-  let trd = `${y.toString()}/${m.toString().padStart(2, "0")}/${(d + 2)
-    .toString()
-    .padStart(2, "0")}`;
+  //   //日期計算
+  //   let nd = new Date(date);
+  //   let y = nd.getFullYear();
+  //   let m = nd.getMonth() + 1;
+  //   let d = nd.getDate();
+  //   let fst = `${y.toString()}/${m.toString().padStart(2, "0")}/${d
+  //     .toString()
+  //     .padStart(2, "0")}`;
+  //   let sec = `${y.toString()}/${m.toString().padStart(2, "0")}/${(d + 1)
+  //     .toString()
+  //     .padStart(2, "0")}`;
+  //   let trd = `${y.toString()}/${m.toString().padStart(2, "0")}/${(d + 2)
+  //     .toString()
+  //     .padStart(2, "0")}`;
 
   //2022-06-23 ZH
   //根據不同roomState顯示不同房間名稱
@@ -336,21 +325,21 @@ function BookingOrderPage() {
     }
   };
 
-  //判斷活動包是否出現在畫面上
-  const [activityBag1Visible, setactivityBag1Visible] = useState(false);
-  const [activityBag2Visible, setactivityBag2Visible] = useState(false);
-  const [activityBag3Visible, setactivityBag3Visible] = useState(false);
-  useEffect(() => {
-    activity1Data === "1"
-      ? setactivityBag1Visible(true)
-      : setactivityBag1Visible(false);
-    activity2Data === "3"
-      ? setactivityBag2Visible(true)
-      : setactivityBag2Visible(false);
-    activity3Data === "5"
-      ? setactivityBag3Visible(true)
-      : setactivityBag3Visible(false);
-  }, [activity1Data, activity2Data, activity3Data]);
+  //   //判斷活動包是否出現在畫面上
+  //   const [activityBag1Visible, setactivityBag1Visible] = useState(false);
+  //   const [activityBag2Visible, setactivityBag2Visible] = useState(false);
+  //   const [activityBag3Visible, setactivityBag3Visible] = useState(false);
+  //   useEffect(() => {
+  //     activity1Data === "1"
+  //       ? setactivityBag1Visible(true)
+  //       : setactivityBag1Visible(false);
+  //     activity2Data === "3"
+  //       ? setactivityBag2Visible(true)
+  //       : setactivityBag2Visible(false);
+  //     activity3Data === "5"
+  //       ? setactivityBag3Visible(true)
+  //       : setactivityBag3Visible(false);
+  //   }, [activity1Data, activity2Data, activity3Data]);
 
   //計算房間金額
   const [roomSum, setRoomSum] = useState(Number(0));
@@ -404,10 +393,10 @@ function BookingOrderPage() {
         roomId: roomState,
         couponItemId: couponState,
         orderTotal: sumActivity,
-        activePackId: PackId,
+        activePackId: null,
         isActive: activityState,
         joinTotal: countActivity,
-        orderItemPrice: 1700,
+        orderItemPrice: 1000,
       };
       console.log(orderDetails);
       fetch("http://localhost:5000/order/getAndSaveOrderData", {
@@ -452,10 +441,6 @@ function BookingOrderPage() {
           <AiOutlineRight />
         </span>
         <Link to="/bookingHomePage">即刻預定</Link>
-        <span>
-          <AiOutlineRight />
-        </span>
-        <Link to="/psychologicalExam">心理測驗</Link>
         <span>
           <AiOutlineRight />
         </span>
@@ -536,52 +521,52 @@ function BookingOrderPage() {
           )}
         </div>
         <div className="orderList">
-          {activityPackloading ? (
-            <>
-              <div className="orderListHeader">
-                <h1>訂購者資料確認</h1>
-                <p>
-                  一條龍記錄您的訂單及活動行程，並即時更新在會員中心讓您隨時查看。
-                </p>
+          {/* {activityPackloading ? (
+            <> */}
+          <div className="orderListHeader">
+            <h1>訂購者資料確認</h1>
+            <p>
+              一條龍記錄您的訂單及活動行程，並即時更新在會員中心讓您隨時查看。
+            </p>
+          </div>
+          <div className="orderListBody">
+            <div className="orderListImg">{handleImgData()}</div>
+            <div className="orderListAll">
+              <div className="list">
+                <p>入住日期</p>
+                <span>{date}</span>
               </div>
-              <div className="orderListBody">
-                <div className="orderListImg">{handleImgData()}</div>
-                <div className="orderListAll">
-                  <div className="list">
-                    <p>入住日期</p>
-                    <span>{date}</span>
-                  </div>
-                  <div className="list">
-                    <p>入住天數</p>
-                    <span>{dayState}</span>
-                  </div>
-                  <div className="list">
-                    <p>青旅/房型</p>
-                    <span>{handleroomStateData()}</span>
-                  </div>
-                  <div className="list">
-                    <p>優惠票券</p>
-                    <span>{handleCouponStateData()}</span>
-                  </div>
-                  <div className="list">
-                    <p>活動參與</p>
-                    <span>{handleActivityStateData()}</span>
-                  </div>
-                  <div className="list">
-                    <p>活動天數</p>
-                    <span>{countActivity}</span>
-                  </div>
-                </div>
+              <div className="list">
+                <p>入住天數</p>
+                <span>{dayState}</span>
               </div>
-            </>
+              <div className="list">
+                <p>青旅/房型</p>
+                <span>{handleroomStateData()}</span>
+              </div>
+              <div className="list">
+                <p>優惠票券</p>
+                <span>{handleCouponStateData()}</span>
+              </div>
+              <div className="list">
+                <p>活動參與</p>
+                <span>{handleActivityStateData()}</span>
+              </div>
+              <div className="list">
+                <p>活動天數</p>
+                <span>{countActivity}</span>
+              </div>
+            </div>
+          </div>
+          {/* </>
           ) : (
             <div style={{ marginLeft: 600 }}>
               <BookingLoading />
             </div>
-          )}
+          )} */}
         </div>
 
-        <div className="marginContainer">
+        {/* <div className="marginContainer">
           {activityPackloading ? (
             <>
               {getAllActivePackData && (
@@ -611,15 +596,15 @@ function BookingOrderPage() {
               <BookingLoading />
             </div>
           )}
-        </div>
+        </div> */}
         <div className="line"></div>
-        <div className="marginContainer plusBuy">
+        {/* <div className="marginContainer plusBuy">
           <h5>KOMORU Star Hostel 背包客房型 加購活動確認</h5>
           <p>
             活動參與天數{countActivity}天:
             <span>NT${countActivity * 700}元</span>
           </p>
-        </div>
+        </div> */}
         <div className="marginContainer Total">
           <p>
             房間總共:<span> NT${roomSum}元</span>
@@ -639,4 +624,4 @@ function BookingOrderPage() {
   );
 }
 
-export default BookingOrderPage;
+export default OrderWithNoActivity;

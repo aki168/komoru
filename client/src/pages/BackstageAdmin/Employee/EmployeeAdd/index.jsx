@@ -165,7 +165,7 @@ function EmployeeAdd({ setAddShow }) {
           )}
         </>
       )}
-      <div className="mt-3 mb-1 d-flex justify-content-end">
+      <div className="mt-3 mb-4 d-flex justify-content-end">
         <button
           className="btn km-add-button-modal km-modal-footer"
           type="submit"
