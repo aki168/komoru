@@ -322,7 +322,16 @@ exports.getOrderItemDataListByOrderId = async (orderId) => {
   return new Promise((resolve, reject) => {
     let sql =
       "SELECT" +
-      "`OrderItem`.`order_item_date`, `OrderItem`.`is_active`, `OrderItem`.`order_item_price`, `ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`active_pack_item_content2`, `ActivePackItem`.`active_pack_item_content3`, `OrderItem`.`active_pack_id`, `ActivePackItem`.`partnership_id`, `Partnership`.`partnership_name`, `Partnership`.`partnership_addr` " +
+      "`OrderItem`.`order_item_date`, `OrderItem`.`is_active`, `OrderItem`.`order_item_price`, `ActivePackItem`.`active_pack_item_title` " +
+      "FROM `Order` " +
+      "LEFT JOIN OrderItem ON`Order`.`order_id` = `OrderItem`.`order_id` " +
+      "LEFT JOIN `ActivePack` ON `OrderItem`.`active_pack_id` = `ActivePack`.`active_pack_id` " +
+      "LEFT JOIN `ActivePackItem` ON `ActivePack`.`active_pack_id` = `ActivePackItem`.`active_pack_id` " +
+      "WHERE `Order`.`order_id` = ? " +
+      "ORDER BY `order_item_id` DESC ";
+
+    let partnerSql = "SELECT " +
+      "`ActivePackItem`.`active_pack_item_content`, `OrderItem`.`active_pack_id`, `ActivePackItem`.`partnership_id`, `Partnership`.`partnership_name`, `Partnership`.`partnership_addr` " +
       "FROM `Order`" +
       "LEFT JOIN OrderItem ON`Order`.`order_id` = `OrderItem`.`order_id`" +
       "LEFT JOIN `ActivePack` ON `OrderItem`.`active_pack_id` = `ActivePack`.`active_pack_id`" +
@@ -330,15 +339,27 @@ exports.getOrderItemDataListByOrderId = async (orderId) => {
       "LEFT JOIN `Partnership` ON `ActivePackItem`.`partnership_id` = `Partnership`.`partnership_id` " +
       "WHERE `Order`.`order_id` = ? " +
       "ORDER BY `order_item_id` DESC ";
-
     db.con.query(sql, orderId, (err, rows, fields) => {
       if (err) {
         reject(err);
       }
-      resolve(db.rowDataToCamelData(rows));
+      let orderItemData = db.rowDataToCamelData(rows)
+      console.log('orderItemData')
+      console.log(orderItemData)
+      
+      db.con.query(partnerSql, orderId, (err, rows, fields) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(
+          console.log(db.rowDataToCamelData(rows)),
+          
+          orderItemData,db.rowDataToCamelData(rows));
+      })
     });
   });
 };
+
 
 // 2022-07-05 PG
 // 取得訂單資料 by orderId
