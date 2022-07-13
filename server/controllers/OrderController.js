@@ -175,63 +175,64 @@ exports.getCouponData = async (req, res) => {
 // 2022-06-30 AKI MJ
 // 取得訂單資料byMemberId
 exports.getOrderDataByMemberId = async (req, res) => {
-  // const { token } = req.body;
-  // if (token) {
-  //   //   解碼
-  //   const decoded = await promisify(jwt.verify)(token, "jwtSecret");
-  //   const { memberId } = decoded;
-    let memberId = 8763
-    // 解碼完後對照資料庫，有的話回傳該訂單資料
+  const { token } = req.body;
+  if (token) {
+    //   解碼
+    const decoded = await promisify(jwt.verify)(token, "jwtSecret");
+    const { memberId } = decoded;
+  // let memberId = 8772
+  // 解碼完後對照資料庫，有的話回傳該訂單資料
 
-    try {
-      // 1.用memberId查orderId
-      let getOrdeIdByMemberId = await orderModel.getOrdeIdByMemberId(memberId);
-      // 2.用orderId查訂單詳細內容
-      let getOrderDatalistByOrderId = await orderModel.splitOrderIdArray(
-        getOrdeIdByMemberId
+  try {
+    // 1.用memberId查orderId
+    let getOrdeIdByMemberId = await orderModel.getOrdeIdByMemberId(memberId);
+    // 2.用orderId查訂單詳細內容
+    let getOrderDatalistByOrderId = await orderModel.splitOrderIdArray(getOrdeIdByMemberId);
+    console.log(getOrderDatalistByOrderId)
+
+    // 將 enum 數值轉換為文字
+    for (let i = 0; i < getOrderDatalistByOrderId.length; i++) {
+      let valueToString = configController.enumValueToString(
+        "Room",
+        "roomType",
+        getOrderDatalistByOrderId[i].roomType
       );
-      // 將 enum 數值轉換為文字
-      for (let i = 0; i < getOrderDatalistByOrderId.length; i++) {
-        let valueToString = configController.enumValueToString(
-          "Room",
-          "roomType",
-          getOrderDatalistByOrderId[i].roomType
-        );
-        let orderStatusValueToString = configController.enumValueToString(
-          "Order",
-          "orderStatus",
-          getOrderDatalistByOrderId[i].orderStatus
-        );
-        let memberGenderValueToString = configController.enumValueToString(
-          "Member",
-          "gender",
-          getOrderDatalistByOrderId[i].memberGender
-        );
+      let orderStatusValueToString = configController.enumValueToString(
+        "Order",
+        "orderStatus",
+        getOrderDatalistByOrderId[i].orderStatus
+      );
+      let memberGenderValueToString = configController.enumValueToString(
+        "Member",
+        "gender",
+        getOrderDatalistByOrderId[i].memberGender
+      );
 
-        // 如果檢查結果是正常，即將值取代為對應的文字，否則輸出錯誤訊息
-        getOrderDatalistByOrderId[i].roomType = valueToString.errCheck
-          ? valueToString.transferString
-          : valueToString.errMsg;
+      // 如果檢查結果是正常，即將值取代為對應的文字，否則輸出錯誤訊息
+      getOrderDatalistByOrderId[i].roomType = valueToString.errCheck
+        ? valueToString.transferString
+        : valueToString.errMsg;
 
-        getOrderDatalistByOrderId[i].orderStatus =
-          orderStatusValueToString.errCheck
-            ? orderStatusValueToString.transferString
-            : orderStatusValueToString.errMsg;
+      getOrderDatalistByOrderId[i].orderStatus =
+        orderStatusValueToString.errCheck
+          ? orderStatusValueToString.transferString
+          : orderStatusValueToString.errMsg;
 
-        getOrderDatalistByOrderId[i].memberGender =
-          memberGenderValueToString.errCheck
-            ? memberGenderValueToString.transferString
-            : memberGenderValueToString.errMsg;
-      }
-      configController.sendJsonMsg(res, true, "", getOrderDatalistByOrderId);
-    } catch (error) {
-      // 目前不確定這邊要怎改
-      console.log(error);
-      res.status(500).json({ message: "Server error" });
+      getOrderDatalistByOrderId[i].memberGender =
+        memberGenderValueToString.errCheck
+          ? memberGenderValueToString.transferString
+          : memberGenderValueToString.errMsg;
     }
-  // } else {
-  //   res.json({ message: "該用戶尚未登入" });
-  // }
+
+    configController.sendJsonMsg(res, true, "", getOrderDatalistByOrderId);
+  } catch (error) {
+    // 目前不確定這邊要怎改
+    console.log(error);
+    res.status(500).json({ message: "Server error" });
+  }
+  } else {
+    res.json({ message: "該用戶尚未登入" });
+  }
 };
 
 // 2022-07-05 PG
