@@ -49,15 +49,18 @@ export default function Home() {
         <br />
         <br />
         <div className='Stepseven'>
-        <Example />
+          <Example />
         </div>
         <br />
         <br />
+
         <div className='RoomList'>
-<QuiltedImageList />
+          <QuiltedImageList />
         </div>
-<br/>
-<br/>
+
+        <br />
+        <br />
+        
       </div>
 
     </div>

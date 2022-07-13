@@ -1,55 +1,57 @@
 import { logout } from "../../App";
-import "./Navbar.css";
+import "./Navbar-bg-white.css";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
 
 export default function Navbar() {
   
   const token = localStorage.token;
   
   return (
-    <div className="container-fluid navbar sticky-top">
+    <nav className="navbar--bgWhite">
       <h1>
         <Link className="navbar--title" to="/">
           <img
             className="navbar--logo"
-            src="KOMORU_LOGO_Home.png"
+            src="KOMORU_LOGO_OG.png"
             alt="LOGO"
           ></img>
         </Link>
       </h1>
       <ul className="navbar--menu">
-        <li >
-          <Link className="navbar--item" to="/bookingHomepage" style={{ color: "#ED8C4E" }}>
-            即刻預定
+        <li>
+          <Link className="navbar--item--bgWhite" to="/hotelIntro">
+            房型介紹
           </Link>
         </li>
         <li>
-          <Link className="navbar--item" to="/hotelIntro">
-            合作飯店
+          <Link className="navbar--item--bgWhite" to="/contactUs">
+            聯絡我們
           </Link>
         </li>
         <li>
-          <Link className="navbar--item" to="/user-home">
+          <Link className="navbar--item--bgWhite" to="/user-home">
             會員中心
           </Link>
         </li>
         <li>
-          <Link className="navbar--item" to="/contactUs">
-            聯絡我們
+          <Link className="navbar--item--bgWhite" to="/bookingHomepage">
+            即刻預定
           </Link>
         </li>
-        <li className="logout">
+        <li>
+          <Link className="navbar--item--bgWhite" to="/">
+            EN | TW
+          </Link>
+        </li>
+        <li>
           {token && (
-            // 改不掉按鈕樣式
-            <Button variant="white" size="sm" onClick={logout} style={{ color: "#ED8C4E" }}>
-              LOG
+            <Button variant="secondary" size="sm" onClick={logout}>
+              登出
             </Button>
           )}
         </li>
       </ul>
-    
-    </div>
+    </nav>
   );
 }
