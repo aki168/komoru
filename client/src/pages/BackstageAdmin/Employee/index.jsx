@@ -325,7 +325,7 @@ function Employee() {
                         <td>員工帳號</td>
                         <td>員工姓名</td>
                         <td>員工電話</td>
-                        <td></td>
+                        <td>功能</td>
                       </tr>
                     </thead>
                     <tbody>{displayUsers}</tbody>

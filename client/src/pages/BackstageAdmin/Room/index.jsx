@@ -161,12 +161,13 @@ function Room() {
         // .then((response) => response.json())
         .then((res) => {
           console.log(res);
+          alert("移除成功");
+          window.location.reload(false);
         })
         .catch((e) => {
           console.error(e);
         });
 
-      window.location.reload(false);
     }
   };
   /*20220622 YN
@@ -302,12 +303,12 @@ function Room() {
                     onChange={sreachChangeHandle}
                   >
                    <option value="" selected>
-                      飯店搜尋
+                      區域搜尋
                     </option>
-                    <option value="1">北區</option>
-                    <option value="2">中區</option>
-                    <option value="3">南區</option>
-                    <option value="4">東區</option>
+                    <option value="1">北部</option>
+                    <option value="2">中部</option>
+                    <option value="3">南部</option>
+                    <option value="4">東部</option>
                   </select>
                 </div>
                 <div className="col-2">
@@ -336,7 +337,7 @@ function Room() {
                         <td className="col-sm-1">區域</td>
                         <td className="col-sm-1">容納人數</td>
                         <td className="col-sm-1">圖片</td>
-                        <td className="col-sm-1"></td>
+                        <td className="col-sm-1">功能</td>
                       </tr>
                     </thead>
                     <tbody

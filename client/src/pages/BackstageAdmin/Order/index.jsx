@@ -232,7 +232,7 @@ function Order() {
           </td>
           <td className="col-sm-1">{data.orderNumber}</td>
           <td className="col-sm-1">{data.memberName}</td>
-          <td className="col-sm-2">{data.roomType}</td>
+          <td className="col-sm-1">{data.roomType}</td>
           <td className="col-sm-1">{data.orderStartDate}</td>
           <td className="col-sm-1">{data.stayNight}</td>
           <td className="col-sm-1">{data.orderStatus}</td>

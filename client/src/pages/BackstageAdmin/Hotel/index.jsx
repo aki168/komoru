@@ -321,7 +321,7 @@ function Hotel() {
                         <td className="col-sm-1">地址</td>
                         <td className="col-sm-1">聯絡電話</td>
                         <td className="col-sm-1">圖片</td>
-                        <td className="col-sm-1"></td>
+                        <td className="col-sm-1">功能</td>
                       </tr>
                     </thead>
                     <tbody

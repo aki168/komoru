@@ -335,7 +335,7 @@ function Partnership() {
                         <td>區域</td>
                         <td>地址</td>
                         <td>聯絡電話</td>
-                        <td></td>
+                        <td>功能</td>
                       </tr>
                     </thead>
                     <tbody>{displayUsers}</tbody>
