@@ -8,12 +8,14 @@ import "./PartnerHotel.css";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 import RoomItemLeft from "./roomItem/RoomItemLeft";
 import RoomItemRight from "./roomItem/RoomItemRight";
 import PrivateRoomModal from "./roomModal/PrivateRoomModal";
 import BackPackerRoomModal from "./roomModal/BackPackerRoomModal";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import UserHeader from "../../components/User/UserHeader";
+// import WeatherApp from "../../components/WeatherApp/WeatherApp";
 
 const PartnerHotel = () => {
   useEffect(() => {
@@ -260,12 +262,12 @@ const PartnerHotel = () => {
               <h1>夾腳拖的家</h1>
               <h1>Flip Flop Hostel</h1>
             </div>
-            <p>{data[0].hotelContent}</p>
+            <p>{data[3].hotelContent}</p>
             <br />
             <br />
             <br />
-            <p>{data[0].hotelTel}</p>
-            <p>{data[0].hotelAddr}</p>
+            <p>{data[3].hotelTel}</p>
+            <p>{data[3].hotelAddr}</p>
             <a href="https://www.facebook.com/OwlStay.FlipFlopHostel/">
               認識 夾角拖的家 Flip Flop Hostel
             </a>
@@ -304,15 +306,16 @@ const PartnerHotel = () => {
               <h1>誠星青年旅館</h1>
               <h1>Star Hostel</h1>
             </div>
-            <p>{data[1].hotelContent}</p>
+            <p>{data[0].hotelContent}</p>
             <br />
             <br />
             <br />
             <br />
-            <p>{data[1].hotelTel}</p>
-            <p>{data[1].hotelAddr}</p>
+            <br />
+            <p>{data[0].hotelTel}</p>
+            <p>{data[0].hotelAddr}</p>
             <a href="https://www.facebook.com/OwlStay.FlipFlopHostel/">
-              認識 夾角拖的家 Flip Flop Hostel
+              認識 誠星青年旅館 Star Hostel
             </a>
           </div>
           {Hotel1Img.map((Taipeiimg, index) => {
@@ -367,14 +370,14 @@ const PartnerHotel = () => {
           })}
           <div className="sizeRight" data-aos="fade-up">
             <div>
-              <h1>{data[2].hotelTitle}</h1>
+              <h1>快活慢行</h1>
             </div>
-            <p>{data[2].hotelContent}</p>
+            <p>{data[1].hotelContent}</p>
             {/* <br /> */}
-            <p>{data[2].hotelTel}</p>
-            <p>{data[2].hotelAddr}</p>
+            <p>{data[1].hotelTel}</p>
+            <p>{data[1].hotelAddr}</p>
             <a href="https://www.facebook.com/OwlStay.FlipFlopHostel/">
-              認識 夾角拖的家 Flip Flop Hostel
+              認識 快活慢行
             </a>
           </div>
         </section>
@@ -409,9 +412,9 @@ const PartnerHotel = () => {
         })} */}
           <div className="sizeLeft" data-aos="fade-up">
             <div>
-              <h1>{data[3].hotelTitle}</h1>
+              <h1>山林山鄰</h1>
             </div>
-            <p>{data[3].hotelContent}</p>
+            <p>{data[2].hotelContent}</p>
             <br />
             <br />
             <br />
@@ -421,10 +424,10 @@ const PartnerHotel = () => {
             <br />
             <br />
             <br />
-            <p>{data[3].hotelTel}</p>
-            <p>{data[3].hotelAddr}</p>
+            <p>{data[2].hotelTel}</p>
+            <p>{data[2].hotelAddr}</p>
             <a href="https://www.facebook.com/OwlStay.FlipFlopHostel/">
-              認識 夾角拖的家 Flip Flop Hostel
+              認識 山林山鄰
             </a>
           </div>
           {Hotel4Img.map((Hualienimg, index) => {
@@ -447,6 +450,7 @@ const PartnerHotel = () => {
           backPackerUrl="http://localhost:5000/images/room/room-12.jpeg"
         />
       </div>
+      <Footer />
     </>
   );
 };

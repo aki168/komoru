@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./ContactUs.css";
 import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 import AutoCarousel from "./AutoCarousel";
 import axios from "axios";
 // import ContactUsModal from "./ContactUsModal";
@@ -52,10 +53,6 @@ const ContactUs = () => {
       })
         .then((res) => {
           console.log(res);
-          // console.log({
-          //   subject: formData.name + "," + formData.email + "," + formData.tel,
-          //   html: formData.html,
-          // });
 
           setFormData({
             name: "",
@@ -66,12 +63,7 @@ const ContactUs = () => {
         })
         .then(() => {
           alert("我們已收到您的訊息!謝謝!");
-          // setLoading(true);
         })
-        // .then(() => {
-        //   // setOpencontactUsModal(true);
-        //   setReceive(false);
-        // })
         .catch((err) => {
           console.log(err);
         });
@@ -111,7 +103,7 @@ const ContactUs = () => {
         <form className="contactForm">
           <h1>立即免費聯繫</h1>
           <p>
-            <AiOutlineUser className="contactIcon" />
+            {/* <AiOutlineUser className="contactIcon" /> */}
             <input
               className="basicText"
               id="name"
@@ -131,7 +123,7 @@ const ContactUs = () => {
             )}
           </p>
           <p>
-            <GoMail className="contactIcon" />
+            {/* <GoMail className="contactIcon" /> */}
             <input
               className="basicText"
               id="email"
@@ -151,7 +143,7 @@ const ContactUs = () => {
             )}
           </p>
           <p>
-            <AiOutlinePhone className="contactIcon" />
+            {/* <AiOutlinePhone className="contactIcon" /> */}
             <input
               className="basicText"
               id="tel"
@@ -171,7 +163,7 @@ const ContactUs = () => {
             )}
           </p>
           <p>
-            <GoComment className="contactIcon" />
+            {/* <GoComment className="contactIcon" /> */}
             <textarea
               className="messegeText"
               id="html"
@@ -211,6 +203,7 @@ const ContactUs = () => {
           </div>
         </div>
       )} */}
+      <Footer />
     </>
   );
 };
