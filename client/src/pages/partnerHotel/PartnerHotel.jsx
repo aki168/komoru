@@ -7,7 +7,7 @@ import axios from "axios";
 import "./PartnerHotel.css";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import Navbar from "../../components/Navbar/Navbar-bg-white";
+import Navbar from "../../components/Navbar/Navbar";
 import RoomItemLeft from "./roomItem/RoomItemLeft";
 import RoomItemRight from "./roomItem/RoomItemRight";
 import PrivateRoomModal from "./roomModal/PrivateRoomModal";
@@ -234,7 +234,7 @@ const PartnerHotel = () => {
 
       <div className="pHotelContainer">
         {/* 台北 */}
-        <section className="sliderleft mt-3">
+        <section className="sliderleft">
           <BsChevronLeft
             className="sliderleft-left-arrow"
             onClick={prevSlide3}
