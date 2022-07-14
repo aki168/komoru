@@ -61,7 +61,21 @@ function BookingPageImgAll() {
   // return <div className="rightImgContainer">{bookingHomePageImg};</div>;
   return (
     <div className="rightImgContainer">
-      <img src={require("./訂房首頁圖.png")} alt="訂房首頁圖" />
+      <img
+        className="rightImgContainer-img"
+        src={require("./訂房首頁圖.png")}
+        alt="訂房首頁圖"
+      />
+      <img
+        className="rightImgContainer-img"
+        src={require("./bookingimage2.jpeg")}
+        alt="訂房首頁圖"
+      />
+      <img
+        className="rightImgContainer-img"
+        src={require("./bookingimage3.jpeg")}
+        alt="訂房首頁圖"
+      />
       {/* <img src="http://localhost:5000/images/hotel/hotel-15.jpeg" alt="" /> */}
     </div>
   );

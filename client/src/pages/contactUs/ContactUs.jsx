@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ContactUs.css";
-import Navbar from "../../components/Navbar/Navbar-bg-white";
+import Navbar from "../../components/Navbar/Navbar";
 import AutoCarousel from "./AutoCarousel";
 import axios from "axios";
 // import ContactUsModal from "./ContactUsModal";

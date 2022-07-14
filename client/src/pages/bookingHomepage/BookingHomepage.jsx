@@ -26,7 +26,6 @@ function BookingHomepage() {
         </span>
         <p>即刻預定</p>
       </div>
-      {/* <BreadCrumbs /> */}
       <div className="bookingHomepageContainer">
         <Booking />
       </div>

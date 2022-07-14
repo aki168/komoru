@@ -1,17 +1,22 @@
+.about{
+    margin-top: 200px;
+}
+
+.aboutwords{
+   width: 900px;
+   margin: 0 auto;
+}
+
 .Komoruthree{
     display: flex;
     justify-content: space-around;
 }
 
-.backImg{
-width: 1920px;
-height: 950px;
-}
-
-.Stepseven{
+.Homepic{
     margin-left : auto;
 	margin-right: auto;
-    width: 1200px;
+    width: 1920px;
+    height:950px;
 }
 
 .RoomList{
@@ -19,7 +24,3 @@ height: 950px;
     justify-content: space-around;
 }
 
-h3{
-    font-family: wfont_a7b4cf_a230c1af664a46cf8472b2dca1c723ea,wf_a230c1af664a46cf8472b2dca,orig_agrandir_wide_medium_d_4;
-    
-}
