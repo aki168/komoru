@@ -8,41 +8,33 @@ export default function Example(props)
     var items = [
 
         {
-            name: "Random Name #2",
+            // name: "Random Name #2",
             description: <CardMedia
             component="img"
-            height="500"
-            image="3.png"
+            height="1000"
+            image="探索照片.webp"
             alt="step1"
           />
         },
         {
-            name: "Random Name #2",
+            // name: "Random Name #2",
             description: <CardMedia
             component="img"
-            height="500"
+            height="1000"
             image="3.png"
-            alt="step1"
+            alt="step2"
           />
         },
         {
-            name: "Random Name #2",
+            // name: "Random Name #2",
             description: <CardMedia
             component="img"
-            height="500"
+            height="1000"
             image="3.png"
-            alt="step1"
+            alt="step3"
           />
         },
-        {
-            name: "Random Name #2",
-            description: <CardMedia
-            component="img"
-            height="500"
-            image="3.png"
-            alt="step1"
-          />
-        }
+        
     ]
 
     return (
