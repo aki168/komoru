@@ -34,6 +34,7 @@ const DemoLiquidCoupon = ({southData}) => {
        border: 4,
        distance: 8,
      },
+     color:'#ed8c4e',
      wave: {
        length: 128,
      },

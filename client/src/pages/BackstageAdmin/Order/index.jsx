@@ -471,7 +471,7 @@ function Order() {
         // centered
         show={editShow}
         onHide={handleEditClose}
-        style={{ margin: "-50px 0 0 170px" }}
+        style={{ margin: "-60px 0 0 170px" }}
       >
         <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
         {editData && (

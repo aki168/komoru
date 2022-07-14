@@ -162,12 +162,13 @@ function Hotel() {
         // .then((response) => response.json())
         .then((res) => {
           console.log(res);
+          alert('移除成功')
+          window.location.reload(false);
         })
         .catch((e) => {
           console.error(e);
         });
 
-      window.location.reload(false);
     }
   };
 

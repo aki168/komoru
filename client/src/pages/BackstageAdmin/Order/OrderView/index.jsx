@@ -79,89 +79,89 @@ function OrderView({ setEditShow, editData }) {
   return (
     <>
       {loading ? (
-        <div className="container border mb-3">
-          <div>
-            <h3 className="mb-3 mt-3">訂購者資料</h3>
+        <div className="container mb-5">
+          <div className="px-2">
+            <h3 className="mb-3 mt-2">訂購者資料</h3>
             <div className="row">
               <div className="col-6">
                 <div className=" d-flex align-items-center ">
-                  <h5 className="mb-3 col-4">帳號</h5>
+                  <h5 className="mb-3 col-3">帳號</h5>
                   <p className="mb-3 col-4">{orderMemberData.memberMail}</p>
                 </div>
                 <div className=" d-flex align-items-center ">
-                  <h5 className="mb-3 col-4">姓名</h5>
+                  <h5 className="mb-3 col-3">姓名</h5>
                   <p className="mb-3 col-4">{orderMemberData.memberName}</p>
                 </div>
                 <div className=" d-flex align-items-center ">
-                  <h5 className="mb-3 col-4">暱稱</h5>
+                  <h5 className="mb-3 col-3">暱稱</h5>
                   <p className="mb-3 col-4">{orderMemberData.memberNickName}</p>
                 </div>
               </div>
               <div className="col-6">
                 <div className=" d-flex align-items-center ">
-                  <h5 className="mb-3 col-4">性別</h5>
+                  <h5 className="mb-3 col-3">性別</h5>
                   <p className="mb-3 col-4">{orderMemberData.memberGender}</p>
                 </div>
                 <div className=" d-flex align-items-center">
-                  <h5 className="mb-3 col-4">手機</h5>
+                  <h5 className="mb-3 col-3">手機</h5>
                   <p className="mb-3 col-4">{orderMemberData.memberPhone}</p>
                 </div>
                 <div className=" d-flex align-items-center ">
-                  <h5 className="mb-3 col-4">付款方式</h5>
+                  <h5 className="mb-3 col-3">付款方式</h5>
                   <p className="mb-3 col-4">{orderMemberData.payment}</p>
                 </div>
               </div>
             </div>
           </div>
-          <div>
+          <div className="px-2">
             <h3 className="mb-3 mt-3">訂單資料</h3>
             <div className="row">
-              <div className="col-6">
+              <div className="col-6 mb-3">
                 <div className=" d-flex align-items-center ">
-                  <h5 className="mb-3 col-4">入住日期</h5>
+                  <h5 className="mb-3 col-3">入住日期</h5>
                   <p className="mb-3 col-4">{orderMemberData.orderStartDate}</p>
                 </div>
                 <div className=" d-flex align-items-center ">
-                  <h5 className="mb-3 col-4">退房日期</h5>
+                  <h5 className="mb-3 col-3">退房日期</h5>
                   <p className="mb-3 col-4">{orderMemberData.orderEndDate}</p>
                 </div>
                 <div className=" d-flex align-items-center ">
-                  <h5 className="mb-3 col-4">青旅/房型</h5>
+                  <h5 className="mb-3 col-3">飯店/房型</h5>
                   <p className="mb-3 col-6">{orderMemberData.roomDetail}</p>
                 </div>
               </div>
-              <div className="col-6">
+              <div className="col-6 mb-3">
                 <div className=" d-flex align-items-center ">
-                  <h5 className="mb-3 col-4">優惠票卷</h5>
+                  <h5 className="mb-3 col-3">優惠票卷</h5>
                   <p className="mb-3 col-4">{orderMemberData.couponTitle}</p>
                 </div>
                 <div className=" d-flex align-items-center ">
-                  <h5 className="mb-3 col-4">應付金額</h5>
+                  <h5 className="mb-3 col-3">應付金額</h5>
                   <p className="mb-3 col-4">{orderMemberData.orderTotal}元</p>
                 </div>
               </div>
             </div>
           </div>
-          <div>
-            <h3 className="mb-3 mt-3">活動資料</h3>
+          <div className="px-2" style={{borderTop:'1px solid #E6E6E6'}}>
+            <h3 className="mb-1 mt-3">活動資料</h3>
             <div className="row">
               {orderActiveDataFirst && (
                 <div className="col-4">
-                  <h4 className="mb-1 mt-3">第一天</h4>
+                  <h4 className="mb-3 mt-3">Day1</h4>
                   <div className=" d-flex align-items-center ">
-                    <h5 className="mb-3 col-4">活動參與</h5>
+                    <h5 className="mb-3 col-3">參加</h5>
                     <p className="mb-3 col-4">
                       {orderActiveDataFirst.isActive === "0" ? "有" : "無"}
                     </p>
                   </div>
                   <div className=" d-flex align-items-center ">
-                    <h5 className="mb-3 col-4">活動日期</h5>
+                    <h5 className="mb-3 col-3">日期</h5>
                     <p className="mb-3 col-4">
                       {orderActiveDataFirst.orderItemDate}
                     </p>
                   </div>
                   <div className=" d-flex align-items-center ">
-                    <h5 className="mb-3 col-4">活動包類型</h5>
+                    <h5 className="mb-3 col-3">類型</h5>
                     <p className="mb-3 col-6">
                       {orderActiveDataFirst.activePackType}
                     </p>
@@ -170,46 +170,34 @@ function OrderView({ setEditShow, editData }) {
               )}
               {orderActiveDataSecond && (
                 <div className="col-4">
-                  <h4 className="mb-1 mt-3">第二天</h4>
+                  <h4 className="mb-3 mt-3">Day2</h4>
                   <div className=" d-flex align-items-center ">
-                    <h5 className="mb-3 col-4">活動參與</h5>
+                    <h5 className="mb-3 col-3">參加</h5>
                     <p className="mb-3 col-4">
                       {orderActiveDataSecond.isActive === "0" ? "有" : "無"}
                     </p>
                   </div>
                   <div className=" d-flex align-items-center ">
-                    <h5 className="mb-3 col-4">活動日期</h5>
+                    <h5 className="mb-3 col-3">日期</h5>
                     <p className="mb-3 col-4">
                       {orderActiveDataSecond.orderItemDate}
-                    </p>
-                  </div>
-                  <div className=" d-flex align-items-center ">
-                    <h5 className="mb-3 col-4">活動包類型</h5>
-                    <p className="mb-3 col-6">
-                      {orderActiveDataSecond.activePackType}
                     </p>
                   </div>
                 </div>
               )}
               {orderActiveDataThird && (
                 <div className="col-4">
-                  <h4 className="mb-1 mt-3">第三天</h4>
+                  <h4 className="mb-3 mt-3">Day3</h4>
                   <div className=" d-flex align-items-center ">
-                    <h5 className="mb-3 col-4">活動參與</h5>
+                    <h5 className="mb-3 col-3">參加</h5>
                     <p className="mb-3 col-4">
                       {orderActiveDataThird.isActive === "0" ? "有" : "無"}
                     </p>
                   </div>
                   <div className=" d-flex align-items-center ">
-                    <h5 className="mb-3 col-4">活動日期</h5>
+                    <h5 className="mb-3 col-3">日期</h5>
                     <p className="mb-3 col-4">
                       {orderActiveDataThird.orderItemDate}
-                    </p>
-                  </div>
-                  <div className=" d-flex align-items-center ">
-                    <h5 className="mb-3 col-4">活動包類型</h5>
-                    <p className="mb-3 col-6">
-                      {orderActiveDataThird.activePackType}
                     </p>
                   </div>
                 </div>

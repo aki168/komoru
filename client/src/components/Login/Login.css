@@ -23,35 +23,43 @@ h5 {
 }
 
 .login--container {
-  margin: 0;
+  margin: 0 auto;
   max-width: 976px;
 }
 
 .login--wrap{
 		text-align: center;  
-		animation:mymove 8s infinite; /*animation 時間 播放次數*/  
-		animation-direction:alternate; /*是否循環交替反向播放動畫*/ 
+		animation:mymoveL 5s infinite; /*animation 時間 播放次數*/  
+		animation-direction: alternate; /*是否循環交替反向播放動畫*/ 
 		/*Safari 和 Chrome:*/
-		-webkit-animation:mymove 5s infinite;
+		-webkit-animation:mymoveL 5s infinite;
     background-repeat: no-repeat;
     background-position: bottom 0 right 10%;
     overflow: visible;
     padding-bottom: 1px;
 }
 
-@keyframes mymove  
+@keyframes mymoveL {
+  0% {opacity: 0.5;}
+  50% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+@keyframes mymoveL 
 {
-  0% {background-image:url(../../../public/1.png)}  
-  33% {background-image:url(../../../public/2.png)}  
-  66% {background-image:url(../../../public/3.png)}  
+  0% {background-image:url(../../../public/KOMORU_2.png)}    
+  25% {background-image:url(../../../public/KOMORU_1.png)}  
+  75% {background-image:url(../../../public/KOMORU_2.png)}  
+  100% {background-image:url(../../../public/KOMORU_3.png)}  
 }  
 
 /*Safari 和 Chrome:*/
-@-webkit-keyframes mymove
+@-webkit-keyframes mymoveL
 {
-  0% {background-image:url(../../../public/1.png)}  
-  33% {background-image:url(../../../public/2.png)}  
-  66% {background-image:url(../../../public/3.png)}  
+  0% {background-image:url(../../../public/KOMORU_2.png)}    
+  25% {background-image:url(../../../public/KOMORU_1.png)}  
+  75% {background-image:url(../../../public/KOMORU_2.png)}  
+  100% {background-image:url(../../../public/KOMORU_3.png)}  
 }
 
 /* 上面為全域設定 */
@@ -60,7 +68,6 @@ h5 {
   margin: 0 auto;
   width: 65%;
   text-align: start;
-  margin-left: 100px;
 }
 
 .login--title {
@@ -71,7 +78,6 @@ h5 {
   font-weight: 600;
   font-size: 40px;
   line-height: 52px;
-  /* identical to box height, or 130% */
   letter-spacing: 0.01em;
 }
 
@@ -87,12 +93,10 @@ h5 {
   background: #ED8C4E;
   color: #fff;
   font-size: 22px;
-  /* identical to box height, or 208% */
   letter-spacing: 0.01em;
   padding: 15px;
   width: 100%;
   margin-bottom: 8px;
-  /* border: 1px solid #808080; */
 }
 
 .login--submit:hover{
@@ -143,6 +147,7 @@ h5 {
   width: 180px;
   height: 180px;
   display: block;
+  border-radius: 5px;
 }
 
 .LINE{

@@ -1,6 +1,5 @@
 .pHotelContainer {
   padding-top: 150px;
-  padding-bottom: 100px;
 }
 
 .goBooking {
@@ -100,7 +99,7 @@
 .sizeRight h1 {
   font-size: 30px;
   color: #ed8c4e;
-  line-height: 35px;
+  line-height: 40px;
 }
 
 .sizeRight div {
@@ -172,6 +171,7 @@
 .sizeLeft h1 {
   font-size: 30px;
   color: #ed8c4e;
+  line-height: 40px;
 }
 
 .sizeLeft div {
