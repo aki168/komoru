@@ -17,6 +17,8 @@
     "bootstrap-icons": "^1.8.3",
     "googleapis": "^105.0.0",
     "nanoid": "^4.0.0",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.4.0",
     "react-dom": "^18.2.0",

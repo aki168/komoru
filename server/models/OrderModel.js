@@ -335,9 +335,6 @@ exports.getOrderItemDataListByOrderId = async (orderId) => {
       var otderItemData = db.rowDataToCamelData(rows)
       var length = otderItemData.length
       for (let i = 0; i < length; i++) {
-        // if (i < 3) {
-        console.log('in for')
-        console.log(i)
         let activePackId = otderItemData[i].activePackId
         if (activePackId) {
           let packContentSql = "SELECT" +
@@ -350,7 +347,6 @@ exports.getOrderItemDataListByOrderId = async (orderId) => {
             if (err) {
               reject(err);
             }
-            // console.log(db.rowDataToCamelData(rows))
             otderItemData[i]['activePactContent'] = db.rowDataToCamelData(rows)
             if (i === 2) {
               resolve(otderItemData)

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getUserCodeApiUrl, getTokenByUserCode } from "../LineLogin";
 
+
 export default function Login(props) {
   let navigate = useNavigate();
 
@@ -166,6 +167,7 @@ export default function Login(props) {
   // 2022-07-13 MJ
   // google登入:取得使用者資訊
   const getGoogleUserAcct = () => {
+    console.log('googleLogin')
     
   }
 
@@ -214,13 +216,13 @@ export default function Login(props) {
       <h3 className="login--subTitle">或使用以下選項登入</h3>
       <ul className="login--other">
         <li>
-          <button className="login--block GOOGLE" onClick={getGoogleUserAcct}/>
+          <button className="login--block GOOGLE" onClick={getGoogleUserAcct} />
         </li>
         <li>
-          <button className="login--block FB"/>
+          <button className="login--block FB" />
         </li>
         <li>
-          <button className="login--block LINE" onClick={getLineUserCode}/>
+          <button className="login--block LINE" onClick={getLineUserCode} />
         </li>
       </ul>
     </div>
