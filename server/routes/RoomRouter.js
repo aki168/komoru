@@ -74,8 +74,4 @@ router.post(
 // 刪除房型 By roomId
 router.post("/delRoomByRoomId", roomController.delRoomWithImgByRoomId);
 
-// 2022-07-12 MJ 
-// 取得房型內容
-router.post('/getRoomContentByRoomId', roomController.getRoomContentByRoomId)
-
 module.exports = router;

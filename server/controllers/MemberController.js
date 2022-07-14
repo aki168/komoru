@@ -199,7 +199,7 @@ exports.updateMemberIcon = async (req, res) => {
 // Line 登入
 exports.lineLogin = async (req, res, next) => {
   let data = req.body;
-  
+
   if (typeof data.token !== "undefined") {
     // 根據企業方金鑰解碼
     let userData = jwt.verify(data.token, "393a8b93b091685dd5e2ca7ed8bd4538");
@@ -270,4 +270,54 @@ const checkThirdPartyRegisterIdIdExisted = async (thirdPartyRegisterId) => {
     status: check,
     data: memberData,
   };
+};
+
+// 2022-07-14 MJ
+// google 登入
+exports.googleLogin = async (req, res, next) => {
+  let userData = req.body;
+  if (userData) {
+    // 確認第三方 id 是否存在
+    let checkResult = await checkThirdPartyRegisterIdIdExisted(userData.uid);
+    if (!checkResult.status) {
+      await memberModel
+        .register(
+          typeof userData.email == "undefined" ? "" : userData.email,
+          "",
+          "",
+          userData.name,
+          userData.name,
+          "2",
+          "",
+          "1",
+          userData.picture,
+          userData.uid
+        )
+        .then((result) => {
+          if (result.status == 2) {
+            const token = jwt.sign({ memberId: result.memberId }, "jwtSecret", {
+              expiresIn: "90d",
+            });
+            configController.sendJsonMsg(res, true, "", { token: token });
+          } else {
+            configController.sendJsonMsg(res, false, "SQL未預期錯誤", []);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).json({ message: "Server error" });
+        });
+    } else {
+      const token = jwt.sign(
+        { memberId: checkResult.data[0].memberId },
+        "jwtSecret",
+        {
+          expiresIn: "90d",
+        }
+      );
+      configController.sendJsonMsg(res, true, "", { token: token });
+    }
+  } else {
+    configController.sendJsonMsg(res, false, "未傳遞變數", []);
+  }
 };

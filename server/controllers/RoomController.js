@@ -345,19 +345,3 @@ const checkData = (dataList, dataColumns) => {
     errCheck: errCheck,
   };
 };
-
-// 2022-07-12 MJ
-// 取得房型內容
-exports.getRoomContentByRoomId = async (req, res) => {
-  const roomId = req.body.roomId
-  try {
-    let roomContent = await roomModel.getRoomContentByRoomId(roomId)
-    roomContent = roomContent[0].roomContent.split('/')
-    configController.sendJsonMsg(res, true, "", roomContent)
-  }
-  catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Server error" });
-  }
-
-}

@@ -393,3 +393,17 @@ const checkData = (dataList, dataColumns) => {
     errCheck: errCheck,
   };
 };
+
+// 2022-07-12 MJ
+// 取得房型內容
+exports.getHotelAndRoomContent = async (req, res) => {
+  try {
+    let hotelContent = await hotelModel.getHotelAndRoomContent()
+    // roomContent = roomContent[0].roomContent.split('/')
+    configController.sendJsonMsg(res, true, "", hotelContent)
+  }
+  catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error" });
+  }
+}

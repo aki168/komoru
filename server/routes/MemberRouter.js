@@ -61,20 +61,8 @@ router.post("/updateMemberIcon",
 // 0619 確認帳密，允許登入 - aki
 router.post("/lineLogin", memberController.lineLogin);
 
-// // 0713 Google登入 - MJ
-// router.get('/google', passport.authenticate('google', {
-//   scope: ['email', 'profile']
-// }));
-
-// router.get('/google/callback', passport.authenticate('google', { session: false }), (req, res) => {
-//   res.send({
-//     status: true,
-//     data: {
-//       id: req.user.id,
-//       name: req.user.displayName
-//     }
-//   });
-// })
+// 0714 google登入 - MJ
+router.post("/googleLogin", memberController.googleLogin);
 
 module.exports = router;
 

@@ -4,6 +4,8 @@ import "./Login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getUserCodeApiUrl, getTokenByUserCode } from "../LineLogin";
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { auth } from '../../firebase-config';
 
 
 export default function Login(props) {
@@ -166,10 +168,47 @@ export default function Login(props) {
 
   // 2022-07-13 MJ
   // google登入:取得使用者資訊
-  const getGoogleUserAcct = () => {
-    console.log('googleLogin')
-    
-  }
+  const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    // 限制只有選項
+    // provider.setCustomParameters({
+    // });
+    try {
+      const response = await signInWithPopup(auth, provider);
+      const token = response.user.accessToken;
+      localStorage.setItem('access_token', token);
+      if (token) {
+        axios({
+          method: "POST",
+          url: "http://localhost:5000/member/googleLogin",
+          data: {
+            uid: response.user.uid,
+            email: response.user.email,
+            name: response.user.displayName,
+            picture: response.user.photoURL,
+          },
+        })
+          .then((res) => {
+            console.log('login')
+            
+            navigate("/login", { replace: true });
+            if (res.data.status) {
+              localStorage.setItem("token", res.data.dataList.token);
+              setLoginStatus(true);
+              alert("登入成功！");
+              navigate("/", { replace: true });
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
 
   return (
     <div className="login">
@@ -216,7 +255,7 @@ export default function Login(props) {
       <h3 className="login--subTitle">或使用以下選項登入</h3>
       <ul className="login--other">
         <li>
-          <button className="login--block GOOGLE" onClick={getGoogleUserAcct} />
+          <button className="login--block GOOGLE" onClick={signInWithGoogle} />
         </li>
         <li>
           <button className="login--block FB" />

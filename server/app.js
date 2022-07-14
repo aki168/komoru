@@ -8,8 +8,6 @@ var logger = require("morgan");
 // 2022-06-12-PG
 // 額外引用的模組一律放這，先不要和 express 預設有的放一起
 var cors = require("cors");
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 // router
 var configRouter = require("./routes/_ConfigRouters");
@@ -64,14 +62,5 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-// passport.use(new GoogleStrategy({
-//   clientID: '300310047900-4tgg9ie5rgbi5anu4qbkjne3t4ip8get.apps.googleusercontent.com',
-//   clientSecret: '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',
-//   callbackURL: "http://localhost:5000/member/google/callback"
-// },
-//   function (accessToken, refreshToken, profile, cb) {
-//     return profile;
-//   }
-// ));
 
 module.exports = app;

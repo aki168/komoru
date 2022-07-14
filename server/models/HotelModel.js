@@ -346,3 +346,22 @@ exports.delHotelByHotelId = async (dataList) => {
     });
   });
 };
+
+// 2022-07-12 MJ
+// 取得房型內容
+exports.getHotelAndRoomContent = async () => {
+  return new Promise((resolve, reject) => {
+    let sql =
+      "SELECT  `Hotel`.`hotel_title`, `Hotel`.`hotel_addr`, `Hotel`.`hotel_content`, `Room`.`room_type`, `Room`.`room_content` " +
+      "FROM `Hotel` " +
+      "LEFT JOIN `Room` ON `Hotel`.`hotel_id` = `Room`.`hotel_id` ";
+    db.con.query(sql, (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(
+        db.rowDataToCamelData(rows)
+      );
+    });
+  });
+};
