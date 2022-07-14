@@ -4,11 +4,18 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
+  
+  const token = localStorage.token;
+  
   return (
     <nav className="navbar">
       <h1>
         <Link className="navbar--title" to="/">
-          KOMORU;
+          <img
+            className="navbar--logo"
+            src="KOMORU_LOGO_White.png"
+            alt="LOGO"
+          ></img>
         </Link>
       </h1>
       <ul className="navbar--menu">
@@ -38,9 +45,11 @@ export default function Navbar() {
           </Link>
         </li>
         <li>
-          <Button variant="secondary" size="sm" onClick={logout}>
-            登出
-          </Button>
+          {token && (
+            <Button variant="secondary" size="sm" onClick={logout}>
+              登出
+            </Button>
+          )}
         </li>
       </ul>
     </nav>

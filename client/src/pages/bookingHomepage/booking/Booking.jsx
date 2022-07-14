@@ -29,7 +29,7 @@ function Booking() {
       },
     })
       .then((res) => {
-        // console.log(res.data[0].memberId);
+        console.log(res.data[0].memberId);
         setMemberId(res.data[0].memberId);
       })
       .catch((err) => {
@@ -46,8 +46,7 @@ function Booking() {
   const { roomState, setRoomState } = useContext(BookContext);
   const { cityIdValue, setCityIdValue } = useContext(BookContext);
   //優惠代碼
-  const { couponState, setCouponState, couponItemId, setCouponItemId } =
-    useContext(BookContext);
+  const { couponState, setCouponState } = useContext(BookContext);
   //根據會員ID有的優惠票券
   const { couponData, setCouponData } = useContext(BookContext);
   //是否參與活動
@@ -161,7 +160,7 @@ function Booking() {
     } else if (activityState === "0") {
       navigate("/psychologicalExam");
     } else if (activityState === "1") {
-      navigate("/bookingOrderPage");
+      navigate("/OrderWithNoActivity");
     }
     // else {
     //   navigate("/404");
@@ -170,22 +169,23 @@ function Booking() {
 
   //獲取coupon資料
   useEffect(() => {
+    console.log(memberId);
     axios({
       method: "post",
       url: "http://localhost:5000/coupon/getCouponByMemberId",
       data: {
-        memberId: memberId,
+        token: localStorage.token,
       },
     })
       .then((res) => {
-        console.log(res.data.dataList.usableCouponlist[0].couponItemId);
+        console.log(res.data.dataList.usableCouponlist);
         setCouponData(res.data.dataList.usableCouponlist);
-        console.log(couponData);
+        // console.log(.usableCouponlist[0].couponItemId);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [memberId]);
+  }, []);
 
   console.log(couponData);
 

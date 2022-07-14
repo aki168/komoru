@@ -61,8 +61,8 @@ function Sidebar() {
               >
                 <RiHome2Line className="mx-2 ms-4" />
                 飯店房型管理
+                <BsChevronCompactDown className="ms-3" size="20px" />
               </span>
-              <BsChevronCompactDown className="ms-3" color="#7C7B7B" size="20px" />
             </a>
             <ul
               className="collapse nav hidden flex-column h-50 km-sidebar"

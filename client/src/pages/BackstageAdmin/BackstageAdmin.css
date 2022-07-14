@@ -164,5 +164,8 @@
   background-color: #ed8c4e;
   border-color: #ed8c4e;
 }
+input[type="radio"]:checked + label {
+  background-color: yellow;
+}
 
 

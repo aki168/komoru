@@ -1,22 +1,23 @@
 import React, { useState } from "react";
-// import {
-//   TiMail,
-//   TiPhoneOutline,
-//   TiUserOutline,
-//   TiMessage,
-// } from "react-icons/ti";
 import "./ContactUs.css";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar-bg-white";
 import AutoCarousel from "./AutoCarousel";
 import axios from "axios";
-import ContactUsModal from "./ContactUsModal";
+// import ContactUsModal from "./ContactUsModal";
 import { GoComment, GoMail } from "react-icons/go";
 import { AiOutlinePhone, AiOutlineUser } from "react-icons/ai";
+import UserHeader from "../../components/User/UserHeader";
+import { IoMdAlert } from "react-icons/io";
 
 const ContactUs = () => {
   // const [loading, setLoading] = useState(false);
   // const [opencontactUsModal, setOpencontactUsModal] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    tel: "",
+    html: "",
+  });
   // const [recieve, setReceive] = useState(true);
 
   // 追蹤表單輸入值使用
@@ -28,8 +29,10 @@ const ContactUs = () => {
     }));
   }
 
+  const [submit, setSubmit] = useState("");
   //送出表單提交資料，並清空表單輸入植
   function send(e) {
+    setSubmit(e.type);
     e.preventDefault();
     if (
       formData.name === "" ||
@@ -88,6 +91,14 @@ const ContactUs = () => {
       /> */}
 
       <Navbar />
+      {/* 0712 aki-更改為滾動視差  */}
+      <div className="ContactUs--titleBar ContactUs--bg--fix mb-5">
+        <UserHeader
+          title="遍地全台的合作飯店一覽"
+          text="KOMORU與北、中、南、東各個在地青旅合作，活絡社會並讓旅者與業者達到雙贏！"
+        />
+      </div>
+
       {/* {recieve ? ( */}
       <div className="ContactUsContainer">
         <div className="leftContent">
@@ -111,6 +122,13 @@ const ContactUs = () => {
               value={formData.name}
               onChange={inputHandler}
             />
+            {submit === "click" && (
+              <>
+                {formData.name === "" && (
+                  <IoMdAlert className="ContactUs-IoMdAlert" />
+                )}
+              </>
+            )}
           </p>
           <p>
             <GoMail className="contactIcon" />
@@ -124,6 +142,13 @@ const ContactUs = () => {
               value={formData.email}
               onChange={inputHandler}
             />
+            {submit === "click" && (
+              <>
+                {formData.email === "" && (
+                  <IoMdAlert className="ContactUs-IoMdAlert" />
+                )}
+              </>
+            )}
           </p>
           <p>
             <AiOutlinePhone className="contactIcon" />
@@ -137,6 +162,13 @@ const ContactUs = () => {
               value={formData.tel}
               onChange={inputHandler}
             />
+            {submit === "click" && (
+              <>
+                {formData.tel === "" && (
+                  <IoMdAlert className="ContactUs-IoMdAlert" />
+                )}
+              </>
+            )}
           </p>
           <p>
             <GoComment className="contactIcon" />
@@ -149,6 +181,13 @@ const ContactUs = () => {
               value={formData.html}
               onChange={inputHandler}
             ></textarea>
+            {submit === "click" && (
+              <>
+                {formData.html === "" && (
+                  <IoMdAlert className="ContactUs-IoMdAlert" />
+                )}
+              </>
+            )}
           </p>
           <button className="submitBtn" onClick={send}>
             提交

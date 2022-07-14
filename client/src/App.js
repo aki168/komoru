@@ -15,6 +15,7 @@ import UserHomePage from "./pages/userPage/UserHomePage";
 import PsychologicalExam from "./pages/psychologicalExam/PsychologicalExam";
 import BookingHomepage from "./pages/bookingHomepage/BookingHomepage";
 import BookingOrderPage from "./pages/orderPage/BookingOrderPage";
+import OrderWithNoActivity from "./pages/orderPage/OrderWithNoActivity";
 import CheckoutSucceeded from "./pages/checkoutSucceededPage/CheckoutSucceeded";
 import { BookContext } from "./Helper/Context";
 import PartnerHotel from "./pages/partnerHotel/PartnerHotel";
@@ -46,7 +47,6 @@ export const logout = () => {
   localStorage.removeItem("token");
   window.location.reload("false"); //想重新渲染同頁面可以用這段
 };
-
 
 function App() {
   //2022-06-23 ZH
@@ -114,6 +114,14 @@ function App() {
           element={
             <BookContext.Provider value={all}>
               <BookingHomepage />
+            </BookContext.Provider>
+          }
+        />
+        <Route
+          path="/OrderWithNoActivity"
+          element={
+            <BookContext.Provider value={all}>
+              <OrderWithNoActivity />
             </BookContext.Provider>
           }
         />

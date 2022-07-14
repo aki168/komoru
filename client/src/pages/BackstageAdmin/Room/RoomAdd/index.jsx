@@ -4,6 +4,7 @@ import axios from "axios";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { IoAlertCircleSharp } from "react-icons/io5";
 import { HiOutlineRefresh } from "react-icons/hi";
+import BackstageLodingModal from "../../../../components/BackstageLoadingModal";
 
 function RoomAdd({ setAddShow, data, hotelData }) {
   /*20220622 YN
@@ -38,6 +39,10 @@ function RoomAdd({ setAddShow, data, hotelData }) {
   /*20220710 YN
   當輸入框為""，出現警示狀態初始化 */
   const [alertImg, setAlertImg] = useState(false);
+
+  /*20220707 YN
+ 資料載入過程初始化*/
+  const [loading, setLoading] = useState(false);
 
   /*20220622 YN
    取得後端飯店資料*/
@@ -102,15 +107,18 @@ function RoomAdd({ setAddShow, data, hotelData }) {
     console.log(...formData);
     // setAddFormData(newContacts);
     console.log(selectedFile);
+    
     if (
       addFormData.hotelId === "" ||
       addFormData.roomType === "" ||
       addFormData.liveNum === "" ||
+      addFormData.roomDesc === "" ||
       selectedFile === null
     ) {
       setAlertImg(true);
     } else {
       setAlertImg(false);
+      setLoading(true)
       fetch("http://localhost:5000/room/addRoom", {
         method: "POST",
         body: formData,
@@ -120,7 +128,7 @@ function RoomAdd({ setAddShow, data, hotelData }) {
           if (data.status) {
             setAddShow(false);
             window.location.reload(false);
-            alert('新增成功')
+            alert("新增成功");
           }
           console.log(data);
         })
@@ -197,15 +205,18 @@ function RoomAdd({ setAddShow, data, hotelData }) {
                 {selectedFile === null && (
                   <>
                     {alertImg && (
-                      <h6 className="d-flex align-items-center" style={{color:'red'}}>
-                      <IoAlertCircleSharp size="20px" color="red" />
-                      請上傳檔案
-                    </h6>
+                      <p
+                        className="d-flex align-items-center"
+                        style={{ color: "red" }}
+                      >
+                        <IoAlertCircleSharp size="20px" color="red" />
+                        請上傳檔案
+                      </p>
                       // <p
                       //   className="text-center"
                       //   style={{ fontSize: "18px", color: "red" }}
                       // >
-                        
+
                       // </p>
                     )}
                   </>
@@ -234,10 +245,10 @@ function RoomAdd({ setAddShow, data, hotelData }) {
           {addFormData.hotelId === "" && (
             <>
               {alertImg && (
-                <h6 style={{ color: "red" }}>
+                <p style={{ color: "red" }}>
                   <IoAlertCircleSharp size="20px" color="red" />
                   飯店不可空白
-                </h6>
+                </p>
               )}
             </>
           )}
@@ -258,10 +269,10 @@ function RoomAdd({ setAddShow, data, hotelData }) {
         {addFormData.roomType === "" && (
           <>
             {alertImg && (
-              <h6 style={{ color: "red" }}>
+              <p style={{ color: "red" }}>
                 <IoAlertCircleSharp size="20px" color="red" />
                 房型不可空白
-              </h6>
+              </p>
             )}
           </>
         )}
@@ -278,10 +289,10 @@ function RoomAdd({ setAddShow, data, hotelData }) {
         {addFormData.liveNum === "" && (
           <>
             {alertImg && (
-              <h6 style={{ color: "red" }}>
+              <p style={{ color: "red" }}>
                 <IoAlertCircleSharp size="20px" color="red" />
                 容納人數不可空白
-              </h6>
+              </p>
             )}
           </>
         )}
@@ -295,14 +306,25 @@ function RoomAdd({ setAddShow, data, hotelData }) {
             style={{ fontSize: "18px" }}
           />
         </Form.Group>
+        {addFormData.roomDesc === "" && (
+            <>
+              {alertImg && (
+                <p style={{ color: "red" }}>
+                  <IoAlertCircleSharp size="20px" color="red" />
+                  備註不可空白
+                </p>
+              )}
+            </>
+          )}
       </Form.Group>
-      <div className="mt-3 mb-1 d-flex justify-content-end">
+      <div className="mt-3 mb-4 d-flex justify-content-end">
         <button
           className="btn km-add-button-modal km-modal-footer"
           type="submit"
         >
           新增
         </button>
+        {loading === true && <BackstageLodingModal />}
       </div>
     </Form>
   );

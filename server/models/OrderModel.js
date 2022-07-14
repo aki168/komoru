@@ -280,7 +280,7 @@ exports.splitOrderIdArray = async (orderIdArray) => {
             orderData[i]["OrderItem"] = result;
           });
       }
-      
+
       resolve(orderData);
     } catch (error) {
       reject(error);
@@ -318,24 +318,71 @@ exports.getOrderDatalistByOrderId = async (orderId) => {
 // 取得orderItemDataList byMemberId
 exports.getOrderItemDataListByOrderId = async (orderId) => {
   return new Promise((resolve, reject) => {
+    // 1.先找出packId
     let sql =
       "SELECT" +
-      "`OrderItem`.`order_item_date`, `OrderItem`.`is_active`, `OrderItem`.`order_item_price`, `ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `OrderItem`.`active_pack_id`, `ActivePackItem`.`partnership_id`, `Partnership`.`partnership_name`, `Partnership`.`partnership_addr`" +
+      "`OrderItem`.`order_item_date`, `OrderItem`.`is_active`, `OrderItem`.`order_item_price`, `ActivePack`.`active_pack_id` " +
       "FROM `Order` " +
-      "LEFT JOIN OrderItem ON`Order`.`order_id` = `OrderItem`.`order_id` " +
+      "LEFT JOIN OrderItem ON `Order`.`order_id` = `OrderItem`.`order_id` " +
       "LEFT JOIN `ActivePack` ON `OrderItem`.`active_pack_id` = `ActivePack`.`active_pack_id` " +
-      "LEFT JOIN `ActivePackItem` ON `ActivePack`.`active_pack_id` = `ActivePackItem`.`active_pack_id` " +
-      "LEFT JOIN `Partnership` ON `ActivePackItem`.`partnership_id` = `Partnership`.`partnership_id` " +
       "WHERE `Order`.`order_id` = ? " +
-      "ORDER BY `order_item_id` ASC, `active_pack_item_id`";
+      "ORDER BY `order_item_id` ASC ";
     db.con.query(sql, orderId, (err, rows, fields) => {
       if (err) {
         reject(err);
       }
-      resolve(db.rowDataToCamelData(rows))
-    });
+      // 2.用PackId去找活動包
+      var otderItemData = db.rowDataToCamelData(rows)
+      var length = otderItemData.length
+      for (let i = 0; i < length; i++) {
+        // if (i < 3) {
+        console.log('in for')
+        console.log(i)
+        let activePackId = otderItemData[i].activePackId
+        if (activePackId) {
+          let packContentSql = "SELECT" +
+            "`ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`partnership_id`, `Partnership`.`partnership_name`, `Partnership`.`partnership_addr`" +
+            "FROM `ActivePackItem` " +
+            "LEFT JOIN `Partnership` ON `ActivePackItem`.`partnership_id` = `Partnership`.`partnership_id` " +
+            "WHERE `ActivePackItem`.`active_pack_id` = ? " +
+            "ORDER BY `active_pack_item_id` ASC "
+          db.con.query(packContentSql, activePackId, (err, rows, fields) => {
+            if (err) {
+              reject(err);
+            }
+            // console.log(db.rowDataToCamelData(rows))
+            otderItemData[i]['activePactContent'] = db.rowDataToCamelData(rows)
+            if (i === 2) {
+              resolve(otderItemData)
+            }
+          })
+        }
+        else {
+          otderItemData[i]['activePactContent'] = '無參與活動'
+        }
+      };
+    })
   });
 };
+// return new Promise((resolve, reject) => {
+//   let sql =
+//     "SELECT" +
+//     "`OrderItem`.`order_item_date`, `OrderItem`.`is_active`, `OrderItem`.`order_item_price`, `ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `OrderItem`.`active_pack_id`, `ActivePackItem`.`partnership_id`, `Partnership`.`partnership_name`, `Partnership`.`partnership_addr`" +
+//     "FROM `Order` " +
+//     "LEFT JOIN OrderItem ON`Order`.`order_id` = `OrderItem`.`order_id` " +
+//     "LEFT JOIN `ActivePack` ON `OrderItem`.`active_pack_id` = `ActivePack`.`active_pack_id` " +
+//     "LEFT JOIN `ActivePackItem` ON `ActivePack`.`active_pack_id` = `ActivePackItem`.`active_pack_id` " +
+//     "LEFT JOIN `Partnership` ON `ActivePackItem`.`partnership_id` = `Partnership`.`partnership_id` " +
+//     "WHERE `Order`.`order_id` = ? " +
+//     "ORDER BY `order_item_id` ASC, `active_pack_item_id`";
+//   db.con.query(sql, orderId, (err, rows, fields) => {
+//     if (err) {
+//       reject(err);
+//     }
+//     resolve(db.rowDataToCamelData(rows))
+//   });
+// });
+
 
 
 // 2022-07-05 PG

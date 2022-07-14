@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import BackstageLoding from "../../../../components/BackstageLoading";
+import BackstageLodingModal from "../../../../components/BackstageLoadingModal";
 
 function PartnershipEdit({ setEditShow, editData, data }) {
   /*20220624 YN
@@ -46,7 +47,9 @@ function PartnershipEdit({ setEditShow, editData, data }) {
  資料載入過程初始化*/
   const [loading, setLoading] = useState(false);
 
-  const [saveloading,setSaveloading] = useState(false);
+/*20220707 YN
+ 資料送出過程初始化*/
+  const [saveloading, setSaveloading] = useState(false);
 
   /*20220624 YN
    可否修改狀態改變*/
@@ -176,13 +179,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
         <Form
           className="container km-modal-content"
           onSubmit={editFormSubmitHandle}
-          
         >
-           {!saveloading === true && <>
-          <div className="d-flex justify-content-center">
-            <BackstageLoding />
-          </div>
-        </>}
           <Form.Group>
             <Form.Label>商家名稱</Form.Label>
             <Form.Control
@@ -255,7 +252,7 @@ function PartnershipEdit({ setEditShow, editData, data }) {
               className="km-modal-content"
             />
           </Form.Group>
-          <div className="mt-3 mb-3 d-flex justify-content-end">
+          <div className="mt-3 mb-5 d-flex justify-content-end">
             {editButton ? (
               <></>
             ) : (
@@ -277,9 +274,8 @@ function PartnershipEdit({ setEditShow, editData, data }) {
             ) : (
               <></>
             )}
-            
+            {saveloading === true && <BackstageLodingModal />}
           </div>
-         
         </Form>
       ) : (
         <div className="d-flex justify-content-center">
