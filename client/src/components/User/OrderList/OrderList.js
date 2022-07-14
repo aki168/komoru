@@ -17,7 +17,8 @@ export default function OrderList(props) {
   // 0710 aki - 獲取單張訂單的活動包資料
   const [activeData, setActiveData] = useState([]);
   useEffect(() => {
-    setActiveData(props.OrderItem.reverse()); // 調整活動包日期順序：過去->未來
+    // setActiveData(props.OrderItem.reverse()); // 調整活動包日期順序：過去->未來
+    setActiveData(props.OrderItem); // 調整活動包日期順序：過去->未來
   }, [props])
 
   const orderItems = activeData.map(item => {

@@ -4,6 +4,9 @@ import ActivePackPlaceMapPopover from "./ActivePackPlaceMapPopover/ActivePackPla
 
 export default function OrderListDaily(props) {
   console.log(props);
+  const { activePactContent } = props;
+  console.log(activePactContent); // 0714 aki-印出單日的活動包array (固定3個活動)
+
   return (
     <>
       {props.activePackId && (
@@ -21,10 +24,10 @@ export default function OrderListDaily(props) {
             <li className="pt-2 pb-2 ">
               <h4>・12:00 - 14:00 不一樣的用餐體驗</h4>
               <ActivePackPlaceMapPopover
-                activePackContent={props.activePackItemContent}
-                partnershipId={props.partnershipId}
-                partnershipName={props.partnershipName}
-                partnershipAddr={props.partnershipAddr}
+                activePackContent={activePactContent[0].activePackItemContent}
+                partnershipId={activePactContent[0].partnershipId}
+                partnershipName={activePactContent[0].partnershipName}
+                partnershipAddr={activePactContent[0].partnershipAddr}
               />
             </li>
           </ul>
@@ -33,19 +36,19 @@ export default function OrderListDaily(props) {
             <li className="pt-2 pb-2 ">
               <h4>・14:00 - 16:00 探索時刻</h4>
               <ActivePackPlaceMapPopover
-                activePackContent={props.activePackItemContent2}
-                partnershipId={props.partnershipId2}
-                partnershipName={props.partnershipName2}
-                partnershipAddr={props.partnershipAddr2}
+                activePackContent={activePactContent[1].activePackItemContent}
+                partnershipId={activePactContent[1].partnershipId}
+                partnershipName={activePactContent[1].partnershipName}
+                partnershipAddr={activePactContent[1].partnershipAddr}
               />
             </li>
             <li className="pt-2 pb-2 ">
               <h4>・16:00 - 17:00 Tea Time</h4>
               <ActivePackPlaceMapPopover
-                activePackContent={props.activePackItemContent3}
-                partnershipId={props.partnershipId3}
-                partnershipName={props.partnershipName3}
-                partnershipAddr={props.partnershipAddr3}
+                activePackContent={activePactContent[2].activePackItemContent}
+                partnershipId={activePactContent[2].partnershipId}
+                partnershipName={activePactContent[2].partnershipName}
+                partnershipAddr={activePactContent[2].partnershipAddr}
               />
             </li>
             <li className="pt-2 pb-2 ">
