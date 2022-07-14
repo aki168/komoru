@@ -31,17 +31,17 @@ h1,h2,h3,h4,h5{
 
 @keyframes mymove  
 {
-0% {background-image:url(../../../public/1.png)}  
-50% {background-image:url(../../../public/2.png)}  
-100% {background-image:url(../../../public/3.png)}  
+  0% {background-image:url(../../../public/1.png)}  
+  33% {background-image:url(../../../public/2.png)}  
+  100% {background-image:url(../../../public/3.png)}  
 }  
 
 /*Safari 和 Chrome:*/
 @-webkit-keyframes mymove
 {
-0% {background-image:url(../../../public/1.png)}  
-50% {background-image:url(../../../public/2.png)}  
-100% {background-image:url(../../../public/3.png)}  
+  0% {background-image:url(../../../public/1.png)}  
+  33% {background-image:url(../../../public/2.png)}  
+  100% {background-image:url(../../../public/3.png)}  
 }
 
 

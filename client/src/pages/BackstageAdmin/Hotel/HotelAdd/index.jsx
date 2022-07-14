@@ -151,6 +151,7 @@ function HotelAdd({ setAddShow, data }) {
       setAlertImg(true);
     } else {
       setAlertImg(false);
+      setLoading(true);
       fetch("http://localhost:5000/hotel/addHotel", {
         method: "POST",
         body: formData,
@@ -507,7 +508,7 @@ function HotelAdd({ setAddShow, data }) {
             </div>
           </div>
         </Form.Group>
-        <Form.Group className="col-6 km-modal-content">
+        <Form.Group className="col-6">
           <Form.Group>
             <Form.Control
               type="text"

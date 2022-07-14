@@ -4,6 +4,7 @@ import Booking from "./booking/Booking";
 import "./BookingHomepage.css";
 import BookingAgreeModal from "./bookingAgreeModal/BookingAgreeModal";
 import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 // import BreadCrumbs from "../../components/BreadCrumbs/BreadCrumbs";
 import { AiOutlineRight } from "react-icons/ai";
 
@@ -29,6 +30,7 @@ function BookingHomepage() {
       <div className="bookingHomepageContainer">
         <Booking />
       </div>
+      <Footer />
     </>
   );
 }

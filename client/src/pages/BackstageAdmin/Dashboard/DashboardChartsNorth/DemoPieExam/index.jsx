@@ -60,7 +60,7 @@ const DemoPieExam = ({northData}) => {
       },
     ],
   };
-  return <Pie {...config} />;
+  return <Pie {...config}/>;
 };
 
 export default React.memo(DemoPieExam);

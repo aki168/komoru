@@ -60,6 +60,10 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
   資料送出過程初始化*/
   const [saveloading, setSaveloading] = useState(false);
 
+ /*20220714 YN
+  更換照片按鈕切換初始化*/
+  const [imgButton, setImgButton] = useState(false)
+
   // console.log(editImage);
   /*20220701 YN
      取得後端預設房型資料*/
@@ -232,6 +236,20 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
     return () => (document.body.style.overflowY = "");
   }, []);
 
+/*20220714 YN
+更換照片按鈕功能*/
+const showChangeImg = ()=>{
+  setImgButton(true);
+  setEditImage(true)
+}
+
+/*20220714 YN
+原始照片按鈕功能*/
+const showOriginalImg = ()=>{
+  setImgButton(false);
+  setEditImage(false)
+}
+
   return (
     <>
       {loading ? (
@@ -310,7 +328,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
                 name="hotelId"
                 onChange={editFormChangeHandle}
                 disabled={isDisabled}
-                style={{ fontSize: "18px" }}
+                className="km-modal-content"
               >
                 <option disabled>請選擇飯店</option>
                 {hotelArr}
@@ -322,7 +340,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
                 name="roomType"
                 onChange={editFormChangeHandle}
                 disabled={isDisabled}
-                style={{ fontSize: "18px" }}
+                className="km-modal-content"
               >
                 <option disabled>請選擇房型</option>
                 <option
@@ -348,7 +366,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
                 defaultValue={editModalData.liveNum}
                 onChange={editFormChangeHandle}
                 disabled={isDisabled}
-                style={{ fontSize: "18px" }}
+                className="km-modal-content"
               />
             </Form.Group>
             <Form.Group className="mt-3">
@@ -361,7 +379,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
                 onChange={editFormChangeHandle}
                 name="roomDesc"
                 disabled={isDisabled}
-                style={{ fontSize: "18px" }}
+                className="km-modal-content"
               />
             </Form.Group>
           </Form.Group>
@@ -378,11 +396,24 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
             )}
 
             {editButton ? (
+              !imgButton &&
               <a
                 className="btn me-2 km-img-button-modal km-modal-footer"
-                onClick={() => setEditImage(true)}
+                // onClick={() => setEditImage(true)}
+                onClick={showChangeImg}
               >
                 更換照片
+              </a>
+            ) : (
+              <></>
+            )}
+            { editButton && imgButton ? (
+              
+              <a
+                className="btn me-2 km-img-button-modal km-modal-footer"
+                onClick={showOriginalImg}
+              >
+                原始照片
               </a>
             ) : (
               <></>

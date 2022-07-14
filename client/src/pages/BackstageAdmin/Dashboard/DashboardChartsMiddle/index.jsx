@@ -20,7 +20,7 @@ function DashboardChartsMiddle({ dateData, setTitleArea }) {
   /*20220709 YN
    區域標題狀態設定*/
   useEffect(() => {
-    setTitleArea("中區");
+    setTitleArea("中部");
   }, []);
 
   /*20220707 YN
@@ -51,48 +51,140 @@ function DashboardChartsMiddle({ dateData, setTitleArea }) {
   return (
     <>
       <div className="mx-5 me-5">
-        <div className="ms-5 me-5">
-          {" "}
+        <div className="row ms-5 me-5">
           {loading ? (
             <>
-              <div>
-                <div className="row mb-5">
-                  <h3>入住率</h3>
-                  {middleData && (
-                    <DemoColumnOccupancyRate middleData={middleData} />
-                  )}
+              <div
+                className="p-5 "
+                style={{
+                  backgroundColor: "white",
+                  boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                }}
+              >
+                <div className="pb-3">
+                  <p className="km-modal-report-title">入住率</p>
                 </div>
-                <div className="row mb-5">
-                  <h3>房型營業額</h3>
-                  {middleData && (
-                    <DemoLineRoomTurnover middleData={middleData} />
-                  )}
+                {middleData && (
+                  <DemoColumnOccupancyRate middleData={middleData} />
+                )}
+              </div>
+
+              <div
+                className="mt-5 p-5"
+                style={{
+                  backgroundColor: "white",
+                  boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                }}
+              >
+                <div className="pb-3">
+                  <p className="km-modal-report-title">房型營業額</p>
                 </div>
-                <div className="row mb-5">
-                  <div className="col-4">
-                    <h3>參與活動率</h3>
+                {middleData && <DemoLineRoomTurnover middleData={middleData} />}
+              </div>
+
+              <div className="row mb-5 mt-2 g-0">
+                <div
+                  className="col-4"
+                  style={{
+                    padding: "20px 20px 0 0",
+                  }}
+                >
+                  <div
+                    className="mt-3"
+                    style={{
+                      backgroundColor: "white",
+                      boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                    }}
+                  >
+                    <div className="pt-3 ps-3">
+                      <p className="km-modal-report-title">參與活動率</p>
+                    </div>
+
                     {middleData && (
                       <DemoPieParticipate middleData={middleData} />
                     )}
                   </div>
-                  <div className="col-4">
-                    <h3>測驗後參與率</h3>
+                </div>
+                <div
+                  className="col-4"
+                  style={{
+                    padding: "20px 0 0 0",
+                  }}
+                >
+
+                  <div
+                    className="mt-3"
+                    style={{
+                      backgroundColor: "white",
+                      boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                    }}
+                  >
+                    <div className="pt-3 ps-3">
+                      <p className="km-modal-report-title">測驗後下訂率</p>
+                    </div>
                     {middleData && <DemoPieExam middleData={middleData} />}
                   </div>
-                  <div className="col-4">
-                    <h3>活動類型</h3>
+                </div>
+
+                <div
+                  className="col-4"
+                  style={{
+                    padding: "20px 0 0 20px",
+                  }}
+                >
+
+                  <div
+                    className="mt-3"
+                    style={{
+                      backgroundColor: "white",
+                      boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                    }}
+                  >
+                    <div className="pt-3 ps-3">
+                      <p className="km-modal-report-title">活動類型</p>
+                    </div>
                     {middleData && (
                       <DemoPieActivityType middleData={middleData} />
                     )}
                   </div>
                 </div>
-                <div className="row mb-5">
-                  <div className="col-6">
-                    <h3>優惠卷使用率</h3>
+              </div>
+              <div className="row mb-5 g-0">
+                <div
+                  className="col-6"
+                  style={{
+                    padding: "0 20px 0 0",
+                  }}
+                >
+                  <div
+                    className="pb-5"
+                    style={{
+                      backgroundColor: "white",
+                      boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                    }}
+                  >
+                    <div className="pt-3 ps-4">
+                      <p className="km-modal-report-title">優惠卷使用率</p>
+                    </div>
                     {middleData && <DemoLiquidCoupon middleData={middleData} />}
                   </div>
-                  <div className="col-6">
-                    <h3>回饋率</h3>
+                </div>
+                <div
+                  className="col-6"
+                  style={{
+                    padding: "0 0 0 20px",
+                  }}
+                >
+                  <div
+                    className="pb-5 "
+                    style={{
+                      backgroundColor: "white",
+                      boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
+                    }}
+                  >
+                    <div className="pt-3 ps-4">
+                      <p className="km-modal-report-title">回饋率</p>
+                    </div>
                     {middleData && (
                       <DemoLiquidFeedback middleData={middleData} />
                     )}
@@ -107,6 +199,9 @@ function DashboardChartsMiddle({ dateData, setTitleArea }) {
           )}
         </div>
       </div>
+
+
+
     </>
   );
 }
