@@ -23,7 +23,7 @@ h5 {
 }
 
 .login--container {
-  margin: 0;
+  margin: 0 auto;
   max-width: 976px;
 }
 
@@ -41,17 +41,17 @@ h5 {
 
 @keyframes mymove  
 {
-  0% {background-image:url(../../../public/1.png)}  
-  33% {background-image:url(../../../public/2.png)}  
-  66% {background-image:url(../../../public/3.png)}  
+  /* 0% {background-image:url(../../../public/KOMORU_1.png)}  
+  33% {background-image:url(../../../public/KOMORU_2.png)}  
+  66% {background-image:url(../../../public/KOMORU_3.png)}   */
 }  
 
 /*Safari 和 Chrome:*/
 @-webkit-keyframes mymove
 {
-  0% {background-image:url(../../../public/1.png)}  
-  33% {background-image:url(../../../public/2.png)}  
-  66% {background-image:url(../../../public/3.png)}  
+  /* 0% {background-image:url(../../../public/KOMORU_1.png)}  
+  33% {background-image:url(../../../public/KOMORU_2.png)}  
+  66% {background-image:url(../../../public/KOMORU_3.png)}   */
 }
 
 /* 上面為全域設定 */
@@ -60,7 +60,6 @@ h5 {
   margin: 0 auto;
   width: 65%;
   text-align: start;
-  margin-left: 100px;
 }
 
 .login--title {
@@ -71,7 +70,6 @@ h5 {
   font-weight: 600;
   font-size: 40px;
   line-height: 52px;
-  /* identical to box height, or 130% */
   letter-spacing: 0.01em;
 }
 
@@ -87,12 +85,10 @@ h5 {
   background: #ED8C4E;
   color: #fff;
   font-size: 22px;
-  /* identical to box height, or 208% */
   letter-spacing: 0.01em;
   padding: 15px;
   width: 100%;
   margin-bottom: 8px;
-  /* border: 1px solid #808080; */
 }
 
 .login--submit:hover{
