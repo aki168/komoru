@@ -46,8 +46,7 @@ function Booking() {
   const { roomState, setRoomState } = useContext(BookContext);
   const { cityIdValue, setCityIdValue } = useContext(BookContext);
   //優惠代碼
-  const { couponState, setCouponState, couponItemId, setCouponItemId } =
-    useContext(BookContext);
+  const { couponState, setCouponState } = useContext(BookContext);
   //根據會員ID有的優惠票券
   const { couponData, setCouponData } = useContext(BookContext);
   //是否參與活動
