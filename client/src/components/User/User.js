@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
 import { Button, Alert } from "react-bootstrap"
 import './User.css'
 import axios from 'axios'
@@ -207,6 +206,7 @@ export default function User(props) {
                 id="name"
                 value={formData.name}
                 onChange={inputHandler}
+                placeholder="請輸入姓名"
               />}
             </li>
             <li className="user--item">
@@ -217,6 +217,7 @@ export default function User(props) {
                 id="nickName"
                 value={formData.nickName}
                 onChange={inputHandler}
+                placeholder="請輸入暱稱"
               />}
             </li>
             <li className="user--item">

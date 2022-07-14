@@ -97,14 +97,6 @@ export default function OrderList(props) {
                     <span className="col-3 ">住宿金額</span>
                     <span className="fw-light col-8">＄{props.orderTotal}元</span>
                   </li>
-                  {/* <li className="card--list--item fs-4 row">
-                    <span className="col-3 ">活動參與</span>
-                    <span className="fw-light col-8"> </span>
-                  </li>
-                  <li className="card--list--item fs-4 row">
-                    <span className="col-3 ">活動天數</span>
-                    <span className="fw-light col-8"> </span>
-                  </li> */}
                 </ul>
               </div>
               {props.OrderItem[0].isActive === '0' &&

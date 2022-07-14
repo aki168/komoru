@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import BackstageAdmin from "./pages/BackstageAdmin";
 import BackstageLogin from "./pages/BackstageLogin";
@@ -10,10 +10,6 @@ import LoginPage from "./pages/aboutMember/LoginPage";
 import ForgotPW from "./pages/aboutMember/ForgotPWPage";
 import Register from "./pages/aboutMember/Register";
 import UserHomePage from "./pages/userPage/UserHomePage";
-// import UserPage from "./pages/userPage/userPage";
-// import OrderPageUserZone from "./pages/userPage/OrderPageUserZone";
-// import FeedbackPage from "./pages/userPage/FeedbackPage";
-// import CouponPage from "./pages/userPage/CouponPage";
 
 //ZH
 import PsychologicalExam from "./pages/psychologicalExam/PsychologicalExam";
@@ -107,7 +103,7 @@ function App() {
 
         {/* AKI */}
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login/*" element={<LoginPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgotPW" element={<ForgotPW />} />
         <Route path="/user-home/*" element={<UserHomePage />} />
