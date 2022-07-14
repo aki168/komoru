@@ -18,7 +18,7 @@ exports.getHotelDataListWithMainImgAndCityName = async () => {
       "JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id`" +
       "WHERE `HotelImg`.`hotel_img_is_main` = '0' " +
       "AND `Hotel`.`is_invalid` = '1' " +
-      "ORDER BY `Hotel`.`hotel_id` DESC; ";
+      "ORDER BY `Hotel`.`hotel_id` ASC; ";
     db.con.query(sql, (err, rows, fields) => {
       if (err) {
         reject(err);
