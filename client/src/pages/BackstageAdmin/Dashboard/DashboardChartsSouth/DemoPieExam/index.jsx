@@ -17,6 +17,7 @@ const DemoPieExam = ({southData}) => {
     data,
     angleField: 'value',
     colorField: 'type',
+    color: ['#51a49a', '#ed8c4e'],
     radius: 0.9,
     label: {
       type: 'inner',

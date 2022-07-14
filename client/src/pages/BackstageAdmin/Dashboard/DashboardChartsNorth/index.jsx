@@ -19,7 +19,7 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
   /*20220709 YN
    區域標題狀態設定*/
   useEffect(() => {
-    setTitleArea("北區");
+    setTitleArea("北部");
   }, []);
 
   /*20220707 YN
@@ -61,7 +61,7 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                 }}
               >
                 <div className="pb-3">
-                  <p style={{ fontSize: "22px", color: "#808080" }}>入住率</p>
+                  <p className="km-modal-report-title">入住率</p>
                 </div>
                 {northData && (
                   <DemoColumnOccupancyRate northData={northData} />
@@ -76,7 +76,7 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                 }}
               >
                 <div className="pb-3">
-                  <p style={{ fontSize: "22px", color: "#808080" }}>房型營業額</p>
+                  <p className="km-modal-report-title">房型營業額</p>
                 </div>
                 {northData && <DemoLineRoomTurnover northData={northData} />}
               </div>
@@ -96,7 +96,7 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                     }}
                   >
                     <div className="pt-3 ps-3">
-                      <p style={{ fontSize: "22px", color: "#808080" }}>參與活動率</p>
+                      <p className="km-modal-report-title">參與活動率</p>
                     </div>
 
                     {northData && (
@@ -119,7 +119,7 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                     }}
                   >
                     <div className="pt-3 ps-3">
-                      <p style={{ fontSize: "22px", color: "#808080" }}>測驗後參與率</p>
+                      <p className="km-modal-report-title">測驗後下訂率</p>
                     </div>
                     {northData && <DemoPieExam northData={northData} />}
                   </div>
@@ -140,7 +140,7 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                     }}
                   >
                     <div className="pt-3 ps-3">
-                      <p style={{ fontSize: "22px", color: "#808080" }}>活動類型</p>
+                      <p className="km-modal-report-title">活動類型</p>
                     </div>
                     {northData && (
                       <DemoPieActivityType northData={northData} />
@@ -163,7 +163,7 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                     }}
                   >
                     <div className="pt-3 ps-4">
-                      <p style={{ fontSize: "22px", color: "#808080" }}>優惠卷使用率</p>
+                      <p className="km-modal-report-title">優惠卷使用率</p>
                     </div>
                     {northData && <DemoLiquidCoupon northData={northData} />}
                   </div>
@@ -182,7 +182,7 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                     }}
                   >
                     <div className="pt-3 ps-4">
-                      <p style={{ fontSize: "22px", color: "#808080" }}>回饋率</p>
+                      <p className="km-modal-report-title">回饋率</p>
                     </div>
                     {northData && (
                       <DemoLiquidFeedback northData={northData} />

@@ -67,7 +67,7 @@ function BackstageLogin() {
   // const [loginShow, setLoginShow] = useState(true);
 
   //20220708 登入成功彈跳視窗狀態初始
-  const [errorShow, setErrorShow] = useState(false);
+  // const [errorShow, setErrorShow] = useState(false);
 
   let navigate = useNavigate();
 
@@ -103,6 +103,7 @@ function BackstageLogin() {
             console.log(res.data); // 印出撈到的資料看看
             // console.log(loginShow)
             // setLoginShow(true)
+            alert("登入成功")
             navigate("/BackstageAdmin", { replace: true });
           } else {
             // setErrorShow(true);

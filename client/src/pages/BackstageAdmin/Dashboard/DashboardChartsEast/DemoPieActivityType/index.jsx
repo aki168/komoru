@@ -57,6 +57,7 @@ const DemoPieActivityType = ({eastData}) => {
     data,
     angleField: 'value',
     colorField: 'type',
+    color: ['#ED8C4E', '#EFA16A', '#F3B486', '#F5C5A7', '#F6CEBF'],
     radius: 0.9,
     label: {
       type: 'inner',

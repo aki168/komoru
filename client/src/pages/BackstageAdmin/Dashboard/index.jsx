@@ -24,7 +24,7 @@ function Dashboard() {
 
   /*20220709 YN
   區域標題狀態初始化 */
-  const [titleArea, setTitleArea] = useState("北區");
+  const [titleArea, setTitleArea] = useState("北部");
 
 
   const [isClicked, setIsClicked]=useState({

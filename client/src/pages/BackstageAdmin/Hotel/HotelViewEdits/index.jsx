@@ -83,10 +83,16 @@ function HotelViewEdits({ setEditShow, editData, data }) {
   /*20220707 YN
  資料載入過程初始化*/
   const [loading, setLoading] = useState(false);
-  
+
   /*20220707 YN
  資料送出過程初始化*/
   const [saveloading, setsaveloading] = useState(false);
+
+/*20220714 YN
+  更換照片按鈕切換初始化*/
+  const [imgButton, setImgButton] = useState(false);
+
+
 
   /*20220701 YN
      取得後端預設飯店資料*/
@@ -104,7 +110,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
       .then((data) => {
         setLoading(true);
         setEditModalData(data.dataList.hotelData[0]);
-        console.log(data)
+        console.log(data.dataList.hotelData[0])
         //20220703 判斷主圖
         let mainResult = data.dataList.hotelImgDataList;
         let mainArr = mainResult.filter((result) => {
@@ -346,10 +352,25 @@ function HotelViewEdits({ setEditShow, editData, data }) {
     return () => (document.body.style.overflowY = "");
   }, []);
 
+
+  /*20220714 YN
+更換照片按鈕功能*/
+  const showChangeImg = () => {
+    setImgButton(true);
+    setEditImage(true)
+  }
+
+  /*20220714 YN
+  原始照片按鈕功能*/
+  const showOriginalImg = () => {
+    setImgButton(false);
+    setEditImage(false)
+  }
+
   return (
     <>
-     {loading ? (
-          <Form className="row me-5 ms-5 mb-3 mt-3" onSubmit={editFormSubmitHandle}>
+      {loading ? (
+        <Form className="row me-5 ms-5 mb-3 mt-3" onSubmit={editFormSubmitHandle}>
           {!editImage && (
             <Form.Group className="col-6 d-flex g-0 ">
               <div className="container d-flex flex-column">
@@ -392,7 +413,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
               </div>
             </Form.Group>
           )}
-    
+
           {editImage && (
             <Form.Group className="col-6 d-flex g-0 ">
               <div className="container d-flex flex-column">
@@ -457,44 +478,8 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                     </div>
                   </Form.Group>
                 </div>
-    
-                {/* <div
-                  className="col-12 h-75 justify-content-center d-flex flex-column align-items-center"
-                  style={{
-                    background: primaryImgPreview
-                      ? `url("${primaryImgPreview}") no-repeat center/cover`
-                      : "#d3d3d3",
-                  }}
-                >
-                  {!primaryImgPreview && (
-                    <>
-                      <label
-                        className="btn text-white "
-                        htmlFor="primaryfileUpload"
-                      >
-                        <BsFillArrowUpSquareFill size="4em" />
-                      </label>
-                      <input
-                        id="primaryfileUpload"
-                        type="file"
-                        style={{ display: "none" }}
-                        onChange={primaryImageChangeHandle}
-                      />
-                      <p className="text-white">請選擇主要圖片</p>
-                    </>
-                  )}
-                  {primaryError && (
-                    <p className="text-center text-danger">不支援此檔案</p>
-                  )}
-                  <div>
-                    {primaryImgPreview && (
-                      <button onClick={() => setPrimaryImgPreview(null)}>
-                        更換照片
-                      </button>
-                    )}
-                  </div>
-                </div> */}
-    
+
+
                 <div className="mt-2 col-md-12 d-flex">
                   <div className="col-md-4" style={{ paddingRight: "5px" }}>
                     <div
@@ -558,7 +543,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                       </Form.Group>
                     </div>
                   </div>
-    
+
                   <div
                     className="col-md-4"
                     style={{ paddingRight: "2.5px", paddingLeft: "2.5px" }}
@@ -624,7 +609,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                       </Form.Group>
                     </div>
                   </div>
-    
+
                   <div className="col-md-4" style={{ paddingLeft: "5px" }}>
                     <div
                       style={{
@@ -646,7 +631,7 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                           />
                         </button>
                       )}
-    
+
                       <Form.Group
                         className="d-flex justify-content-center "
                         style={{ paddingTop: "35px" }}
@@ -689,116 +674,10 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                     </div>
                   </div>
                 </div>
-    
-                {/* <div className="mt-2 col-md-12 d-flex h-25 container-fuield">
-                  <div
-                    className="me-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
-                    style={{
-                      background: firstImgPreview
-                        ? `url("${firstImgPreview}") no-repeat center/cover`
-                        : "#d3d3d3",
-                    }}
-                  >
-                    {!firstImgPreview && (
-                      <>
-                        <label
-                          className="btn text-white "
-                          htmlFor="firstFileUpload"
-                        >
-                          <BsFillArrowUpSquareFill size="2em" />
-                        </label>
-                        <input
-                          id="firstFileUpload"
-                          type="file"
-                          style={{ display: "none" }}
-                          onChange={firstImageChangeHandle}
-                        />
-                      </>
-                    )}
-                    {firstError && (
-                      <p className="text-center text-danger">不支援此檔案</p>
-                    )}
-                    <div>
-                      {firstImgPreview && (
-                        <button onClick={() => setFirstImgPreview(null)}>
-                          更換照片
-                        </button>
-                      )}
-                    </div>
-                  </div>
-    
-                  <div
-                    className="col-md-4 d-flex flex-column justify-content-center align-items-center"
-                    style={{
-                      background: secondImgPreview
-                        ? `url("${secondImgPreview}") no-repeat center/cover`
-                        : "#d3d3d3",
-                    }}
-                  >
-                    {!secondImgPreview && (
-                      <>
-                        <label
-                          className="btn text-white "
-                          htmlFor="secondfileUpload"
-                        >
-                          <BsFillArrowUpSquareFill size="2em" />
-                        </label>
-                        <input
-                          id="secondfileUpload"
-                          type="file"
-                          style={{ display: "none" }}
-                          onChange={secondImageChangeHandle}
-                        />
-                      </>
-                    )}
-                    {secondError && (
-                      <p className="text-center text-danger">不支援此檔案</p>
-                    )}
-                    <div>
-                      {secondImgPreview && (
-                        <button onClick={() => setSecondImgPreview(null)}>
-                          更換照片
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    className="ms-1 col-md-4 d-flex flex-column justify-content-center align-items-center"
-                    style={{
-                      background: thirdImgPreview
-                        ? `url("${thirdImgPreview}") no-repeat center/cover`
-                        : "#d3d3d3",
-                    }}
-                  >
-                    {!thirdImgPreview && (
-                      <>
-                        <label className="btn text-white " htmlFor="fileUpload">
-                          <BsFillArrowUpSquareFill size="2em" />
-                        </label>
-                        <input
-                          id="fileUpload"
-                          type="file"
-                          style={{ display: "none" }}
-                          onChange={thirdImageChangeHandle}
-                        />
-                      </>
-                    )}
-                    {thirdError && (
-                      <p className="text-center text-danger">不支援此檔案</p>
-                    )}
-                    <div>
-                      {thirdImgPreview && (
-                        <button onClick={() => setThirdImgPreview(null)}>
-                          更換照片
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div> */}
               </div>
             </Form.Group>
           )}
-    
+
           <Form.Group className="col-6 km-modal-content">
             <Form.Group>
               <Form.Label>飯店名稱</Form.Label>
@@ -820,13 +699,11 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                 onChange={editFormChangeHandle}
                 className="km-modal-content"
               >
-                <option defaultValue={editModalData.cityId}>
-                  {editData.cityName}
-                </option>
-                <option Value="1">台北市</option>
-                <option Value="2">台中市</option>
-                <option Value="3">台南市</option>
-                <option Value="4">台東市</option>
+                <option disabled>請選擇區域</option>
+                <option value="1" selected={editModalData.cityId === 1 ? true : ""}>台北市</option>
+                <option value="2" selected={editModalData.cityId === 2 ? true : ""}>台中市</option>
+                <option value="3" selected={editModalData.cityId === 3 ? true : ""}>台南市</option>
+                <option value="4" selected={editModalData.cityId === 4 ? true : ""}>台東市</option>
               </Form.Select>
             </Form.Group>
             <Form.Group className="mt-2">
@@ -890,17 +767,30 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                 修改
               </button>
             )}
+
             {editButton ? (
+              !imgButton &&
               <a
                 className="btn me-2 km-img-button-modal km-modal-footer"
-                onClick={() => setEditImage(true)}
+                onClick={showChangeImg}
               >
                 更換照片
               </a>
             ) : (
               <></>
             )}
-    
+
+            {editButton && imgButton ? (
+              <a
+                className="btn me-2 km-img-button-modal km-modal-footer"
+                onClick={showOriginalImg}
+              >
+                原始照片
+              </a>
+            ) : (
+              <></>
+            )}
+
             {editButton ? (
               <button
                 className="btn me-1 km-img-button-modal km-modal-footer"
@@ -913,16 +803,12 @@ function HotelViewEdits({ setEditShow, editData, data }) {
             )}
             {saveloading === true && <BackstageLodingModal />}
           </div>
-              
-               
-             
-           
         </Form>
-     ) : (
-      <div className="d-flex justify-content-center">
-        <BackstageLoding />
-      </div>
-    )}
+      ) : (
+        <div className="d-flex justify-content-center">
+          <BackstageLoding />
+        </div>
+      )}
     </>
   );
 }

@@ -37,6 +37,7 @@ const DemoLiquidFeedback = ({southData}) => {
     wave: {
       length: 128,
     },
+    color: '#ed8c4e',
   };
   return <Liquid {...config} />;
 };
