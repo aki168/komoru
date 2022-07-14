@@ -21,7 +21,7 @@ export default function Navbar() {
         </Link>
       </h1>
       <ul className="navbar--menu">
-        <li >
+        <li className="li--marginright">
           <Link className="navbar--item" to="/bookingHomepage" style={{ color: "#ED8C4E" ,fontWeight:"bolder" }}>
             即刻預定
           </Link>
