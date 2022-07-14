@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useHistory } from 'react-router-dom'
-import Navbar from '../../components/Navbar/Navbar-simple';
+import Navbar from '../../components/Navbar/Navbar';
 import Confirm from '../../components/Confirm/Confirm'
 import Login from '../../components/Login/Login';
 import '../../components/Login/Login.css'

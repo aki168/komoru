@@ -11,6 +11,7 @@ router.use(bodyParser.json());
 // ----------------------------------------------------------------------------------------------------------------------
 
 
-
+// 0714 確認會員 是否有領過註冊送200的coupon（酷碰ID=3） - aki
+router.post('/checkSignIn200coupon', couponItemController.checkSignIn200coupon)
 
 module.exports = router;

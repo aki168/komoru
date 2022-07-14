@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../../components/Navbar/Navbar-simple';
+import Navbar from '../../components/Navbar/Navbar';
 import ForgotPW from '../../components/ForgotPW/ForgotPW';
 import '../../components/ForgotPW/ForgotPW.css'
 

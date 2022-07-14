@@ -145,10 +145,6 @@ h5 {
   display: block;
 }
 
-.login--block:hover{
-  background: rgba(255,117,0,0.5);
-}
-
 .LINE{
   background:url('../../../public/lineicon.jpeg');
   background-position: center;
@@ -161,5 +157,20 @@ h5 {
 
 .GOOGLE{
   background:url('../../../public/googleicon.jpeg');
+  background-position: center;
+}
+
+.LINE:hover{
+  background:url('../../../public/icon_line.jpeg');
+  background-position: center;
+}
+
+.FB:hover{
+  background:url('../../../public/icon_fb.jpeg');
+  background-position: center;
+}
+
+.GOOGLE:hover{
+  background:url('../../../public/icon_google.jpeg');
   background-position: center;
 }
