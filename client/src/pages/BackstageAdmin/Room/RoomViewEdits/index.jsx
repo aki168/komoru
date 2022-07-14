@@ -3,6 +3,9 @@ import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { HiOutlineRefresh } from "react-icons/hi";
+import BackstageLoding from "../../../../components/BackstageLoading";
+import BackstageLodingModal from "../../../../components/BackstageLoadingModal";
+
 function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
   /*20220622 YN
    飯店資料初始化*/
@@ -49,6 +52,14 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
   修改按鈕初始化 */
   const [editButton, setEditButton] = useState(false);
 
+  /*20220707 YN
+ 資料載入過程初始化*/
+  const [loading, setLoading] = useState(false);
+
+  /*20220707 YN
+  資料送出過程初始化*/
+  const [saveloading, setSaveloading] = useState(false);
+
   // console.log(editImage);
   /*20220701 YN
      取得後端預設房型資料*/
@@ -64,6 +75,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
       .then((data) => {
         setEditModalData(data.dataList[0]);
         // console.log(data.dataList[0]);
+        setLoading(true);
       })
       .catch((e) => {
         console.error(e);
@@ -111,7 +123,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
     // };
 
     // console.log(newContact)
-
+    setSaveloading(true);
     if (editImage === true) {
       const formData = new FormData();
       formData.append("roomDataList", JSON.stringify(newContact));
@@ -221,165 +233,179 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
   }, []);
 
   return (
-    <Form className="me-5 ms-5 mt-3 mb-3 row" onSubmit={editFormSubmitHandle}>
-      {!editImage && (
-        <Form.Group
-          className="col-6 d-flex justify-content-center align-items-center "
-          style={{
-            background: `url("http://localhost:5000${editData.roomImgPath}") no-repeat center/cover`,
-          }}
-        ></Form.Group>
-      )}
-
-      {editImage && (
-        <div
-          className="col-6"
-          style={{
-            background: imgPreview
-              ? `url("${imgPreview}") no-repeat center/cover`
-              : "#f4f5f7",
-          }}
+    <>
+      {loading ? (
+        <Form
+          className="me-5 ms-5 mt-3 mb-3 row"
+          onSubmit={editFormSubmitHandle}
         >
-          {imgPreview && (
-            <button
-              style={{ border: "none", background: "none" }}
-              onClick={() => setImgPreview(null)}
-            >
-              <HiOutlineRefresh
-                size="30px"
-                color="#ed8c4e"
-                style={{ marginTop: "10px" }}
-              />
-            </button>
+          {!editImage && (
+            <Form.Group
+              className="col-6 d-flex justify-content-center align-items-center "
+              style={{
+                background: `url("http://localhost:5000${editData.roomImgPath}") no-repeat center/cover`,
+              }}
+            ></Form.Group>
           )}
-          <Form.Group
-            className="d-flex justify-content-center "
-            style={{
-              paddingTop: "130px",
-            }}
-          >
-            <div className="d-flex flex-column ">
-              {!imgPreview && (
-                <>
-                  <label className="btn" htmlFor="fileUpload">
-                    <MdOutlineFileUpload size="5em" color="#efa16a" />
-                  </label>
-                  <input
-                    id="fileUpload"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={handleImageChange}
+
+          {editImage && (
+            <div
+              className="col-6"
+              style={{
+                background: imgPreview
+                  ? `url("${imgPreview}") no-repeat center/cover`
+                  : "#f4f5f7",
+              }}
+            >
+              {imgPreview && (
+                <button
+                  style={{ border: "none", background: "none" }}
+                  onClick={() => setImgPreview(null)}
+                >
+                  <HiOutlineRefresh
+                    size="30px"
+                    color="#ed8c4e"
+                    style={{ marginTop: "10px" }}
                   />
-                  <h6
-                    className="d-flex align-items-center justify-content-center"
-                    style={{ color: "#efa16a" }}
-                  >
-                    請上傳檔案
-                  </h6>
-                </>
+                </button>
               )}
-              {error && <p className="text-center text-danger">不支援此檔案</p>}
+              <Form.Group
+                className="d-flex justify-content-center "
+                style={{
+                  paddingTop: "130px",
+                }}
+              >
+                <div className="d-flex flex-column ">
+                  {!imgPreview && (
+                    <>
+                      <label className="btn" htmlFor="fileUpload">
+                        <MdOutlineFileUpload size="5em" color="#efa16a" />
+                      </label>
+                      <input
+                        id="fileUpload"
+                        type="file"
+                        style={{ display: "none" }}
+                        onChange={handleImageChange}
+                      />
+                      <h6
+                        className="d-flex align-items-center justify-content-center"
+                        style={{ color: "#efa16a" }}
+                      >
+                        請上傳檔案
+                      </h6>
+                    </>
+                  )}
+                  {error && (
+                    <p className="text-center text-danger">不支援此檔案</p>
+                  )}
+                </div>
+              </Form.Group>
             </div>
+          )}
+
+          <Form.Group className="col-6 km-modal-content">
+            <Form.Group>
+              <Form.Label>飯店名稱</Form.Label>
+              <Form.Select
+                name="hotelId"
+                onChange={editFormChangeHandle}
+                disabled={isDisabled}
+                style={{ fontSize: "18px" }}
+              >
+                <option disabled>請選擇飯店</option>
+                {hotelArr}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mt-3">
+              <Form.Label>房型選擇</Form.Label>
+              <Form.Select
+                name="roomType"
+                onChange={editFormChangeHandle}
+                disabled={isDisabled}
+                style={{ fontSize: "18px" }}
+              >
+                <option disabled>請選擇房型</option>
+                <option
+                  value="1"
+                  selected={editModalData.roomType === "1" ? true : ""}
+                >
+                  單人房
+                </option>
+                <option
+                  value="0"
+                  selected={editModalData.roomType === "0" ? true : ""}
+                >
+                  背包客
+                </option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mt-3">
+              <Form.Label>容納人數</Form.Label>
+              <Form.Control
+                type="text"
+                name="liveNum"
+                // required="required"
+                defaultValue={editModalData.liveNum}
+                onChange={editFormChangeHandle}
+                disabled={isDisabled}
+                style={{ fontSize: "18px" }}
+              />
+            </Form.Group>
+            <Form.Group className="mt-3">
+              <Form.Label>備註</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="備註"
+                defaultValue={editModalData.roomDesc}
+                onChange={editFormChangeHandle}
+                name="roomDesc"
+                disabled={isDisabled}
+                style={{ fontSize: "18px" }}
+              />
+            </Form.Group>
           </Form.Group>
+          <div className="mt-3 mb-4 d-flex justify-content-end">
+            {editButton ? (
+              <></>
+            ) : (
+              <button
+                className="btn me-1 km-edit-button-modal km-modal-footer"
+                onClick={disabledClickHandle}
+              >
+                修改
+              </button>
+            )}
+
+            {editButton ? (
+              <a
+                className="btn me-2 km-img-button-modal km-modal-footer"
+                onClick={() => setEditImage(true)}
+              >
+                更換照片
+              </a>
+            ) : (
+              <></>
+            )}
+            {editButton ? (
+              <button
+                className="btn me-1 km-img-button-modal km-modal-footer"
+                type="submit"
+              >
+                儲存
+              </button>
+            ) : (
+              <></>
+            )}
+            {saveloading === true && <BackstageLodingModal />}
+          </div>
+        </Form>
+      ) : (
+        <div className="d-flex justify-content-center">
+          <BackstageLoding />
         </div>
       )}
-
-      <Form.Group className="col-6 km-modal-content">
-        <Form.Group>
-          <Form.Label>飯店名稱</Form.Label>
-          <Form.Select
-            name="hotelId"
-            onChange={editFormChangeHandle}
-            disabled={isDisabled}
-            style={{ fontSize: "18px" }}
-          >
-            <option disabled>請選擇飯店</option>
-            {hotelArr}
-          </Form.Select>
-        </Form.Group>
-        <Form.Group className="mt-3">
-          <Form.Label>房型選擇</Form.Label>
-          <Form.Select
-            name="roomType"
-            onChange={editFormChangeHandle}
-            disabled={isDisabled}
-            style={{ fontSize: "18px" }}
-          >
-            <option disabled>請選擇房型</option>
-            <option
-              value="1"
-              selected={editModalData.roomType === "1" ? true : ""}
-            >
-              單人房
-            </option>
-            <option
-              value="0"
-              selected={editModalData.roomType === "0" ? true : ""}
-            >
-              背包客
-            </option>
-          </Form.Select>
-        </Form.Group>
-        <Form.Group className="mt-3">
-          <Form.Label>容納人數</Form.Label>
-          <Form.Control
-            type="text"
-            name="liveNum"
-            // required="required"
-            defaultValue={editModalData.liveNum}
-            onChange={editFormChangeHandle}
-            disabled={isDisabled}
-            style={{ fontSize: "18px" }}
-          />
-        </Form.Group>
-        <Form.Group className="mt-3">
-          <Form.Label>備註</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            placeholder="備註"
-            defaultValue={editModalData.roomDesc}
-            onChange={editFormChangeHandle}
-            name="roomDesc"
-            disabled={isDisabled}
-            style={{ fontSize: "18px" }}
-          />
-        </Form.Group>
-      </Form.Group>
-      <div className="mt-3 mb-1 d-flex justify-content-end">
-        {editButton ? (
-          <></>
-        ) : (
-          <button
-            className="btn me-1 km-edit-button-modal km-modal-footer"
-            onClick={disabledClickHandle}
-          >
-            修改
-          </button>
-        )}
-
-        {editButton ? (
-          <a
-            className="btn me-2 km-img-button-modal km-modal-footer"
-            onClick={() => setEditImage(true)}
-          >
-            更換照片
-          </a>
-        ) : (
-          <></>
-        )}
-        {editButton ? (
-          <button
-            className="btn me-1 km-img-button-modal km-modal-footer"
-            type="submit"
-          >
-            儲存
-          </button>
-        ) : (
-          <></>
-        )}
-      </div>
-    </Form>
+    </>
   );
 }
 
