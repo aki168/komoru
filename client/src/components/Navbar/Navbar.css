@@ -21,8 +21,8 @@ h1,h2,h3,h4,h5{
 /* 上面為全域設定 */
 
 .li--marginright{
-  margin-right: 10px;
- 
+  margin-rleft: 80px;
+  padding:40px 0 !important;
 }
 /* react button怎改 */
 Button{
@@ -70,6 +70,5 @@ margin-left: 150px;
 }
 
 .logout{
-
   margin-left: 50px;
 }
