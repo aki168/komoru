@@ -282,7 +282,7 @@ function Hotel() {
                     onChange={sreachChangeHandle}
                   >
                     <option value="" selected>
-                      地區搜尋
+                      區域搜尋
                     </option>
                     <option value="1">北區</option>
                     <option value="2">中區</option>

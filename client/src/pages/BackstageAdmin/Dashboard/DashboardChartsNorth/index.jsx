@@ -83,10 +83,10 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
 
               <div className="row mb-5 mt-2 g-0">
                 <div
-                  className="col-4"
-                  style={{
-                    padding: "20px 20px 0 0",
-                  }}
+                  className="col-lg-4 col-md-12 pt-lg-3 pe-lg-3 pt-md-0 pe-md-0"
+                  // style={{
+                  //   padding: "20px 20px 0 0",
+                  // }}
                 >
                   <div
                     className="mt-3"
@@ -105,7 +105,7 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                   </div>
                 </div>
                 <div
-                  className="col-4"
+                  className="col-lg-4 col-md-12 pt-lg-3 pt-md-0"
                   style={{
                     padding: "20px 0 0 0",
                   }}
@@ -126,10 +126,10 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                 </div>
 
                 <div
-                  className="col-4"
-                  style={{
-                    padding: "20px 0 0 20px",
-                  }}
+                  className="col-lg-4 col-md-12 pt-lg-3 ps-lg-3 pt-md-0 ps-md-0"
+                  // style={{
+                  //   padding: "20px 0 0 20px",
+                  // }}
                 >
 
                   <div
@@ -150,13 +150,13 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
               </div>
               <div className="row mb-5 g-0">
                 <div
-                  className="col-6"
-                  style={{
-                    padding: "0 20px 0 0",
-                  }}
+                  className="col-lg-6 col-md-12 pe-md-0 pe-lg-3"
+                  // style={{
+                  //   padding: "0 20px 0 0",
+                  // }}
                 >
                   <div
-                    className="pb-5"
+                    className="pb-lg-5"
                     style={{
                       backgroundColor: "white",
                       boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
@@ -169,19 +169,19 @@ function DashboardChartsNorth({ dateData, setTitleArea }) {
                   </div>
                 </div>
                 <div
-                  className="col-6"
-                  style={{
-                    padding: "0 0 0 20px",
-                  }}
+                  className="col-lg-6 col-md-12 ps-md-0  ps-lg-3"
+                  // style={{
+                  //   padding: "0 0 0 20px",
+                  // }}
                 >
                   <div
-                    className="pb-5 "
+                    className="pb-lg-5 "
                     style={{
                       backgroundColor: "white",
                       boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
                     }}
                   >
-                    <div className="pt-3 ps-4">
+                    <div className="pt-3 ps-4 mt-lg-0 mt-md-3">
                       <p className="km-modal-report-title">回饋率</p>
                     </div>
                     {northData && (

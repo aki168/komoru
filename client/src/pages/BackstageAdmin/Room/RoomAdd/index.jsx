@@ -22,7 +22,7 @@ function RoomAdd({ setAddShow, data, hotelData }) {
     hotelId: "",
     roomType: "",
     liveNum: "",
-    roomDesc: "",
+    roomContent: "",
   });
 
   /*20220625 YN
@@ -89,7 +89,7 @@ function RoomAdd({ setAddShow, data, hotelData }) {
       hotelId: addFormData.hotelId,
       roomType: addFormData.roomType,
       liveNum: addFormData.liveNum,
-      roomDesc: addFormData.roomDesc,
+      roomContent: addFormData.roomContent,
       employeeId: 1,
     };
     // const newContacts = newContact;
@@ -112,7 +112,7 @@ function RoomAdd({ setAddShow, data, hotelData }) {
       addFormData.hotelId === "" ||
       addFormData.roomType === "" ||
       addFormData.liveNum === "" ||
-      addFormData.roomDesc === "" ||
+      addFormData.roomContent === "" ||
       selectedFile === null
     ) {
       setAlertImg(true);
@@ -235,7 +235,7 @@ function RoomAdd({ setAddShow, data, hotelData }) {
           <Form.Select
             name="hotelId"
             onChange={addFormChangeHandle}
-            style={{ fontSize: "18px" }}
+            className="km-modal-content"
           >
             <option value="" selected>
               請選擇飯店
@@ -257,7 +257,7 @@ function RoomAdd({ setAddShow, data, hotelData }) {
           <Form.Select
             name="roomType"
             onChange={addFormChangeHandle}
-            style={{ fontSize: "18px" }}
+            className="km-modal-content"
           >
             <option value="" selected>
               請選擇房型
@@ -283,7 +283,7 @@ function RoomAdd({ setAddShow, data, hotelData }) {
             // required="required"
             placeholder="請輸入容納人數"
             onChange={addFormChangeHandle}
-            style={{ fontSize: "18px" }}
+            className="km-modal-content"
           />
         </Form.Group>
         {addFormData.liveNum === "" && (
@@ -299,19 +299,19 @@ function RoomAdd({ setAddShow, data, hotelData }) {
         <Form.Group className="mt-3">
           <Form.Control
             as="textarea"
-            rows={3}
-            placeholder="備註"
-            name="roomDesc"
+            rows={5}
+            placeholder="請輸入介紹"
+            name="roomContent"
             onChange={addFormChangeHandle}
-            style={{ fontSize: "18px" }}
+            className="km-modal-content"
           />
         </Form.Group>
-        {addFormData.roomDesc === "" && (
+        {addFormData.roomContent === "" && (
             <>
               {alertImg && (
                 <p style={{ color: "red" }}>
                   <IoAlertCircleSharp size="20px" color="red" />
-                  備註不可空白
+                  介紹不可空白
                 </p>
               )}
             </>

@@ -53,8 +53,10 @@ function AdminHeader() {
   return (
     <>
       <div
-        className="d-flex  sticky-top justify-content-end align-items-center "
-        style={{ background: "#EFA16A", height: "100px" ,boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)" }}
+        className="d-flex  sticky-top justify-content-end align-items-center"
+        style={{ background: "#EFA16A",
+         height: "100px" ,
+         boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)" }}
       >
         <h6 className="fs-4 text-white me-4">您好, {userName}</h6>
         <button className="btn me-5" onClick={logOut}>

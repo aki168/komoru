@@ -301,7 +301,7 @@ function Partnership() {
                     
                   >
                     <option value="" selected>
-                      地區搜尋
+                      區域搜尋
                     </option>
                     <option value="1">北部</option>
                     <option value="2">中部</option>

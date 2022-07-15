@@ -10,6 +10,7 @@ import { BsChevronCompactDown } from "react-icons/bs";
 // import { RiBuildingLine } from "react-icons/ri";
 // import { IoBedOutline } from "react-icons/io5";
 import LOGO from "../../assets/my-logo.png";
+import CatLOGO from "../../assets/CatLogo.png";
 import "./BackstageAdminSidebar.css";
 
 function Sidebar() {
@@ -25,11 +26,18 @@ function Sidebar() {
           className=" container nav flex-column text-start fs-4 d-block nav-pills"
           style={{ height: "100vh" }}
         >
-          <div className="pt-4 pb-5  ">
+          <div className="pt-4 pb-5">
             <Link to="order">
               <img
-                style={{ width: "210px", height: "70px", marginLeft: "20px" }}
+              className="img-fluid d-none d-md-block"
+                style={{ maxWidth: "70%", height: "auto", marginLeft: "20px" }}
                 src={LOGO}
+                alt=""
+              />
+              <img
+              className="img-fluid d-md-none"
+                style={{ maxWidth: "50%", height: "auto", marginLeft: "20px" }}
+                src={CatLOGO}
                 alt=""
               />
             </Link>
@@ -53,7 +61,7 @@ function Sidebar() {
               data-bs-toggle="collapse"
               className="nav-link dropdown-toggle pt-2 "
               // aria-expanded="false"
-              style={{ textDecoration: "none", height: '60px' }}
+              style={{ textDecoration: "none", height: '60px',whiteSpace:'normal' }}
             >
               <span
                 className="kmr-font-color-primary km-sidebar"
