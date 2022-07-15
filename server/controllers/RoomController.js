@@ -113,7 +113,7 @@ exports.addRoomWithImg = async (req, res, next) => {
       "hotelId",
       "roomType",
       "liveNum",
-      "roomDesc",
+      "roomContent",
       "employeeId",
     ]);
 
@@ -173,7 +173,7 @@ exports.updateRoomWithImgByRoomId = async (req, res, next) => {
       "roomId",
       "roomType",
       "liveNum",
-      "roomDesc",
+      "roomContent",
       "roomImgPath",
       "employeeId",
     ]);
@@ -314,7 +314,7 @@ const checkData = (dataList, dataColumns) => {
   let errCheck = true;
   dataColumns.forEach((value) => {
     switch (value) {
-      case "roomDesc":
+      case "roomContent":
       case "roomImgPath":
       case "keyword":
         if (typeof dataList[value] === "undefined") {

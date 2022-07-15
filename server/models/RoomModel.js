@@ -101,13 +101,13 @@ exports.addRoomWithImg = async (dataList) => {
   return new Promise((resolve, reject) => {
     let sql =
       "INSERT INTO `Room` " +
-      "(`hotel_id`, `room_type`, `live_num`, `room_desc`, `creator_id`, `create_datetime`) " +
+      "(`hotel_id`, `room_type`, `live_num`, `room_content`, `creator_id`, `create_datetime`) " +
       "VALUES (?, ?, ?, ?, ?, ?);";
     let value = [
       dataList.hotelId,
       dataList.roomType,
       dataList.liveNum,
-      dataList.roomDesc,
+      dataList.roomContent,
       dataList.employeeId,
       db.getDateTimeNow(),
     ];
@@ -179,13 +179,13 @@ exports.updateRoomWithImgByRoomId = async (dataList) => {
   return new Promise((resolve, reject) => {
     let sql =
       "UPDATE `Room` SET " +
-      "`hotel_id` = ?, `room_type` = ?, `live_num` = ?, `room_desc` = ?, `updater_id` = ?, `update_datetime` = ? " +
+      "`hotel_id` = ?, `room_type` = ?, `live_num` = ?, `room_content` = ?, `updater_id` = ?, `update_datetime` = ? " +
       "WHERE `Room`.`room_id` = ?; ";
     let value = [
       dataList.hotelId,
       dataList.roomType,
       dataList.liveNum,
-      dataList.roomDesc,
+      dataList.roomContent,
       dataList.employeeId,
       db.getDateTimeNow(),
       dataList.roomId,
