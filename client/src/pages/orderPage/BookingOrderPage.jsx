@@ -446,6 +446,7 @@ function BookingOrderPage() {
   return (
     <>
       <Navbar />
+
       <div className="bookingBreadcrumbs">
         <Link to="/">首頁</Link>
         <span>
@@ -461,178 +462,180 @@ function BookingOrderPage() {
         </span>
         <p>訂單確認</p>
       </div>
-      <div className="orderContainer">
-        <div className="memberCheckout">
-          {memberloading ? (
-            <>
-              <div className="memberCheckoutHeader" ref={testRef}>
-                <h1>訂購者資料確認</h1>
-                <p>
-                  確認資料無誤後選擇付款方式，簡單快速的下訂流程讓你立即體驗旅程！
-                </p>
-              </div>
-              <table className="memberCheckoutTable">
-                <tbody>
-                  <tr>
-                    <td>
-                      <b>帳號:</b>
-                      <span>{memberMail}</span>
-                    </td>
-                    <td>
-                      <b>手機:</b>
-                      <span className="specialSpan">{memberPhone}</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <b>姓名:</b>
-                      <span>{memberName}</span>
-                    </td>
-                    <td>
-                      <b>性別:</b>
-                      <span className="specialSpan">{gender()}</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <b>暱稱:</b>
-                      <span>{memberNickName}</span>
-                    </td>
-                    <td>
-                      <div className="payMethodContent">
-                        <b>付款方式</b>
+      <div className="orderwrap">
+        <div className="orderContainer">
+          <div className="memberCheckout">
+            {memberloading ? (
+              <>
+                <div className="memberCheckoutHeader" ref={testRef}>
+                  <h1>訂購者資料確認</h1>
+                  <p>
+                    確認資料無誤後選擇付款方式，簡單快速的下訂流程讓你立即體驗旅程！
+                  </p>
+                </div>
+                <table className="memberCheckoutTable">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <b>帳號:</b>
+                        <span>{memberMail}</span>
+                      </td>
+                      <td>
+                        <b>手機:</b>
+                        <span className="specialSpan">{memberPhone}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>姓名:</b>
+                        <span>{memberName}</span>
+                      </td>
+                      <td>
+                        <b>性別:</b>
+                        <span className="specialSpan">{gender()}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>暱稱:</b>
+                        <span>{memberNickName}</span>
+                      </td>
+                      <td>
+                        <div className="payMethodContent">
+                          <b>付款方式</b>
 
-                        <span>
-                          <select
-                            id="expDays"
-                            defaultValue={""}
-                            onChange={(e) => {
-                              setPayMethod(e.target.value);
-                            }}
-                          >
-                            <option value="" disabled hidden>
-                              請選擇要付款的方式
-                            </option>
-                            <option value="1">現金</option>
-                          </select>
-                          {nextStep === "click" && (
-                            <>
-                              {payMethod === "" && (
-                                <IoMdAlert className="orderIoMdAlert" />
-                              )}
-                            </>
-                          )}
-                        </span>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </>
-          ) : (
-            <div style={{ marginLeft: 600 }}>
-              <BookingLoading />
-            </div>
-          )}
-        </div>
-        <div className="orderList">
-          {activityPackloading ? (
-            <>
-              <div className="orderListHeader">
-                <h1>訂購者資料確認</h1>
-                <p>
-                  一條龍記錄您的訂單及活動行程，並即時更新在會員中心讓您隨時查看。
-                </p>
+                          <span>
+                            <select
+                              id="expDays"
+                              defaultValue={""}
+                              onChange={(e) => {
+                                setPayMethod(e.target.value);
+                              }}
+                            >
+                              <option value="" disabled hidden>
+                                請選擇要付款的方式
+                              </option>
+                              <option value="1">現金</option>
+                            </select>
+                            {nextStep === "click" && (
+                              <>
+                                {payMethod === "" && (
+                                  <IoMdAlert className="orderIoMdAlert" />
+                                )}
+                              </>
+                            )}
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </>
+            ) : (
+              <div style={{ marginLeft: 600 }}>
+                <BookingLoading />
               </div>
-              <div className="orderListBody">
-                <div className="orderListImg">{handleImgData()}</div>
-                <div className="orderListAll">
-                  <div className="list">
-                    <p>入住日期</p>
-                    <span>{date}</span>
-                  </div>
-                  <div className="list">
-                    <p>入住天數</p>
-                    <span>{dayState}</span>
-                  </div>
-                  <div className="list">
-                    <p>飯店/房型</p>
-                    <span>{handleroomStateData()}</span>
-                  </div>
-                  <div className="list">
-                    <p>優惠票券</p>
-                    <span>{handleCouponStateData()}</span>
-                  </div>
-                  <div className="list">
-                    <p>活動參與</p>
-                    <span>{handleActivityStateData()}</span>
-                  </div>
-                  <div className="list">
-                    <p>活動天數</p>
-                    <span>{countActivity}</span>
+            )}
+          </div>
+          <div className="orderList">
+            {activityPackloading ? (
+              <>
+                <div className="orderListHeader">
+                  <h1>訂購者資料確認</h1>
+                  <p>
+                    一條龍記錄您的訂單及活動行程，並即時更新在會員中心讓您隨時查看。
+                  </p>
+                </div>
+                <div className="orderListBody">
+                  <div className="orderListImg">{handleImgData()}</div>
+                  <div className="orderListAll">
+                    <div className="list">
+                      <p>入住日期</p>
+                      <span>{date}</span>
+                    </div>
+                    <div className="list">
+                      <p>入住天數</p>
+                      <span>{dayState}</span>
+                    </div>
+                    <div className="list">
+                      <p>飯店/房型</p>
+                      <span>{handleroomStateData()}</span>
+                    </div>
+                    <div className="list">
+                      <p>優惠票券</p>
+                      <span>{handleCouponStateData()}</span>
+                    </div>
+                    <div className="list">
+                      <p>活動參與</p>
+                      <span>{handleActivityStateData()}</span>
+                    </div>
+                    <div className="list">
+                      <p>活動天數</p>
+                      <span>{countActivity}</span>
+                    </div>
                   </div>
                 </div>
+              </>
+            ) : (
+              <div style={{ marginLeft: 600 }}>
+                <BookingLoading />
               </div>
-            </>
-          ) : (
-            <div style={{ marginLeft: 600 }}>
-              <BookingLoading />
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
-        <div className="marginContainer">
-          {activityPackloading ? (
-            <>
-              {getAllActivePackData && (
-                <>
-                  {activityBag1Visible && (
-                    <div className="activityList">{showAvtivity1Bag()}</div>
-                  )}
-                </>
-              )}
-              {getAllActivePackData && (
-                <>
-                  {activityBag2Visible && (
-                    <div className="activityList">{showAvtivity2Bag()}</div>
-                  )}
-                </>
-              )}
-              {getAllActivePackData && (
-                <>
-                  {activityBag3Visible && (
-                    <div className="activityList">{showAvtivity3Bag()}</div>
-                  )}
-                </>
-              )}
-            </>
-          ) : (
-            <div style={{ marginLeft: 600 }}>
-              <BookingLoading />
-            </div>
-          )}
-        </div>
-        <div className="line"></div>
-        <div className="marginContainer plusBuy">
-          <h5>KOMORU Star Hostel 背包客房型 加購活動確認</h5>
-          <p>
-            活動參與天數{countActivity}天:
-            <span>NT${countActivity * 700}元</span>
-          </p>
-        </div>
-        <div className="marginContainer Total">
-          <p>
-            房間總共:<span> NT${roomSum}元</span>
-          </p>
-          {showCoupon && (
+          <div className="marginContainer">
+            {activityPackloading ? (
+              <>
+                {getAllActivePackData && (
+                  <>
+                    {activityBag1Visible && (
+                      <div className="activityList">{showAvtivity1Bag()}</div>
+                    )}
+                  </>
+                )}
+                {getAllActivePackData && (
+                  <>
+                    {activityBag2Visible && (
+                      <div className="activityList">{showAvtivity2Bag()}</div>
+                    )}
+                  </>
+                )}
+                {getAllActivePackData && (
+                  <>
+                    {activityBag3Visible && (
+                      <div className="activityList">{showAvtivity3Bag()}</div>
+                    )}
+                  </>
+                )}
+              </>
+            ) : (
+              <div style={{ marginLeft: 600 }}>
+                <BookingLoading />
+              </div>
+            )}
+          </div>
+          <div className="line"></div>
+          <div className="marginContainer plusBuy">
+            <h5>KOMORU Star Hostel 背包客房型 加購活動確認</h5>
             <p>
-              優惠折扣:<span>-NT${Number(couponData[0].discount)}元</span>
+              活動參與天數{countActivity}天:
+              <span>NT${countActivity * 700}元</span>
             </p>
-          )}
-          <p style={{ color: "black" }}>
-            應付金額: <span>NT$ {sumActivity}元</span>
-          </p>
-          <button onClick={CheckoutOrderHandler}>結帳確認</button>
+          </div>
+          <div className="marginContainer Total">
+            <p>
+              房間總共:<span> NT${roomSum}元</span>
+            </p>
+            {showCoupon && (
+              <p>
+                優惠折扣:<span>-NT${Number(couponData[0].discount)}元</span>
+              </p>
+            )}
+            <p style={{ color: "black" }}>
+              應付金額: <span>NT$ {sumActivity}元</span>
+            </p>
+            <button onClick={CheckoutOrderHandler}>結帳確認</button>
+          </div>
         </div>
       </div>
     </>

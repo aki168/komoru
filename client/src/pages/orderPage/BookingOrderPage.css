@@ -6,6 +6,10 @@
   padding-top: 80px;
 }
 
+.orderwrap {
+  padding-bottom: 60px;
+}
+
 .memberCheckout {
   border: 1px solid black;
   width: 1280px;
@@ -82,11 +86,12 @@
   margin-top: 100px;
   border: 1px solid black;
   position: relative;
+  background-color: white;
   color: #808080;
 }
 
 .plusBuy > p {
-  padding: 15px;
+  padding: 20px 0px 20px 15px;
   font-size: 20px;
 }
 

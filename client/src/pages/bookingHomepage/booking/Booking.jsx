@@ -225,7 +225,16 @@ function Booking() {
     );
   });
 
+  //日期用
   const ref = useRef();
+
+  //滾動到指定元素
+  const scrollToElement = () => window.scrollTo(0, 0);
+  useEffect(() => {
+    if (roomState !== "") {
+      scrollToElement();
+    }
+  }, [roomState]);
 
   return (
     <>

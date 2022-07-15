@@ -41,6 +41,7 @@ const PartnerHotel = () => {
         console.log(err);
       });
   }, []);
+  console.log(data[0].hotelContent);
 
   // //獲取房型資料
   // const [roomDes, setRoomDes] = useState("");
@@ -345,12 +346,11 @@ const PartnerHotel = () => {
               <h1>夾腳拖的家</h1>
               <h1>Flip Flop Hostel</h1>
             </div>
-            <p>{data[3].hotelContent}</p>
+            <p>{data[0].hotelContent}</p>
             <br />
             <br />
-            <br />
-            <p>{data[3].hotelTel}</p>
-            <p>{data[3].hotelAddr}</p>
+            <p>{data[0].hotelTel}</p>
+            <p>{data[0].hotelAddr}</p>
             <a
               href="https://www.facebook.com/OwlStay.FlipFlopHostel/"
               target="_blank"
@@ -395,14 +395,14 @@ const PartnerHotel = () => {
               <h1>誠星青年旅館</h1>
               <h1>Star Hostel</h1>
             </div>
-            <p>{data[0].hotelContent}</p>
+            {/* {data[0].hotelContent} */}
+            <p>{data[1].hotelContent}</p>
             <br />
             <br />
             <br />
             <br />
-            <br />
-            <p>{data[0].hotelTel}</p>
-            <p>{data[0].hotelAddr}</p>
+            <p>{data[1].hotelTel}</p>
+            <p>{data[1].hotelAddr}</p>
             <a href="https://starhostelparklane.com/" target="_blank">
               認識 誠星青年旅館 Star Hostel
             </a>
@@ -463,10 +463,10 @@ const PartnerHotel = () => {
             <div>
               <h1>快活慢行</h1>
             </div>
-            <p>{data[1].hotelContent}</p>
-            {/* <br /> */}
-            <p>{data[1].hotelTel}</p>
-            <p>{data[1].hotelAddr}</p>
+            <p>{data[2].hotelContent}</p>
+            <br />
+            <p>{data[2].hotelTel}</p>
+            <p>{data[2].hotelAddr}</p>
             <a href="https://hiihubs.com/" target="_blank">
               認識 快活慢行
             </a>
@@ -507,7 +507,7 @@ const PartnerHotel = () => {
             <div>
               <h1>山林山鄰</h1>
             </div>
-            <p>{data[2].hotelContent}</p>
+            <p>{data[3].hotelContent}</p>
             <br />
             <br />
             <br />
@@ -516,10 +516,8 @@ const PartnerHotel = () => {
             <br />
             <br />
             <br />
-            <br />
-            <br />
-            <p>{data[2].hotelTel}</p>
-            <p>{data[2].hotelAddr}</p>
+            <p>{data[3].hotelTel}</p>
+            <p>{data[3].hotelAddr}</p>
             <a href="https://www.forest3030hostel.com.tw/" target="_blank">
               認識 山林山鄰
             </a>

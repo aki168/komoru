@@ -12,7 +12,7 @@
   background-color: #ed8c4e;
 }
 
-.headerTitle {
+.examHeaderTitle {
   font-size: 30px;
   margin: 140px 0px 0px 120px;
 }
@@ -91,7 +91,7 @@
   left: 120px;
   bottom: 80px;
   font-size: 100px;
-  background-color: rgb(255, 255, 255, 0);
+  background-color: rgb(0, 0, 0, 0);
   color: #ed8c4e;
 }
 

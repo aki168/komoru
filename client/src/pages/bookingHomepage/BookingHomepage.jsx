@@ -30,7 +30,9 @@ function BookingHomepage() {
       <div className="bookingHomepageContainer">
         <Booking />
       </div>
-      <Footer />
+      <div className="bookingFooter">
+        <Footer />
+      </div>
     </>
   );
 }

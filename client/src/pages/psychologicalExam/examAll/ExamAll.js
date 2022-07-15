@@ -35,7 +35,8 @@ const ExamAll = () => {
   const [personality, setPersonality] = useState("");
   const [personalityDescribe, setPersonalityDescribe] = useState("");
   const [activityPack, setActivityPack] = useState("");
-  const [examImg, setExamImg] = useState();
+  // const [examImg, setExamImg] = useState();
+  const [examResult, setExamResult] = useState("");
 
   const [page, setPage] = useState(0);
   const FormTitles = ["問題一.", "問題二.", "問題三.", "問題四.", "問題五."];
@@ -113,8 +114,14 @@ const ExamAll = () => {
           {loading ? (
             <>
               <div className="examFormCantainer">
-                <h1>{personality}</h1>
-                <p className="personalityDescribe">{personalityDescribe}</p>
+                <h1>{examResult.personality}</h1>
+                <p className="personalityDescribe">
+                  {examResult.personalityDescribe[0]}
+                  <br />
+                  {examResult.personalityDescribe[1]}
+                  <br />
+                  {examResult.personalityDescribe[2]}
+                </p>
                 {/* <p>活動包:{activityPack}</p> */}
                 <img src={require("../madCat.png")} alt="" />
                 <button onClick={ToOrderPage} className="nextStepResult">
@@ -192,7 +199,8 @@ const ExamAll = () => {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data.dataList);
+            console.log(data);
+            setExamResult(data.dataList);
             // let personality = res.dataList.personality;
             // let personalityDescribe = res.dataList.personalityDescribe;
             setPersonality(data.dataList.personality);
@@ -206,10 +214,11 @@ const ExamAll = () => {
       }
     }
   };
-
+  // console.log(examResult);
+  // console.log(personality);
   return (
     <div className="form">
-      {personality === "" && (
+      {examResult === "" && (
         <>
           <div className="progressbar">
             <div
@@ -229,11 +238,11 @@ const ExamAll = () => {
           </div>
           <div className="examFormCantainer">
             <div>
-              <p className="headerTitle">{FormTitles[page]}</p>
+              <p className="examHeaderTitle">{FormTitles[page]}</p>
             </div>
-            <div className="body">{PageDisplay()}</div>
+            <div className="examBody">{PageDisplay()}</div>
 
-            <div className="footer">
+            <div className="examFooter">
               <button
                 disabled={page === 0}
                 onClick={() => {
