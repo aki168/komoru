@@ -98,7 +98,8 @@ exports.register = async (
       }
       resolve(
         {
-          rows
+          status: rows.serverStatus,
+          memberId: rows.insertId,
         },
         console.log("新增成功")
       );
