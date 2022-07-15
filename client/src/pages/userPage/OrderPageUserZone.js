@@ -41,7 +41,6 @@ export default function OrderPage() {
         setOrderData(postOrderData)
         setIsOrder(true)
       }
-      console.log(res.data.dataList.getOrderDataByMemberId)
       console.log(res)
 
 
