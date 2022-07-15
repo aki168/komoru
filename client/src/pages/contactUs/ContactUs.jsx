@@ -87,7 +87,7 @@ const ContactUs = () => {
       <div className="ContactUs--titleBar ContactUs--bg--fix mb-5">
         <UserHeader
           title="遍地全台的合作飯店一覽"
-          text="KOMORU與北、中、南、東各個在地青旅合作，活絡社會並讓旅者與業者達到雙贏！"
+          text="KOMORU與北、中、南、東各個在地飯店合作，活絡社會並讓旅者與業者達到雙贏！"
         />
       </div>
 

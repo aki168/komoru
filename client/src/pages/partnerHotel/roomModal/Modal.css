@@ -19,6 +19,10 @@
   z-index: 200;
 }
 
+.modalRight {
+  width: 500px;
+}
+
 .modalContainer {
   width: 1300px;
   position: fixed;
@@ -31,10 +35,22 @@
   z-index: 200;
 }
 
-.closeBtn {
+.ModalCloseBtn {
   position: fixed;
   top: 8px;
   right: 8px;
   font-size: 20px;
   cursor: pointer;
+}
+
+.ModalContent h1 {
+  font-size: 40px;
+  display: flex;
+  margin: 40px 0px 10px 20px;
+}
+
+.ModalContent p {
+  font-size: 20px;
+  margin: 30px;
+  line-height: 38px;
 }

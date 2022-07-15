@@ -11,13 +11,13 @@ const PrivateRoomModal = (props) => {
       <div className="modalContainer">
         <img className="ModalImg" src={props.privateUrl} alt="" />
         <div className="modalRight">
-          <p onClick={props.onClose} className="closeBtn">
+          <p onClick={props.onClose} className="ModalCloseBtn">
             X
           </p>
-          <div className="content">
-            <h1>description</h1>
-            <p>description</p>
-            <p>description</p>
+          <div className="ModalContent">
+            <h1>{props.desTitle}</h1>
+            <p>{props.des1}</p>
+            <p>{props.des2}</p>
           </div>
         </div>
       </div>

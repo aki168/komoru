@@ -541,7 +541,7 @@ function OrderWithNoActivity() {
                 <span>{dayState}</span>
               </div>
               <div className="list">
-                <p>青旅/房型</p>
+                <p>飯店/房型</p>
                 <span>{handleroomStateData()}</span>
               </div>
               <div className="list">

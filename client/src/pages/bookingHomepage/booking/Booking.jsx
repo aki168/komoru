@@ -41,7 +41,7 @@ function Booking() {
   const { date, setDate } = useContext(BookContext);
   //探索天數
   const { dayState, setDayState } = useContext(BookContext);
-  //青旅/房型
+  //飯店/房型
   const { cityState, setCityState } = useContext(BookContext);
   const { roomState, setRoomState } = useContext(BookContext);
   const { cityIdValue, setCityIdValue } = useContext(BookContext);
@@ -83,7 +83,7 @@ function Booking() {
   };
 
   //2022-06-19 -ZH
-  //青旅/房型根據下拉式選單值不同，顯示不同圖片
+  //飯店/房型根據下拉式選單值不同，顯示不同圖片
   const [DEFAULTContentVisile, setDEFAULTContentVisile] = useState(false);
   const [room1ContentVisile, setRoom1ContentVisile] = useState(false);
   const [room2ContentVisile, setRoom2ContentVisile] = useState(false);
@@ -284,7 +284,7 @@ function Booking() {
                 className="roomSelect"
                 onChange={(e) => setRoomState(e.target.value)}
               >
-                <option value="default">請選擇青旅/房型</option>
+                <option value="default">飯店/房型</option>
                 {cityIdValue === "1" && (
                   <>
                     <option value="5">夾腳拖的家-私人套房</option>

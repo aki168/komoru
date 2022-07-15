@@ -4,12 +4,12 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 
 const RoomItemLeft = (props) => {
-  useEffect(() => {
-    Aos.init({ duration: 2500 });
-  }, []);
+  // useEffect(() => {
+  //   Aos.init({ duration: 2500 });
+  // }, []);
 
   return (
-    <div className="roomContainer-L" data-aos="fade-out">
+    <div className="roomContainer-L">
       <div className="parent">
         <div
           className="privateRoom child"
