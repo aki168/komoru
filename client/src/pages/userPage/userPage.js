@@ -39,7 +39,7 @@ export default function UserPage() {
 
   return (
     <>
-      <RainbowCard />
+      <RainbowCard className="border border-danger" />
       <User
         mail={userData.memberMail}
         name={userData.memberName}

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getUserCodeApiUrl, getTokenByUserCode } from "../LineLogin";
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../../firebase-config';
+import AlertModal from '../AlertModal/AlertModal'
 
 
 export default function Login(props) {
@@ -16,6 +17,9 @@ export default function Login(props) {
   const [mailCheck, setMailCheck] = useState(""); //確認mail是否設定好在顯示密碼欄位
   const [loginStatus, setLoginStatus] = useState(false); //設置jwt使用按鈕狀態
   const [emailErr, setEmailErr] = useState("　");
+
+  // 0715 aki-登入成功彈窗 初始化 aki
+  const [loginSuccess, setLoginSuccess] = useState(false)
 
   // 2022-07-08 PG
   // 取得 Line 登入網址 Code
@@ -110,9 +114,9 @@ export default function Login(props) {
       headers: { "x-access-token": localStorage.getItem("token") },
     }).then((res) => {
       console.log(res);
-
-      alert("登入成功！");
       navigate("/", { replace: true });
+      alert("登入成功！");
+      // setLoginSuccess(true)
     });
   };
 
@@ -151,7 +155,8 @@ export default function Login(props) {
             localStorage.setItem("token", res.data.dataList.token);
             setLoginStatus(true);
             alert("登入成功！");
-            navigate("/", { replace: true });
+            navigate("/", { replace: true })
+            // setLoginSuccess(true);
           }
         })
         .catch((e) => {
@@ -176,7 +181,7 @@ export default function Login(props) {
     try {
       const response = await signInWithPopup(auth, provider);
       const token = response.user.accessToken;
-      localStorage.setItem('access_token', token);
+
       if (token) {
         axios({
           method: "POST",
@@ -190,13 +195,14 @@ export default function Login(props) {
         })
           .then((res) => {
             console.log('login')
-            
+
             navigate("/login", { replace: true });
             if (res.data.status) {
               localStorage.setItem("token", res.data.dataList.token);
               setLoginStatus(true);
               alert("登入成功！");
               navigate("/", { replace: true });
+              // setLoginSuccess(true)
             }
           })
           .catch((e) => {
@@ -251,6 +257,12 @@ export default function Login(props) {
       )}
 
       {/* <a href="/ForgotPW" className="login--forgot">忘記密碼？</a> */}
+
+      {loginSuccess &&
+        <AlertModal
+          text="登入成功"
+        />
+      }
 
       <h3 className="login--subTitle">或使用以下選項登入</h3>
       <ul className="login--other">

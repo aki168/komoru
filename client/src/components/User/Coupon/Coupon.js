@@ -91,7 +91,7 @@ export default function Coupon(props) {
         url:"http://localhost:5000/coupon/createCoupon",
         data:{
           member_id:props.memberId,
-          coupon_id:3,
+          coupon_id:1, // 0715 aki-酷碰id改1
           count:1
         }
       })

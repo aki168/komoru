@@ -66,7 +66,7 @@ h5 {
 
 .login {
   margin: 0 auto;
-  width: 65%;
+  max-width: 500px;
   text-align: start;
 }
 
@@ -144,8 +144,8 @@ h5 {
 }
 
 .login--block {
-  width: 180px;
-  height: 180px;
+  width: 150px;
+  height: 150px;
   display: block;
   border-radius: 5px;
 }

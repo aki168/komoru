@@ -53,7 +53,7 @@ export default function RainbowCard(props) {
       >
         <Modal.Body>
           <div className="rainbowCard">
-            <p className="rainbowCard--EN">[勉勵金句] KOMORU想送給你一句話...</p>
+            <p className="rainbowCard--EN">KOMORU想送給你一句話...</p>
 
             { //資料尚未取得之前，顯示Loading
               !loading &&
