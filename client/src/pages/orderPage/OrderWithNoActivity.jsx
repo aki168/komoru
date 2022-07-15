@@ -4,7 +4,7 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { BookContext } from "../../Helper/Context";
 import ActivityBag from "./ActivityBag";
 import axios from "axios";
-import Navbar from "../../components/Navbar/Navbar-simple";
+import Navbar from "../../components/Navbar/Navbar";
 import { AiOutlineRight } from "react-icons/ai";
 import { IoMdAlert } from "react-icons/io";
 import BookingLoading from "../../components/BookingLoading/BookingLoading";
