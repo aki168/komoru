@@ -158,10 +158,10 @@ exports.addHotelWithImg = async (req, res, next) => {
                 fs.rename(
                   imgDataValue.originName,
                   imgDataValue.destination +
-                    "hotel-" +
-                    imgDataValue.hotelImgId +
-                    "." +
-                    imgDataValue.mimetype,
+                  "hotel-" +
+                  imgDataValue.hotelImgId +
+                  "." +
+                  imgDataValue.mimetype,
                   function (err) {
                     if (err) configController.sendJsonMsg(res, false, err, []);
                   }
@@ -258,10 +258,10 @@ exports.updateHotelWithImgByHotelId = async (req, res, next) => {
                   imgDataValue.hotelImgPath !== ""
                     ? imgDataValue.hotelImgPath
                     : imgDataValue.destination +
-                        "hotel-" +
-                        imgDataValue.hotelImgId +
-                        "." +
-                        imgDataValue.mimetype,
+                    "hotel-" +
+                    imgDataValue.hotelImgId +
+                    "." +
+                    imgDataValue.mimetype,
                   function (err) {
                     if (err) configController.sendJsonMsg(res, false, err, []);
                   }
@@ -394,12 +394,11 @@ const checkData = (dataList, dataColumns) => {
   };
 };
 
-// 2022-07-12 MJ
+// 2022-07-15 MJ
 // 取得房型內容
 exports.getHotelAndRoomContent = async (req, res) => {
   try {
     let hotelContent = await hotelModel.getHotelAndRoomContent()
-    // roomContent = roomContent[0].roomContent.split('/')
     configController.sendJsonMsg(res, true, "", hotelContent)
   }
   catch (error) {

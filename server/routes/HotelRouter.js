@@ -82,7 +82,7 @@ router.post(
 // 刪除飯店 By hotelId
 router.post("/delHotelByHotelId", hotelController.delHotelWithImgByHotelId);
 
-// 2022-07-12 MJ 
+// 2022-07-15 MJ 
 // 取得飯店&房型內容
 router.post('/getHotelAndRoomContent', hotelController.getHotelAndRoomContent)
 
