@@ -231,15 +231,16 @@
   position: absolute;
   display: inline-block;
   margin-top: 5px;
-  margin-left: 150px;
+  margin-left: 10px;
 }
 
 .citySearch {
   appearance: none;
-  width: 180px;
+  width: 170px;
   height: 40px;
   cursor: pointer;
-  padding-left: 10px;
+  padding-top: 2px;
+  padding-left: 60px;
 }
 
 .partnerHotel--titleBar {
