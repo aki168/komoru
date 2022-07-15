@@ -19,6 +19,7 @@ import CheckoutSucceeded from "./pages/checkoutSucceededPage/CheckoutSucceeded";
 import { BookContext } from "./Helper/Context";
 import PartnerHotel from "./pages/partnerHotel/PartnerHotel";
 import ContactUs from "./pages/contactUs/ContactUs";
+import OrderWithNoActivity from "./pages/orderPage/OrderWithNoActivity";
 
 // import ReactLoading from 'react-loading';
 
@@ -46,7 +47,6 @@ export const logout = () => {
   localStorage.removeItem("token");
   window.location.reload("false"); //想重新渲染同頁面可以用這段
 };
-
 
 function App() {
   //2022-06-23 ZH
@@ -134,6 +134,14 @@ function App() {
             </BookContext.Provider>
           }
         />
+        <Route
+          path="/OrderWithNoActivity"
+          element={
+            <BookContext.Provider value={all}>
+              <OrderWithNoActivity />
+            </BookContext.Provider>
+          }
+        />
         <Route path="checkoutSucceeded" element={<CheckoutSucceeded />} />
         <Route path="/hotelIntro" element={<PartnerHotel />} />
         <Route path="/contactUs" element={<ContactUs />} />
@@ -143,5 +151,3 @@ function App() {
 }
 
 export default App;
-
-

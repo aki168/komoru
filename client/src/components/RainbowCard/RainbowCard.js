@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import './RainbowCard.css'
 import BookingLoading from '../BookingLoading/BookingLoading';
@@ -26,11 +26,18 @@ export default function RainbowCard(props) {
       setRainbowCard(res.data.dataList.getRainbowCard[0].rainbowCardContent)
       setShow(true)
     })
-    .catch((err) => {
-      console.log(err)
-    })
+      .catch((err) => {
+        console.log(err)
+      })
   }
     , [])
+
+  /*20220709 YN
+  排除當modal開啟時，scrollbar 消失 sidebar 往右移 */
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+    return () => (document.body.style.overflowY = "");
+  }, []);
 
 
 
@@ -49,13 +56,13 @@ export default function RainbowCard(props) {
             <p className="rainbowCard--EN">[勉勵金句] KOMORU想送給你一句話...</p>
 
             { //資料尚未取得之前，顯示Loading
-              !loading && 
+              !loading &&
               <div className='d-flex justify-content-center'>
-                <BookingLoading/>
+                <BookingLoading />
               </div>
             }
 
-            { loading && <p className="rainbowCard--CN">{rainbowCard}</p> } 
+            {loading && <p className="rainbowCard--CN">{rainbowCard}</p>}
           </div>
         </Modal.Body>
       </Modal>

@@ -99,180 +99,177 @@ export default function User(props) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (selectedFile){
-    let param = new FormData()
-    param.append("icon", selectedFile)
-    param.append("mail", formData.mail)
-    // console.log(param.get("icon"))
+    if (selectedFile) {
+      let param = new FormData()
+      param.append("icon", selectedFile)
+      param.append("mail", formData.mail)
+      // console.log(param.get("icon"))
 
-    let config = {
-      headers: { 'Content-Type': 'multipart/form-data' }
+      let config = {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }
+
+      axios.post(
+        "http://localhost:5000/member/updateMemberIcon",
+        param, config
+
+      ).then((res) => {
+        console.log('上傳成功')
+        console.log(res)
+        setUploadSuccess(true)
+
+      }).catch((err) => {
+        console.log(err)
+
+      })
+    } else {
+      alert('尚未選取圖檔')
     }
-
-    axios.post(
-      "http://localhost:5000/member/updateMemberIcon",
-      param, config
-
-    ).then((res) => {
-      console.log('上傳成功')
-      console.log(res)
-      setUploadSuccess(true)
-
-    }).catch((err) => {
-      console.log(err)
-
-    })
-  } else {
-    alert('尚未選取圖檔')
   }
-}
 
   // 0711 aki 頭像路徑判斷設定 (第三方註冊後更變path)
   let imgURL;
-  if (formData.registerType === '2'){ //LINE註冊
-    let ans = formData.iconPath.indexOf("profile.line"); //確認LINE註冊者的頭像是否有修改過
-    imgURL = (ans === -1)? `http://localhost:5000${formData.iconPath}` : formData.iconPath;
-  }else if(formData.registerType ==='0'){
+  if (formData.registerType === '2') { //LINE註冊
+    let linePath = formData.iconPath.indexOf("profile.line"); //確認LINE註冊者的頭像是否有修改過
+    imgURL = (linePath === -1) ? `http://localhost:5000${formData.iconPath}` : formData.iconPath;
+  } else if (formData.registerType === '0') { //一般註冊
     imgURL = `http://localhost:5000${formData.iconPath}`;
+  } else if (formData.registerType === '1'){ //google註冊
+    let googlePath = formData.iconPath.indexOf("google"); //確認google註冊者的頭像是否有修改過
+    imgURL = (googlePath === -1) ? `http://localhost:5000${formData.iconPath}` : formData.iconPath;
   }
 
-  // style={{
-  //   background: imgPreview
-  //     ? `url("${imgPreview}") no-repeat center/cover`
-  //     : `url("${formData.iconPath ? ((formData.registerType === '2')? formData.iconPath : `http://localhost:5000${formData.iconPath}`) :
-  //                                     `avatar-pl.png`}") no-repeat center/cover`
-  // }}
 
 
-  return (
-    <>
-      <div className="user--card">
-        <div className="card--title">
-          <h3>會員基本資料</h3>
-          <p>完善的會員中心系統，一鍵增修會員資料、隨心所欲更換喜愛頭像，放上最耀眼的自己！</p>
-        </div>
-        <img className="img-fluid mb-4 w-100" src="../komoru_member.png" alt="profile-banner" />
-
-        {/* 會員頭像區 --------------------------------- */}
-        <div className="user--card--inner">
-          <div className="user--icon">
-            <div
-              className="icon--pic"
-              style={{
-                background: imgPreview
-                  ? `url("${imgPreview}") no-repeat center/cover`
-                  : `url("${formData.iconPath ? imgURL :`avatar-pl.png`}") no-repeat center/cover`
-              }}
-
-            >
-
-            </div>
-            <input
-              className="fs-5 mb-1"
-              name="iconFileUpload"
-              id="iconFileUpload"
-              type="file"
-              onChange={handleImageChange}
-            />
-            <p className="errMsg">請上傳png、jpg、jpeg格式</p>
-
-            <Button className="user--btn--L fs-4" onClick={onSubmit}>上傳/修改頭像</Button>
-
-            {
-              uploadErr &&
-              <Alert variant="danger" onClose={() => setUploadErr(false)} dismissible>
-                <h5>上傳格式錯誤，請再試一次</h5>
-              </Alert>
-            }
-            {
-              uploadSuccess &&
-              <Alert variant="success" onClose={() => setUploadSuccess(false)} dismissible>
-                <h5> - 上傳成功 SUCCESS - </h5>
-              </Alert>
-            }
-
-          </div>
-
-          {/* 會員個人資料區 --------------------------------- */}
-          <ul className="user--form pt-3 pb-3">
-            <li className="user--item">
-              <span className="fs-4"> 帳號　{formData.mail}</span>
-            </li>
-            <li className="user--item">
-              {!alertData && <span className="fs-4">姓名　{formData.name}</span>}
-              {alertData && <input
-                type="text"
-                name="name"
-                id="name"
-                value={formData.name}
-                onChange={inputHandler}
-                placeholder="請輸入姓名"
-              />}
-            </li>
-            <li className="user--item">
-              {!alertData && <span className="fs-4">暱稱　{formData.nickName}</span>}
-              {alertData && <input
-                type="text"
-                name="nickName"
-                id="nickName"
-                value={formData.nickName}
-                onChange={inputHandler}
-                placeholder="請輸入暱稱"
-              />}
-            </li>
-            <li className="user--item">
-              {!alertData && 
-                <span className="fs-4">
-                  性別　{formData.sex === '1' ? `男性` :
-                        formData.sex === '0' ? `女性`:<span className="text-muted">尚未設定</span>}
-                </span>}
-              {alertData && <select
-                name="sex"
-                id="sex"
-                value={formData.sex}
-                onChange={inputHandler}
-              >
-                <option value="1">男性</option>
-                <option value="0">女性</option>
-              </select>}
-            </li>
-            <li className="user--item">
-              {!alertData && 
-              <span className="fs-4">
-                手機　{formData.phone? formData.phone:<span className="text-muted">尚未設定</span>}
-              </span>}
-              {alertData && <input
-                type="text"
-                name="phone"
-                id="phone"
-                value={formData.phone}
-                onChange={inputHandler}
-                placeholder="請輸入手機號碼"
-              />}
-            </li>
-          </ul>
-          <div className="user--btnBar">
-
-            {!alertData &&
-              <Button
-                className="user--btn--M fs-4"
-                onClick={alertSwitch}
-              >修改
-              </Button>
-            }
-            {alertData &&
-              <Button
-                className="user--btn--M fs-4"
-                onClick={alterProfile}
-              >儲存
-              </Button>
-            }
-          </div>
-
-        </div>
+return (
+  <>
+    <div className="user--card">
+      <div className="card--title">
+        <h3>會員基本資料</h3>
+        <p>完善的會員中心系統，一鍵增修會員資料、隨心所欲更換喜愛頭像，放上最耀眼的自己！</p>
       </div>
+      <img className="img-fluid mb-4 w-100" src="../komoru_member.png" alt="profile-banner" />
 
-    </>
-  )
+      {/* 會員頭像區 --------------------------------- */}
+      <div className="user--card--inner">
+        <div className="user--icon">
+          <div
+            className="icon--pic"
+            style={{
+              background: imgPreview
+                ? `url("${imgPreview}") no-repeat center/cover`
+                : `url("${formData.iconPath ? imgURL : `avatar-pl.png`}") no-repeat center/cover`
+            }}
+
+          >
+
+          </div>
+          <input
+            className="fs-5 mb-1"
+            name="iconFileUpload"
+            id="iconFileUpload"
+            type="file"
+            onChange={handleImageChange}
+          />
+          <p className="errMsg">請上傳png、jpg、jpeg格式</p>
+
+          <Button className="user--btn--L fs-4" onClick={onSubmit}>上傳/修改頭像</Button>
+
+          {
+            uploadErr &&
+            <Alert variant="danger" onClose={() => setUploadErr(false)} dismissible>
+              <h5>上傳格式錯誤，請再試一次</h5>
+            </Alert>
+          }
+          {
+            uploadSuccess &&
+            <Alert variant="success" onClose={() => setUploadSuccess(false)} dismissible>
+              <h5> - 上傳成功 SUCCESS - </h5>
+            </Alert>
+          }
+
+        </div>
+
+        {/* 會員個人資料區 --------------------------------- */}
+        <ul className="user--form pt-3 pb-3">
+          <li className="user--item">
+            <span className="fs-4"> 帳號　{formData.mail}</span>
+          </li>
+          <li className="user--item">
+            {!alertData && <span className="fs-4">姓名　{formData.name}</span>}
+            {alertData && <input
+              type="text"
+              name="name"
+              id="name"
+              value={formData.name}
+              onChange={inputHandler}
+              placeholder="請輸入姓名"
+            />}
+          </li>
+          <li className="user--item">
+            {!alertData && <span className="fs-4">暱稱　{formData.nickName}</span>}
+            {alertData && <input
+              type="text"
+              name="nickName"
+              id="nickName"
+              value={formData.nickName}
+              onChange={inputHandler}
+              placeholder="請輸入暱稱"
+            />}
+          </li>
+          <li className="user--item">
+            {!alertData &&
+              <span className="fs-4">
+                性別　{formData.sex === '1' ? `男性` :
+                  formData.sex === '0' ? `女性` : <span className="text-muted">尚未設定</span>}
+              </span>}
+            {alertData && <select
+              name="sex"
+              id="sex"
+              value={formData.sex}
+              onChange={inputHandler}
+            >
+              <option value="1">男性</option>
+              <option value="0">女性</option>
+            </select>}
+          </li>
+          <li className="user--item">
+            {!alertData &&
+              <span className="fs-4">
+                手機　{formData.phone ? formData.phone : <span className="text-muted">尚未設定</span>}
+              </span>}
+            {alertData && <input
+              type="text"
+              name="phone"
+              id="phone"
+              value={formData.phone}
+              onChange={inputHandler}
+              placeholder="請輸入手機號碼"
+            />}
+          </li>
+        </ul>
+        <div className="user--btnBar">
+
+          {!alertData &&
+            <Button
+              className="user--btn--M fs-4"
+              onClick={alertSwitch}
+            >修改
+            </Button>
+          }
+          {alertData &&
+            <Button
+              className="user--btn--M fs-4"
+              onClick={alterProfile}
+            >儲存
+            </Button>
+          }
+        </div>
+
+      </div>
+    </div>
+
+  </>
+)
 
 }
