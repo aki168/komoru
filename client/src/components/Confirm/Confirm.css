@@ -27,7 +27,7 @@ h1,h2,h3,h4,h5{
 
 .Confirm{
   margin: 80px auto;
-  width: 65%;
+  max-width: 500px;
   border-top:1px solid #454545 ;
   border-bottom:1px solid #454545 ;
 }

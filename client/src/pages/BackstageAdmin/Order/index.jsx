@@ -231,11 +231,11 @@ function Order() {
             </label>
           </td>
           <td className="col-sm-1">{data.orderNumber}</td>
+          <td className="col-sm-1">{data.orderStartDate}</td>
+          <td className="col-sm-1">{data.orderStatus}</td>
           <td className="col-sm-1">{data.memberName}</td>
           <td className="col-sm-1">{data.roomType}</td>
-          <td className="col-sm-1">{data.orderStartDate}</td>
           <td className="col-sm-1">{data.stayNight}</td>
-          <td className="col-sm-1">{data.orderStatus}</td>
           <td className="col-sm-1">
             <button
               onClick={() => handleViewShow(index)}
@@ -424,11 +424,11 @@ function Order() {
                       <tr>
                         <td></td>
                         <td>訂單編號</td>
+                        <td>入住日期</td>
+                        <td>入住狀態</td>
                         <td>訂購姓名</td>
                         <td>區域/房型</td>
-                        <td>入住日期</td>
                         <td>入住天數</td>
-                        <td>入住狀態</td>
                         <td>功能</td>
                       </tr>
                     </thead>

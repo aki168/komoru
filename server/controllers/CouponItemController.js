@@ -3,7 +3,7 @@ const configController = require("./_ConfigController");
 const { promisify } = require('util'); // nodejs原生
 const jwt = require('jsonwebtoken'); //token
 
-// 0714 確認會員 是否有領過註冊送200的coupon（酷碰ID=3） - aki
+// 0714 確認會員 是否有領過註冊送200的coupon（酷碰ID=1） - aki
 exports.checkSignIn200coupon = async (req, res) => {
     const { token } = req.body;
     if (token) {

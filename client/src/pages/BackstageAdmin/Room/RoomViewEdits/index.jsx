@@ -16,7 +16,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
   const [editModalData, setEditModalData] = useState({
     hotelId: "",
     liveNum: "",
-    roomDesc: "",
+    roomContent: "",
     roomId: "",
     roomType: "",
     employeeId: "1",
@@ -109,7 +109,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
       hotelId: editModalData.hotelId,
       roomType: editModalData.roomType,
       liveNum: editModalData.liveNum,
-      roomDesc: editModalData.roomDesc,
+      roomContent: editModalData.roomContent,
       employeeId: 1,
       roomImgPath: editModalData.roomImgPath,
       roomId: editModalData.roomId,
@@ -120,7 +120,7 @@ function RoomViewEdits({ setEditShow, editData, data, hotelData }) {
     //   hotelId: editModalData.hotelId,
     //   roomType: editModalData.roomType,
     //   liveNum: editModalData.liveNum,
-    //   roomDesc: editModalData.roomDesc,
+    //   roomContent: editModalData.roomContent,
     //   employeeId: 1,
     //   roomImgPath: "",
     //   roomId: editModalData.roomId,
@@ -362,6 +362,7 @@ const showOriginalImg = ()=>{
               <Form.Control
                 type="text"
                 name="liveNum"
+                placeholder="請輸入容納人數"
                 // required="required"
                 defaultValue={editModalData.liveNum}
                 onChange={editFormChangeHandle}
@@ -370,14 +371,14 @@ const showOriginalImg = ()=>{
               />
             </Form.Group>
             <Form.Group className="mt-3">
-              <Form.Label>備註</Form.Label>
+              <Form.Label>介紹</Form.Label>
               <Form.Control
                 as="textarea"
-                rows={3}
-                placeholder="備註"
-                defaultValue={editModalData.roomDesc}
+                rows={5}
+                placeholder="請輸入介紹"
+                defaultValue={editModalData.roomContent}
                 onChange={editFormChangeHandle}
-                name="roomDesc"
+                name="roomContent"
                 disabled={isDisabled}
                 className="km-modal-content"
               />
