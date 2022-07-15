@@ -216,8 +216,8 @@ exports.lineLogin = async (req, res, next) => {
           userData.name,
           "2",
           "",
-          userData.picture,
           "2",
+          userData.picture,
           userData.sub
         )
         .then((result) => {
