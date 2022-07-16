@@ -26,8 +26,8 @@ export default function OrderListDaily(props) {
               <ActivePackPlaceMapPopover
                 activePackContent={activePactContent[0].activePackItemContent}
                 partnershipId={activePactContent[0].partnershipId}
-                partnershipName={activePactContent[0].partnershipName}
-                partnershipAddr={activePactContent[0].partnershipAddr}
+                partnershipNameTo={activePactContent[0].partnershipName}
+                partnershipAddrTo={activePactContent[0].partnershipAddr}
               />
             </li>
           </ul>
@@ -38,8 +38,10 @@ export default function OrderListDaily(props) {
               <ActivePackPlaceMapPopover
                 activePackContent={activePactContent[1].activePackItemContent}
                 partnershipId={activePactContent[1].partnershipId}
-                partnershipName={activePactContent[1].partnershipName}
-                partnershipAddr={activePactContent[1].partnershipAddr}
+                partnershipNameTo={activePactContent[1].partnershipName}
+                partnershipAddrTo={activePactContent[1].partnershipAddr}
+                partnershipNameFrom={activePactContent[0].partnershipName}
+                partnershipAddrFrom={activePactContent[0].partnershipAddr}
               />
             </li>
             <li className="pt-2 pb-2 ">
@@ -47,8 +49,10 @@ export default function OrderListDaily(props) {
               <ActivePackPlaceMapPopover
                 activePackContent={activePactContent[2].activePackItemContent}
                 partnershipId={activePactContent[2].partnershipId}
-                partnershipName={activePactContent[2].partnershipName}
-                partnershipAddr={activePactContent[2].partnershipAddr}
+                partnershipNameTo={activePactContent[2].partnershipName}
+                partnershipAddrTo={activePactContent[2].partnershipAddr}
+                partnershipNameFrom={activePactContent[1].partnershipName}
+                partnershipAddrFrom={activePactContent[1].partnershipAddr}
               />
             </li>
             <li className="pt-2 pb-2 ">
