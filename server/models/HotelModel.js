@@ -154,9 +154,9 @@ exports.addHotelWithImg = async (dataList) => {
                         "WHERE `HotelImg`.`hotel_img_id` = ?;";
                       let updateImgValue = [
                         dataList.hotelImgPath +
-                          addImgResult.insertId +
-                          "." +
-                          imgDataValue.mimetype,
+                        addImgResult.insertId +
+                        "." +
+                        imgDataValue.mimetype,
                         dataList.employeeId,
                         db.getDateTimeNow(),
                         addImgResult.insertId,
@@ -261,9 +261,9 @@ exports.updateHotelWithImgByHotelId = async (dataList) => {
                           "WHERE `HotelImg`.`hotel_img_id` = ?;";
                         let updateImgValue = [
                           dataList.hotelImgPathForSql +
-                            addImgResult.insertId +
-                            "." +
-                            imgDataValue.mimetype,
+                          addImgResult.insertId +
+                          "." +
+                          imgDataValue.mimetype,
                           dataList.employeeId,
                           db.getDateTimeNow(),
                           addImgResult.insertId,
@@ -347,21 +347,48 @@ exports.delHotelByHotelId = async (dataList) => {
   });
 };
 
-// 2022-07-12 MJ
+// 2022-07-15 MJ
 // 取得房型內容
 exports.getHotelAndRoomContent = async () => {
   return new Promise((resolve, reject) => {
-    let sql =
-      "SELECT  `Hotel`.`hotel_title`, `Hotel`.`hotel_addr`, `Hotel`.`hotel_content`, `Room`.`room_type`, `Room`.`room_content` " +
-      "FROM `Hotel` " +
-      "LEFT JOIN `Room` ON `Hotel`.`hotel_id` = `Room`.`hotel_id` ";
-    db.con.query(sql, (err, rows, fields) => {
+    let hotelsql =
+      "SELECT `Hotel`.`hotel_id`, `Hotel`.`hotel_title`, `Hotel`.`hotel_addr`, `Hotel`.`hotel_tel`, `Hotel`.`hotel_content` FROM `Hotel`"
+    // 先找出hotelId
+    db.con.query(hotelsql, (err, rows, fields) => {
       if (err) {
         reject(err);
       }
-      resolve(
-        db.rowDataToCamelData(rows)
-      );
+      let hotelList = db.rowDataToCamelData(rows)
+      // 用for跑hotelId找文案
+      for (let i = 0; i < hotelList.length; i++) {
+        let hotelId = hotelList[i].hotelId
+        let hotelImgSql =
+          "SELECT `HotelImg`.`hotel_img_is_main`, `HotelImg`.`hotel_img_path` " +
+          "FROM `HotelImg` " +
+          "WHERE `hotel_id` = ?"
+          // 找飯店照片
+        db.con.query(hotelImgSql, hotelId, (err, rows, fields) => {
+          if (err) {
+            reject(err);
+          }
+          hotelList[i]['hotelImg'] = db.rowDataToCamelData(rows)
+          let roomSql =
+            "SELECT `Room`.`room_type`, `Room`.`room_content` , `RoomImg`.`room_img_path`" +
+            "FROM `Room` " +
+            "LEFT JOIN `RoomImg` ON `Room`.`room_id` = `RoomImg`.`room_id` " +
+            "WHERE `Room`.`hotel_id` = ? ";
+            // 找房型照片&文案
+          db.con.query(roomSql, hotelId, (err, rows, fields) => {
+            if (err) {
+              reject(err);
+            }
+            hotelList[i]['roomContent'] = db.rowDataToCamelData(rows)
+            if (i === hotelList.length - 1) {
+              resolve(hotelList)
+            }
+          })
+        })
+      }
     });
   });
 };

@@ -8,14 +8,22 @@ const Day2ContentVisible = () => {
   const { activity2Data, setActivity2Data } = useContext(BookContext);
   //日期計算
   const { date, setDate } = useContext(BookContext);
-  let nd = new Date(date);
+  function addDaysToDate(date, days) {
+    var res = new Date(date);
+    res.setDate(res.getDate() + days);
+    return res;
+  }
+
+  var nd = new Date(date);
   let y = nd.getFullYear();
   let m = nd.getMonth() + 1;
   let d = nd.getDate();
+  let addOneM = addDaysToDate(nd, 1).getMonth() + 1;
+  let addOneD = addDaysToDate(nd, 1).getDate();
   let fst = `${y.toString()}/${m.toString().padStart(2, "0")}/${d
     .toString()
     .padStart(2, "0")}`;
-  let sec = `${y.toString()}/${m.toString().padStart(2, "0")}/${(d + 1)
+  let sec = `${y.toString()}/${addOneM.toString().padStart(2, "0")}/${addOneD
     .toString()
     .padStart(2, "0")}`;
 

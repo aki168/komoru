@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import "./Modal.css";
 
 const BackPackerRoomModal = (props) => {
-  console.log(props.open);
   if (!props.open) {
     return null;
   }

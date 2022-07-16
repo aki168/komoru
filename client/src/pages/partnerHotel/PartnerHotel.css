@@ -112,7 +112,7 @@
   border: 1px solid #808080;
   width: 530px;
   height: 40px;
-  font-size: 16px;
+  font-size: 18px;
   text-align: center;
   color: #808080;
   text-decoration: none;
@@ -123,6 +123,7 @@
 .sizeLeft a:hover {
   background-color: #ed8c4e;
   color: white;
+  border: none;
 }
 
 .sliderleft-left-arrow {
@@ -220,11 +221,37 @@
   margin-bottom: 120px;
   margin-top: -80px;
 }
+
+.goBookingContainer {
+  /* position: relative; */
+  position: sticky;
+  margin-left: 40px;
+  top: 150px;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.goBooking {
+  width: 170px;
+  height: 40px;
+  cursor: pointer;
+  padding-top: 2px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid black;
+}
+
+.goBooking:hover {
+  background-color: rgba(241, 164, 97, 0.9);
+  color: white;
+  border: none;
+}
+
 .searchContainer {
   position: relative;
   position: sticky;
   margin-left: 40px;
-  top: 150px;
+  top: 210px;
   font-size: 20px;
 }
 
@@ -242,6 +269,7 @@
   cursor: pointer;
   padding-top: 2px;
   padding-left: 60px;
+  border: 1px solid black;
 }
 
 .partnerHotel--titleBar {

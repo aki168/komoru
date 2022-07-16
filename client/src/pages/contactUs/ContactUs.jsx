@@ -86,8 +86,8 @@ const ContactUs = () => {
       {/* 0712 aki-更改為滾動視差  */}
       <div className="ContactUs--titleBar ContactUs--bg--fix mb-5">
         <UserHeader
-          title="遍地全台的合作飯店一覽"
-          text="KOMORU與北、中、南、東各個在地飯店合作，活絡社會並讓旅者與業者達到雙贏！"
+          title="KOMORU隨時接收您的寶貴意見"
+          text="將您的寶貴意見以郵件方式送出我們將於工作日由專人以郵件回覆您"
         />
       </div>
 
