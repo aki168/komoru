@@ -16,9 +16,11 @@ import { BsChevronLeft, BsChevronRight, BsSearch } from "react-icons/bs";
 import UserHeader from "../../components/User/UserHeader";
 import { useNavigate } from "react-router-dom";
 import ScrollToTop from "../../components/ScrollToTop/ScrollToTop";
-// import WeatherApp from "../../components/WeatherApp/WeatherApp";
+import BookingLoading from "../../components/BookingLoading/BookingLoading";
 
 const PartnerHotel = () => {
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     Aos.init({ duration: 2000 });
   }, []);
@@ -84,8 +86,10 @@ const PartnerHotel = () => {
         setHotelTainanImg(res.data.dataList[2].hotelImg);
         setHotelHualienImg(res.data.dataList[3].hotelImg);
         setRoomTaipeiDes(res.data.dataList[0].roomContent);
+        setRoomTaichungDes(res.data.dataList[1].roomContent);
         setRoomTainanDes(res.data.dataList[2].roomContent);
         setRoomHualienDes(res.data.dataList[3].roomContent);
+        setLoading(true);
       })
       .catch((err) => {
         console.log(err);
@@ -245,7 +249,7 @@ const PartnerHotel = () => {
           setOpenPrivate3Modal(false);
         }}
         open={openPrivate3Modal}
-        privateUrl="http://localhost:5000/images/room/room-2.jpeg"
+        privateUrl={`http://localhost:5000${roomTaipeiDes[1].roomImgPath}`}
         desTitle="台北私人套房"
         // des1={roomTaipeiDes[0].roomContent}
         des2={roomTaipeiDes[1].roomContent}
@@ -255,7 +259,7 @@ const PartnerHotel = () => {
           setOpenBackPacker3Modal(false);
         }}
         open={openBackPacker3Modal}
-        backPackerUrl="http://localhost:5000/images/room/room-1.jpeg"
+        backPackerUrl={`http://localhost:5000${roomTaipeiDes[0].roomImgPath}`}
         desTitle="台北背包客房"
         des1={roomTaipeiDes[0].roomContent}
         // des2="2"
@@ -267,7 +271,7 @@ const PartnerHotel = () => {
           setOpenPrivate1Modal(false);
         }}
         open={openPrivate1Modal}
-        privateUrl="http://localhost:5000/images/room/room-4.jpeg"
+        privateUrl={`http://localhost:5000${roomTaichungDes[1].roomImgPath}`}
         desTitle="台中私人套房"
         des1="若是你希望保有個人空間，並且喜愛自在的坐臥在地板上，那麼這間客房會十分適合您入住。"
         des2="簡約的單人空間沒有華而不實的設備，有的僅是簡單的設施讓你放慢腳步在這生活，為旅人提供一個認識勤美一帶的機會，但或許每次都能讓你有新的發現和新的感受。"
@@ -277,7 +281,7 @@ const PartnerHotel = () => {
           setOpenBackPacker1Modal(false);
         }}
         open={openBackPacker1Modal}
-        backPackerUrl="http://localhost:5000/images/room/room-3.jpeg"
+        backPackerUrl={`http://localhost:5000${roomTaichungDes[0].roomImgPath}`}
         desTitle="台中背包客房"
         des1="六人背包床位提供給旅人最基本的起居空間，雖然不算寬敞但絕不至於狹小，房間的一半配置了和式休憩區，讓共用的房間增加了更多與人交流聊天的機會。"
         des2="你也可以與三兩好友一起包下這間房，也可以享有與好友間的獨處時光，我們房型雖然簡單，但希望能讓你每次入住都能有新的發現和新的感受，並用緩慢悠哉的步調感受台中。"
@@ -289,7 +293,7 @@ const PartnerHotel = () => {
           setOpenPrivate2Modal(false);
         }}
         open={openPrivate2Modal}
-        privateUrl="http://localhost:5000/images/room/room-6.jpeg"
+        privateUrl={`http://localhost:5000${roomTainanDes[1].roomImgPath}`}
         desTitle="台南私人套房"
         des1={roomTainanDes[1].roomContent}
         // des2="2"
@@ -299,7 +303,7 @@ const PartnerHotel = () => {
           setOpenBackPacker2Modal(false);
         }}
         open={openBackPacker2Modal}
-        backPackerUrl="http://localhost:5000/images/room/room-5.jpeg"
+        backPackerUrl={`http://localhost:5000${roomTainanDes[0].roomImgPath}`}
         desTitle="台南背包客房"
         des1={roomTainanDes[0].roomContent}
         // des2="2"
@@ -311,7 +315,7 @@ const PartnerHotel = () => {
           setOpenPrivate4Modal(false);
         }}
         open={openPrivate4Modal}
-        privateUrl="http://localhost:5000/images/room/room-8.jpeg"
+        privateUrl={`http://localhost:5000${roomHualienDes[1].roomImgPath}`}
         desTitle="花蓮私人套房"
         des1={roomHualienDes[0].roomContent}
         // des2="2"
@@ -321,7 +325,7 @@ const PartnerHotel = () => {
           setOpenBackPacker4Modal(false);
         }}
         open={openBackPacker4Modal}
-        backPackerUrl="http://localhost:5000/images/room/room-7.jpeg"
+        backPackerUrl={`http://localhost:5000${roomHualienDes[0].roomImgPath}`}
         desTitle="花蓮背包客房"
         des1={roomHualienDes[0].roomContent}
         // des2="2"
@@ -366,199 +370,211 @@ const PartnerHotel = () => {
         </select>
       </div>
 
-      <div className="pHotelContainer" ref={TaipeiRef}>
-        {/* 台北 */}
-        <section className="sliderleft">
-          <BsChevronLeft
-            className="sliderleft-left-arrow"
-            onClick={prevSlide3}
-          />
-          <BsChevronRight
-            className="sliderleft-right-arrow"
-            onClick={nextSlide3}
-          />
+      {loading ? (
+        <>
+          <div className="pHotelContainer" ref={TaipeiRef}>
+            {/* 台北 */}
+            <section className="sliderleft">
+              <BsChevronLeft
+                className="sliderleft-left-arrow"
+                onClick={prevSlide3}
+              />
+              <BsChevronRight
+                className="sliderleft-right-arrow"
+                onClick={nextSlide3}
+              />
 
-          {imgTaipei.map((TaipeiImg, index) => {
-            return (
-              <div
-                className={index === current3 ? "slide active" : "slide"}
-                key={index}
-              >
-                {index === current3 && (
-                  <img src={TaipeiImg} alt="err img" className="image" />
-                )}
+              {imgTaipei.map((TaipeiImg, index) => {
+                return (
+                  <div
+                    className={index === current3 ? "slide active" : "slide"}
+                    key={index}
+                  >
+                    {index === current3 && (
+                      <img src={TaipeiImg} alt="err img" className="image" />
+                    )}
+                  </div>
+                );
+              })}
+              <div className="sizeRight" data-aos="fade-up">
+                <div>
+                  <h1>夾腳拖的家</h1>
+                  <h1>Flip Flop Hostel</h1>
+                </div>
+                <p>{data[0].hotelContent}</p>
+                <br />
+                <br />
+                <p>{data[0].hotelTel}</p>
+                <p>{data[0].hotelAddr}</p>
+                <a
+                  href="https://www.facebook.com/OwlStay.FlipFlopHostel/"
+                  target="_blank"
+                >
+                  認識 夾角拖的家 Flip Flop Hostel
+                </a>
               </div>
-            );
-          })}
-          <div className="sizeRight" data-aos="fade-up">
-            <div>
-              <h1>夾腳拖的家</h1>
-              <h1>Flip Flop Hostel</h1>
-            </div>
-            <p>{data[0].hotelContent}</p>
-            <br />
-            <br />
-            <p>{data[0].hotelTel}</p>
-            <p>{data[0].hotelAddr}</p>
-            <a
-              href="https://www.facebook.com/OwlStay.FlipFlopHostel/"
-              target="_blank"
-            >
-              認識 夾角拖的家 Flip Flop Hostel
-            </a>
-          </div>
-        </section>
-        <RoomItemLeft
-          privateClick={openPrivateModal3Click}
-          backPackerClick={openBackPackerModal3Click}
-          privateUrl="http://localhost:5000/images/room/room-2.jpeg"
-          backPackerUrl="http://localhost:5000/images/room/room-1.jpeg"
-        />
+            </section>
+            <RoomItemLeft
+              privateClick={openPrivateModal3Click}
+              backPackerClick={openBackPackerModal3Click}
+              privateUrl={`http://localhost:5000${roomTaipeiDes[1].roomImgPath}`}
+              backPackerUrl={`http://localhost:5000${roomTaipeiDes[0].roomImgPath}`}
+            />
 
-        <div className="partnerHotelLine" ref={TaichungRef}></div>
+            <div className="partnerHotelLine" ref={TaichungRef}></div>
 
-        {/* 台中 */}
-        <section className="sliderRight">
-          <BsChevronLeft
-            className="sliderRight-left-arrow"
-            onClick={prevSlide1}
-          />
-          <BsChevronRight
-            className="sliderRight-right-arrow"
-            onClick={nextSlide1}
-          />
-          <div className="sizeLeft" data-aos="fade-up">
-            <div>
-              <h1>誠星青年旅館</h1>
-              <h1>Star Hostel</h1>
-            </div>
-            {/* {data[0].hotelContent} */}
-            <p>{data[1].hotelContent}</p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <p>{data[1].hotelTel}</p>
-            <p>{data[1].hotelAddr}</p>
-            <a href="https://starhostelparklane.com/" target="_blank">
-              認識 誠星青年旅館 Star Hostel
-            </a>
-          </div>
-          {imgTaichung.map((Taichungimg, index) => {
-            return (
-              <div
-                className={index === current1 ? "slide active" : "slide"}
-                key={index}
-              >
-                {index === current1 && (
-                  <img src={Taichungimg} alt="Taipei img" className="image" />
-                )}
+            {/* 台中 */}
+            <section className="sliderRight">
+              <BsChevronLeft
+                className="sliderRight-left-arrow"
+                onClick={prevSlide1}
+              />
+              <BsChevronRight
+                className="sliderRight-right-arrow"
+                onClick={nextSlide1}
+              />
+              <div className="sizeLeft" data-aos="fade-up">
+                <div>
+                  <h1>誠星青年旅館</h1>
+                  <h1>Star Hostel</h1>
+                </div>
+                {/* {data[0].hotelContent} */}
+                <p>{data[1].hotelContent}</p>
+                <br />
+                <br />
+                <br />
+                <br />
+                <p>{data[1].hotelTel}</p>
+                <p>{data[1].hotelAddr}</p>
+                <a href="https://starhostelparklane.com/" target="_blank">
+                  認識 誠星青年旅館 Star Hostel
+                </a>
               </div>
-            );
-          })}
-        </section>
-        <RoomItemRight
-          privateClick={openPrivateModal1Click}
-          backPackerClick={openBackPackerModal1Click}
-          privateUrl="http://localhost:5000/images/room/room-4.jpeg"
-          backPackerUrl="http://localhost:5000/images/room/room-3.jpeg"
-        />
+              {imgTaichung.map((Taichungimg, index) => {
+                return (
+                  <div
+                    className={index === current1 ? "slide active" : "slide"}
+                    key={index}
+                  >
+                    {index === current1 && (
+                      <img
+                        src={Taichungimg}
+                        alt="Taipei img"
+                        className="image"
+                      />
+                    )}
+                  </div>
+                );
+              })}
+            </section>
+            <RoomItemRight
+              privateClick={openPrivateModal1Click}
+              backPackerClick={openBackPackerModal1Click}
+              privateUrl={`http://localhost:5000${roomTaichungDes[1].roomImgPath}`}
+              backPackerUrl={`http://localhost:5000${roomTaichungDes[0].roomImgPath}`}
+            />
 
-        <div className="partnerHotelLine" ref={TainanRef}></div>
+            <div className="partnerHotelLine" ref={TainanRef}></div>
 
-        {/* 台南 */}
-        <section className="sliderleft ">
-          <BsChevronLeft
-            className="sliderleft-left-arrow"
-            onClick={prevSlide2}
-          />
-          <BsChevronRight
-            className="sliderleft-right-arrow"
-            onClick={nextSlide2}
-          />
-          {imgTainan.map((Tainanimg, index) => {
-            return (
-              <div
-                className={index === current2 ? "slide active" : "slide"}
-                key={index}
-              >
-                {index === current2 && (
-                  <img src={Tainanimg} alt="err img" className="image" />
-                )}
+            {/* 台南 */}
+            <section className="sliderleft ">
+              <BsChevronLeft
+                className="sliderleft-left-arrow"
+                onClick={prevSlide2}
+              />
+              <BsChevronRight
+                className="sliderleft-right-arrow"
+                onClick={nextSlide2}
+              />
+              {imgTainan.map((Tainanimg, index) => {
+                return (
+                  <div
+                    className={index === current2 ? "slide active" : "slide"}
+                    key={index}
+                  >
+                    {index === current2 && (
+                      <img src={Tainanimg} alt="err img" className="image" />
+                    )}
+                  </div>
+                );
+              })}
+              <div className="sizeRight" data-aos="fade-up">
+                <div>
+                  <h1>快活慢行</h1>
+                </div>
+                <p>{data[2].hotelContent}</p>
+                <br />
+                <p>{data[2].hotelTel}</p>
+                <p>{data[2].hotelAddr}</p>
+                <a href="https://hiihubs.com/" target="_blank">
+                  認識 快活慢行
+                </a>
               </div>
-            );
-          })}
-          <div className="sizeRight" data-aos="fade-up">
-            <div>
-              <h1>快活慢行</h1>
-            </div>
-            <p>{data[2].hotelContent}</p>
-            <br />
-            <p>{data[2].hotelTel}</p>
-            <p>{data[2].hotelAddr}</p>
-            <a href="https://hiihubs.com/" target="_blank">
-              認識 快活慢行
-            </a>
-          </div>
-        </section>
-        <RoomItemLeft
-          privateClick={openPrivateModal2Click}
-          backPackerClick={openBackPackerModal2Click}
-          privateUrl="http://localhost:5000/images/room/room-6.jpeg"
-          backPackerUrl="http://localhost:5000/images/room/room-5.jpeg"
-        />
+            </section>
+            <RoomItemLeft
+              privateClick={openPrivateModal2Click}
+              backPackerClick={openBackPackerModal2Click}
+              privateUrl={`http://localhost:5000${roomTainanDes[1].roomImgPath}`}
+              backPackerUrl={`http://localhost:5000${roomTainanDes[0].roomImgPath}`}
+            />
 
-        <div className="partnerHotelLine" ref={HualienRef}></div>
+            <div className="partnerHotelLine" ref={HualienRef}></div>
 
-        {/* 花蓮 */}
-        <section className="sliderRight">
-          <BsChevronLeft
-            className="sliderRight-left-arrow"
-            onClick={prevSlide4}
-          />
-          <BsChevronRight
-            className="sliderRight-right-arrow"
-            onClick={nextSlide4}
-          />
-          <div className="sizeLeft" data-aos="fade-up">
-            <div>
-              <h1>山林山鄰</h1>
-            </div>
-            <p>{data[3].hotelContent}</p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <p>{data[3].hotelTel}</p>
-            <p>{data[3].hotelAddr}</p>
-            <a href="https://www.forest3030hostel.com.tw/" target="_blank">
-              認識 山林山鄰
-            </a>
-          </div>
-          {imgHualien.map((Hualienimg, index) => {
-            return (
-              <div
-                className={index === current4 ? "slide active" : "slide"}
-                key={index}
-              >
-                {index === current4 && (
-                  <img src={Hualienimg} alt="err img" className="image" />
-                )}
+            {/* 花蓮 */}
+            <section className="sliderRight">
+              <BsChevronLeft
+                className="sliderRight-left-arrow"
+                onClick={prevSlide4}
+              />
+              <BsChevronRight
+                className="sliderRight-right-arrow"
+                onClick={nextSlide4}
+              />
+              <div className="sizeLeft" data-aos="fade-up">
+                <div>
+                  <h1>山林山鄰</h1>
+                </div>
+                <p>{data[3].hotelContent}</p>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <p>{data[3].hotelTel}</p>
+                <p>{data[3].hotelAddr}</p>
+                <a href="https://www.forest3030hostel.com.tw/" target="_blank">
+                  認識 山林山鄰
+                </a>
               </div>
-            );
-          })}
-        </section>
-        <RoomItemRight
-          privateClick={openPrivateModal4Click}
-          backPackerClick={openBackPackerModal4Click}
-          privateUrl="http://localhost:5000/images/room/room-8.jpeg"
-          backPackerUrl="http://localhost:5000/images/room/room-7.jpeg"
-        />
-      </div>
+              {imgHualien.map((Hualienimg, index) => {
+                return (
+                  <div
+                    className={index === current4 ? "slide active" : "slide"}
+                    key={index}
+                  >
+                    {index === current4 && (
+                      <img src={Hualienimg} alt="err img" className="image" />
+                    )}
+                  </div>
+                );
+              })}
+            </section>
+            <RoomItemRight
+              privateClick={openPrivateModal4Click}
+              backPackerClick={openBackPackerModal4Click}
+              privateUrl={`http://localhost:5000${roomHualienDes[1].roomImgPath}`}
+              backPackerUrl={`http://localhost:5000${roomHualienDes[0].roomImgPath}`}
+            />
+          </div>
+        </>
+      ) : (
+        <div style={{ marginLeft: 900, marginTop: 0 }}>
+          <BookingLoading />
+        </div>
+      )}
       <Footer />
     </>
   );
