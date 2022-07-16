@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 // import TaipeiHotelImg from "./hotelImg/TaipeiHotelImg";
 // import TaichungHotelImg from "./hotelImg/TaichungHotelImg";
-import { Hotel1Img, Hotel2Img, Hotel3Img, Hotel4Img } from "./roomImg/RoomImg";
 // import HotelDescription from "./hotelDescription/HotelDescription";
 import axios from "axios";
 import "./PartnerHotel.css";
@@ -246,7 +245,7 @@ const PartnerHotel = () => {
           setOpenPrivate3Modal(false);
         }}
         open={openPrivate3Modal}
-        privateUrl="http://localhost:5000/images/room/room-9.jpeg"
+        privateUrl="http://localhost:5000/images/room/room-2.jpeg"
         desTitle="台北私人套房"
         // des1={roomTaipeiDes[0].roomContent}
         des2={roomTaipeiDes[1].roomContent}
@@ -256,7 +255,7 @@ const PartnerHotel = () => {
           setOpenBackPacker3Modal(false);
         }}
         open={openBackPacker3Modal}
-        backPackerUrl="http://localhost:5000/images/room/room-10.jpeg"
+        backPackerUrl="http://localhost:5000/images/room/room-1.jpeg"
         desTitle="台北背包客房"
         des1={roomTaipeiDes[0].roomContent}
         // des2="2"
@@ -268,7 +267,7 @@ const PartnerHotel = () => {
           setOpenPrivate1Modal(false);
         }}
         open={openPrivate1Modal}
-        privateUrl="http://localhost:5000/images/room/room-1.jpeg"
+        privateUrl="http://localhost:5000/images/room/room-4.jpeg"
         desTitle="台中私人套房"
         des1="若是你希望保有個人空間，並且喜愛自在的坐臥在地板上，那麼這間客房會十分適合您入住。"
         des2="簡約的單人空間沒有華而不實的設備，有的僅是簡單的設施讓你放慢腳步在這生活，為旅人提供一個認識勤美一帶的機會，但或許每次都能讓你有新的發現和新的感受。"
@@ -278,7 +277,7 @@ const PartnerHotel = () => {
           setOpenBackPacker1Modal(false);
         }}
         open={openBackPacker1Modal}
-        backPackerUrl="http://localhost:5000/images/room/room-5.jpeg"
+        backPackerUrl="http://localhost:5000/images/room/room-3.jpeg"
         desTitle="台中背包客房"
         des1="六人背包床位提供給旅人最基本的起居空間，雖然不算寬敞但絕不至於狹小，房間的一半配置了和式休憩區，讓共用的房間增加了更多與人交流聊天的機會。"
         des2="你也可以與三兩好友一起包下這間房，也可以享有與好友間的獨處時光，我們房型雖然簡單，但希望能讓你每次入住都能有新的發現和新的感受，並用緩慢悠哉的步調感受台中。"
@@ -290,7 +289,7 @@ const PartnerHotel = () => {
           setOpenPrivate2Modal(false);
         }}
         open={openPrivate2Modal}
-        privateUrl="http://localhost:5000/images/room/room-14.jpeg"
+        privateUrl="http://localhost:5000/images/room/room-6.jpeg"
         desTitle="台南私人套房"
         des1={roomTainanDes[1].roomContent}
         // des2="2"
@@ -300,7 +299,7 @@ const PartnerHotel = () => {
           setOpenBackPacker2Modal(false);
         }}
         open={openBackPacker2Modal}
-        backPackerUrl="http://localhost:5000/images/room/room-13.jpeg"
+        backPackerUrl="http://localhost:5000/images/room/room-5.jpeg"
         desTitle="台南背包客房"
         des1={roomTainanDes[0].roomContent}
         // des2="2"
@@ -312,7 +311,7 @@ const PartnerHotel = () => {
           setOpenPrivate4Modal(false);
         }}
         open={openPrivate4Modal}
-        privateUrl="http://localhost:5000/images/room/room-11.jpeg"
+        privateUrl="http://localhost:5000/images/room/room-8.jpeg"
         desTitle="花蓮私人套房"
         des1={roomHualienDes[0].roomContent}
         // des2="2"
@@ -322,7 +321,7 @@ const PartnerHotel = () => {
           setOpenBackPacker4Modal(false);
         }}
         open={openBackPacker4Modal}
-        backPackerUrl="http://localhost:5000/images/room/room-12.jpeg"
+        backPackerUrl="http://localhost:5000/images/room/room-7.jpeg"
         desTitle="花蓮背包客房"
         des1={roomHualienDes[0].roomContent}
         // des2="2"
@@ -412,8 +411,8 @@ const PartnerHotel = () => {
         <RoomItemLeft
           privateClick={openPrivateModal3Click}
           backPackerClick={openBackPackerModal3Click}
-          privateUrl="http://localhost:5000/images/room/room-9.jpeg"
-          backPackerUrl="http://localhost:5000/images/room/room-10.jpeg"
+          privateUrl="http://localhost:5000/images/room/room-2.jpeg"
+          backPackerUrl="http://localhost:5000/images/room/room-1.jpeg"
         />
 
         <div className="partnerHotelLine" ref={TaichungRef}></div>
@@ -461,8 +460,8 @@ const PartnerHotel = () => {
         <RoomItemRight
           privateClick={openPrivateModal1Click}
           backPackerClick={openBackPackerModal1Click}
-          privateUrl="http://localhost:5000/images/room/room-1.jpeg"
-          backPackerUrl="http://localhost:5000/images/room/room-5.jpeg"
+          privateUrl="http://localhost:5000/images/room/room-4.jpeg"
+          backPackerUrl="http://localhost:5000/images/room/room-3.jpeg"
         />
 
         <div className="partnerHotelLine" ref={TainanRef}></div>
@@ -505,8 +504,8 @@ const PartnerHotel = () => {
         <RoomItemLeft
           privateClick={openPrivateModal2Click}
           backPackerClick={openBackPackerModal2Click}
-          privateUrl="http://localhost:5000/images/room/room-14.jpeg"
-          backPackerUrl="http://localhost:5000/images/room/room-13.jpeg"
+          privateUrl="http://localhost:5000/images/room/room-6.jpeg"
+          backPackerUrl="http://localhost:5000/images/room/room-5.jpeg"
         />
 
         <div className="partnerHotelLine" ref={HualienRef}></div>
@@ -556,8 +555,8 @@ const PartnerHotel = () => {
         <RoomItemRight
           privateClick={openPrivateModal4Click}
           backPackerClick={openBackPackerModal4Click}
-          privateUrl="http://localhost:5000/images/room/room-11.jpeg"
-          backPackerUrl="http://localhost:5000/images/room/room-12.jpeg"
+          privateUrl="http://localhost:5000/images/room/room-8.jpeg"
+          backPackerUrl="http://localhost:5000/images/room/room-7.jpeg"
         />
       </div>
       <Footer />

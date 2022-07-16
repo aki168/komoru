@@ -19,7 +19,7 @@ const BookingImgTaitungBackpackerRoom = () => {
     <div className="bookingPageImgContainer">
       <img
         className="bookingPageImg"
-        src="http://localhost:5000/images/room/room-12.jpeg"
+        src="http://localhost:5000/images/room/room-7.jpeg"
         alt=""
       />
     </div>

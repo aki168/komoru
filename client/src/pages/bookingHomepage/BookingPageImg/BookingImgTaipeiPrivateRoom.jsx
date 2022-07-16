@@ -8,9 +8,7 @@ const BookingImgTaipeiPrivateRoom = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .post(
-        "http://localhost:5000/room/getRoomDataWithImgByRoomId"
-      )
+      .post("http://localhost:5000/room/getRoomDataWithImgByRoomId")
       .then((res) => {
         setData(res.data.dataList);
       })
@@ -20,7 +18,7 @@ const BookingImgTaipeiPrivateRoom = () => {
     <div className="bookingPageImgContainer">
       <img
         className="bookingPageImg"
-        src="http://localhost:5000/images/room/room-9.jpeg"
+        src="http://localhost:5000/images/room/room-2.jpeg"
         alt=""
       />
     </div>
