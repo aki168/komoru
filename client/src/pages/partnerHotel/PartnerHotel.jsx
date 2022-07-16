@@ -15,6 +15,8 @@ import PrivateRoomModal from "./roomModal/PrivateRoomModal";
 import BackPackerRoomModal from "./roomModal/BackPackerRoomModal";
 import { BsChevronLeft, BsChevronRight, BsSearch } from "react-icons/bs";
 import UserHeader from "../../components/User/UserHeader";
+import { useNavigate } from "react-router-dom";
+import ScrollToTop from "../../components/ScrollToTop/ScrollToTop";
 // import WeatherApp from "../../components/WeatherApp/WeatherApp";
 
 const PartnerHotel = () => {
@@ -26,33 +28,29 @@ const PartnerHotel = () => {
   const [current3, setCurrent3] = useState(0);
   const [current4, setCurrent4] = useState(0);
 
-  //獲取飯店資料
-  const [data, setData] = useState([{}, {}, {}, {}]);
-  useEffect(() => {
-    axios({
-      method: "post",
-      url: "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName",
-    })
-      .then((res) => {
-        console.log(res.data.dataList);
-        setData(res.data.dataList);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-  console.log(data[0].hotelContent);
+  // //獲取飯店資料
+  // const [data, setData] = useState([{}, {}, {}, {}]);
+  // useEffect(() => {
+  //   axios({
+  //     method: "post",
+  //     url: "http://localhost:5000/hotel/getHotelDataListWithMainImgAndCityName",
+  //   })
+  //     .then((res) => {
+  //       console.log(res.data.dataList);
+  //       setData(res.data.dataList);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+  // console.log(data[0].hotelContent);
 
-  // //獲取房型資料
+  //獲取房型資料
   // const [roomDes, setRoomDes] = useState("");
   // useEffect(() => {
   //   axios({
   //     method: "post",
-  //     url: "http://localhost:5000/room/getRoomContentByRoomId",
-  //     data: {
-  //       roomId: 1,
-  //       // roomId: 2,
-  //     },
+  //     url: "http://localhost:5000/hotel/getHotelAndRoomContent",
   //   })
   //     .then((res) => {
   //       console.log(res.data.dataList);
@@ -63,37 +61,83 @@ const PartnerHotel = () => {
   //     });
   // }, []);
 
+  //獲取飯店資料
+  const [data, setData] = useState([{}, {}, {}, {}]);
+  const [HotelTaipeiImg, setHotelTaipeiImg] = useState([{}, {}, {}, {}]);
+  const [HotelTaichungImg, setHotelTaichungImg] = useState([{}, {}, {}, {}]);
+  const [HotelTainanImg, setHotelTainanImg] = useState([{}, {}, {}, {}]);
+  const [HotelHualienImg, setHotelHualienImg] = useState([{}, {}, {}, {}]);
+  const [roomTaipeiDes, setRoomTaipeiDes] = useState([{}, {}]);
+  const [roomTaichungDes, setRoomTaichungDes] = useState([{}, {}]);
+  const [roomTainanDes, setRoomTainanDes] = useState([{}, {}]);
+  const [roomHualienDes, setRoomHualienDes] = useState([{}, {}]);
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: "http://localhost:5000/hotel/getHotelAndRoomContent",
+    })
+      .then((res) => {
+        console.log("first");
+        console.log(res.data.dataList);
+        setData(res.data.dataList);
+        setHotelTaipeiImg(res.data.dataList[0].hotelImg);
+        setHotelTaichungImg(res.data.dataList[1].hotelImg);
+        setHotelTainanImg(res.data.dataList[2].hotelImg);
+        setHotelHualienImg(res.data.dataList[3].hotelImg);
+        setRoomTaipeiDes(res.data.dataList[0].roomContent);
+        setRoomTainanDes(res.data.dataList[2].roomContent);
+        setRoomHualienDes(res.data.dataList[3].roomContent);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  //map出飯店照片路經的Array
+  const imgTaipei = HotelTaipeiImg.map((ImgPath, index) => {
+    return `http://localhost:5000${ImgPath.hotelImgPath}`;
+  });
+  const imgTaichung = HotelTaichungImg.map((ImgPath, index) => {
+    return `http://localhost:5000${ImgPath.hotelImgPath}`;
+  });
+  const imgTainan = HotelTainanImg.map((ImgPath, index) => {
+    return `http://localhost:5000${ImgPath.hotelImgPath}`;
+  });
+  const imgHualien = HotelHualienImg.map((ImgPath, index) => {
+    return `http://localhost:5000${ImgPath.hotelImgPath}`;
+  });
+
   //台北
 
   const nextSlide1 = () => {
-    setCurrent1(current1 === Hotel1Img.length - 1 ? 0 : current1 + 1);
+    setCurrent1(current1 === HotelTaipeiImg.length - 1 ? 0 : current1 + 1);
   };
   const prevSlide1 = () => {
-    setCurrent1(current1 === 0 ? Hotel1Img.length - 1 : current1 - 1);
+    setCurrent1(current1 === 0 ? HotelTaipeiImg.length - 1 : current1 - 1);
   };
 
   //台中
   const nextSlide2 = () => {
-    setCurrent2(current2 === Hotel2Img.length - 1 ? 0 : current2 + 1);
+    setCurrent2(current2 === HotelTaichungImg.length - 1 ? 0 : current2 + 1);
   };
   const prevSlide2 = () => {
-    setCurrent2(current2 === 0 ? Hotel2Img.length - 1 : current2 - 1);
+    setCurrent2(current2 === 0 ? HotelTaichungImg.length - 1 : current2 - 1);
   };
 
   //台南
   const nextSlide3 = () => {
-    setCurrent3(current3 === Hotel3Img.length - 1 ? 0 : current3 + 1);
+    setCurrent3(current3 === HotelTainanImg.length - 1 ? 0 : current3 + 1);
   };
   const prevSlide3 = () => {
-    setCurrent3(current3 === 0 ? Hotel3Img.length - 1 : current3 - 1);
+    setCurrent3(current3 === 0 ? HotelTainanImg.length - 1 : current3 - 1);
   };
 
   //花蓮
   const nextSlide4 = () => {
-    setCurrent4(current4 === Hotel4Img.length - 1 ? 0 : current4 + 1);
+    setCurrent4(current4 === HotelHualienImg.length - 1 ? 0 : current4 + 1);
   };
   const prevSlide4 = () => {
-    setCurrent4(current4 === 0 ? Hotel4Img.length - 1 : current4 - 1);
+    setCurrent4(current4 === 0 ? HotelHualienImg.length - 1 : current4 - 1);
   };
 
   const [openPrivate1Modal, setOpenPrivate1Modal] = useState(false);
@@ -166,11 +210,6 @@ const PartnerHotel = () => {
 
   //滾動到指定元素
   const [serchValue, setSearchValue] = useState("");
-  // const searchHandler = (e) => {
-  //   setNextStep(e.type);
-  //   // e.preventDefault();
-
-  // };
   const TaipeiRef = useRef(null);
   const TaichungRef = useRef(null);
   const TainanRef = useRef(null);
@@ -193,9 +232,37 @@ const PartnerHotel = () => {
       scrollToHualien();
     }
   }, [serchValue]);
+
+  const navigate = useNavigate();
+  const goBooking = () => {
+    navigate("/bookingHomePage");
+  };
   return (
     <>
       {/* Modal必須放最外層，否則overlay無法作用 */}
+      {/* 台北房型 */}
+      <PrivateRoomModal
+        onClose={() => {
+          setOpenPrivate3Modal(false);
+        }}
+        open={openPrivate3Modal}
+        privateUrl="http://localhost:5000/images/room/room-9.jpeg"
+        desTitle="台北私人套房"
+        // des1={roomTaipeiDes[0].roomContent}
+        des2={roomTaipeiDes[1].roomContent}
+      />
+      <BackPackerRoomModal
+        onClose={() => {
+          setOpenBackPacker3Modal(false);
+        }}
+        open={openBackPacker3Modal}
+        backPackerUrl="http://localhost:5000/images/room/room-10.jpeg"
+        desTitle="台北背包客房"
+        des1={roomTaipeiDes[0].roomContent}
+        // des2="2"
+      />
+
+      {/* 台中房型 */}
       <PrivateRoomModal
         onClose={() => {
           setOpenPrivate1Modal(false);
@@ -216,6 +283,8 @@ const PartnerHotel = () => {
         des1="六人背包床位提供給旅人最基本的起居空間，雖然不算寬敞但絕不至於狹小，房間的一半配置了和式休憩區，讓共用的房間增加了更多與人交流聊天的機會。"
         des2="你也可以與三兩好友一起包下這間房，也可以享有與好友間的獨處時光，我們房型雖然簡單，但希望能讓你每次入住都能有新的發現和新的感受，並用緩慢悠哉的步調感受台中。"
       />
+
+      {/* 台南房型 */}
       <PrivateRoomModal
         onClose={() => {
           setOpenPrivate2Modal(false);
@@ -223,8 +292,8 @@ const PartnerHotel = () => {
         open={openPrivate2Modal}
         privateUrl="http://localhost:5000/images/room/room-14.jpeg"
         desTitle="台南私人套房"
-        des1="1"
-        des2="2"
+        des1={roomTainanDes[1].roomContent}
+        // des2="2"
       />
       <BackPackerRoomModal
         onClose={() => {
@@ -233,29 +302,11 @@ const PartnerHotel = () => {
         open={openBackPacker2Modal}
         backPackerUrl="http://localhost:5000/images/room/room-13.jpeg"
         desTitle="台南背包客房"
-        des1="1"
-        des2="2"
+        des1={roomTainanDes[0].roomContent}
+        // des2="2"
       />
-      <PrivateRoomModal
-        onClose={() => {
-          setOpenPrivate3Modal(false);
-        }}
-        open={openPrivate3Modal}
-        privateUrl="http://localhost:5000/images/room/room-9.jpeg"
-        desTitle="台北私人套房"
-        des1="1"
-        des2="2"
-      />
-      <BackPackerRoomModal
-        onClose={() => {
-          setOpenBackPacker3Modal(false);
-        }}
-        open={openBackPacker3Modal}
-        backPackerUrl="http://localhost:5000/images/room/room-10.jpeg"
-        desTitle="台北背包客房"
-        des1="1"
-        des2="2"
-      />
+
+      {/* 花蓮房型 */}
       <PrivateRoomModal
         onClose={() => {
           setOpenPrivate4Modal(false);
@@ -263,8 +314,8 @@ const PartnerHotel = () => {
         open={openPrivate4Modal}
         privateUrl="http://localhost:5000/images/room/room-11.jpeg"
         desTitle="花蓮私人套房"
-        des1="1"
-        des2="2"
+        des1={roomHualienDes[0].roomContent}
+        // des2="2"
       />
       <BackPackerRoomModal
         onClose={() => {
@@ -273,12 +324,12 @@ const PartnerHotel = () => {
         open={openBackPacker4Modal}
         backPackerUrl="http://localhost:5000/images/room/room-12.jpeg"
         desTitle="花蓮背包客房"
-        des1="1"
-        des2="2"
+        des1={roomHualienDes[0].roomContent}
+        // des2="2"
       />
 
       <Navbar />
-      {/* <button className="goBooking">立即預定</button> */}
+
       {/* 0712 aki-更改為滾動視差  */}
       <div className="partnerHotel--titleBar partnerHotel--bg--fix mb-5 partnerHotel-banner">
         <UserHeader
@@ -287,14 +338,13 @@ const PartnerHotel = () => {
         />
       </div>
 
-      {/* <div className="hotelIntroTitle">
-        <div className="textGroup">
-          <h1>遍地全台的合作飯店一覽 </h1>
-          <p>
-            KOMORU與北、中、南、東各個在地飯店合作，活絡社會並讓旅者與業者達到雙贏！
-          </p>
-        </div>
-      </div> */}
+      <div className="goBookingContainer">
+        <button className="goBooking" onClick={goBooking}>
+          立即預定
+        </button>
+      </div>
+
+      <ScrollToTop />
 
       {/* 快速搜索 */}
       <div className="searchContainer">
@@ -307,14 +357,13 @@ const PartnerHotel = () => {
           className="citySearch"
           onChange={(e) => {
             setSearchValue(e.target.value);
-            console.log(e.target.value);
           }}
         >
           <option value="">快速搜尋</option>
-          <option value="Taipei">台北</option>
-          <option value="Taichung">台中</option>
-          <option value="Tainan">台南</option>
-          <option value="Hualien">花蓮</option>
+          <option value="Taipei">北部</option>
+          <option value="Taichung">中部</option>
+          <option value="Tainan">南部</option>
+          <option value="Hualien">東部</option>
         </select>
       </div>
 
@@ -329,14 +378,15 @@ const PartnerHotel = () => {
             className="sliderleft-right-arrow"
             onClick={nextSlide3}
           />
-          {Hotel3Img.map((Tainanimg, index) => {
+
+          {imgTaipei.map((TaipeiImg, index) => {
             return (
               <div
                 className={index === current3 ? "slide active" : "slide"}
                 key={index}
               >
                 {index === current3 && (
-                  <img src={Tainanimg.image} alt="err img" className="image" />
+                  <img src={TaipeiImg} alt="err img" className="image" />
                 )}
               </div>
             );
@@ -358,18 +408,6 @@ const PartnerHotel = () => {
               認識 夾角拖的家 Flip Flop Hostel
             </a>
           </div>
-          {/* {TainanSliderDes.map((TainanDes, index) => {
-          return (
-            <div
-              // className={index === current3 ? "slide active" : "slide"}
-              key={index}
-            >
-              {index === current3 && (
-                <p className="sizeRight">{TainanDes.description}</p>
-              )}
-            </div>
-          );
-        })} */}
         </section>
         <RoomItemLeft
           privateClick={openPrivateModal3Click}
@@ -407,18 +445,14 @@ const PartnerHotel = () => {
               認識 誠星青年旅館 Star Hostel
             </a>
           </div>
-          {Hotel1Img.map((Taipeiimg, index) => {
+          {imgTaichung.map((Taichungimg, index) => {
             return (
               <div
                 className={index === current1 ? "slide active" : "slide"}
                 key={index}
               >
                 {index === current1 && (
-                  <img
-                    src={Taipeiimg.image}
-                    alt="Taipei img"
-                    className="image"
-                  />
+                  <img src={Taichungimg} alt="Taipei img" className="image" />
                 )}
               </div>
             );
@@ -443,18 +477,14 @@ const PartnerHotel = () => {
             className="sliderleft-right-arrow"
             onClick={nextSlide2}
           />
-          {Hotel2Img.map((Taichungimg, index) => {
+          {imgTainan.map((Tainanimg, index) => {
             return (
               <div
                 className={index === current2 ? "slide active" : "slide"}
                 key={index}
               >
                 {index === current2 && (
-                  <img
-                    src={Taichungimg.image}
-                    alt="err img"
-                    className="image"
-                  />
+                  <img src={Tainanimg} alt="err img" className="image" />
                 )}
               </div>
             );
@@ -491,18 +521,6 @@ const PartnerHotel = () => {
             className="sliderRight-right-arrow"
             onClick={nextSlide4}
           />
-          {/* {HualienSliderDes.map((HualienDes, index) => {
-          return (
-            <div
-              // className={index === current4 ? "slide active" : "slide"}
-              key={index}
-            >
-              {index === current4 && (
-                <p className="sizeLeft">{HualienDes.description}</p>
-              )}
-            </div>
-          );
-        })} */}
           <div className="sizeLeft" data-aos="fade-up">
             <div>
               <h1>山林山鄰</h1>
@@ -522,14 +540,14 @@ const PartnerHotel = () => {
               認識 山林山鄰
             </a>
           </div>
-          {Hotel4Img.map((Hualienimg, index) => {
+          {imgHualien.map((Hualienimg, index) => {
             return (
               <div
                 className={index === current4 ? "slide active" : "slide"}
                 key={index}
               >
                 {index === current4 && (
-                  <img src={Hualienimg.image} alt="err img" className="image" />
+                  <img src={Hualienimg} alt="err img" className="image" />
                 )}
               </div>
             );
