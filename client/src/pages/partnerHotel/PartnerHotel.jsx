@@ -250,7 +250,7 @@ const PartnerHotel = () => {
         }}
         open={openPrivate3Modal}
         privateUrl={`http://localhost:5000${roomTaipeiDes[1].roomImgPath}`}
-        desTitle="台北私人套房"
+        desTitle="夾腳拖的家-私人套房"
         // des1={roomTaipeiDes[0].roomContent}
         des2={roomTaipeiDes[1].roomContent}
       />
@@ -260,7 +260,7 @@ const PartnerHotel = () => {
         }}
         open={openBackPacker3Modal}
         backPackerUrl={`http://localhost:5000${roomTaipeiDes[0].roomImgPath}`}
-        desTitle="台北背包客房"
+        desTitle="夾腳拖的家-背包客房"
         des1={roomTaipeiDes[0].roomContent}
         // des2="2"
       />
@@ -272,7 +272,7 @@ const PartnerHotel = () => {
         }}
         open={openPrivate1Modal}
         privateUrl={`http://localhost:5000${roomTaichungDes[1].roomImgPath}`}
-        desTitle="台中私人套房"
+        desTitle="誠星青年旅館-私人套房"
         des1="若是你希望保有個人空間，並且喜愛自在的坐臥在地板上，那麼這間客房會十分適合您入住。"
         des2="簡約的單人空間沒有華而不實的設備，有的僅是簡單的設施讓你放慢腳步在這生活，為旅人提供一個認識勤美一帶的機會，但或許每次都能讓你有新的發現和新的感受。"
       />
@@ -282,7 +282,7 @@ const PartnerHotel = () => {
         }}
         open={openBackPacker1Modal}
         backPackerUrl={`http://localhost:5000${roomTaichungDes[0].roomImgPath}`}
-        desTitle="台中背包客房"
+        desTitle="誠星青年旅館-背包客房"
         des1="六人背包床位提供給旅人最基本的起居空間，雖然不算寬敞但絕不至於狹小，房間的一半配置了和式休憩區，讓共用的房間增加了更多與人交流聊天的機會。"
         des2="你也可以與三兩好友一起包下這間房，也可以享有與好友間的獨處時光，我們房型雖然簡單，但希望能讓你每次入住都能有新的發現和新的感受，並用緩慢悠哉的步調感受台中。"
       />
@@ -294,7 +294,7 @@ const PartnerHotel = () => {
         }}
         open={openPrivate2Modal}
         privateUrl={`http://localhost:5000${roomTainanDes[1].roomImgPath}`}
-        desTitle="台南私人套房"
+        desTitle="快活慢行-私人套房"
         des1={roomTainanDes[1].roomContent}
         // des2="2"
       />
@@ -304,7 +304,7 @@ const PartnerHotel = () => {
         }}
         open={openBackPacker2Modal}
         backPackerUrl={`http://localhost:5000${roomTainanDes[0].roomImgPath}`}
-        desTitle="台南背包客房"
+        desTitle="快活慢行-背包客房"
         des1={roomTainanDes[0].roomContent}
         // des2="2"
       />
@@ -316,7 +316,7 @@ const PartnerHotel = () => {
         }}
         open={openPrivate4Modal}
         privateUrl={`http://localhost:5000${roomHualienDes[1].roomImgPath}`}
-        desTitle="花蓮私人套房"
+        desTitle="山林山鄰-私人套房"
         des1={roomHualienDes[0].roomContent}
         // des2="2"
       />
@@ -326,7 +326,7 @@ const PartnerHotel = () => {
         }}
         open={openBackPacker4Modal}
         backPackerUrl={`http://localhost:5000${roomHualienDes[0].roomImgPath}`}
-        desTitle="花蓮背包客房"
+        desTitle="山林山鄰-背包客房"
         des1={roomHualienDes[0].roomContent}
         // des2="2"
       />
