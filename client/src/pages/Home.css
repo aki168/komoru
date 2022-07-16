@@ -5,9 +5,11 @@
 .aboutwords{
    width: 900px;
    margin: 0 auto;
+   font-size:1.5rem;
 }
 
 .Komoruthree{
+    margin-top: 150px;
     display: flex;
     justify-content: space-around;
 }
@@ -15,12 +17,25 @@
 .Homepic{
     margin-left : auto;
 	margin-right: auto;
-    width: 1920px;
+    /* width: 1920px; */
     height:950px;
 }
 
-.RoomList{
-    display: flex;
-    justify-content: space-around;
+
+.RoomWords{
+/* width: 900px; */
+   /* margin: 0 auto; */
+   font-size:1.5rem;
 }
 
+
+.RoomList{
+    margin-top: 50px;
+    /* display: flex;
+    justify-content: space-around; */
+}
+
+
+.HomeFooter{
+    margin-top: 150px;
+}
