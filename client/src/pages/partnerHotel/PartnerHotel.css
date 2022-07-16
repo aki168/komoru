@@ -1,68 +1,11 @@
 .pHotelContainer {
-  padding-top: 150px;
-}
-
-/* .goBooking {
-  position: fixed;
-  width: 170px;
-  height: 4rem;
-  border: 1px solid black;
-  cursor: pointer;
-  right: 0px;
-  bottom: 30px;
-  font-size: 40px;
-  padding: 2px;
-  border-radius: 10px;
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
-  transition: all 0.2s;
-  transform: translateX(-10%);
-}
-
-.goBooking:hover {
-  background-color: rgba(241, 164, 97, 0.9);
-  color: white;
+  padding-top: 100px;
 }
 
 .goBooking:active {
   transform: translate(-10%, 10px);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
 }
-
-.goBooking:focus {
-  outline: none;
-}
-
-.goBooking > h1:first-child {
-  margin-top: 15px;
-  text-align: center;
-}
-.goBooking > h1 {
-  text-align: center;
-} */
-
-/* .hotelIntroTitle {
-  text-align: center;
-  width: 100%;
-  height: 450px;
-  background-color: #ed8c4e;
-  color: white;
-  margin-bottom: 170px;
-  display: flex;
-  align-items: center;
-}
-
-.textGroup {
-  margin: 0 auto;
-}
-
-.hotelIntroTitle .textGroup h1 {
-  font-size: 50px;
-  padding-bottom: 15px;
-}
-
-.hotelIntroTitle .textGroup p {
-  font-size: 20px;
-} */
 
 .image {
   width: 720px;
