@@ -2,11 +2,6 @@
   padding-top: 100px;
 }
 
-.goBooking:active {
-  transform: translate(-10%, 10px);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
-}
-
 .image {
   width: 720px;
   height: 500px;
