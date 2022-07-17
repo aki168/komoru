@@ -12,7 +12,7 @@ export default function Example(props)
             description: <CardMedia
             component="img"
             height="1000"
-            image="探索照片.webp"
+            image="首頁輪播2.jpg"
             alt="step1"
           />
         },

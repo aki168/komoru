@@ -73,8 +73,30 @@ export default function Home() {
               <div className='FeedBackLeft'>
                 <h2 style={{ color: '#ED8C4E', textAlign: 'left' }}>會員系統</h2>
                 <br />
-                <p className='FeedBackWords' >KOMORU為亞洲最大的複合式訂房網集結下定、活動以及員系統為會員系統為及會員系統為一集結下定、活動以及會員系統活動以及會員系統式訂房的複合式訂房網集結下定、活動以及會員系統為一身
+                <p className='FeedBackWords' >KOMORU擁有易操作多功能的會員系統，協助你輕鬆管理你的會員資料並且瀏覽你的下訂紀錄，探索更多元的自己！
                 </p>
+                
+                <h4 className='FeedBackItem' >• &nbsp;基本資料隨心所欲更換相片
+                </h4>
+                
+                <h4 className='FeedBackItem' >• &nbsp;訂單記錄方便查看訂單內容
+                </h4>
+                
+                <h4 className='FeedBackItem' >• &nbsp;活動回饋記錄旅程心得分享
+                </h4>
+               
+                <h4 className='FeedBackItem' >• &nbsp;優惠表單領取各式優惠票卷
+                </h4>
+                
+                <p className='FeedBackGo'>前往會員中心&nbsp;&nbsp;<btn><Link style={{ textDecoration: 'none' }} to="/user-home">加入KOMORU</Link></btn>
+                </p>
+
+                
+
+              
+
+
+                
 {/* <btn >立即註冊</btn> */}
               </div>
               <div className='FeedBackRight' data-aos="fade-left" >

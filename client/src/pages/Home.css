@@ -57,7 +57,7 @@
 }
 
 .FeedBackLine{
-    margin-top: 100px;
+    margin-top: 150px;
     margin-bottom: 150px;
     border-top: 2px solid #e6e6e6;
 }
@@ -75,8 +75,25 @@
     font-size:1.3rem;
     letter-spacing:1px;
     line-height:40px;
+    margin-bottom: 60px;
+}
+
+.FeedBackItem{
+    /* font-size:1.3rem; */
+    margin-top: 25px;
+    letter-spacing:1px;
+    line-height:40px;
+    color: #808080;
+    font-weight: 350;
+}
+
+.FeedBackGo{
+    font-size: 25px;
+    margin-top: 150px;
 }
 
 .HomeFooter{
-    margin-top: 150px;
+    margin-top: 200px;
 }
+
+
