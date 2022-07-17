@@ -3,3 +3,13 @@
 border-top: 2px solid #F4F5F7;
 height: 500px;
 }
+
+.copyRight{
+    color: #808080;
+    margin-top: 400px;
+    display: flex;
+    /* 水平置中 */
+    justify-content: center;    
+    /* 垂直置中 */
+    align-items: center;  
+}

@@ -1,6 +1,9 @@
 import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import Aos from "aos";
+import "aos/dist/aos.css";
+import {useEffect} from 'react';
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {
   return {
@@ -12,6 +15,12 @@ function srcset(image: string, size: number, rows = 1, cols = 1) {
 }
 
 export default function QuiltedImageList() {
+
+  useEffect(() => {
+    Aos.init({ duration: 3000
+     });
+  }, []);
+
   return (
     <ImageList
       sx={{ width: 1296, height:600 }}
@@ -34,21 +43,21 @@ export default function QuiltedImageList() {
 
 const itemData = [
   {
-    img: '3.png',
+    img: '首頁圖庫1.jpg',
     title: 'Breakfast',
     rows: 2,
     cols: 2,
   },
   {
-    img: '3.png',
+    img: '首頁圖庫2.jpeg',
     title: 'Burger',
   },
   {
-    img: '3.png',
+    img: '首頁圖庫3.jpg',
     title: 'Camera',
   },
   {
-    img: '1.png',
+    img: '首頁圖庫4.jpeg',
     title: 'Coffee',
     cols: 2,
   },
