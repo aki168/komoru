@@ -27,7 +27,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: bottom center;
+  background-position: bottom 100px center;
 }
 
 .User--container {
