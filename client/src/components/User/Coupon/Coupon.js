@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Coupon.css'
 import { Tab, Tabs, Button } from 'react-bootstrap'
 import axios from 'axios'
@@ -9,6 +10,7 @@ import BookingLoading from '../../BookingLoading/BookingLoading'
 export default function Coupon(props) {
 
   console.log(props)
+  let navigate = useNavigate()
 
 
   const [coupon, getCoupon] = useState([])
@@ -98,7 +100,10 @@ export default function Coupon(props) {
     // 領取後消失
     setSingInCoupon(false)
     alert('已領取【新會員註冊送 200元 COUPON券】!')
-    window.location.reload("false") //重新渲染頁面
+    navigate('/user-home', { replace: true })
+    
+    // window.location.reload("false") //重新渲染頁面
+
   }
 
   return (
