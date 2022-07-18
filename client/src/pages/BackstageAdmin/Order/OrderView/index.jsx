@@ -79,9 +79,9 @@ function OrderView({ setEditShow, editData }) {
   return (
     <>
       {loading ? (
-        <div className="container mb-5">
+        <div className="container mb-4">
           <div className="px-2">
-            <h3 className="mb-3 mt-2">訂購者資料</h3>
+            <h3 className="mb-3 mt-1">訂購者資料</h3>
             <div className="row">
               <div className="col-6">
                 <div className=" d-flex align-items-center ">
@@ -114,7 +114,7 @@ function OrderView({ setEditShow, editData }) {
             </div>
           </div>
           <div className="px-2">
-            <h3 className="mb-3 mt-3">訂單資料</h3>
+            <h3 className="mb-3 mt-2">訂單資料</h3>
             <div className="row">
               <div className="col-6 mb-3">
                 <div className=" d-flex align-items-center ">
@@ -126,7 +126,7 @@ function OrderView({ setEditShow, editData }) {
                   <p className="mb-3 col-4">{orderMemberData.orderEndDate}</p>
                 </div>
                 <div className=" d-flex align-items-center ">
-                  <h5 className="mb-3 col-3">飯店/房型</h5>
+                  <h5 className="mb-2 col-3">飯店/房型</h5>
                   <p className="mb-3 col-6">{orderMemberData.roomDetail}</p>
                 </div>
               </div>
@@ -161,7 +161,7 @@ function OrderView({ setEditShow, editData }) {
                     </p>
                   </div>
                   <div className=" d-flex align-items-center ">
-                    <h5 className="mb-3 col-3">類型</h5>
+                    <h5 className="mb-1 col-3">類型</h5>
                     <p className="mb-3 col-6">
                       {orderActiveDataFirst.activePackType}
                     </p>

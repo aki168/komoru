@@ -700,10 +700,10 @@ function HotelViewEdits({ setEditShow, editData, data }) {
                 className="km-modal-content"
               >
                 <option disabled>請選擇區域</option>
-                <option value="1" selected={editModalData.cityId === 1 ? true : ""}>台北市</option>
-                <option value="2" selected={editModalData.cityId === 2 ? true : ""}>台中市</option>
-                <option value="3" selected={editModalData.cityId === 3 ? true : ""}>台南市</option>
-                <option value="4" selected={editModalData.cityId === 4 ? true : ""}>台東市</option>
+                <option value="1" selected={editModalData.cityId === 1 ? true : ""}>北部</option>
+                <option value="2" selected={editModalData.cityId === 2 ? true : ""}>中部</option>
+                <option value="3" selected={editModalData.cityId === 3 ? true : ""}>南部</option>
+                <option value="4" selected={editModalData.cityId === 4 ? true : ""}>東部</option>
               </Form.Select>
             </Form.Group>
             <Form.Group className="mt-2">

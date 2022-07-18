@@ -12,7 +12,7 @@ export default function Example(props)
             description: <CardMedia
             component="img"
             height="1000"
-            image="探索照片.webp"
+            image="首頁輪播圖1.jpg"
             alt="step1"
           />
         },
@@ -21,7 +21,7 @@ export default function Example(props)
             description: <CardMedia
             component="img"
             height="1000"
-            image="首頁貓咪.jpg"
+            image="首頁輪播圖2.jpg"
             alt="step2"
           />
         },
@@ -30,7 +30,7 @@ export default function Example(props)
             description: <CardMedia
             component="img"
             height="1000"
-            image="KOMORU首頁圖-20.jpg"
+            image="首頁輪播圖3.jpg"
             alt="step3"
           />
         },
