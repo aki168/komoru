@@ -97,25 +97,25 @@ function Booking() {
     roomState === "default"
       ? setDEFAULTContentVisile(true)
       : setDEFAULTContentVisile(false);
-    roomState === "5"
+    roomState === "2"
       ? setRoom1ContentVisile(true)
       : setRoom1ContentVisile(false);
-    roomState === "8"
+    roomState === "1"
       ? setRoom2ContentVisile(true)
       : setRoom2ContentVisile(false);
-    roomState === "1"
+    roomState === "4"
       ? setRoom3ContentVisile(true)
       : setRoom3ContentVisile(false);
-    roomState === "2"
+    roomState === "3"
       ? setRoom4ContentVisile(true)
       : setRoom4ContentVisile(false);
-    roomState === "3"
+    roomState === "6"
       ? setRoom5ContentVisile(true)
       : setRoom5ContentVisile(false);
-    roomState === "6"
+    roomState === "5"
       ? setRoom6ContentVisile(true)
       : setRoom6ContentVisile(false);
-    roomState === "4"
+    roomState === "8"
       ? setRoom7ContentVisile(true)
       : setRoom7ContentVisile(false);
     roomState === "7"
@@ -291,30 +291,32 @@ function Booking() {
                 id="roomId"
                 value={roomState}
                 className="roomSelect"
-                onChange={(e) => setRoomState(e.target.value)}
+                onChange={(e) => {
+                  setRoomState(e.target.value);
+                }}
               >
                 <option value="default">飯店/房型</option>
                 {cityIdValue === "1" && (
                   <>
-                    <option value="5">夾腳拖的家-私人套房</option>
-                    <option value="8">夾腳拖的家-背包客房</option>
+                    <option value="2">夾腳拖的家-私人套房</option>
+                    <option value="1">夾腳拖的家-背包客房</option>
                   </>
                 )}
                 {cityIdValue === "2" && (
                   <>
-                    <option value="1">Star Hostel-私人套房</option>
-                    <option value="2">Star Hostel-背包客房</option>
+                    <option value="4">Star Hostel-私人套房</option>
+                    <option value="3">Star Hostel-背包客房</option>
                   </>
                 )}
                 {cityIdValue === "3" && (
                   <>
-                    <option value="3">快活慢行-私人套房</option>
-                    <option value="6">快活慢行-背包客房</option>
+                    <option value="6">快活慢行-私人套房</option>
+                    <option value="5">快活慢行-背包客房</option>
                   </>
                 )}
                 {cityIdValue === "4" && (
                   <>
-                    <option value="4">山林山鄰-私人套房</option>
+                    <option value="8">山林山鄰-私人套房</option>
                     <option value="7">山林山鄰-背包客房</option>
                   </>
                 )}
