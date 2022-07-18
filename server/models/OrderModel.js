@@ -18,7 +18,8 @@ exports.getOrderDataListWithRoomDescAndStayNight = async () => {
       "JOIN `Member` ON `Order`.`member_id` = `Member`.`member_id` " +
       "JOIN `Room` ON `Order`.`room_id` = `Room`.`room_id` " +
       "JOIN `Hotel` ON `Room`.`hotel_id` = `Hotel`.`hotel_id` " +
-      "JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id`;";
+      "JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id` " +
+      "ORDER BY `Order`.`order_start_date` DESC, `Order`.`order_status` ASC, `City`.`city_id` ASC, `Room`.`room_type` ASC;";
     db.con.query(sql, (err, rows, fields) => {
       if (err) {
         reject(err);
@@ -64,7 +65,9 @@ exports.getOrderDataListByKeywordAndOrderStatus = async (dataList) => {
       "%' " +
       "OR `City`.`city_name` LIKE '%" +
       dataList.keyword +
-      "%') ";
+      "%') " +
+      "ORDER BY `Order`.`order_start_date` DESC, `Order`.`order_status` ASC, `City`.`city_id` ASC, `Room`.`room_type` ASC;";
+
 
     if (dataList.orderStatus != "") {
       sql += "AND `Order`.`order_status` = ?;";
