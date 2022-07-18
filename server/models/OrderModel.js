@@ -283,7 +283,6 @@ exports.splitOrderIdArray = async (orderIdArray) => {
             orderData[i]["OrderItem"] = result;
           });
       }
-
       resolve(orderData);
     } catch (error) {
       reject(error);
@@ -335,10 +334,10 @@ exports.getOrderItemDataListByOrderId = async (orderId) => {
         reject(err);
       }
       // 2.用PackId去找活動包
-      var otderItemData = db.rowDataToCamelData(rows)
-      var length = otderItemData.length
+      var orderItemData = db.rowDataToCamelData(rows)
+      var length = orderItemData.length
       for (let i = 0; i < length; i++) {
-        let activePackId = otderItemData[i].activePackId
+        let activePackId = orderItemData[i].activePackId
         if (activePackId) {
           let packContentSql = "SELECT" +
             "`ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`partnership_id`, `Partnership`.`partnership_name`, `Partnership`.`partnership_addr`" +
@@ -350,14 +349,17 @@ exports.getOrderItemDataListByOrderId = async (orderId) => {
             if (err) {
               reject(err);
             }
-            otderItemData[i]['activePactContent'] = db.rowDataToCamelData(rows)
+            orderItemData[i]['activePactContent'] = db.rowDataToCamelData(rows)
             if (i === 2) {
-              resolve(otderItemData)
+              resolve(orderItemData)
             }
           })
         }
         else {
-          otderItemData[i]['activePactContent'] = '無參與活動'
+          orderItemData[i]['activePactContent'] = '無參與活動'
+          if (i === 2) {
+            resolve(orderItemData)
+          }
         }
       };
     })

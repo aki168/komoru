@@ -180,14 +180,15 @@ exports.getOrderDataByMemberId = async (req, res) => {
     //   解碼
     const decoded = await promisify(jwt.verify)(token, "jwtSecret");
     const { memberId } = decoded;
-  // let memberId = 8763
+  // let memberId = 10
   // 解碼完後對照資料庫，有的話回傳該訂單資料
-
   try {
     // 1.用memberId查orderId
     let getOrdeIdByMemberId = await orderModel.getOrdeIdByMemberId(memberId);
+    console.log(getOrdeIdByMemberId)
     // 2.用orderId查訂單詳細內容
     let getOrderDatalistByOrderId = await orderModel.splitOrderIdArray(getOrdeIdByMemberId);
+    console.log(getOrderDatalistByOrderId)
     // 將 enum 數值轉換為文字
     for (let i = 0; i < getOrderDatalistByOrderId.length; i++) {
       let valueToString = configController.enumValueToString(
@@ -223,7 +224,6 @@ exports.getOrderDataByMemberId = async (req, res) => {
     }
     configController.sendJsonMsg(res, true, "", getOrderDatalistByOrderId);
   } catch (error) {
-    // 目前不確定這邊要怎改
     console.log(error);
     res.status(500).json({ message: "Server error" });
   }
