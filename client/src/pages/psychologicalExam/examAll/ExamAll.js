@@ -32,8 +32,8 @@ const ExamAll = () => {
   const [exam5Data, setExam5Data] = useState("");
   console.log(exam1Data, exam2Data, exam3Data, exam4Data, exam5Data);
 
-  const [personality, setPersonality] = useState("");
-  const [personalityDescribe, setPersonalityDescribe] = useState("");
+  // const [personality, setPersonality] = useState("");
+  // const [personalityDescribe, setPersonalityDescribe] = useState("");
   const [activityPack, setActivityPack] = useState("");
   // const [examImg, setExamImg] = useState();
   const [examResult, setExamResult] = useState("");
@@ -201,10 +201,8 @@ const ExamAll = () => {
           .then((data) => {
             console.log(data);
             setExamResult(data.dataList);
-            // let personality = res.dataList.personality;
-            // let personalityDescribe = res.dataList.personalityDescribe;
-            setPersonality(data.dataList.personality);
-            setPersonalityDescribe(data.dataList.personalityDescribe);
+            // setPersonality(data.dataList.personality);
+            // setPersonalityDescribe(data.dataList.personalityDescribe);
             setActivityPack(data.dataList.activePackType);
           })
           .then(() => {
