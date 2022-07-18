@@ -31,7 +31,7 @@ const CheckoutSucceeded = () => {
         <span>下訂成功!</span>
         <p>
           快到會員中心查看→
-          <Link to="/user-home/order" className="checkoutSucceededLink">
+          <Link to="/user-home" className="checkoutSucceededLink">
             訂單紀錄
           </Link>
         </p>

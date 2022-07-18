@@ -22,9 +22,10 @@ export default function Feedback(props) {
     })
       .then((res) => {
         console.log(res)
-        alert('送出心得回饋')
+        alert('已收到心得回饋，感謝您！')
+        navigate('/user-home', { replace: true })
         // navigate('/user-home/feedback', { replace: true })
-        window.location.reload("false")
+        // window.location.reload("false")
       })
       .catch((err) => {
         console.log(err) 
