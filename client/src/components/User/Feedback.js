@@ -1,10 +1,12 @@
 import React,{useState} from "react"
+import { useNavigate } from 'react-router-dom'
 import './Feedback.css'
 import { Button, Accordion, Form } from 'react-bootstrap'
 import axios from "axios"
 
 
 export default function Feedback(props) {
+  let navigate = useNavigate()
 
   const [feedback, setFeedback] = useState('')
 
@@ -20,6 +22,8 @@ export default function Feedback(props) {
     })
       .then((res) => {
         console.log(res)
+        alert('送出心得回饋')
+        // navigate('/user-home/feedback', { replace: true })
         window.location.reload("false")
       })
       .catch((err) => {
