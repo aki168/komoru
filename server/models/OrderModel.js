@@ -78,7 +78,6 @@ exports.getOrderDataListByKeywordAndOrderStatus = async (dataList) => {
 
     let value = [dataList.orderStatus == "" ? "" : dataList.orderStatus];
     db.con.query(sql, value, (err, rows, fields) => {
-      console.log(err);
       if (err) {
         reject(err);
       }
