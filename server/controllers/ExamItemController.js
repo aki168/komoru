@@ -12,6 +12,7 @@ exports.getAndSaveExamData = async (req, res) => {
             // 2. 根據答案給活動包
             data['qTwoAnsValue'] = `${data['q2AnsValue']}${data['q3AnsValue']}${data['q4AnsValue']}${data['q5AnsValue']}`
             let done = examItemModel.getPersonality(data)
+            data['activePackType'] = done.activePackType         
             // 刪除多餘資料
             delete data['isActive']
             for (i = 2; i < 6; i++) {
