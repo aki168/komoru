@@ -19,11 +19,6 @@
    line-height:40px;
 }
 
-/* Link:hover{
-    text-decoration: none;
-} */
-/* 刪不掉底線 */
-
 .numberWords{
     color:#ed8c4e ;
     font-size: 27px;
@@ -39,8 +34,6 @@
     margin-bottom: 150px;
     border-top: 2px solid #e6e6e6;
 }
-
-
 
 .RoomWords{
 /* width: 900px; */
@@ -90,6 +83,23 @@
 .FeedBackGo{
     font-size: 25px;
     margin-top: 150px;
+}
+
+.FaqLine{
+    margin-top: 150px;
+    border-top: 2px solid #e6e6e6;
+    margin-bottom: 150px;
+}
+
+.FaqTitle{
+       letter-spacing:1px;
+       line-height:40px;
+       margin-bottom: 50px;
+    }
+
+.FaqWords{
+    margin-bottom: 75px;
+    
 }
 
 .HomeFooter{

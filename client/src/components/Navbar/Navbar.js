@@ -56,14 +56,14 @@ export default function Navbar() {
         )}
       </li>
     </ul>
-    <button className="navbar-toggler d-block d-md-none" style={{backgroundColor:"#000"}} type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+    <button className="navbar-toggler d-block d-md-none" style={{backgroundColor:"#ed8c4e "}} type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
             <span className="navbar-toggler-icon"></span>
      </button>
 
 
           <div className="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div className="offcanvas-header">
-              <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+              <h5 className="offcanvas-title" id="offcanvasNavbarLabel">KOMORU</h5>
               <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div className="offcanvas-body">
@@ -81,7 +81,7 @@ listStyle: "none"
                             <Link className="navbar--item nav-link "  to="/user-home">會員中心</Link>
                         </li>
                         <li className="li--marginright nav-item">
-                            <Link className="navbar--item nav-link" to="/user-home">會員中心</Link>
+                            <Link className="navbar--item nav-link" to="/contactUs">聯絡我們</Link>
                         </li>
                        
                     </ul>

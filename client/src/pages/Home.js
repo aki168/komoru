@@ -8,6 +8,7 @@ import QuiltedImageList from '../components/ImageList/ImageList';
 import APP from '../components/ScrollToTop/ScrollToTop';
 import SimpleHook from '../components/CountUp/CountUp';
 import { Link } from "react-router-dom";
+import Faq from '../components/Faq/Faq';
 // 滑入效果試著放在components
 // import Aos from "aos";
 // import "aos/dist/aos.css";
@@ -75,29 +76,23 @@ export default function Home() {
                 <br />
                 <p className='FeedBackWords' >KOMORU擁有易操作多功能的會員系統，協助你輕鬆管理你的會員資料並且瀏覽你的下訂紀錄，探索更多元的自己。
                 </p>
-                
+
                 <h4 className='FeedBackItem' >• &nbsp;基本資料隨心所欲更換相片
                 </h4>
-                
+
                 <h4 className='FeedBackItem' >• &nbsp;訂單記錄方便查看訂單內容
                 </h4>
-                
+
                 <h4 className='FeedBackItem' >• &nbsp;活動回饋記錄旅程心得分享
                 </h4>
-               
+
                 <h4 className='FeedBackItem' >• &nbsp;優惠表單領取各式優惠票卷
                 </h4>
-                
+
                 <p className='FeedBackGo'>前往會員中心&nbsp;&nbsp;<btn><Link style={{ textDecoration: 'none' }} to="/user-home">加入KOMORU</Link></btn>
                 </p>
 
-                
 
-              
-
-
-                
-{/* <btn >立即註冊</btn> */}
               </div>
               <div className='FeedBackRight' data-aos="fade-left" >
 
@@ -107,13 +102,23 @@ export default function Home() {
             </div>
 
 
+            {/* 問與答 */}
+            <div className='FaqLine'>
+            </div>
+
+            <div className='FaqTitle'>
+              <h2 className='FaqWords' style={{ color: '#ED8C4E', textAlign: 'center' }}>FAQ</h2>
+              <Faq />
+            </div>
+
+
           </div>
           <div className='HomeFooter'>
             <Footer />
           </div>
+
           <div className='ScrollTop'>
             <APP />
-
           </div>
 
         </div>
