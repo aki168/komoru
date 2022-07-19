@@ -65,16 +65,20 @@ exports.getOrderDataListByKeywordAndOrderStatus = async (dataList) => {
       "%' " +
       "OR `City`.`city_name` LIKE '%" +
       dataList.keyword +
-      "%') " +
-      "ORDER BY `Order`.`order_start_date` DESC, `Order`.`order_status` ASC, `City`.`city_id` ASC, `Room`.`room_type` ASC;";
-
+      "%') ";
 
     if (dataList.orderStatus != "") {
-      sql += "AND `Order`.`order_status` = ?;";
+      sql += "AND `Order`.`order_status` = ? ";
+      sql +=
+        "ORDER BY `Order`.`order_start_date` DESC, `Order`.`order_status` ASC, `City`.`city_id` ASC, `Room`.`room_type` ASC;";
+    } else {
+      sql +=
+        "ORDER BY `Order`.`order_start_date` DESC, `Order`.`order_status` ASC, `City`.`city_id` ASC, `Room`.`room_type` ASC;";
     }
 
     let value = [dataList.orderStatus == "" ? "" : dataList.orderStatus];
     db.con.query(sql, value, (err, rows, fields) => {
+      console.log(err);
       if (err) {
         reject(err);
       }
@@ -274,11 +278,13 @@ exports.splitOrderIdArray = async (orderIdArray) => {
     try {
       var orderData = [];
       for (let i = 0; i < orderIdArray.length; i++) {
-        await exports.getOrderDatalistByOrderId(orderIdArray[i]["orderId"])
+        await exports
+          .getOrderDatalistByOrderId(orderIdArray[i]["orderId"])
           .then((result) => {
             orderData.push(result[0]);
           });
-        await exports.getOrderItemDataListByOrderId(orderIdArray[i]["orderId"])
+        await exports
+          .getOrderItemDataListByOrderId(orderIdArray[i]["orderId"])
           .then((result) => {
             orderData[i]["OrderItem"] = result;
           });
@@ -334,35 +340,35 @@ exports.getOrderItemDataListByOrderId = async (orderId) => {
         reject(err);
       }
       // 2.用PackId去找活動包
-      var orderItemData = db.rowDataToCamelData(rows)
-      var length = orderItemData.length
+      var orderItemData = db.rowDataToCamelData(rows);
+      var length = orderItemData.length;
       for (let i = 0; i < length; i++) {
-        let activePackId = orderItemData[i].activePackId
+        let activePackId = orderItemData[i].activePackId;
         if (activePackId) {
-          let packContentSql = "SELECT" +
+          let packContentSql =
+            "SELECT" +
             "`ActivePackItem`.`active_pack_item_title`, `ActivePackItem`.`active_pack_item_content`, `ActivePackItem`.`partnership_id`, `Partnership`.`partnership_name`, `Partnership`.`partnership_addr`" +
             "FROM `ActivePackItem` " +
             "LEFT JOIN `Partnership` ON `ActivePackItem`.`partnership_id` = `Partnership`.`partnership_id` " +
             "WHERE `ActivePackItem`.`active_pack_id` = ? " +
-            "ORDER BY `active_pack_item_id` ASC "
+            "ORDER BY `active_pack_item_id` ASC ";
           db.con.query(packContentSql, activePackId, (err, rows, fields) => {
             if (err) {
               reject(err);
             }
-            orderItemData[i]['activePactContent'] = db.rowDataToCamelData(rows)
+            orderItemData[i]["activePactContent"] = db.rowDataToCamelData(rows);
             if (i === 2) {
-              resolve(orderItemData)
+              resolve(orderItemData);
             }
-          })
-        }
-        else {
-          orderItemData[i]['activePactContent'] = '無參與活動'
+          });
+        } else {
+          orderItemData[i]["activePactContent"] = "無參與活動";
           if (i === 2) {
-            resolve(orderItemData)
+            resolve(orderItemData);
           }
         }
-      };
-    })
+      }
+    });
   });
 };
 
@@ -407,9 +413,9 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
         reject(err);
       } else {
         let orderId = db.rowDataToCamelData(rows)[0]["orderId"];
-        let isActive = data['is_active'];
-        var pack = data['active_pack_id']
-        var length = pack.length
+        let isActive = data["is_active"];
+        var pack = data["active_pack_id"];
+        var length = pack.length;
         // 寫入OrderId到ExamItem
         let examItemsql =
           "UPDATE `ExamItem` " +
@@ -444,7 +450,7 @@ exports.saveOrderIdToOrderItemAndExamItem = (data) => {
                   data["active_pack_id"][i],
                   order_start_date.addDays(i).toLocaleDateString(),
                   // if null ? '0' : '1'
-                  data["active_pack_id"][i] ? data["is_active"] : '1',
+                  data["active_pack_id"][i] ? data["is_active"] : "1",
                   data["create_datetime"],
                   data["order_item_price"],
                 ];
