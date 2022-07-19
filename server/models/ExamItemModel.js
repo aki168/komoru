@@ -3,14 +3,6 @@ const db = require("./_ConfigDB");
 // -------------------------------------------
 // 2022-06-24 MJ
 // 取得人格測驗答案並對照資料表給出相應活動包
-/** 傳入資料格式 JSON
-{
-    "is_active" : "0",
-    "memberId" : 3,
-    "qOneAnsValue" : "0",
-    "qTwoAnsValue" : "ESTJ"
-}
- */
 exports.getPersonality = (data) => {
     var personality = data['qTwoAnsValue']
     // return new Promise(function (reslove, reject) {

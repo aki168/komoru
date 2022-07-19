@@ -185,10 +185,8 @@ exports.getOrderDataByMemberId = async (req, res) => {
   try {
     // 1.用memberId查orderId
     let getOrdeIdByMemberId = await orderModel.getOrdeIdByMemberId(memberId);
-    console.log(getOrdeIdByMemberId)
     // 2.用orderId查訂單詳細內容
     let getOrderDatalistByOrderId = await orderModel.splitOrderIdArray(getOrdeIdByMemberId);
-    console.log(getOrderDatalistByOrderId)
     // 將 enum 數值轉換為文字
     for (let i = 0; i < getOrderDatalistByOrderId.length; i++) {
       let valueToString = configController.enumValueToString(
