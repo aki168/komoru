@@ -30,23 +30,23 @@ const DemoPieActivityType = ({southData}) => {
   // }, [])
   const data = [
     {
-      type: '活動包A',
+      type: '藝術家',
       value: southData.activeType.activePackTypeA,
     },
     {
-      type: '活動包B',
+      type: '霸道總裁',
       value: southData.activeType.activePackTypeB,
     },
     {
-      type: '活動包C',
+      type: '內向輔助',
       value: southData.activeType.activePackTypeC,
     },
     {
-      type: '活動包D',
+      type: '能言善道',
       value: southData.activeType.activePackTypeD,
     },
     {
-      type: '活動包E',
+      type: '冒險家',
       value: southData.activeType.activePackTypeE,
     }
 

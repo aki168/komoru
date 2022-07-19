@@ -543,10 +543,10 @@ function HotelAdd({ setAddShow, data }) {
               className="km-modal-content"
             >
               <option defaultValue>請選擇區域</option>
-              <option value="1">台北市</option>
-              <option value="2">台中市</option>
-              <option value="3">台南市</option>
-              <option value="4">台東市</option>
+              <option value="1">北部</option>
+              <option value="2">中部</option>
+              <option value="3">南部</option>
+              <option value="4">東部</option>
             </Form.Select>
           </Form.Group>
           {addFormData.cityId === "" && (

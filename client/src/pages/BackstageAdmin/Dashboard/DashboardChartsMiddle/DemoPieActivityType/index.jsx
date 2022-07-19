@@ -30,23 +30,23 @@ const DemoPieActivityType = ({middleData}) => {
   // }, [])
   const data = [
     {
-      type: '活動包A',
+      type: '藝術家',
       value: middleData.activeType.activePackTypeA,
     },
     {
-      type: '活動包B',
+      type: '霸道總裁',
       value: middleData.activeType.activePackTypeB,
     },
     {
-      type: '活動包C',
+      type: '內向輔助',
       value: middleData.activeType.activePackTypeC,
     },
     {
-      type: '活動包D',
+      type: '能言善道',
       value: middleData.activeType.activePackTypeD,
     },
     {
-      type: '活動包E',
+      type: '冒險家',
       value: middleData.activeType.activePackTypeE,
     }
    

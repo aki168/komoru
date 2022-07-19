@@ -284,10 +284,10 @@ function Hotel() {
                     <option value="" selected>
                       區域搜尋
                     </option>
-                    <option value="1">北區</option>
-                    <option value="2">中區</option>
-                    <option value="3">南區</option>
-                    <option value="4">東區</option>
+                    <option value="1">北部</option>
+                    <option value="2">中部</option>
+                    <option value="3">南部</option>
+                    <option value="4">東部</option>
                   </select>
                 </div>
                 <div className="col-2">
