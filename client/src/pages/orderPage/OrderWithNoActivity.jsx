@@ -249,19 +249,19 @@ function OrderWithNoActivity() {
   //2022-06-23 ZH
   //根據不同roomState顯示不同房間名稱
   const handleroomStateData = () => {
-    if (roomState === "5") {
+    if (roomState === "2") {
       return <p>夾腳拖的家/私人套房</p>;
-    } else if (roomState === "8") {
-      return <p>夾腳拖的家/背包客房</p>;
     } else if (roomState === "1") {
-      return <p>Star Hostel/私人套房</p>;
-    } else if (roomState === "2") {
-      return <p>Star Hostel/背包客房</p>;
-    } else if (roomState === "3") {
-      return <p>快活慢行/私人套房</p>;
-    } else if (roomState === "6") {
-      return <p>快活慢行/背包客房</p>;
+      return <p>夾腳拖的家/背包客房</p>;
     } else if (roomState === "4") {
+      return <p>Star Hostel/私人套房</p>;
+    } else if (roomState === "3") {
+      return <p>Star Hostel/背包客房</p>;
+    } else if (roomState === "6") {
+      return <p>快活慢行/私人套房</p>;
+    } else if (roomState === "5") {
+      return <p>快活慢行/背包客房</p>;
+    } else if (roomState === "8") {
       return <p>山林山鄰/私人套房</p>;
     } else if (roomState === "7") {
       return <p>山林山鄰/背包客房</p>;
@@ -270,31 +270,31 @@ function OrderWithNoActivity() {
 
   //根據不同roomState顯示不同房間照片
   const handleImgData = () => {
-    if (roomState === "5") {
-      return <img src="http://localhost:5000/images/room/room-9.jpeg" alt="" />;
-    } else if (roomState === "8") {
-      return (
-        <img src="http://localhost:5000/images/room/room-10.jpeg" alt="" />
-      );
-    } else if (roomState === "1") {
+    if (roomState === "1") {
       return <img src="http://localhost:5000/images/room/room-1.jpeg" alt="" />;
     } else if (roomState === "2") {
-      return <img src="http://localhost:5000/images/room/room-5.jpeg" alt="" />;
-    } else if (roomState === "3") {
       return (
-        <img src="http://localhost:5000/images/room/room-11.jpeg" alt="" />
+        <img src="http://localhost:5000/images/room/room-2.jpeg" alt="" />
+      );
+    } else if (roomState === "3") {
+      return <img src="http://localhost:5000/images/room/room-3.jpeg" alt="" />;
+    } else if (roomState === "4") {
+      return <img src="http://localhost:5000/images/room/room-4.jpeg" alt="" />;
+    } else if (roomState === "5") {
+      return (
+        <img src="http://localhost:5000/images/room/room-5.jpeg" alt="" />
       );
     } else if (roomState === "6") {
       return (
-        <img src="http://localhost:5000/images/room/room-13.jpeg" alt="" />
-      );
-    } else if (roomState === "4") {
-      return (
-        <img src="http://localhost:5000/images/room/room-11.jpeg" alt="" />
+        <img src="http://localhost:5000/images/room/room-6.jpeg" alt="" />
       );
     } else if (roomState === "7") {
       return (
-        <img src="http://localhost:5000/images/room/room-12.jpeg" alt="" />
+        <img src="http://localhost:5000/images/room/room-7.jpeg" alt="" />
+      );
+    } else if (roomState === "8") {
+      return (
+        <img src="http://localhost:5000/images/room/room-8.jpeg" alt="" />
       );
     }
   };
