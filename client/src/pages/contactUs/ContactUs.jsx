@@ -114,13 +114,13 @@ const ContactUs = () => {
               value={formData.name}
               onChange={inputHandler}
             />
-            {submit === "click" && (
+            {/* {submit === "click" && (
               <>
                 {formData.name === "" && (
                   <IoMdAlert className="ContactUs-IoMdAlert" />
                 )}
               </>
-            )}
+            )} */}
           </p>
           <p>
             {/* <GoMail className="contactIcon" /> */}
@@ -134,13 +134,13 @@ const ContactUs = () => {
               value={formData.email}
               onChange={inputHandler}
             />
-            {submit === "click" && (
+            {/* {submit === "click" && (
               <>
                 {formData.email === "" && (
                   <IoMdAlert className="ContactUs-IoMdAlert" />
                 )}
               </>
-            )}
+            )} */}
           </p>
           <p>
             {/* <AiOutlinePhone className="contactIcon" /> */}
@@ -154,13 +154,13 @@ const ContactUs = () => {
               value={formData.tel}
               onChange={inputHandler}
             />
-            {submit === "click" && (
+            {/* {submit === "click" && (
               <>
                 {formData.tel === "" && (
                   <IoMdAlert className="ContactUs-IoMdAlert" />
                 )}
               </>
-            )}
+            )} */}
           </p>
           <p>
             {/* <GoComment className="contactIcon" /> */}
@@ -173,13 +173,13 @@ const ContactUs = () => {
               value={formData.html}
               onChange={inputHandler}
             ></textarea>
-            {submit === "click" && (
+            {/* {submit === "click" && (
               <>
                 {formData.html === "" && (
                   <IoMdAlert className="ContactUs-IoMdAlert" />
                 )}
               </>
-            )}
+            )} */}
           </p>
           <button className="submitBtn" onClick={send}>
             提交
