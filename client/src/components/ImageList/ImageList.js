@@ -43,21 +43,21 @@ export default function QuiltedImageList() {
 
 const itemData = [
   {
-    img: '首頁圖庫1.jpg',
+    img: 'imagelist1.jpg',
     title: 'Breakfast',
     rows: 2,
     cols: 2,
   },
   {
-    img: '首頁圖庫2.jpeg',
+    img: 'imagelist2.jpeg',
     title: 'Burger',
   },
   {
-    img: '首頁圖庫3.jpg',
+    img: 'imagelist3.jpg',
     title: 'Camera',
   },
   {
-    img: '首頁圖庫4.jpeg',
+    img: 'imagelist4.jpeg',
     title: 'Coffee',
     cols: 2,
   },

@@ -19,7 +19,7 @@ function Dashboard() {
   /*20220709 YN
   資料選取月份狀態初始化 */
   const [dateData, setDateData] = useState({
-    dateRange: "2022-06",
+    dateRange: "2022-07",
   });
 
   /*20220709 YN
@@ -87,10 +87,10 @@ console.log(e.target)
             name="dateRange"
             onChange={dateRangeChangeHandle}
           >
-            <option value="2022-06" selected>
+            <option value="2022-06" >
               2022-06
             </option>
-            <option value="2022-07">2022-07</option>
+            <option value="2022-07" selected>2022-07</option>
             <option value="2022-08">2022-08</option>
             <option value="2022-09">2022-09</option>
             <option value="2022-10">2022-10</option>

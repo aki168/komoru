@@ -14,9 +14,9 @@ export default function Footer() {
 
 <div className="FooterIcon">
 
-<a className="Icon"><img src="頁尾igicon.png"></img></a>
-<a className="Icon"><img src="頁尾fbicon.png"></img></a>
-<a className="Icon"><img src="頁尾mailicon.png"></img></a>
+<a className="Icon"><img src="footerigicon.png"></img></a>
+<a className="Icon"><img src="footerfbicon.png"></img></a>
+<a className="Icon"><img src="footermailicon.png"></img></a>
 
 </div>
 

@@ -26,17 +26,17 @@ function Sidebar() {
           className=" container nav flex-column text-start fs-4 d-block nav-pills"
           style={{ height: "100vh" }}
         >
-          <div className="pt-4 pb-5">
+          <div className="pt-lg-4 pb-lg-5 pt-md-5 pb-md-5">
             <Link to="order">
               <img
-              className="img-fluid d-none d-md-block"
+                className="img-fluid d-md-none d-lg-block"
                 style={{ maxWidth: "70%", height: "auto", marginLeft: "20px" }}
                 src={LOGO}
                 alt=""
               />
               <img
-              className="img-fluid d-md-none"
-                style={{ maxWidth: "50%", height: "auto", marginLeft: "20px" }}
+                className="img-fluid d-lg-none d-md-block"
+                style={{ maxWidth: "60%", height: "auto", marginLeft: "15px" }}
                 src={CatLOGO}
                 alt=""
               />
@@ -44,15 +44,25 @@ function Sidebar() {
           </div>
           <li className="nav-item" style={{ alignItem: 'center' }}>
             <MyNavLink to="order">
-              <RiFileList3Line className="mx-2 ms-4" />
-              <span>訂單管理</span>
+              <div className="d-md-none d-lg-block">
+                <RiFileList3Line className="mx-2 ms-4" />
+                <span>訂單管理</span>
+              </div>
+              <div className="d-lg-none d-md-block text-center">
+                <RiFileList3Line size="60%" />
+              </div>
             </MyNavLink>
 
           </li>
           <li className="nav-item">
             <MyNavLink to="partnership">
-              <RiSpyLine className="mx-2 ms-4" />
-              合作夥伴管理
+              <div className="d-md-none d-lg-block">
+                <RiSpyLine className="mx-2 ms-4" />
+                <span>合作夥伴管理</span>
+              </div>
+              <div className="d-lg-none d-md-block text-center">
+                <RiSpyLine size="60%" />
+              </div>
             </MyNavLink>
           </li>
           <li className="nav-item dropdown">
@@ -61,12 +71,25 @@ function Sidebar() {
               data-bs-toggle="collapse"
               className="nav-link dropdown-toggle pt-2 "
               // aria-expanded="false"
-              style={{ textDecoration: "none", height: '60px',whiteSpace:'normal' }}
+              style={{ textDecoration: "none", height: '60px', whiteSpace: 'normal' }}
             >
+              {/* <div className="d-md-none d-lg-block">
+                <RiHome2Line className="mx-2 ms-4" />
+                <span className="kmr-font-color-primary km-sidebar">
+                  飯店房型管理
+                  <BsChevronCompactDown className="ms-3" size="20px" />
+                </span>
+
+              </div>
+              <div className="d-lg-none d-md-block text-center">
+                <RiHome2Line size="60%" />
+              </div> */}
+
               <span
                 className="kmr-font-color-primary km-sidebar"
 
               >
+
                 <RiHome2Line className="mx-2 ms-4" />
                 飯店房型管理
                 <BsChevronCompactDown className="ms-3" size="20px" />
@@ -79,7 +102,7 @@ function Sidebar() {
               styl
             >
               <li >
-                <MyNavLink className="nav-link text-center pt-3" style={{ height: '60px' }} to="hotel">
+                <MyNavLink className="nav-link text-center pt-lg-3 pt-md-0" style={{ height: '60px' }} to="hotel">
                   <p style={{ paddingRight: "80px" }}>飯店</p>
                 </MyNavLink>
               </li>
@@ -92,14 +115,25 @@ function Sidebar() {
           </li>
           <li className="nav-item">
             <MyNavLink to="employee">
-              <BiUser className="mx-2 ms-4" />
-              員工管理
+              <div className="d-md-none d-lg-block">
+                <BiUser className="mx-2 ms-4" />
+                <span>員工管理</span>
+              </div>
+              <div className="d-lg-none d-md-block text-center">
+                <BiUser size="60%" />
+              </div>
+
             </MyNavLink>
           </li>
           <li className="nav-item">
             <MyNavLink to="dashboard">
-              <RiBarChart2Line className="mx-2 ms-4" />
-              分區報表
+              <div className="d-md-none d-lg-block">
+                <RiBarChart2Line className="mx-2 ms-4" />
+                <span>分區報表</span>
+              </div>
+              <div className="d-lg-none d-md-block text-center">
+                <RiBarChart2Line size="60%" />
+              </div>
             </MyNavLink>
           </li>
 
