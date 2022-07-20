@@ -10,7 +10,7 @@ exports.getOrderDataListWithRoomDescAndStayNight = async () => {
   return new Promise((resolve, reject) => {
     let sql =
       "SELECT " +
-      "`Order`.`order_id`, `Order`.`order_number`, `Order`.`order_start_date`, `Order`.`order_end_date`, (`order_end_date` - `order_start_date`) AS `stay_night`, `Order`.`order_status`, " +
+      "`Order`.`order_id`, `Order`.`order_number`, `Order`.`order_start_date`, `Order`.`order_end_date`, DATEDIFF(`order_end_date`,`order_start_date`) AS `stay_night`, `Order`.`order_status`, " +
       "`Member`.`member_name`, " +
       "`City`.`city_name`, " +
       "`Room`.`room_type` " +
@@ -21,6 +21,7 @@ exports.getOrderDataListWithRoomDescAndStayNight = async () => {
       "JOIN `City` ON `Hotel`.`city_id` = `City`.`city_id` " +
       "ORDER BY `Order`.`order_start_date` DESC, `Order`.`order_status` ASC, `City`.`city_id` ASC, `Room`.`room_type` ASC;";
     db.con.query(sql, (err, rows, fields) => {
+      console.log(err);
       if (err) {
         reject(err);
       }
@@ -39,7 +40,7 @@ exports.getOrderDataListByKeywordAndOrderStatus = async (dataList) => {
   return new Promise((resolve, reject) => {
     let sql =
       "SELECT " +
-      "`Order`.`order_id`, `Order`.`order_number`, `Order`.`order_start_date`, `Order`.`order_end_date`, (`order_end_date` - `order_start_date`) AS `stay_night`, `Order`.`order_status`, " +
+      "`Order`.`order_id`, `Order`.`order_number`, `Order`.`order_start_date`, `Order`.`order_end_date`, DATEDIFF(`order_end_date`,`order_start_date`) AS `stay_night`, `Order`.`order_status`, " +
       "`Member`.`member_name`, " +
       "`City`.`city_name`, " +
       "`Room`.`room_type` " +
