@@ -1,3 +1,9 @@
+@media (min-width:992px){
+  .LogoContent{
+    margin-left: 150px !important;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
