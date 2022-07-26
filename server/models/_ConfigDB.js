@@ -1,13 +1,23 @@
 const mysql = require("mysql");
 
+// const db = mysql.createConnection({
+//   host: "db4free.net",
+//   port: "3306",
+//   user: "kmradmin",
+//   password: "1qaz@WSX",
+//   database: "komoru",
+//   dateStrings: true, // 2022-06-18 PG 強制日期格式以字串傳回
+//   multipleStatements: true
+// });
+
 const db = mysql.createConnection({
-  host: "db4free.net",
+  host: "localhost",
   port: "3306",
-  user: "kmradmin",
-  password: "1qaz@WSX",
+  user: "root",
+  password: "",
   database: "komoru",
   dateStrings: true, // 2022-06-18 PG 強制日期格式以字串傳回
-  multipleStatements: true
+  multipleStatements: true,
 });
 
 db.connect(function (err) {
@@ -82,10 +92,7 @@ exports.camelDataToRowData = (dataList) => {
 exports.getDateTimeNow = () => {
   let now = new Date();
   now = now.setHours(now.getHours() + 8);
-  return new Date(now)
-    .toISOString()
-    .replace(/T/, " ")
-    .replace(/\..+/, "");
+  return new Date(now).toISOString().replace(/T/, " ").replace(/\..+/, "");
 };
 
 exports.multipleQueryRowDataToSingleObj = (dataList) => {
@@ -97,21 +104,76 @@ exports.multipleQueryRowDataToSingleObj = (dataList) => {
     });
   });
   return newDatalist;
-}
+};
 
-// 2022-06-28 MJ 
-// 隨機產生密碼 
+// 2022-06-28 MJ
+// 隨機產生密碼
 exports.creatRandomPassword = (size) => {
-  var seed = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'p', 'Q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-    '2', '3', '4', '5', '6', '7', '8', '9'
-  )
+  var seed = new Array(
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "m",
+    "n",
+    "p",
+    "Q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9"
+  );
   // 陣列長度
-  seedlength = seed.length
-  var createPassword = []
+  seedlength = seed.length;
+  var createPassword = [];
   for (i = 0; i < size; i++) {
-    var j = Math.floor(Math.random() * seedlength)
-    createPassword.push(seed[j])
+    var j = Math.floor(Math.random() * seedlength);
+    createPassword.push(seed[j]);
   }
-  return createPassword.join('')
-}
+  return createPassword.join("");
+};
