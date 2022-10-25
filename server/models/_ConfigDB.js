@@ -1,24 +1,24 @@
 const mysql = require("mysql");
 
-// const db = mysql.createConnection({
-//   host: "db4free.net",
-//   port: "3306",
-//   user: "kmradmin",
-//   password: "1qaz@WSX",
-//   database: "komoru",
-//   dateStrings: true, // 2022-06-18 PG 強制日期格式以字串傳回
-//   multipleStatements: true
-// });
-
 const db = mysql.createConnection({
-  host: "localhost",
+  host: "db4free.net",
   port: "3306",
-  user: "root",
-  password: "",
+  user: "kmradmin",
+  password: "1qaz@WSX",
   database: "komoru",
   dateStrings: true, // 2022-06-18 PG 強制日期格式以字串傳回
-  multipleStatements: true,
+  multipleStatements: true
 });
+
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   port: "3306",
+//   user: "root",
+//   password: "",
+//   database: "komoru",
+//   dateStrings: true, // 2022-06-18 PG 強制日期格式以字串傳回
+//   multipleStatements: true,
+// });
 
 db.connect(function (err) {
   // console.log(err);
